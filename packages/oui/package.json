@@ -1,0 +1,51 @@
+{
+  "name": "@oakwood/oui",
+  "version": "0.0.0",
+  "private": false,
+  "author": "Martin Barri <maeertin@gmail.com>",
+  "description": "Oakwood UI components built with React and Material-UI.",
+  "keywords": [
+    "react",
+    "react-component",
+    "material-ui",
+    "utils"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oakwood/oui.git",
+    "directory": "packages/oui"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oakwood/oui/issues"
+  },
+  "scripts": {
+    "build": "yarn build:cjs && yarn build:esm && yarn build:es",
+    "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./build",
+    "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./build/esm",
+    "build:es": "cross-env NODE_ENV=production BABEL_ENV=es babel --config-file ../../babel.config.js ./src --out-dir ./build/es",
+    "prebuild": "rimraf build",
+    "release": "yarn build && npm publish build --tag latest",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "@material-ui/core": "^4.1.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@babel/runtime": "^7.4.4",
+    "@oakwood/oui-utils": "0.0.0",
+    "imagesloaded": "^4.1.4",
+    "prop-types": "^15.7.2",
+    "react-intersection-observer": "^8.25.1"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

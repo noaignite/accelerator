@@ -1,0 +1,22 @@
+{
+  "name": "docs",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Martin Barri <maeertin@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "build-storybook -o oui-docs",
+    "dev": "start-storybook -p 3001 --ci",
+    "start": "yarn dev"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.1.2",
+    "@oakwood/oui": "0.0.0",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-knobs": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1"
+  }
+}
