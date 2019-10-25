@@ -4,6 +4,9 @@
   "scripts": {
     "docs:build": "yarn workspace docs build",
     "docs:dev": "yarn workspace docs dev",
+    "lint": "eslint . --cache --report-unused-disable-directives",
+    "lint:ci": "eslint . --report-unused-disable-directives",
+    "lint:fix": "eslint . --cache --fix",
     "start": "yarn docs:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,12 +19,22 @@
     "@babel/plugin-transform-runtime": "~7.5.5",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-transform-dev-warning": "^0.1.0",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
     "cross-env": "^6.0.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-import-resolver-babel-module": "^5.1.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.1.1",
     "rimraf": "^3.0.0"
   },
   "workspaces": [
