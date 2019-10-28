@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { boolean, number, select } from '@storybook/addon-knobs'
+import { boolean, number } from '@storybook/addon-knobs'
 import Slide from '@material-ui/core/Slide'
 import Media from '@oakwood/oui/Media'
 import MediaLoader from '@oakwood/oui/MediaLoader'
