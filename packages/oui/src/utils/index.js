@@ -1,5 +1,7 @@
 export { default as capitalize } from './capitalize'
 export { default as clamp } from './clamp'
+export { default as createChainedFunction } from './createChainedFunction'
+export { default as debounce } from './debounce'
 export { default as lerp } from './lerp'
 export { default as map } from './map'
 export { default as normalize } from './normalize'
