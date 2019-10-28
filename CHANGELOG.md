@@ -1,5 +1,14 @@
 ### Versions
 
+## 0.2.0
+###### *2019-10-28*
+
+### `@oakwood/oui@v0.2.0`
+- [utils] Add new component related utils
+
+### `@oakwood/oui-utils@v0.2.0`
+- [utils] Move component related utils to @oakwood/oui package
+
 ## 0.1.0
 ###### *2019-10-28*
 
