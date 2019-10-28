@@ -1,6 +1,6 @@
 {
   "name": "@oakwood/oui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "author": "Martin Barri <maeertin@gmail.com>",
   "description": "Oakwood UI components built with React and Material-UI.",
@@ -37,7 +37,7 @@
   "devDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.4.4",
-    "@oakwood/oui-utils": "0.1.0",
+    "@oakwood/oui-utils": "0.2.0",
     "imagesloaded": "^4.1.4",
     "prop-types": "^15.7.2",
     "react-intersection-observer": "^8.25.1"
