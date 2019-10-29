@@ -1,5 +1,14 @@
 ### Versions
 
+## 0.3.0
+###### *2019-10-29*
+
+### `@oakwood/oui@v0.3.0`
+- [utils] Add new createChainedFunction util
+- [utils] Add new debounce util
+
+### `@oakwood/oui-utils@v0.3.0`
+
 ## 0.2.0
 ###### *2019-10-28*
 
