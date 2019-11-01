@@ -5,6 +5,7 @@ import imagesLoaded from 'imagesloaded'
 import { InView } from 'react-intersection-observer'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
+import useForkRef from '../utils/useForkRef'
 
 export const styles = theme => ({
   root: {
@@ -72,7 +73,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     }
   }
 
-  const handleReady = instance => {
+  const handleMediaReady = instance => {
     setLoaded(true)
 
     if (onReady) {
@@ -80,9 +81,9 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     }
   }
 
-  const handleRef = node => {
+  const handleMediaRef = node => {
     if (node && !loaded) {
-      imagesLoaded(node, handleReady)
+      imagesLoaded(node, handleMediaReady)
     }
   }
 
@@ -101,11 +102,13 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     }
   }
 
+  const handleMediaForkRef = useForkRef(handleMediaRef, childrenProp.ref)
+
   let children = shouldRender ? childrenProp : null
   if (React.isValidElement(children)) {
     children = React.cloneElement(children, {
       className: classnames(classes.media, children.props.className),
-      ref: handleRef,
+      ref: handleMediaForkRef,
     })
   }
 
