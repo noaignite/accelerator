@@ -25,6 +25,7 @@ export const ScrollProgressSectionStory = () => (
     <div style={{ height: '110vh' }} />
 
     <ScrollProgress
+      component="section"
       // eslint-disable-next-line
       onChange={console.log}
       style={{ height: '150vh', background: 'hotpink' }}
