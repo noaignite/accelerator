@@ -1,5 +1,14 @@
 ### Versions
 
+## 0.4.1
+###### *2019-11-07*
+
+### `@oakwood/oui@v0.4.1`
+- [ScrollProgress] Add component prop for overriding the rendered node
+
+### Docs
+- [ScrollProgress] Add example with component prop usage
+
 ## 0.4.0
 ###### *2019-11-01*
 
