@@ -1,6 +1,6 @@
 {
   "name": "@oakwood/oui-utils",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "author": "Martin Barri <maeertin@gmail.com>",
   "description": "Oakwood-UI Utils - Utility functions for Oakwood-UI.",
