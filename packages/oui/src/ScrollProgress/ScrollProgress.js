@@ -11,7 +11,7 @@ export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = 
 }
 
 const ScrollProgress = props => {
-  const { children, onChange, ...other } = props
+  const { children, component, onChange, ...other } = props
 
   const entryRef = React.useRef(null)
   const [isInView, setIsInView] = React.useState(false)
@@ -53,7 +53,7 @@ const ScrollProgress = props => {
   }, [handleScroll, isInView])
 
   return (
-    <InView onChange={handleIntersect} {...other}>
+    <InView as={component} onChange={handleIntersect} {...other}>
       {children}
     </InView>
   )
@@ -61,6 +61,7 @@ const ScrollProgress = props => {
 
 ScrollProgress.propTypes = {
   children: PropTypes.node,
+  component: PropTypes.elementType,
   onChange: PropTypes.func,
 }
 
