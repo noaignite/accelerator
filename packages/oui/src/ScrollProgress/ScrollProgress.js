@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { InView } from 'react-intersection-observer'
-import clamp from '../utils/clamp'
+import clamp from '@oakwood/oui-utils/clamp'
 
 export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = topOffset) {
   const vh = window.innerHeight
