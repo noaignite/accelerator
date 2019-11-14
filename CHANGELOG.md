@@ -1,5 +1,17 @@
 ### Versions
 
+## 0.5.0
+###### *2019-11-13*
+
+Migrate all utils previously found under oui/utils over to oui-utils package for a more straight forward separation of package contents.
+
+### `@oakwood/oui@v0.5.0`
+- [utils] Remove all utils
+
+### `@oakwood/oui-utils@v0.5.0`
+- [utils] Add utils previously found under oui/utils
+- [utils] Add new mediaType util
+
 ## 0.4.1
 ###### *2019-11-07*
 
