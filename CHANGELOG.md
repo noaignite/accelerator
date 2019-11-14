@@ -1,5 +1,11 @@
 ### Versions
 
+## 0.5.1
+###### *2019-11-14*
+
+### `@oakwood/oui@v0.5.1`
+[utils] Fix import paths as they were migrated to oui-utils
+
 ## 0.5.0
 ###### *2019-11-13*
 
