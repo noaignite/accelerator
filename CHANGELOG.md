@@ -1,5 +1,11 @@
 ### Versions
 
+## 0.5.2
+###### *2019-11-18*
+
+### `@oakwood/oui@v0.5.2`
+[Media] Fix ref forwarding for MediaWithWidth by replacing deprecated withWidth HOC for useMediaQuery hook
+
 ## 0.5.1
 ###### *2019-11-14*
 
@@ -9,7 +15,7 @@
 ## 0.5.0
 ###### *2019-11-13*
 
-Migrate all utils previously found under oui/utils over to oui-utils package for a more straight forward separation of package contents.
+Migrate all utils previously found under oui/utils over to oui-utils package for a more straight forward separation of package contents
 
 ### `@oakwood/oui@v0.5.0`
 - [utils] Remove all utils

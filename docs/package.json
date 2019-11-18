@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "author": "Martin Barri <maeertin@gmail.com>",
   "license": "MIT",
@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.1.2",
-    "@oakwood/oui": "^0.5.1",
-    "@oakwood/oui-utils": "^0.5.1",
+    "@oakwood/oui": "^0.5.2",
+    "@oakwood/oui-utils": "^0.5.2",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-knobs": "^5.2.5",
     "@storybook/addons": "^5.2.5",
