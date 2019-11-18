@@ -2,37 +2,38 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth'
+import useTheme from '@material-ui/core/styles/useTheme'
 import CardMedia from '@material-ui/core/CardMedia'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
 
 /**
  * @ignore - internal component.
  */
 const MediaWithWidth = React.forwardRef(function MediaWithWidth(props, ref) {
-  const { breakpoints, component, theme, width, ...other } = props
+  const { breakpoints, component, ...other } = props
 
+  const theme = useTheme()
   const keys = [...theme.breakpoints.keys].reverse()
-  let componentProps = {}
+  const breakpoint = keys.reduce((output, key) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const matches = useMediaQuery(theme.breakpoints.up(key))
+    return !output && matches ? breakpoints[key] : output
+  }, null)
 
-  for (let index = 0; index < keys.length; index += 1) {
-    const key = keys[index]
-    const breakpoint = breakpoints[key]
-
-    if (breakpoint && isWidthUp(key, width)) {
-      if (typeof breakpoint === 'object') {
-        const { src, ...more } = breakpoint
-        componentProps = {
-          image: src,
-          ...more,
-        }
-      } else {
-        componentProps.image = breakpoint
-      }
-      break
-    }
+  // When rendering the component on the server,
+  // we have no idea about the client browser screen width.
+  // In order to prevent blinks and help the reconciliation of the React tree
+  // we are not rendering the child component.
+  //
+  // An alternative is to implement a `ssrMatchMedia`.
+  // https://material-ui.com/components/use-media-query/#server-side-rendering
+  if (breakpoint === null) {
+    return null
   }
 
-  return <CardMedia component={component} ref={ref} {...componentProps} {...other} />
+  const { src, ...more } = typeof breakpoint !== 'object' ? { src: breakpoint } : breakpoint
+
+  return <CardMedia component={component} image={src} ref={ref} {...more} {...other} />
 })
 
 MediaWithWidth.propTypes = {
@@ -44,8 +45,6 @@ MediaWithWidth.propTypes = {
     xl: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }),
   component: PropTypes.elementType,
-  theme: PropTypes.object.isRequired,
-  width: PropTypes.string.isRequired,
 }
 
-export default withWidth({ withTheme: true })(MediaWithWidth)
+export default MediaWithWidth
