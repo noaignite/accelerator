@@ -5,7 +5,7 @@ import imagesLoaded from 'imagesloaded'
 import { InView } from 'react-intersection-observer'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
-import useForkRef from '@oakwood/oui-utils/useForkRef'
+import { useForkRef } from '@oakwood/oui-utils'
 
 export const styles = theme => ({
   root: {
