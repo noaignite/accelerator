@@ -2,9 +2,9 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import warning from 'warning'
 import withStyles from '@material-ui/core/styles/withStyles'
 import CardMedia from '@material-ui/core/CardMedia'
+import { chainPropTypes } from '@oakwood/oui-utils'
 import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
 
@@ -40,11 +40,6 @@ export function imgAttrEntries(props) {
 
 const Media = React.forwardRef(function Media(props, ref) {
   const { breakpoints, component, src, ...other } = props
-
-  warning(
-    'children' in other || Boolean(breakpoints || src),
-    'UI: the Media component requires either `breakpoints`, `children` or `src` property.',
-  )
 
   let componentProps = {}
   let Component = CardMedia
@@ -83,7 +78,12 @@ Media.propTypes = {
     lg: PropTypes.any,
     xl: PropTypes.any,
   }),
-  children: PropTypes.node,
+  children: chainPropTypes(PropTypes.node, props => {
+    if (!props.breakpoints && !props.children && !props.src) {
+      return new Error('OUI: either `breakpoints`, `children` or `src` prop must be specified.')
+    }
+    return null
+  }),
   classes: PropTypes.object.isRequired,
   component: PropTypes.elementType,
   src: PropTypes.string,
