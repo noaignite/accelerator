@@ -15,6 +15,7 @@ export const imageType = PropTypes.shape({
 })
 
 export const videoType = PropTypes.shape({
+  autoPlay: PropTypes.bool,
   breakpoints: responsiveSrcType,
   controls: PropTypes.bool,
   loop: PropTypes.bool,
