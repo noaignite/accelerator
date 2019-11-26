@@ -1,4 +1,5 @@
 export { default as capitalize } from './capitalize'
+export { default as chainPropTypes } from './chainPropTypes'
 export { default as clamp } from './clamp'
 export { default as createChainedFunction } from './createChainedFunction'
 export { default as debounce } from './debounce'
