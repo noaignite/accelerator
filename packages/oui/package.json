@@ -41,7 +41,7 @@
     "clsx": "^1.0.2",
     "imagesloaded": "^4.1.4",
     "prop-types": "^15.7.2",
-    "react-intersection-observer": "^8.25.1"
+    "react-intersection-observer": "^8.25.2"
   },
   "sideEffects": false,
   "publishConfig": {
