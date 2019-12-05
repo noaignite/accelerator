@@ -8,7 +8,10 @@ const inRanges = ['0>0.5>1', '0>1>3', '0>0.5>4']
 
 const outRanges = ['0>2>6', '0>1>-1', '1>0>1', '0>1>0']
 
-const stepsPerRange = 10000
+const precision = 100
+const round = i => Math.round(i * precision) / precision
+
+const stepsPerRange = precision
 
 const makeFunc = (minIn, midIn, maxIn, minOut, midOut, maxOut) => i =>
   mapRange(i, minIn, midIn, maxIn, minOut, midOut, maxOut)
@@ -24,11 +27,11 @@ const makeTest = (inRange, outRange) => () => {
     map(i, inRange[0], inRange[1], outRange[0], outRange[1]),
   )
   const outEndRange = inEndRange.map(i => map(i, inRange[1], inRange[2], outRange[1], outRange[2]))
-  const outValues = outStartRange.concat(outEndRange)
+  const outValues = outStartRange.concat(outEndRange).map(round)
 
-  const results = inValues.map(
-    makeFunc(inRange[0], inRange[1], inRange[2], outRange[0], outRange[1], outRange[2]),
-  )
+  const results = inValues
+    .map(makeFunc(inRange[0], inRange[1], inRange[2], outRange[0], outRange[1], outRange[2]))
+    .map(round)
   expect(results).toEqual(outValues)
 }
 
