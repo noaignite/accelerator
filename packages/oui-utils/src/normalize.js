@@ -1,7 +1,7 @@
-import map from './map'
+import mapRange from './mapRange'
 
 function normalize(value, x, y) {
-  return map(value, x, y, 0, 1)
+  return mapRange(value, x, y, 0, 1)
 }
 
 export default normalize
