@@ -4,7 +4,7 @@ import ScrollProgress from '@oakwood/oui/ScrollProgress'
 
 const stories = storiesOf('Components/ScrollProgress', module)
 
-export const ScrollProgressStory = () => (
+export const Default = () => (
   <>
     <div style={{ height: '110vh' }} />
 
@@ -20,7 +20,7 @@ export const ScrollProgressStory = () => (
   </>
 )
 
-export const ScrollProgressSectionStory = () => (
+export const WithSection = () => (
   <>
     <div style={{ height: '110vh' }} />
 
@@ -37,7 +37,7 @@ export const ScrollProgressSectionStory = () => (
   </>
 )
 
-stories.add('Default', ScrollProgressStory)
-stories.add('With Section', ScrollProgressSectionStory)
+stories.add('Default', Default)
+stories.add('With Section', WithSection)
 
 export default ScrollProgress
