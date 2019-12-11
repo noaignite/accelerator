@@ -9,31 +9,31 @@ import MediaLoader from '@oakwood/oui/MediaLoader'
 
 const stories = storiesOf('Components/MediaLoader', module)
 
-export const MediaLoaderStory = () => (
+export const Default = () => (
   <MediaLoader>
     <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
   </MediaLoader>
 )
 
-export const MediaLoaderAspectRatioStory = () => (
+export const CustomAspectRatio = () => (
   <MediaLoader width={number('width', 10)} height={number('height', 5)}>
     <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
   </MediaLoader>
 )
 
-export const MediaLoaderPlaceholderStory = () => (
+export const CustomPlaceholder = () => (
   <MediaLoader placeholder={<Media component="img" src="//placekitten.com/500/299" />}>
     <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
   </MediaLoader>
 )
 
-export const MediaLoaderTransitionStory = () => (
+export const CustomTransition = () => (
   <MediaLoader TransitionComponent={Zoom}>
     <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
   </MediaLoader>
 )
 
-export const MediaLoaderLazyStory = () => (
+export const LazyLoadAndReveal = () => (
   <div>
     <div style={{ height: 3000, margin: 20, background: '#eee' }} />
 
@@ -52,10 +52,10 @@ export const MediaLoaderLazyStory = () => (
   </div>
 )
 
-stories.add('Default', MediaLoaderStory)
-stories.add('Custom Aspect Ratio', MediaLoaderAspectRatioStory)
-stories.add('Custom Placeholder', MediaLoaderPlaceholderStory)
-stories.add('Custom Transition', MediaLoaderTransitionStory)
-stories.add('Lazy Load', MediaLoaderLazyStory)
+stories.add('Default', Default)
+stories.add('Custom Aspect Ratio', CustomAspectRatio)
+stories.add('Custom Placeholder', CustomPlaceholder)
+stories.add('Custom Transition', CustomTransition)
+stories.add('Lazy Load & Reveal', LazyLoadAndReveal)
 
 export default MediaLoader
