@@ -1,172 +1,157 @@
+// @inheritedComponent AspectRatio
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
 import imagesLoaded from 'imagesloaded'
 import { InView } from 'react-intersection-observer'
-import withStyles from '@material-ui/core/styles/withStyles'
+import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
-import { useForkRef } from '@oakwood/oui-utils'
+import { elementAcceptingRef } from '@oakwood/oui-utils'
+import AspectRatio from '../AspectRatio'
 
-export const styles = theme => ({
-  root: {
-    position: 'relative',
-    width: '100%',
-    overflow: 'hidden',
-  },
-  loading: {},
-  unloaded: {},
-  aspectRatioFill: {
-    paddingBottom: ({ aspectRatio }) => {
-      if (aspectRatio) {
-        const { width = 1, height = 1 } = aspectRatio
-        return `${((height / width) * 100).toFixed(2)}%`
-      }
-      return undefined
-    },
-    '& + *': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-    },
-  },
-  placeholder: {
+export const styles = {
+  root: {},
+  bounds: {
     position: 'absolute',
+    zIndex: -1,
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: theme.palette.background.media || '#eee',
-    objectFit: 'cover',
   },
-})
+  media: {},
+}
 
 const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   const {
-    aspectRatio,
-    children: childrenProp,
+    children,
     classes,
-    className: classNameProp,
+    className,
     component = 'div',
-    disablePlaceholder,
+    height,
     lazy,
-    onIntersect,
-    onReady,
-    placeholder: placeholderProp = <div />,
-    rootMargin = '2000px 0px',
+    onLoad,
+    onRender,
+    onReveal,
+    placeholder,
+    rootMargin,
     TransitionComponent = Fade,
     transitionDuration = 1000,
     TransitionProps,
+    width,
     ...other
   } = props
 
   const [shouldRender, setShouldRender] = React.useState(!lazy)
+  const [shouldReveal, setShouldReveal] = React.useState(!rootMargin)
   const [loaded, setLoaded] = React.useState(false)
 
-  const handleIntersect = (inView, entry) => {
-    setShouldRender(inView)
+  const handleRender = React.useCallback(
+    (inView, entry) => {
+      if (inView) {
+        setShouldRender(inView)
 
-    if (onIntersect) {
-      onIntersect(inView, entry)
-    }
-  }
+        if (onRender) {
+          onRender(entry)
+        }
+      }
+    },
+    [onRender],
+  )
 
-  const handleMediaReady = instance => {
-    setLoaded(true)
+  const handleReveal = React.useCallback(
+    (inView, entry) => {
+      if (inView) {
+        setShouldReveal(inView)
 
-    if (onReady) {
-      onReady(instance)
-    }
-  }
+        if (onReveal) {
+          onReveal(entry)
+        }
+      }
+    },
+    [onReveal],
+  )
+
+  const handleLoad = React.useCallback(
+    instance => {
+      setLoaded(true)
+
+      if (onLoad) {
+        onLoad(instance)
+      }
+    },
+    [onLoad],
+  )
 
   const handleMediaRef = node => {
     if (node && !loaded) {
-      imagesLoaded(node, handleMediaReady)
+      imagesLoaded(node, handleLoad)
     }
   }
 
-  let Component = component
-  if (lazy) {
-    Component = InView
-  }
-
-  let componentProps = {}
-  if (Component === InView) {
-    componentProps = {
-      as: component,
-      onChange: handleIntersect,
-      triggerOnce: true,
-      rootMargin,
-    }
-  }
-
-  const handleMediaForkRef = useForkRef(handleMediaRef, childrenProp.ref)
-
-  let children = shouldRender ? childrenProp : null
-  if (React.isValidElement(children)) {
-    children = React.cloneElement(children, {
-      className: classnames(classes.media, children.props.className),
-      ref: handleMediaForkRef,
-    })
-  }
-
-  let placeholder = !disablePlaceholder ? placeholderProp : null
-  if (React.isValidElement(placeholder)) {
-    placeholder = (
-      <TransitionComponent
-        appear={false} // We're only transitioning out.
-        in={!loaded}
-        timeout={transitionDuration}
-        unmountOnExit
-        {...TransitionProps}
-      >
-        {React.cloneElement(placeholder, {
-          className: classnames(classes.placeholder, placeholder.props.className),
-        })}
-      </TransitionComponent>
-    )
-  }
-
-  const className = classnames(
-    classes.root,
-    {
-      [classes.loading]: !loaded,
-      [classes.unloaded]: !shouldRender,
-    },
-    classNameProp,
-  )
+  const inProp = shouldReveal && loaded
 
   return (
-    <Component className={className} ref={ref} {...componentProps} {...other}>
-      {aspectRatio && <div className={classes.aspectRatioFill} />}
-      {children}
-      {placeholder}
-    </Component>
+    <AspectRatio
+      className={classnames(classes.root, className)}
+      component={component}
+      height={height}
+      width={width}
+      ref={ref}
+      {...other}
+    >
+      {!shouldRender && (
+        <InView className={classes.bounds} onChange={handleRender} rootMargin="2000px 0px" />
+      )}
+      {!shouldReveal && (
+        <InView className={classes.bounds} onChange={handleReveal} rootMargin={rootMargin} />
+      )}
+
+      {shouldRender && (
+        <TransitionComponent
+          in={inProp}
+          className={classnames(classes.media, children.props.className)}
+          timeout={transitionDuration}
+          ref={handleMediaRef}
+          {...TransitionProps}
+        >
+          {children}
+        </TransitionComponent>
+      )}
+
+      {placeholder && (
+        <Fade
+          in={!inProp}
+          className={classnames(classes.bounds, placeholder.props.className)}
+          timeout={transitionDuration * 2}
+          unmountOnExit
+        >
+          {placeholder}
+        </Fade>
+      )}
+    </AspectRatio>
   )
 })
 
 MediaLoader.propTypes = {
-  aspectRatio: PropTypes.shape({
-    height: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-  }),
-  children: PropTypes.element.isRequired,
+  children: elementAcceptingRef.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   component: PropTypes.string,
-  disablePlaceholder: PropTypes.bool,
+  height: PropTypes.number,
   lazy: PropTypes.bool,
-  onIntersect: PropTypes.func,
-  onReady: PropTypes.func,
+  onLoad: PropTypes.func,
+  onRender: PropTypes.func,
+  onReveal: PropTypes.func,
   placeholder: PropTypes.element,
   rootMargin: PropTypes.string,
   TransitionComponent: PropTypes.elementType,
   transitionDuration: PropTypes.number,
   TransitionProps: PropTypes.object,
+  width: PropTypes.number,
 }
 
-MediaLoader.uiName = 'MediaLoader'
+MediaLoader.uiName = 'OuiMediaLoader'
 
-export default withStyles(styles)(MediaLoader)
+export default withStyles(styles, { name: 'OuiMediaLoader' })(MediaLoader)
