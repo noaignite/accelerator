@@ -65,6 +65,6 @@ ScrollProgress.propTypes = {
   onChange: PropTypes.func,
 }
 
-ScrollProgress.uiName = 'ScrollProgress'
+ScrollProgress.uiName = 'OuiScrollProgress'
 
 export default ScrollProgress
