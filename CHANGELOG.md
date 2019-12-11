@@ -1,5 +1,31 @@
 ### Versions
 
+## 0.6.0
+###### *2019-12-11*
+
+### `@oakwood/oui@v0.6.0`
+[components] Update all components to merge in theme global props & overrides
+[MediaLoader] Refactor component with extended opt-in functionality
+[AspectRatio] New component which was extracted from MediaLoader
+[Media] Remove warning package dependency
+[index.js] Update common exports file pattern
+[npm] Replace classnames for clsx for smaller build footprint
+
+### `@oakwood/oui-utils@v0.6.0`
+- [utils] Rename map to mapRange for clarity
+- [utils] Add elementAcceptingRef & elementTypeAcceptingRef utils
+- [utils] Add chainPropTypes util
+- [utils] Fix faulty refType
+- [npm] Add babel-runtime dependency
+
+### Docs
+- [misc] Update story naming convention
+- [npm] Upgrade dependencies
+
+### Core
+- [npm] Add peerDependencies within packages/* to root package.json as devDependencies
+- [npm] Upgrade dependencies
+
 ## 0.5.2
 ###### *2019-11-18*
 
