@@ -1,15 +1,24 @@
 ### Versions
 
+## 0.6.1
+###### *2020-01-08*
+
+### `@oakwood/oui@v0.6.1`
+- [MediaLoader] Switch out imagesLoaded for mediaLoaded package
+
+### Docs
+- [misc] Add additional stories showcasing functionality
+
 ## 0.6.0
 ###### *2019-12-11*
 
 ### `@oakwood/oui@v0.6.0`
-[components] Update all components to merge in theme global props & overrides
-[MediaLoader] Refactor component with extended opt-in functionality
-[AspectRatio] New component which was extracted from MediaLoader
-[Media] Remove warning package dependency
-[index.js] Update common exports file pattern
-[npm] Replace classnames for clsx for smaller build footprint
+- [components] Update all components to merge in theme global props & overrides
+- [MediaLoader] Refactor component with extended opt-in functionality
+- [AspectRatio] New component which was extracted from MediaLoader
+- [Media] Remove warning package dependency
+- [index.js] Update common exports file pattern
+- [npm] Replace classnames for clsx for smaller build footprint
 
 ### `@oakwood/oui-utils@v0.6.0`
 - [utils] Rename map to mapRange for clarity
@@ -30,13 +39,13 @@
 ###### *2019-11-18*
 
 ### `@oakwood/oui@v0.5.2`
-[Media] Fix ref forwarding for MediaWithWidth by replacing deprecated withWidth HOC for useMediaQuery hook
+- [Media] Fix ref forwarding for MediaWithWidth by replacing deprecated withWidth HOC for useMediaQuery hook
 
 ## 0.5.1
 ###### *2019-11-14*
 
 ### `@oakwood/oui@v0.5.1`
-[utils] Fix import paths as they were migrated to oui-utils
+- [utils] Fix import paths as they were migrated to oui-utils
 
 ## 0.5.0
 ###### *2019-11-13*
