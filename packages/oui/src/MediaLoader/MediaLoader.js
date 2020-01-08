@@ -3,7 +3,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
-import imagesLoaded from 'imagesloaded'
+import mediaLoaded from '@maeertin/medialoaded'
 import { InView } from 'react-intersection-observer'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
@@ -86,7 +86,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
   const handleMediaRef = node => {
     if (node && !loaded) {
-      imagesLoaded(node, handleLoad)
+      mediaLoaded(node, handleLoad)
     }
   }
 

@@ -37,9 +37,9 @@
   "devDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.7.4",
+    "@maeertin/medialoaded": "^0.0.1",
     "@oakwood/oui-utils": "^0.6.0",
     "clsx": "^1.0.2",
-    "imagesloaded": "^4.1.4",
     "prop-types": "^15.7.2",
     "react-intersection-observer": "^8.25.2"
   },
