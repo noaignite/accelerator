@@ -9,27 +9,48 @@ import MediaLoader from '@oakwood/oui/MediaLoader'
 
 const stories = storiesOf('Components/MediaLoader', module)
 
+const sources = {
+  responsive: {
+    xs: '//source.unsplash.com/960x540',
+    sm: '//source.unsplash.com/1920x1080',
+  },
+  heavy: '//images3.alphacoders.com/975/975999.png',
+  video: '//www.w3schools.com/tags/movie.mp4',
+}
+
 export const Default = () => (
   <MediaLoader>
-    <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
+    <Media component="img" src={sources.heavy} />
+  </MediaLoader>
+)
+
+export const MultipleSources = () => (
+  <MediaLoader>
+    <Media component="picture" breakpoints={sources.responsive} />
+  </MediaLoader>
+)
+
+export const VideoWithPoster = () => (
+  <MediaLoader>
+    <Media component="video" poster={sources.heavy} src={sources.video} controls />
   </MediaLoader>
 )
 
 export const CustomAspectRatio = () => (
   <MediaLoader width={number('width', 10)} height={number('height', 5)}>
-    <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
+    <Media component="img" src={sources.heavy} />
   </MediaLoader>
 )
 
 export const CustomPlaceholder = () => (
-  <MediaLoader placeholder={<Media component="img" src="//placekitten.com/500/299" />}>
-    <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
+  <MediaLoader placeholder={<Media component="img" src={sources.responsive.xs} />}>
+    <Media component="img" src={sources.responsive.sm} />
   </MediaLoader>
 )
 
 export const CustomTransition = () => (
   <MediaLoader TransitionComponent={Zoom}>
-    <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
+    <Media component="img" src={sources.heavy} />
   </MediaLoader>
 )
 
@@ -47,12 +68,14 @@ export const LazyLoadAndReveal = () => (
       // Fades in children and triggers `onLoad` callback if previous criteria met.
       onLoad={() => console.log('onLoad')}
     >
-      <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
+      <Media component="img" src={sources.heavy} />
     </MediaLoader>
   </div>
 )
 
 stories.add('Default', Default)
+stories.add('Multiple Sources', MultipleSources)
+stories.add('Video With Poster', VideoWithPoster)
 stories.add('Custom Aspect Ratio', CustomAspectRatio)
 stories.add('Custom Placeholder', CustomPlaceholder)
 stories.add('Custom Transition', CustomTransition)

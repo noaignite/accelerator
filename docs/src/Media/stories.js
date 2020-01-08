@@ -7,20 +7,20 @@ const stories = storiesOf('Components/Media', module)
 
 const sources = {
   jpg: {
-    xs: 'https://placekitten.com/600/600',
-    sm: 'https://placekitten.com/960/960',
+    xs: '//source.unsplash.com/960x540',
+    sm: '//source.unsplash.com/1920x1080',
   },
   webp: {
-    xs: 'https://fjr-blog.owcda.io/wp-content/uploads/2019/04/enander_o_101674_bild-300x200.webp',
-    sm: 'https://fjr-blog.owcda.io/wp-content/uploads/2019/04/enander_o_101674_bild-768x512.webp',
+    xs: '//www.gstatic.com/webp/gallery/1.sm.webp',
+    sm: '//www.gstatic.com/webp/gallery/2.sm.webp',
   },
   mp3: {
-    xs: 'https://www.w3schools.com/html/horse.mp3',
-    sm: 'https://www.w3schools.com/html/horse.mp3',
+    xs: '//www.w3schools.com/html/horse.mp3',
+    sm: '//www.w3schools.com/html/horse.mp3',
   },
   mp4: {
-    xs: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    sm: 'https://www.w3schools.com/tags/movie.mp4',
+    xs: '//www.w3schools.com/html/mov_bbb.mp4',
+    sm: '//www.w3schools.com/tags/movie.mp4',
   },
 }
 
