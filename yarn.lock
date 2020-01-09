@@ -1861,10 +1861,10 @@
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
   integrity sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==
 
-"@maeertin/medialoaded@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-0.0.3.tgz#4eb6160d3d1626dcb49e01df054c6369ffe20a91"
-  integrity sha512-b0G4aYsRBK3ET5vXJ/BF00p6f+cRftMTGzXDzgyVjEPJWYed5j1nOwZDOAA2uihF+4GZIDCZV71LX+18ngebUg==
+"@maeertin/medialoaded@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-1.0.0.tgz#1eb0c61d685d13ff2749d0a89434e5e53fa7fe60"
+  integrity sha512-zMW6ys8IPKK7KB+rZbJB7fiHwS0/38DRkakMbOWr40Wf8R6N1Az9FmgryVje6pYWJce3YGITGvOpuwOiC4AyRg==
 
 "@material-ui/core@^4.7.0":
   version "4.7.0"
