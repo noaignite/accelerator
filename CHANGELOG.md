@@ -1,5 +1,11 @@
 ### Versions
 
+## 0.6.2
+###### *2020-01-09*
+
+### `@oakwood/oui@v0.6.2`
+- [npm] Upgrade to @maeertin/medialoaded@1.0.0 which can handle media erroring
+
 ## 0.6.1
 ###### *2020-01-08*
 
