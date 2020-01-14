@@ -47,7 +47,7 @@ AspectRatio.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  component: PropTypes.string,
+  component: PropTypes.elementType,
   height: PropTypes.number,
   width: PropTypes.number,
 }
