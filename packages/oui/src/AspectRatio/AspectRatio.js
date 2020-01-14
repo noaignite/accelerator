@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 
 export const styles = {
   root: {
+    display: 'block',
     position: 'relative',
     width: '100%',
   },
