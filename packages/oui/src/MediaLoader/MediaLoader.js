@@ -138,7 +138,7 @@ MediaLoader.propTypes = {
   children: elementAcceptingRef.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  component: PropTypes.string,
+  component: PropTypes.elementType,
   height: PropTypes.number,
   lazy: PropTypes.bool,
   onLoad: PropTypes.func,
