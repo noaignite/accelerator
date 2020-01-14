@@ -1,5 +1,12 @@
 ### Versions
 
+## 0.6.3
+###### *2020-01-14*
+
+### `@oakwood/oui@v0.6.3`
+- [AspectRatio] component prop now validates to elementType instead of string
+- [MediaLoader] component prop now validates to elementType instead of string
+
 ## 0.6.2
 ###### *2020-01-09*
 
