@@ -16,10 +16,10 @@ const ScrollProgress = props => {
   const entryRef = React.useRef(null)
   const [isInView, setIsInView] = React.useState(false)
 
-  const handleIntersect = (inView, entry) => {
+  const handleIntersect = React.useCallback((inView, entry) => {
     entryRef.current = entry
     setIsInView(inView)
-  }
+  }, [])
 
   const handleScroll = React.useCallback(() => {
     const vh = window.innerHeight
@@ -29,11 +29,7 @@ const ScrollProgress = props => {
     const innerProgress = calculateVerticalProgress(bounds, Math.min(target.clientHeight, vh))
 
     if (onChange) {
-      onChange({
-        boundingClientRect: bounds,
-        innerProgress,
-        progress,
-      })
+      onChange(progress, innerProgress, bounds)
     }
   }, [onChange])
 
