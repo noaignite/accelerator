@@ -1,5 +1,12 @@
 ### Versions
 
+## 0.7.0
+###### *2020-01-29*
+
+### `@oakwood/oui@v0.7.0`
+- [AspectRatio] Add root node styles to accommodate for passed component prop
+- [ScrollProgress] onChange arguments no longer grouped into an object
+
 ## 0.6.3
 ###### *2020-01-14*
 
