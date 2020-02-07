@@ -1,5 +1,15 @@
 ### Versions
 
+## 0.7.1
+###### *2020-02-07*
+
+### `@oakwood/oui@v0.7.1`
+- [AspectRatio] Now correctly sets object-fit style to video tags as well
+- [npm] Upgrade to @maeertin/medialoaded@1.1.0
+
+### `@oakwood/oui-utils@v0.7.1`
+- [utils] mapRange now takes a sixth argument which will clamp the value if set to true
+
 ## 0.7.0
 ###### *2020-01-29*
 
