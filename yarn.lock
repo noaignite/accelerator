@@ -989,10 +989,10 @@
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
   integrity sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==
 
-"@maeertin/medialoaded@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-1.0.1.tgz#e9bfd275acdce1f39efb1456bd84167b556d4e13"
-  integrity sha512-1wbgss2KpIR2bR7z+0kXP2/aRa4mCO30U5KhN5hg/0WxLJv0/lJcIEqjHfEY1eYex2koeDsfhR2gTaiwy2hk0w==
+"@maeertin/medialoaded@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-1.1.0.tgz#d443f6e5f2eea47ddfdaaa4eb9dd352144bdf6af"
+  integrity sha512-dZt0I0xm1iV7Ob6NLJPylchk72WBZAciXpCcklqg2p7U5gzx3531LcezR3iUBA30/XXu7ZMlMZIP1vctoFyt7g==
 
 "@material-ui/core@^4.7.0":
   version "4.8.3"

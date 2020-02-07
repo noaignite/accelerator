@@ -37,7 +37,7 @@
   "devDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.7.4",
-    "@maeertin/medialoaded": "^1.0.0",
+    "@maeertin/medialoaded": "^1.1.0",
     "@oakwood/oui-utils": "^0.6.0",
     "clsx": "^1.0.2",
     "prop-types": "^15.7.2",
