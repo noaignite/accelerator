@@ -1,10 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { boolean, number } from '@storybook/addon-knobs'
-import { action } from '@storybook/addon-actions'
 import Media from '@oakwood/oui/Media'
 import Rwiper from '@oakwood/oui/Rwiper'
-import { A11y, Keyboard, Navigation, Pagination, Scrollbar } from 'swiper/js/swiper.esm'
+import { Swiper, A11y, Keyboard, Navigation, Pagination, Scrollbar } from 'swiper/js/swiper.esm'
 import 'swiper/css/swiper.css'
 
 const stories = storiesOf('Components/Rwiper', module)
@@ -12,6 +10,7 @@ const stories = storiesOf('Components/Rwiper', module)
 stories.add('Default', () => {
   return (
     <Rwiper
+      Swiper={Swiper}
       modules={[A11y, Keyboard, Navigation, Pagination, Scrollbar]}
       navigation={{
         prevEl: <div className="swiper-button-prev" />,
@@ -46,6 +45,7 @@ stories.add('External Controls', () => {
   return (
     <>
       <Rwiper
+        Swiper={Swiper}
         modules={[A11y, Navigation, Pagination]}
         navigation={{
           prevEl: () => navigationPrevRef.current,
