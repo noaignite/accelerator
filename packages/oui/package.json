@@ -32,7 +32,8 @@
   "peerDependencies": {
     "@material-ui/core": "^4.1.2",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "swiper": "^5.3.1"
   },
   "devDependencies": {},
   "dependencies": {
@@ -41,8 +42,7 @@
     "@oakwood/oui-utils": "^0.8.0",
     "clsx": "^1.0.2",
     "prop-types": "^15.7.2",
-    "react-intersection-observer": "^8.25.2",
-    "swiper": "^5.3.1"
+    "react-intersection-observer": "^8.25.2"
   },
   "sideEffects": false,
   "publishConfig": {
