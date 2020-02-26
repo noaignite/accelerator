@@ -1,5 +1,19 @@
 ### Versions
 
+## 0.8.0
+###### *2020-02-26*
+
+### `@oakwood/oui@v0.8.0`
+- [Media] Import Mui utils from Mui package
+- [MediaLoader] Import Mui utils from Mui package
+- [Rwiper] Add new react wrapper component for Swiper.js
+
+### `@oakwood/oui-utils@v0.8.0`
+- [utils] Add new useSmoothing util which smoothes out desired value over time
+
+### Docs
+- [Rwiper] Add Rwiper example usage
+
 ## 0.7.1
 ###### *2020-02-07*
 
