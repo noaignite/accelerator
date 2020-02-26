@@ -2,9 +2,9 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import { chainPropTypes } from '@material-ui/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
 import CardMedia from '@material-ui/core/CardMedia'
-import { chainPropTypes } from '@oakwood/oui-utils'
 import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
 
