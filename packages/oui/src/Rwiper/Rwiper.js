@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import classnames from 'clsx'
 import { useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { Swiper } from 'swiper/js/swiper.esm'
+import { Swiper as SwiperClass } from 'swiper/js/swiper.esm'
 
 export const styles = {
   root: {},
@@ -36,13 +36,14 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
   const {
     activeIndex = 0,
     children,
-    classes = {},
+    classes,
     className,
     component: Component = 'div',
     disableTouchMove,
     init = true,
     modules = [],
     style,
+    Swiper = SwiperClass,
     ...other
   } = props
 
@@ -205,6 +206,7 @@ Rwiper.propTypes = {
   init: PropTypes.bool,
   modules: PropTypes.array,
   style: PropTypes.object,
+  Swiper: PropTypes.func,
 }
 
 Rwiper.uiName = 'OuiRwiper'
