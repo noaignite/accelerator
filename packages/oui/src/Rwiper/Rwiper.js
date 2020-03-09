@@ -11,7 +11,6 @@ import PropTypes from 'prop-types'
 import classnames from 'clsx'
 import { useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
-import { Swiper as SwiperClass } from 'swiper/js/swiper.esm'
 
 export const styles = {
   root: {},
@@ -34,16 +33,16 @@ export const styles = {
 
 const Rwiper = React.forwardRef(function Rwiper(props, ref) {
   const {
-    activeIndex = 0,
+    activeSlide,
     children,
     classes,
     className,
     component: Component = 'div',
     disableTouchMove,
     init = true,
-    modules = [],
+    modules,
     style,
-    Swiper = SwiperClass,
+    Swiper,
     ...other
   } = props
 
@@ -64,10 +63,21 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
   const scrollbarRef = React.useRef(null)
 
   React.useEffect(() => {
-    Swiper.use(modules)
+    if (!Swiper) {
+      console.error(
+        [
+          'Oakwood-UI: the Rwiper component requires the Swiper instance to be passed as a prop.',
+          'Import Swiper instance in your local project and pass as `Swiper={Swiper}`.',
+        ].join('\n'),
+      )
+      return undefined
+    }
+
+    if (modules) {
+      Swiper.use(modules)
+    }
 
     const swiperProps = {
-      initialSlide: activeIndex,
       init: false,
       ...more,
     }
@@ -147,9 +157,9 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
   React.useEffect(() => {
     const swiper = swiperRef.current
     if (swiper && swiper.initialized) {
-      swiper.slideTo(activeIndex)
+      swiper.slideTo(activeSlide)
     }
-  }, [activeIndex])
+  }, [activeSlide])
 
   React.useEffect(() => {
     const swiper = swiperRef.current
@@ -197,7 +207,7 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
 })
 
 Rwiper.propTypes = {
-  activeIndex: PropTypes.number,
+  activeSlide: PropTypes.number,
   children: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
