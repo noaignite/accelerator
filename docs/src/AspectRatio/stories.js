@@ -6,12 +6,8 @@ import AspectRatio from '@oakwood/oui/AspectRatio'
 
 const stories = storiesOf('Components/AspectRatio', module)
 
-export const Default = () => (
+stories.add('Default', () => (
   <AspectRatio width={number('width', 10)} height={number('height', 5)}>
     <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
   </AspectRatio>
-)
-
-stories.add('Default', Default)
-
-export default AspectRatio
+))
