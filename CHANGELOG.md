@@ -1,5 +1,14 @@
 ### Versions
 
+## 0.8.1
+###### *2020-03-09*
+
+### `@oakwood/oui@v0.8.1`
+- [Rwiper] Remove import of Swiper and let instance be passed down as a prop
+
+### Docs
+- [docs] Add documentation for custom Rwiper props
+
 ## 0.8.0
 ###### *2020-02-26*
 
@@ -12,7 +21,7 @@
 - [utils] Add new useSmoothing util which smoothes out desired value over time
 
 ### Docs
-- [Rwiper] Add Rwiper example usage
+- [docs] Add Rwiper documentation
 
 ## 0.7.1
 ###### *2020-02-07*
