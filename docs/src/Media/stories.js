@@ -24,7 +24,7 @@ const sources = {
   },
 }
 
-export const Default = () => {
+stories.add('Default', () => {
   const comp = select('component', ['div', 'video', 'audio', 'picture', 'iframe', 'img'], 'div')
 
   const componentProps = {}
@@ -49,18 +49,18 @@ export const Default = () => {
       {...componentProps}
     />
   )
-}
+})
 
-export const Picture = () => (
+stories.add('Picture', () => (
   <Media
     component={select('component', ['picture'], 'picture')}
     breakpoints={object('breakpoints', sources.jpg)}
     src={text('src', sources.jpg.xs)}
     alt={text('alt', 'Just another image description')}
   />
-)
+))
 
-export const PictureWithWebP = () => (
+stories.add('Picture w/ WebP', () => (
   <Media
     component={select('component', ['picture'], 'picture')}
     breakpoints={object('breakpoints', {
@@ -70,9 +70,9 @@ export const PictureWithWebP = () => (
     src={sources.jpg.xs}
     alt={text('alt', 'Just another image description')}
   />
-)
+))
 
-export const Video = () => (
+stories.add('Video', () => (
   <Media
     component={select('component', ['video'], 'video')}
     breakpoints={object('breakpoints', sources.mp4)}
@@ -81,9 +81,9 @@ export const Video = () => (
     muted
     loop
   />
-)
+))
 
-export const Custom = () => (
+stories.add('Custom', () => (
   <Media
     breakpoints={object('breakpoints', {
       xs: {
@@ -99,10 +99,4 @@ export const Custom = () => (
       },
     })}
   />
-)
-
-stories.add('Default', Default)
-stories.add('Picture', Picture)
-stories.add('Picture w/ WebP', PictureWithWebP)
-stories.add('Video', Video)
-stories.add('Custom', Custom)
+))

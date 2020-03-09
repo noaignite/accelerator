@@ -18,43 +18,43 @@ const sources = {
   video: '//www.w3schools.com/tags/movie.mp4',
 }
 
-export const Default = () => (
+stories.add('Default', () => (
   <MediaLoader>
     <Media component="img" src={sources.heavy} />
   </MediaLoader>
-)
+))
 
-export const MultipleSources = () => (
+stories.add('Multiple Sources', () => (
   <MediaLoader>
     <Media component="picture" breakpoints={sources.responsive} />
   </MediaLoader>
-)
+))
 
-export const VideoWithPoster = () => (
+stories.add('Video With Poster', () => (
   <MediaLoader>
     <Media component="video" poster={sources.heavy} src={sources.video} controls />
   </MediaLoader>
-)
+))
 
-export const CustomAspectRatio = () => (
+stories.add('Custom Aspect Ratio', () => (
   <MediaLoader width={number('width', 10)} height={number('height', 5)}>
     <Media component="img" src={sources.heavy} />
   </MediaLoader>
-)
+))
 
-export const CustomPlaceholder = () => (
+stories.add('Custom Placeholder', () => (
   <MediaLoader placeholder={<Media component="img" src={sources.responsive.xs} />}>
     <Media component="img" src={sources.responsive.sm} />
   </MediaLoader>
-)
+))
 
-export const CustomTransition = () => (
+stories.add('Custom Transition', () => (
   <MediaLoader TransitionComponent={Zoom}>
     <Media component="img" src={sources.heavy} />
   </MediaLoader>
-)
+))
 
-export const LazyLoadAndReveal = () => (
+stories.add('Lazy Load & Reveal', () => (
   <div>
     <div style={{ height: 3000, margin: 20, background: '#eee' }} />
 
@@ -71,14 +71,4 @@ export const LazyLoadAndReveal = () => (
       <Media component="img" src={sources.heavy} />
     </MediaLoader>
   </div>
-)
-
-stories.add('Default', Default)
-stories.add('Multiple Sources', MultipleSources)
-stories.add('Video With Poster', VideoWithPoster)
-stories.add('Custom Aspect Ratio', CustomAspectRatio)
-stories.add('Custom Placeholder', CustomPlaceholder)
-stories.add('Custom Transition', CustomTransition)
-stories.add('Lazy Load & Reveal', LazyLoadAndReveal)
-
-export default MediaLoader
+))
