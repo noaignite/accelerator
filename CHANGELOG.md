@@ -1,5 +1,15 @@
 ### Versions
 
+## 0.8.2
+###### *2020-03-19*
+
+### `@oakwood/oui@v0.8.2`
+- [Media] Add object-fit cover for videos, style child img tag when component is picture & small refactor.
+- [Rwiper] Only trigger swiper slideTo if activeSlide is not of nullish value
+
+### Core
+- [core] Upgrade dependencies
+
 ## 0.8.1
 ###### *2020-03-09*
 
