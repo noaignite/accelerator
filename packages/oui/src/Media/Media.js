@@ -9,13 +9,18 @@ import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
 
 export const styles = {
+  root: {},
   media: {
-    '& img': {
-      // Stretch child `img` to it's parent, useful when using `component="picture"`.
-      width: '100%',
-      height: '100%',
-      // ⚠️ object-fit is not supported by IE 11.
-      objectFit: 'cover',
+    // `CardMedia` doesn't stretch videos, patch it.
+    objectFit: 'cover',
+  },
+  img: {
+    // Complement `CardMedia` by styling child img's
+    '& > img': {
+      display: 'inherit',
+      width: 'inherit',
+      height: 'inherit',
+      objectFit: 'inherit',
     },
   },
 }
@@ -41,7 +46,7 @@ export function imgAttrEntries(props) {
 const Media = React.forwardRef(function Media(props, ref) {
   const { breakpoints, component, src, ...other } = props
 
-  let componentProps = {}
+  let componentProps = { ...other }
   let Component = CardMedia
 
   if (component === 'picture') {
@@ -55,16 +60,10 @@ const Media = React.forwardRef(function Media(props, ref) {
       componentProps.children.unshift(<MediaSources key="sources" breakpoints={breakpoints} />)
     }
   } else if (breakpoints) {
-    componentProps = {
-      breakpoints,
-      ...other,
-    }
+    componentProps.breakpoints = breakpoints
     Component = MediaWithWidth
   } else {
-    componentProps = {
-      image: src,
-      ...other,
-    }
+    componentProps.image = src
   }
 
   return <Component component={component} ref={ref} {...componentProps} />
