@@ -156,19 +156,17 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
 
   React.useEffect(() => {
     const swiper = swiperRef.current
-    if (swiper && swiper.initialized) {
-      swiper.slideTo(activeSlide)
+    if (swiper) {
+      swiper.allowTouchMove = !disableTouchMove
     }
-  }, [activeSlide])
+  }, [disableTouchMove])
 
   React.useEffect(() => {
     const swiper = swiperRef.current
-    if (swiper && swiper.allowTouchMove && disableTouchMove) {
-      swiper.allowTouchMove = false
-    } else if (swiper && !swiper.allowTouchMove && !disableTouchMove) {
-      swiper.allowTouchMove = true
+    if (swiper && swiper.initialized && activeSlide != null) {
+      swiper.slideTo(activeSlide)
     }
-  }, [disableTouchMove])
+  }, [activeSlide])
 
   let navigationPrev = null
   if (React.isValidElement(navigationProp.prevEl)) {
