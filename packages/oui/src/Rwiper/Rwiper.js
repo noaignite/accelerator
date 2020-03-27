@@ -145,7 +145,7 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
 
     // See Option 3. https://github.com/facebook/react/issues/14476#issuecomment-471199055
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(other)])
+  }, [JSON.stringify(more)])
 
   React.useEffect(() => {
     const swiper = swiperRef.current
