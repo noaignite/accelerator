@@ -1,10 +1,16 @@
 ### Versions
 
+## 0.8.3
+###### *2020-03-27*
+
+### `@oakwood/oui@v0.8.3`
+- [Rwiper] Init hook no longer listens to navigation, pagination, scrollbar & on props
+
 ## 0.8.2
 ###### *2020-03-19*
 
 ### `@oakwood/oui@v0.8.2`
-- [Media] Add object-fit cover for videos, style child img tag when component is picture & small refactor.
+- [Media] Add object-fit cover for videos, style child img tag when component is picture & small refactor
 - [Rwiper] Only trigger swiper slideTo if activeSlide is not of nullish value
 
 ### Core
