@@ -14,7 +14,7 @@ if (process.env.BABEL_ENV === 'es') {
 }
 
 const productionPlugins = [
-  'babel-plugin-transform-react-constant-elements',
+  '@babel/plugin-transform-react-constant-elements',
   'babel-plugin-transform-dev-warning',
   [
     'babel-plugin-transform-react-remove-prop-types',
@@ -30,7 +30,8 @@ module.exports = {
     'babel-plugin-optimize-clsx',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
-    '@babel/plugin-transform-runtime',
+    // any package needs to declare 7.4.4 as a runtime dependency. default is ^7.0.0
+    ['@babel/plugin-transform-runtime', { version: '^7.4.4' }],
     // for IE 11 support
     '@babel/plugin-transform-object-assign',
   ],
