@@ -16,6 +16,7 @@ export const styles = () => {
   return {
     root: {
       ...absolute,
+      zIndex: -1,
       // ⚠️ clip-path is not supported by IE 11.
       clipPath: 'inset(0 0 0 0)', // Use `clipPath` as `overflow="hidden"` breaks `position="sticky"`
       WebkitClipPath: 'inset(0 0 0 0)',
@@ -31,6 +32,9 @@ export const styles = () => {
     },
     wrapper: {
       ...absolute,
+      '& *': {
+        height: '100%',
+      },
     },
     wrapperFixed: {},
     wrapperSticky: {
