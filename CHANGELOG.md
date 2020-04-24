@@ -1,5 +1,11 @@
 ### Versions
 
+## 0.9.1
+###### *2020-04-24*
+
+### `@oakwood/oui@v0.9.1`
+- [BackgroundMedia] Less config needed
+
 ## 0.9.0
 ###### *2020-04-24*
 
