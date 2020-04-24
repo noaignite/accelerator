@@ -1,6 +1,6 @@
 // @inheritedComponent CardMedia
 
-import React from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import useTheme from '@material-ui/core/styles/useTheme'
 import CardMedia from '@material-ui/core/CardMedia'
