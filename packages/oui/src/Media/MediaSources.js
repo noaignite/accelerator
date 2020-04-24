@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import useTheme from '@material-ui/core/styles/useTheme'
-import { sourceType } from '@oakwood/oui-utils'
 
 /**
  * @ignore - internal component.
@@ -30,6 +29,11 @@ function MediaSources(props) {
     ))
   })
 }
+
+const sourceType = PropTypes.shape({
+  src: PropTypes.string.isRequired,
+  type: PropTypes.string,
+})
 
 MediaSources.propTypes = {
   breakpoints: PropTypes.shape({
