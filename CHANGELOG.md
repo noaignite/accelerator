@@ -1,5 +1,26 @@
 ### Versions
 
+## 0.9.0
+###### *2020-04-24*
+
+### `@oakwood/oui@v0.9.0`
+- [BackgroundMedia] Introduce new component for creating stylish background image effects
+
+### `@oakwood/oui-utils@v0.9.0`
+- [utils] Remove local Mui util definitions and export them directly from it's package
+- [npm] @material-ui/core now a peerDependency
+
+### Core
+- [core] Update to new react import style
+- [core] Bump eslint from v5.9.0 to v6.8.0
+- [core] Bump eslint-config-airbnb from v17.1.1 to v18.1.0
+
+### Docs
+- [docs] Create story for new BackgroundMedia component
+- [docs] Configure alphabetical story sorting
+- [docs] Configure @storybook/addon-a11y
+- [docs] Upgrade dependencies
+
 ## 0.8.3
 ###### *2020-03-27*
 
