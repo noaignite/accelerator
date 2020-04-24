@@ -67,13 +67,15 @@ module.exports = {
         eventHandlerPropPrefix: 'on',
       },
     ],
+    // not a good rule for components close to the DOM
+    'react/jsx-props-no-spreading': 'off',
     'react/no-danger': 'error',
     // Strict, airbnb is using off
     'react/no-direct-mutation-state': 'error',
     'react/no-find-dom-node': 'off',
     'react/no-multi-comp': 'off',
     'react/require-default-props': 'off',
-    'react/sort-prop-types': 'error',
+    'react/sort-prop-types': 'off',
     // This depends entirely on what you're doing. There's no universal pattern
     'react/state-in-constructor': 'off',
     // stylistic opinion. For conditional assignment we want it outside, otherwise as static
