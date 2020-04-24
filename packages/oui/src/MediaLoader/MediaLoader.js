@@ -1,6 +1,6 @@
 // @inheritedComponent AspectRatio
 
-import React from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
 import mediaLoaded from '@maeertin/medialoaded'

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { boolean, text, select, object } from '@storybook/addon-knobs'
 import Media from '@oakwood/oui/Media'
