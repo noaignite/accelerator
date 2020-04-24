@@ -1,6 +1,6 @@
 {
   "name": "@oakwood/oui",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "private": false,
   "author": "Martin Barri <maeertin@gmail.com>",
   "description": "Oakwood UI components built with React and Material-UI.",
