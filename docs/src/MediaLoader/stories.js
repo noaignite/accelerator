@@ -44,7 +44,7 @@ stories.add('Custom Aspect Ratio', () => (
 
 stories.add('Custom Placeholder', () => (
   <MediaLoader placeholder={<Media component="img" src={sources.responsive.xs} />}>
-    <Media component="img" src={sources.responsive.sm} />
+    <Media component="img" src={sources.heavy} />
   </MediaLoader>
 ))
 
