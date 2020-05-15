@@ -1,5 +1,12 @@
 ### Versions
 
+## 0.9.3
+###### *2020-05-15*
+
+### `@oakwood/oui@v0.9.3`
+- [npm] Bump @maeertin/medialoaded from v1.1.0 to v1.2.0
+- [npm] Bump react-intersection-observer from v8.26.1 to v8.26.2
+
 ## 0.9.2
 ###### *2020-05-15*
 
