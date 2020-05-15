@@ -1,5 +1,11 @@
 ### Versions
 
+## 0.9.4
+###### *2020-05-15*
+
+### `@oakwood/oui@v0.9.4`
+- [npm] Bump @maeertin/medialoaded from v1.2.0 to v1.2.1
+
 ## 0.9.3
 ###### *2020-05-15*
 
