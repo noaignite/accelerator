@@ -1,5 +1,14 @@
 ### Versions
 
+## 0.9.2
+###### *2020-05-15*
+
+### `@oakwood/oui@v0.9.2`
+- [MediaLoader] Add new placeholder transition component props for more flexibility
+
+### Docs
+- [docs] Use a bigger image in MediaLoader custom placeholder story
+
 ## 0.9.1
 ###### *2020-04-24*
 
