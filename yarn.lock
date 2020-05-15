@@ -1345,10 +1345,10 @@
   resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-1.1.0.tgz#d443f6e5f2eea47ddfdaaa4eb9dd352144bdf6af"
   integrity sha512-dZt0I0xm1iV7Ob6NLJPylchk72WBZAciXpCcklqg2p7U5gzx3531LcezR3iUBA30/XXu7ZMlMZIP1vctoFyt7g==
 
-"@maeertin/medialoaded@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-1.2.0.tgz#42d7b6cbb6aa58b7aac69b81e1fe382c650e966e"
-  integrity sha512-c0LS3XFpE07L7JJjpwInBFHdTxSjj/YkBocIMlyP7d3RaT+7v3u3Lmgz2y9R7B1cx9uroF1Fwo8FPTB/n2TjDg==
+"@maeertin/medialoaded@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@maeertin/medialoaded/-/medialoaded-1.2.1.tgz#5ed77bec84039d5dcd4e5b2e831d47dbfddd71c8"
+  integrity sha512-c5B1ULED/IddfdM7uncPMZlPleechlJOHHUB4J4F5QXcNj6+1i36Ip9Bd0hvUbCnv4bQBpwAQON5xSSbpaePWg==
 
 "@material-ui/core@^4.9.11":
   version "4.9.11"
