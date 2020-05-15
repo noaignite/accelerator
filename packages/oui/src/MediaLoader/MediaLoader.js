@@ -35,6 +35,8 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     onRender,
     onReveal,
     placeholder,
+    PlaceholderTransitionComponent = Fade,
+    PlaceholderTransitionProps,
     rootMargin,
     TransitionComponent = Fade,
     transitionDuration = 1000,
@@ -74,7 +76,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   )
 
   const handleLoad = React.useCallback(
-    instance => {
+    (instance) => {
       setLoaded(true)
 
       if (onLoad) {
@@ -84,7 +86,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     [onLoad],
   )
 
-  const handleMediaRef = node => {
+  const handleMediaRef = (node) => {
     if (node && !loaded) {
       mediaLoaded(node, handleLoad)
     }
@@ -110,10 +112,10 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
       {shouldRender && (
         <TransitionComponent
-          in={inProp}
           className={classnames(classes.media, children.props.className)}
           timeout={transitionDuration}
           ref={handleMediaRef}
+          in={inProp}
           {...TransitionProps}
         >
           {children}
@@ -121,14 +123,15 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
       )}
 
       {placeholder && (
-        <Fade
-          in={!inProp}
+        <PlaceholderTransitionComponent
           className={classnames(classes.bounds, placeholder.props.className)}
           timeout={transitionDuration * 2}
+          in={!inProp}
           unmountOnExit
+          {...PlaceholderTransitionProps}
         >
           {placeholder}
-        </Fade>
+        </PlaceholderTransitionComponent>
       )}
     </AspectRatio>
   )
@@ -145,6 +148,8 @@ MediaLoader.propTypes = {
   onRender: PropTypes.func,
   onReveal: PropTypes.func,
   placeholder: PropTypes.element,
+  PlaceholderTransitionComponent: PropTypes.elementType,
+  PlaceholderTransitionProps: PropTypes.object,
   rootMargin: PropTypes.string,
   TransitionComponent: PropTypes.elementType,
   transitionDuration: PropTypes.number,
