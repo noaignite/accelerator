@@ -36,12 +36,6 @@ stories.add('Video With Poster', () => (
   </MediaLoader>
 ))
 
-stories.add('Custom Aspect Ratio', () => (
-  <MediaLoader width={number('width', 10)} height={number('height', 5)}>
-    <Media component="img" src={sources.heavy} />
-  </MediaLoader>
-))
-
 stories.add('Custom Placeholder', () => (
   <MediaLoader placeholder={<Media component="img" src={sources.responsive.xs} />}>
     <Media component="img" src={sources.heavy} />
@@ -56,9 +50,11 @@ stories.add('Custom Transition', () => (
 
 stories.add('Lazy Load & Reveal', () => (
   <div>
-    <div style={{ height: 3000, margin: 20, background: '#eee' }} />
+    <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
 
     <MediaLoader
+      width={10}
+      height={5}
       // `lazy` will "delay" the rendering of children. Exposes `onRender` callback.
       onRender={() => console.log('onRender')}
       lazy
