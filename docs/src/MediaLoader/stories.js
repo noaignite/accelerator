@@ -2,7 +2,6 @@
 
 import * as React from 'react'
 import { storiesOf } from '@storybook/react'
-import { number } from '@storybook/addon-knobs'
 import Zoom from '@material-ui/core/Zoom'
 import Media from '@oakwood/oui/Media'
 import MediaLoader from '@oakwood/oui/MediaLoader'
