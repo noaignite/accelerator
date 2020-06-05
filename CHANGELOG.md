@@ -1,5 +1,22 @@
 ### Versions
 
+## 0.9.5
+###### *2020-06-05*
+
+### `@oakwood/oui@v0.9.5`
+- [AspectRatio] Update to a more generic selector when setting object-fit cover
+- [MediaLoader] Fix bug where loaded callback would run even after unmount
+- [MediaLoader] Now conditionally transitions either children or placeholder and no longer both
+- [MediaLoader] Small update to prop interface
+- [MediaLoader] Performance enhancements
+
+### Core
+- [core] Upgrade dependencies
+
+### Docs
+- [docs] Add new & update old stories for MediaLoader
+- [docs] Upgrade dependencies
+
 ## 0.9.4
 ###### *2020-05-15*
 
