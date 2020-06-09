@@ -25,69 +25,46 @@ const sources = {
   video: '//www.w3schools.com/tags/movie.mp4',
 }
 
+const getHandlers = () => ({
+  onLoaded: action('onLoaded'),
+  onEnter: action('onEnter'),
+  onEntering: action('onEntering'),
+  onEntered: action('onEntered'),
+})
+
 stories.add('Default', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-  >
+  <MediaLoader {...getHandlers()}>
     <Media component="img" src={sources.responsive.md} />
   </MediaLoader>
 ))
 
 stories.add('Picture Element', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-  >
+  <MediaLoader {...getHandlers()}>
     <Media component="picture" breakpoints={sources.responsive} />
   </MediaLoader>
 ))
 
 stories.add('Video Element With Poster', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-  >
+  <MediaLoader {...getHandlers()}>
     <Media component="video" poster={sources.responsive.sm} src={sources.video} controls />
   </MediaLoader>
 ))
 
 stories.add('Controlled', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-    in={boolean('in', false)}
-  >
+  <MediaLoader {...getHandlers()} in={boolean('in', false)}>
     <Media component="img" src={sources.responsive.xl} />
   </MediaLoader>
 ))
 
 stories.add('Custom Transition', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-    TransitionComponent={Zoom}
-  >
+  <MediaLoader {...getHandlers()} TransitionComponent={Zoom}>
     <Media component="img" src={sources.responsive.sm} />
   </MediaLoader>
 ))
 
 stories.add('Custom Placeholder', () => (
   <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
+    {...getHandlers()}
     placeholder={<Media component="img" src={sources.replace.thumb} />}
   >
     <Media component="img" src={sources.replace.full} />
@@ -96,10 +73,7 @@ stories.add('Custom Placeholder', () => (
 
 stories.add('Custom Placeholder & Transition', () => (
   <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
+    {...getHandlers()}
     placeholder={<div style={{ background: 'hotpink' }} />}
     TransitionComponent={Slide}
     width={16}
