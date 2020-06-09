@@ -44,7 +44,8 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     onEntering,
     onLoaded,
     placeholder: placeholderProp,
-    rootMargin,
+    revealRootMargin,
+    renderRootMargin = '2000px 0px', // A hardcoded default value for lazy loading.
     TransitionComponent = Fade,
     transitionDuration = 750,
     TransitionProps,
@@ -56,7 +57,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   const [shouldRender, setShouldRender] = React.useState(!lazy)
   const [shouldReveal, setShouldReveal] = useControlled({
     controlled: inProp,
-    default: !rootMargin,
+    default: !revealRootMargin,
     name: 'MediaLoader',
     state: 'shouldReveal',
   })
@@ -169,7 +170,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
         <InView
           className={classes.bounds}
           onChange={handleRenderIntersectionChange}
-          rootMargin="2000px 0px" // A hardcoded reasonable value for lazy loading.
+          rootMargin={renderRootMargin}
           triggerOnce
         />
       )}
@@ -177,7 +178,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
         <InView
           className={classes.bounds}
           onChange={handleRevealIntersectionChange}
-          rootMargin={rootMargin}
+          rootMargin={revealRootMargin}
           triggerOnce
         />
       )}
@@ -199,7 +200,8 @@ MediaLoader.propTypes = {
   onEntering: PropTypes.func,
   onLoaded: PropTypes.func,
   placeholder: PropTypes.element,
-  rootMargin: PropTypes.string,
+  renderRootMargin: PropTypes.string,
+  revealRootMargin: PropTypes.string,
   TransitionComponent: PropTypes.elementType,
   transitionDuration: PropTypes.number,
   TransitionProps: PropTypes.object,
