@@ -83,17 +83,49 @@ stories.add('Custom Placeholder & Transition', () => (
   </MediaLoader>
 ))
 
+stories.add('Custom Render Root Margin', () => (
+  <>
+    <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
+
+    <MediaLoader
+      {...getHandlers()}
+      placeholder={<Media component="img" src={sources.replace.thumb} />}
+      renderRootMargin="0px 0px"
+      width={16}
+      height={9}
+      lazy
+    >
+      <Media component="img" src={sources.replace.full} />
+    </MediaLoader>
+  </>
+))
+
+stories.add('Custom Render & Reveal Root Margin', () => (
+  <>
+    <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
+
+    <MediaLoader
+      {...getHandlers()}
+      placeholder={<div style={{ background: 'hotpink' }} />}
+      renderRootMargin="0px 0px"
+      revealRootMargin="0% 0% -50%"
+      width={16}
+      height={9}
+      lazy
+    >
+      <Media component="img" src={sources.replace.full} />
+    </MediaLoader>
+  </>
+))
+
 stories.add('Lazy Load & Reveal', () => (
   <>
     <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
 
     <MediaLoader
-      onLoaded={action('onLoaded')}
-      onEnter={action('onEnter')}
-      onEntering={action('onEntering')}
-      onEntered={action('onEntered')}
+      {...getHandlers()}
       placeholder={<Media component="img" src={sources.replace.thumb} />}
-      rootMargin="0% 0% -50%"
+      revealRootMargin="0% 0% -50%"
       width={16}
       height={9}
       lazy
