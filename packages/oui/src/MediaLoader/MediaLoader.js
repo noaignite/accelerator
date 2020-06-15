@@ -37,15 +37,20 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     children: childrenProp,
     classes,
     className,
-    in: inProp,
     lazy,
+    /**
+     * `lazyRootMargin` default based on Chromium 4G load-in distance threshold
+     * https://web.dev/native-lazy-loading/#load-in-distance-threshold
+     * https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/settings.json5;drc=e8f3cf0bbe085fee0d1b468e84395aad3ebb2cad;l=971-1003?originalUrl=https:%2F%2Fcs.chromium.org%2Fchromium%2Fsrc%2Fthird_party%2Fblink%2Frenderer%2Fcore%2Fframe%2Fsettings.json5
+     */
+    lazyRootMargin = '3000px 0px',
     onEnter,
     onEntered,
     onEntering,
     onLoaded,
     placeholder: placeholderProp,
+    reveal: revealProp,
     revealRootMargin,
-    renderRootMargin = '2000px 0px', // A hardcoded default value for lazy loading.
     TransitionComponent = Fade,
     transitionDuration = 750,
     TransitionProps,
@@ -55,13 +60,17 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   const mediaRef = React.useRef(null)
 
   const [shouldRender, setShouldRender] = React.useState(!lazy)
+  const [loaded, setLoaded] = React.useState(false)
+
   const [shouldReveal, setShouldReveal] = useControlled({
-    controlled: inProp,
+    controlled: revealProp,
     default: !revealRootMargin,
     name: 'MediaLoader',
-    state: 'shouldReveal',
+    state: 'reveal',
   })
-  const [loaded, setLoaded] = React.useState(false)
+
+  // There is no point in transitioning in an unloaded image.
+  const reveal = loaded && shouldReveal
 
   const handleRenderIntersectionChange = React.useCallback((inView) => {
     if (inView) {
@@ -123,14 +132,12 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     }
   }, [onEntering])
 
-  const inState = loaded && shouldReveal
-
   let placeholder = null
   if (placeholderProp && React.isValidElement(placeholderProp)) {
     placeholder = (
       <TransitionComponent
         className={classnames(classes.placeholder, placeholderProp.props.className)}
-        in={!inState}
+        in={!reveal}
         onExit={handleExit}
         onExited={handleExited}
         onExiting={handleExiting}
@@ -151,7 +158,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     if (!placeholder) {
       children = (
         <TransitionComponent
-          in={inState}
+          in={reveal}
           onEnter={onEnter}
           onEntered={onEntered}
           onEntering={onEntering}
@@ -170,7 +177,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
         <InView
           className={classes.bounds}
           onChange={handleRenderIntersectionChange}
-          rootMargin={renderRootMargin}
+          rootMargin={lazyRootMargin}
           triggerOnce
         />
       )}
@@ -193,14 +200,14 @@ MediaLoader.propTypes = {
   children: elementAcceptingRef.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  in: PropTypes.bool,
   lazy: PropTypes.bool,
+  lazyRootMargin: PropTypes.string,
   onEnter: PropTypes.func,
   onEntered: PropTypes.func,
   onEntering: PropTypes.func,
   onLoaded: PropTypes.func,
   placeholder: PropTypes.element,
-  renderRootMargin: PropTypes.string,
+  reveal: PropTypes.bool,
   revealRootMargin: PropTypes.string,
   TransitionComponent: PropTypes.elementType,
   transitionDuration: PropTypes.number,
