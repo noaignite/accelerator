@@ -25,105 +25,79 @@ const sources = {
   video: '//www.w3schools.com/tags/movie.mp4',
 }
 
+const componentProps = {
+  onLoaded: action('onLoaded'),
+  onEnter: action('onEnter'),
+  onEntering: action('onEntering'),
+  onEntered: action('onEntered'),
+  width: 16,
+  height: 9,
+}
+
 stories.add('Default', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-  >
+  <MediaLoader {...componentProps}>
     <Media component="img" src={sources.responsive.md} />
   </MediaLoader>
 ))
 
 stories.add('Picture Element', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-  >
+  <MediaLoader {...componentProps}>
     <Media component="picture" breakpoints={sources.responsive} />
   </MediaLoader>
 ))
 
 stories.add('Video Element With Poster', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-  >
+  <MediaLoader {...componentProps}>
     <Media component="video" poster={sources.responsive.sm} src={sources.video} controls />
   </MediaLoader>
 ))
 
 stories.add('Controlled', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-    in={boolean('in', false)}
-  >
+  <MediaLoader {...componentProps} reveal={boolean('reveal', false)}>
     <Media component="img" src={sources.responsive.xl} />
   </MediaLoader>
 ))
 
-stories.add('Custom Transition', () => (
+stories.add('Placeholder', () => (
   <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
-    TransitionComponent={Zoom}
-  >
-    <Media component="img" src={sources.responsive.sm} />
-  </MediaLoader>
-))
-
-stories.add('Custom Placeholder', () => (
-  <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
+    {...componentProps}
     placeholder={<Media component="img" src={sources.replace.thumb} />}
   >
     <Media component="img" src={sources.replace.full} />
   </MediaLoader>
 ))
 
-stories.add('Custom Placeholder & Transition', () => (
+stories.add('Custom Transition', () => (
+  <MediaLoader {...componentProps} TransitionComponent={Zoom}>
+    <Media component="img" src={sources.responsive.sm} />
+  </MediaLoader>
+))
+
+stories.add('Placeholder & Custom Transition', () => (
   <MediaLoader
-    onLoaded={action('onLoaded')}
-    onEnter={action('onEnter')}
-    onEntering={action('onEntering')}
-    onEntered={action('onEntered')}
+    {...componentProps}
     placeholder={<div style={{ background: 'hotpink' }} />}
     TransitionComponent={Slide}
-    width={16}
-    height={9}
   >
     <Media component="img" src={sources.responsive.xl} />
   </MediaLoader>
 ))
 
-stories.add('Lazy Load & Reveal', () => (
+stories.add('Transition-in Distance Threshold', () => (
   <>
     <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
 
-    <MediaLoader
-      onLoaded={action('onLoaded')}
-      onEnter={action('onEnter')}
-      onEntering={action('onEntering')}
-      onEntered={action('onEntered')}
-      placeholder={<Media component="img" src={sources.replace.thumb} />}
-      rootMargin="0% 0% -50%"
-      width={16}
-      height={9}
-      lazy
-    >
+    <MediaLoader {...componentProps} revealRootMargin="0% 0% -50%">
+      <Media component="img" src={sources.replace.full} />
+    </MediaLoader>
+  </>
+))
+
+stories.add('Lazy with Load-in Distance Threshold', () => (
+  <>
+    <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
+
+    <MediaLoader {...componentProps} lazyRootMargin="0% 0% -50%" lazy>
       <Media component="img" src={sources.replace.full} />
     </MediaLoader>
   </>
