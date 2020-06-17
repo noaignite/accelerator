@@ -1,5 +1,20 @@
 ### Versions
 
+## 0.9.6
+###### *2020-06-17*
+
+### `@oakwood/oui@v0.9.6`
+- [MediaLoader] New "lazyRootMargin" prop for customizing load-in distance threshold
+- [MediaLoader] Bump default lazy load-in distance threshold from 2000px to 3000px which is based on Chromium 4G threshold
+- [MediaLoader] Rename "rootMargin" prop to "revealRootMargin"
+- [MediaLoader] Rename "in" prop to "reveal"
+
+### Core
+- [core] Upgrade @babel/* dependencies
+
+### Docs
+- [docs] Upgrade dependencies
+
 ## 0.9.5
 ###### *2020-06-05*
 
