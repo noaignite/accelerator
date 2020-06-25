@@ -6,7 +6,7 @@ import classnames from 'clsx'
 import mediaLoaded from '@maeertin/medialoaded'
 import { InView } from 'react-intersection-observer'
 import { elementAcceptingRef } from '@material-ui/utils'
-import { useControlled } from '@material-ui/core/utils'
+import { useControlled, useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
 import AspectRatio from '../AspectRatio'
@@ -110,6 +110,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     },
     [handleLoaded],
   )
+  const handleForkedMediaRef = useForkRef(handleMediaRef, childrenProp?.ref)
 
   // Invert callback direction to simulate `children` still being transitioned.
   const handleExit = React.useCallback(() => {
@@ -153,7 +154,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
   let children = null
   if (childrenProp && React.isValidElement(childrenProp)) {
-    children = React.cloneElement(childrenProp, { ref: handleMediaRef })
+    children = React.cloneElement(childrenProp, { ref: handleForkedMediaRef })
 
     if (!placeholder) {
       children = (
