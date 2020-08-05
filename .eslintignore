@@ -1,5 +1,6 @@
 /.git
 /coverage
+/docs/oui-docs
 /tmp
 build
 node_modules
