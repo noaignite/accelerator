@@ -77,7 +77,7 @@ Media.propTypes = {
     lg: PropTypes.any,
     xl: PropTypes.any,
   }),
-  children: chainPropTypes(PropTypes.node, props => {
+  children: chainPropTypes(PropTypes.node, (props) => {
     if (!props.breakpoints && !props.children && !props.src) {
       return new Error('OUI: either `breakpoints`, `children` or `src` prop must be specified.')
     }

@@ -10,7 +10,7 @@ export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = 
   return 1 - clamp(progress, 0, 1)
 }
 
-const ScrollProgress = props => {
+const ScrollProgress = (props) => {
   const { children, component, onChange, ...other } = props
 
   const entryRef = React.useRef(null)

@@ -10,7 +10,7 @@ const req = require.context('../src', true, /\/stories\.js$/)
 const theme = createMuiTheme({})
 
 function loadStories() {
-  req.keys().forEach(filename => req(filename))
+  req.keys().forEach((filename) => req(filename))
 }
 
 addParameters({
@@ -25,7 +25,7 @@ addParameters({
   },
 })
 
-addDecorator(story => {
+addDecorator((story) => {
   const content = story()
   return (
     <MuiThemeProvider theme={theme}>

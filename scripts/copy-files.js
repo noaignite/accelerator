@@ -25,7 +25,7 @@ async function createModulePackages({ from, to }) {
   const directoryPackages = glob.sync('*/index.js', { cwd: from }).map(path.dirname)
 
   await Promise.all(
-    directoryPackages.map(async directoryPackage => {
+    directoryPackages.map(async (directoryPackage) => {
       const packageJsonPath = path.join(to, directoryPackage, 'package.json')
 
       return packageJsonPath
@@ -59,7 +59,7 @@ async function run() {
         // use enhanced readme from workspace root for `@oakwood/oui`
         packageData.name === '@oakwood/oui' ? '../../README.md' : './README.md',
         '../../CHANGELOG.md',
-      ].map(file => includeFileInBuild(file)),
+      ].map((file) => includeFileInBuild(file)),
     )
 
     await createModulePackages({ from: srcPath, to: buildPath })
