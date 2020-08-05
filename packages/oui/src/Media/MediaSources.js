@@ -11,7 +11,7 @@ function MediaSources(props) {
   const theme = useTheme()
   const keys = [...theme.breakpoints.keys].reverse()
 
-  return keys.map(key => {
+  return keys.map((key) => {
     const breakpoint = breakpoints[key]
     const width = theme.breakpoints.values[key]
     const media = `(min-width: ${width}px)`

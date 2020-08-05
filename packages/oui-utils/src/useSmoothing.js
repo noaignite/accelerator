@@ -25,7 +25,7 @@ export default function useSmoothing(callback, options = {}) {
   }, [callback, friction, precision])
 
   const set = React.useCallback(
-    value => {
+    (value) => {
       targetValueRef.current = value
 
       if (rafRef.current) {
