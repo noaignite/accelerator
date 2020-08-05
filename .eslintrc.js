@@ -1,5 +1,3 @@
-const path = require('path')
-
 module.exports = {
   root: true, // So parent files don't get applied
   globals: {
