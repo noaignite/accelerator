@@ -3,11 +3,14 @@
 # However, in order to prevent issues. We also ignore editors' files here.
 .idea
 .vscode
+.vercel
 
 *.log
 .DS_STORE
-/docs/oui-docs
+/docs/.storybook-static
 /.eslintcache
+/.cache
+/.env
 /coverage
 /tmp
 build
