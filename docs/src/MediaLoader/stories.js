@@ -1,13 +1,8 @@
 import * as React from 'react'
-import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
-import { boolean } from '@storybook/addon-knobs'
 import Slide from '@material-ui/core/Slide'
 import Zoom from '@material-ui/core/Zoom'
 import Media from '@oakwood/oui/Media'
 import MediaLoader from '@oakwood/oui/MediaLoader'
-
-const stories = storiesOf('Components/MediaLoader', module)
 
 const sources = {
   responsive: {
@@ -25,80 +20,122 @@ const sources = {
   video: '//www.w3schools.com/tags/movie.mp4',
 }
 
-const componentProps = {
-  onLoaded: action('onLoaded'),
-  onEnter: action('onEnter'),
-  onEntering: action('onEntering'),
-  onEntered: action('onEntered'),
-  width: 16,
-  height: 9,
+export default {
+  title: 'Components/MediaLoader',
+  component: MediaLoader,
+  argTypes: {
+    onLoaded: { action: 'onLoaded' },
+    onEnter: { action: 'onEnter' },
+    onEntering: { action: 'onEntering' },
+    onEntered: { action: 'onEntered' },
+  },
 }
 
-stories.add('Default', () => (
-  <MediaLoader {...componentProps}>
-    <Media component="img" src={sources.responsive.md} />
+// eslint-disable-next-line react/prop-types
+const Template = ({ mediaProps, ...args }) => (
+  <MediaLoader {...args}>
+    <Media {...mediaProps} />
   </MediaLoader>
-))
+)
 
-stories.add('Picture Element', () => (
-  <MediaLoader {...componentProps}>
-    <Media component="picture" breakpoints={sources.responsive} />
-  </MediaLoader>
-))
+export const Default = Template.bind({})
+Default.args = {
+  width: 16,
+  height: 9,
+  mediaProps: {
+    component: 'img',
+    src: sources.responsive.md,
+  },
+}
 
-stories.add('Video Element With Poster', () => (
-  <MediaLoader {...componentProps}>
-    <Media component="video" poster={sources.responsive.sm} src={sources.video} controls />
-  </MediaLoader>
-))
+export const PictureElement = Template.bind({})
+PictureElement.args = {
+  width: 16,
+  height: 9,
+  mediaProps: {
+    component: 'picture',
+    breakpoints: sources.responsive,
+  },
+}
 
-stories.add('Controlled', () => (
-  <MediaLoader {...componentProps} reveal={boolean('reveal', false)}>
-    <Media component="img" src={sources.responsive.xl} />
-  </MediaLoader>
-))
+export const VideoElementWithPoster = Template.bind({})
+VideoElementWithPoster.args = {
+  width: 16,
+  height: 9,
+  mediaProps: {
+    component: 'video',
+    poster: sources.responsive.sm,
+    src: sources.video,
+    controls: true,
+  },
+}
 
-stories.add('Placeholder', () => (
-  <MediaLoader
-    {...componentProps}
-    placeholder={<Media component="img" src={sources.replace.thumb} />}
-  >
-    <Media component="img" src={sources.replace.full} />
-  </MediaLoader>
-))
+export const Controlled = Template.bind({})
+Controlled.args = {
+  width: 16,
+  height: 9,
+  reveal: false,
+  mediaProps: {
+    component: 'img',
+    src: sources.responsive.xl,
+  },
+}
 
-stories.add('Custom Transition', () => (
-  <MediaLoader {...componentProps} TransitionComponent={Zoom}>
-    <Media component="img" src={sources.responsive.sm} />
-  </MediaLoader>
-))
+export const Placeholder = Template.bind({})
+Placeholder.args = {
+  width: 16,
+  height: 9,
+  placeholder: <Media component="img" src={sources.replace.thumb} />,
+  mediaProps: {
+    component: 'img',
+    src: sources.replace.full,
+  },
+}
 
-stories.add('Placeholder & Custom Transition', () => (
-  <MediaLoader
-    {...componentProps}
-    placeholder={<div style={{ background: 'hotpink' }} />}
-    TransitionComponent={Slide}
-  >
-    <Media component="img" src={sources.responsive.xl} />
-  </MediaLoader>
-))
+export const CustomTransition = Template.bind({})
+CustomTransition.args = {
+  width: 16,
+  height: 9,
+  TransitionComponent: Zoom,
+  mediaProps: {
+    component: 'img',
+    src: sources.responsive.sm,
+  },
+}
 
-stories.add('Transition-in Distance Threshold', () => (
-  <>
-    <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
+export const PlaceholderAndCustomTransition = Template.bind({})
+PlaceholderAndCustomTransition.args = {
+  width: 16,
+  height: 9,
+  placeholder: <div style={{ background: 'hotpink' }} />,
+  TransitionComponent: Slide,
+  mediaProps: {
+    component: 'img',
+    src: sources.responsive.xl,
+  },
+}
 
-    <MediaLoader {...componentProps} revealRootMargin="0% 0% -50%">
-      <Media component="img" src={sources.replace.full} />
-    </MediaLoader>
-  </>
-))
+export const TransitionInDistanceThreshold = Template.bind({})
+TransitionInDistanceThreshold.args = {
+  width: 16,
+  height: 9,
+  style: { marginTop: '150vh' },
+  revealRootMargin: '0% 0% -50%',
+  mediaProps: {
+    component: 'img',
+    src: sources.replace.full,
+  },
+}
 
-stories.add('Lazy with Load-in Distance Threshold', () => (
-  <>
-    <div style={{ height: '150vh', margin: 20, background: '#eee' }} />
-
-    <MediaLoader {...componentProps} lazyRootMargin="0% 0% -50%" lazy>
-      <Media component="img" src={sources.replace.full} />
-    </MediaLoader>
-  </>
-))
+export const LazyWithLoadInDistanceThreshold = Template.bind({})
+LazyWithLoadInDistanceThreshold.args = {
+  width: 16,
+  height: 9,
+  style: { marginTop: '150vh' },
+  lazyRootMargin: '0% 0% -50%',
+  lazy: true,
+  mediaProps: {
+    component: 'img',
+    src: sources.replace.full,
+  },
+}
