@@ -5,7 +5,7 @@
   "author": "Martin Barri <maeertin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "build-storybook -o oui-docs",
+    "build": "build-storybook -o build",
     "dev": "start-storybook -p 3001 --ci",
     "start": "yarn dev"
   },
