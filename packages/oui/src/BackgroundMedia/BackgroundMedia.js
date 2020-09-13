@@ -74,6 +74,4 @@ BackgroundMedia.propTypes = {
   className: PropTypes.string,
 }
 
-BackgroundMedia.uiName = 'BackgroundMedia'
-
 export default withStyles(styles, { name: 'OuiBackgroundMedia' })(BackgroundMedia)

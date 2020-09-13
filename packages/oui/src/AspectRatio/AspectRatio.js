@@ -51,6 +51,4 @@ AspectRatio.propTypes = {
   width: PropTypes.number,
 }
 
-AspectRatio.uiName = 'OuiAspectRatio'
-
 export default withStyles(styles, { name: 'OuiAspectRatio' })(AspectRatio)

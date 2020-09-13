@@ -88,6 +88,4 @@ Media.propTypes = {
   src: PropTypes.string,
 }
 
-Media.uiName = 'OuiMedia'
-
 export default withStyles(styles, { name: 'OuiMedia' })(Media)

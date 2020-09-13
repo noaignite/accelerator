@@ -215,6 +215,4 @@ MediaLoader.propTypes = {
   TransitionProps: PropTypes.object,
 }
 
-MediaLoader.uiName = 'OuiMediaLoader'
-
 export default withStyles(styles, { name: 'OuiMediaLoader' })(MediaLoader)
