@@ -224,6 +224,4 @@ Rwiper.propTypes = {
   Swiper: PropTypes.func,
 }
 
-Rwiper.uiName = 'OuiRwiper'
-
 export default withStyles(styles, { name: 'OuiRwiper' })(Rwiper)
