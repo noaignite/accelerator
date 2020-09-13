@@ -63,6 +63,13 @@ const Rwiper = React.forwardRef(function Rwiper(props, ref) {
   const scrollbarRef = React.useRef(null)
 
   React.useEffect(() => {
+    console.error(
+      [
+        'Oakwood-UI: the `Rwiper` component is deprecated and will be removed in a future version.',
+        'Upgrade to Swiper version 6 or higher and use the Swiper React components.',
+      ].join('\n'),
+    )
+
     if (!Swiper) {
       console.error(
         [

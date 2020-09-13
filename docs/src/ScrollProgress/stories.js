@@ -1,10 +1,12 @@
 import * as React from 'react'
-import { storiesOf } from '@storybook/react'
 import ScrollProgress from '@oakwood/oui/ScrollProgress'
 
-const stories = storiesOf('Components/ScrollProgress', module)
+export default {
+  title: 'Components/ScrollProgress',
+  component: ScrollProgress,
+}
 
-stories.add('Default', () => {
+const Template = (args) => {
   const [progress, setProgress] = React.useState(0)
 
   return (
@@ -12,22 +14,18 @@ stories.add('Default', () => {
       <div style={{ position: 'fixed', padding: 20 }}>Progress: {progress}</div>
 
       <div style={{ height: '110vh' }} />
-      <ScrollProgress onChange={setProgress} style={{ height: '10vh', background: 'hotpink' }} />
+      <ScrollProgress onChange={setProgress} {...args} />
       <div style={{ height: '110vh' }} />
     </>
   )
-})
+}
 
-stories.add('With Section', () => {
-  const [progress, setProgress] = React.useState(0)
+export const Default = Template.bind({})
+Default.args = {
+  style: { height: '10vh', background: 'hotpink' },
+}
 
-  return (
-    <>
-      <div style={{ position: 'fixed', padding: 20 }}>Progress: {progress}</div>
-
-      <div style={{ height: '110vh' }} />
-      <ScrollProgress onChange={setProgress} style={{ height: '150vh', background: 'hotpink' }} />
-      <div style={{ height: '110vh' }} />
-    </>
-  )
-})
+export const LargeElement = Template.bind({})
+LargeElement.args = {
+  style: { height: '150vh', background: 'hotpink' },
+}

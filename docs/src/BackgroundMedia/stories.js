@@ -1,12 +1,14 @@
 import * as React from 'react'
-import { storiesOf } from '@storybook/react'
 import BackgroundMedia from '@oakwood/oui/BackgroundMedia'
 import Media from '@oakwood/oui/Media'
 import MediaLoader from '@oakwood/oui/MediaLoader'
 
-const stories = storiesOf('Components/BackgroundMedia', module)
+export default {
+  title: 'Components/BackgroundMedia',
+  component: BackgroundMedia,
+}
 
-stories.add('Default', () => (
+const Template = () => (
   <>
     <section style={{ position: 'relative' }}>
       <Media component="img" src="//source.unsplash.com/800x400" style={{ opacity: 0 }} />
@@ -78,6 +80,7 @@ stories.add('Default', () => (
       </div>
     </section>
   </>
-))
+)
 
-export default BackgroundMedia
+export const Default = Template.bind({})
+Default.args = {}
