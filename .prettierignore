@@ -1,3 +1,4 @@
+*.md
 /.git
 /coverage
 /docs/oui-docs
