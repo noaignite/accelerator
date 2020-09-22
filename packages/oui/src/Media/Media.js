@@ -1,8 +1,10 @@
 // @inheritedComponent MediaBase
 
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { InView } from 'react-intersection-observer'
+import { setRef } from '@material-ui/core/utils'
 import MediaBase from '../MediaBase'
 import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
@@ -35,6 +37,16 @@ const Media = React.forwardRef(function Media(props, ref) {
     }
   }, [])
 
+  const handleRef = React.useCallback(
+    (instance) => {
+      if (ref) {
+        const node = ReactDOM.findDOMNode(instance)
+        setRef(ref, node)
+      }
+    },
+    [ref],
+  )
+
   let componentProps = { ...other }
   let Component = MediaBase
 
@@ -65,7 +77,7 @@ const Media = React.forwardRef(function Media(props, ref) {
   }
 
   if (ContainerComponent) {
-    return <ContainerComponent as={Component} lazy={lazy} ref={ref} {...componentProps} />
+    return <ContainerComponent as={Component} lazy={lazy} ref={handleRef} {...componentProps} />
   }
 
   return <Component ref={ref} {...componentProps} />

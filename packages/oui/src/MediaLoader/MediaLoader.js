@@ -1,12 +1,13 @@
 // @inheritedComponent AspectRatio
 
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
-import mediaLoaded from '@maeertin/medialoaded'
 import { InView } from 'react-intersection-observer'
+import mediaLoaded from '@maeertin/medialoaded'
 import { elementAcceptingRef } from '@material-ui/utils'
-import { useControlled, useForkRef } from '@material-ui/core/utils'
+import { setRef, useControlled, useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
 import AspectRatio from '../AspectRatio'
@@ -50,6 +51,16 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   // Pointless to transition in a not loaded image.
   const reveal = loaded && inState
 
+  const handleRef = React.useCallback(
+    (instance) => {
+      if (ref) {
+        const node = ReactDOM.findDOMNode(instance)
+        setRef(ref, node)
+      }
+    },
+    [ref],
+  )
+
   const handleIntersectionChange = React.useCallback(
     (inView) => {
       if (inView) {
@@ -80,6 +91,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     },
     [handleLoaded],
   )
+
   const handleMediaRef = useForkRef(handleOwnMediaRef, childrenProp?.ref)
 
   let placeholder = null
@@ -124,7 +136,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
   if (ContainerComponent) {
     return (
-      <ContainerComponent as={Component} ref={ref} {...componentProps}>
+      <ContainerComponent as={Component} ref={handleRef} {...componentProps}>
         {children}
         {placeholder}
       </ContainerComponent>
