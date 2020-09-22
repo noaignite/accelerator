@@ -23,12 +23,6 @@ const sources = {
 export default {
   title: 'Components/MediaLoader',
   component: MediaLoader,
-  argTypes: {
-    onLoaded: { action: 'onLoaded' },
-    onEnter: { action: 'onEnter' },
-    onEntering: { action: 'onEntering' },
-    onEntered: { action: 'onEntered' },
-  },
 }
 
 // eslint-disable-next-line react/prop-types
@@ -74,7 +68,7 @@ export const Controlled = Template.bind({})
 Controlled.args = {
   width: 16,
   height: 9,
-  reveal: false,
+  in: false,
   mediaProps: {
     component: 'img',
     src: sources.responsive.xl,
@@ -119,21 +113,8 @@ export const TransitionInDistanceThreshold = Template.bind({})
 TransitionInDistanceThreshold.args = {
   width: 16,
   height: 9,
-  style: { marginTop: '150vh' },
-  revealRootMargin: '0% 0% -50%',
-  mediaProps: {
-    component: 'img',
-    src: sources.replace.full,
-  },
-}
-
-export const LazyWithLoadInDistanceThreshold = Template.bind({})
-LazyWithLoadInDistanceThreshold.args = {
-  width: 16,
-  height: 9,
-  style: { marginTop: '150vh' },
-  lazyRootMargin: '0% 0% -50%',
-  lazy: true,
+  style: { margin: '150vh 0' },
+  rootMargin: '0% 0% -50%',
   mediaProps: {
     component: 'img',
     src: sources.replace.full,
