@@ -27,7 +27,7 @@ export default {
     component: {
       control: {
         type: 'select',
-        options: ['div', 'video', 'audio', 'picture', 'iframe', 'img'],
+        options: ['video', 'audio', 'picture', 'iframe', 'img'],
       },
     },
     src: {
@@ -43,17 +43,16 @@ const Template = (args) => <Media {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  component: 'div',
+  component: 'img',
   src: sources.jpg.xs,
-  alt: '',
-  style: { minHeight: 100 },
+  alt: 'Image description',
 }
 
 export const Picture = Template.bind({})
 Picture.args = {
   component: 'picture',
   breakpoints: sources.jpg,
-  alt: '',
+  alt: 'Image description',
 }
 
 export const PictureMultiFormat = Template.bind({})
@@ -63,7 +62,7 @@ PictureMultiFormat.args = {
     xs: [{ src: sources.webp.xs, type: 'image/webp' }, { src: sources.jpg.xs }],
     sm: [{ src: sources.webp.sm, type: 'image/webp' }, { src: sources.jpg.sm }],
   },
-  alt: '',
+  alt: 'Image description',
 }
 
 export const Audio = Template.bind({})
@@ -92,7 +91,7 @@ Custom.args = {
     xs: {
       component: 'img',
       src: sources.jpg.xs,
-      alt: 'Just another image description',
+      alt: 'Image description',
     },
     sm: {
       component: 'video',
@@ -101,4 +100,14 @@ Custom.args = {
       muted: true,
     },
   },
+}
+
+export const Lazy = Template.bind({})
+Lazy.args = {
+  component: 'img',
+  src: sources.jpg.xs,
+  alt: 'Image description',
+  loading: 'lazy',
+  rootMargin: '0% 0% -50%',
+  style: { margin: '200vh 0' },
 }
