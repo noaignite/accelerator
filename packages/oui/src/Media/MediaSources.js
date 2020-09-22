@@ -6,7 +6,7 @@ import useTheme from '@material-ui/core/styles/useTheme'
  * @ignore - internal component.
  */
 function MediaSources(props) {
-  const { breakpoints, ...other } = props
+  const { breakpoints, lazy } = props
 
   const theme = useTheme()
   const keys = [...theme.breakpoints.keys].reverse()
@@ -21,11 +21,11 @@ function MediaSources(props) {
     }
 
     if (typeof breakpoint === 'string') {
-      return <source key={key} media={media} srcSet={breakpoint} {...other} />
+      return <source key={key} media={media} srcSet={!lazy ? breakpoint : undefined} />
     }
 
     return breakpoint.map(({ src, type }) => (
-      <source key={key + type} media={media} srcSet={src} type={type} {...other} />
+      <source key={key + type} media={media} srcSet={!lazy ? src : undefined} type={type} />
     ))
   })
 }
@@ -43,6 +43,7 @@ MediaSources.propTypes = {
     lg: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(sourceType)]),
     xl: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(sourceType)]),
   }).isRequired,
+  lazy: PropTypes.bool,
 }
 
 export default MediaSources

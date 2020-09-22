@@ -12,15 +12,6 @@ import Fade from '@material-ui/core/Fade'
 import AspectRatio from '../AspectRatio'
 
 export const styles = {
-  root: {},
-  bounds: {
-    position: 'absolute',
-    zIndex: -1,
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  },
   placeholder: {
     position: 'absolute',
     top: 0,
@@ -37,20 +28,10 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     children: childrenProp,
     classes,
     className,
-    lazy,
-    /**
-     * `lazyRootMargin` default based on Chromium 4G load-in distance threshold
-     * https://web.dev/native-lazy-loading/#load-in-distance-threshold
-     * https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/settings.json5;drc=e8f3cf0bbe085fee0d1b468e84395aad3ebb2cad;l=971-1003?originalUrl=https:%2F%2Fcs.chromium.org%2Fchromium%2Fsrc%2Fthird_party%2Fblink%2Frenderer%2Fcore%2Fframe%2Fsettings.json5
-     */
-    lazyRootMargin = '3000px 0px',
-    onEnter,
-    onEntered,
-    onEntering,
     onLoaded,
     placeholder: placeholderProp,
-    reveal: revealProp,
-    revealRootMargin,
+    in: inProp,
+    rootMargin,
     TransitionComponent = Fade,
     transitionDuration = 750,
     TransitionProps,
@@ -59,39 +40,29 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
   const mediaRef = React.useRef(null)
 
-  const [shouldRender, setShouldRender] = React.useState(!lazy)
   const [loaded, setLoaded] = React.useState(false)
-
-  const [shouldReveal, setShouldReveal] = useControlled({
-    controlled: revealProp,
-    default: !revealRootMargin,
+  const [inState, setInState] = useControlled({
+    controlled: inProp,
+    default: !rootMargin,
     name: 'MediaLoader',
-    state: 'reveal',
   })
 
-  // There is no point in transitioning in an unloaded image.
-  const reveal = loaded && shouldReveal
+  // Pointless to transition in a not loaded image.
+  const reveal = loaded && inState
 
-  const handleRenderIntersectionChange = React.useCallback((inView) => {
-    if (inView) {
-      setShouldRender(true)
-    }
-  }, [])
-
-  const handleRevealIntersectionChange = React.useCallback(
+  const handleIntersectionChange = React.useCallback(
     (inView) => {
       if (inView) {
-        setShouldReveal(true)
+        setInState(true)
       }
     },
-    [setShouldReveal],
+    [setInState],
   )
 
   const handleLoaded = React.useCallback(
     (instance) => {
       if (mediaRef.current) {
         setLoaded(true)
-
         if (onLoaded) {
           onLoaded(instance)
         }
@@ -100,38 +71,16 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     [onLoaded],
   )
 
-  const handleMediaRef = React.useCallback(
+  const handleOwnMediaRef = React.useCallback(
     (node) => {
       mediaRef.current = node
-
       if (node) {
         mediaLoaded(node, handleLoaded)
       }
     },
     [handleLoaded],
   )
-  const handleForkedMediaRef = useForkRef(handleMediaRef, childrenProp?.ref)
-
-  // Invert callback direction to simulate `children` still being transitioned.
-  const handleExit = React.useCallback(() => {
-    if (onEnter) {
-      onEnter(mediaRef.current)
-    }
-  }, [onEnter])
-
-  // Invert callback direction to simulate `children` still being transitioned.
-  const handleExited = React.useCallback(() => {
-    if (onEntered) {
-      onEntered(mediaRef.current)
-    }
-  }, [onEntered])
-
-  // Invert callback direction to simulate `children` still being transitioned.
-  const handleExiting = React.useCallback(() => {
-    if (onEntering) {
-      onEntering(mediaRef.current)
-    }
-  }, [onEntering])
+  const handleMediaRef = useForkRef(handleOwnMediaRef, childrenProp?.ref)
 
   let placeholder = null
   if (placeholderProp && React.isValidElement(placeholderProp)) {
@@ -139,9 +88,6 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
       <TransitionComponent
         className={classnames(classes.placeholder, placeholderProp.props.className)}
         in={!reveal}
-        onExit={handleExit}
-        onExited={handleExited}
-        onExiting={handleExiting}
         timeout={transitionDuration}
         appear={false} // Don't transition `placeholder` on mount.
         unmountOnExit
@@ -154,46 +100,42 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
   let children = null
   if (childrenProp && React.isValidElement(childrenProp)) {
-    children = React.cloneElement(childrenProp, { ref: handleForkedMediaRef })
+    children = React.cloneElement(childrenProp, { ref: handleMediaRef })
 
     if (!placeholder) {
       children = (
-        <TransitionComponent
-          in={reveal}
-          onEnter={onEnter}
-          onEntered={onEntered}
-          onEntering={onEntering}
-          timeout={transitionDuration}
-          {...TransitionProps}
-        >
+        <TransitionComponent in={reveal} timeout={transitionDuration} {...TransitionProps}>
           {children}
         </TransitionComponent>
       )
     }
   }
 
-  return (
-    <AspectRatio className={classnames(classes.root, className)} ref={ref} {...other}>
-      {!shouldRender && (
-        <InView
-          className={classes.bounds}
-          onChange={handleRenderIntersectionChange}
-          rootMargin={lazyRootMargin}
-          triggerOnce
-        />
-      )}
-      {!shouldReveal && (
-        <InView
-          className={classes.bounds}
-          onChange={handleRevealIntersectionChange}
-          rootMargin={revealRootMargin}
-          triggerOnce
-        />
-      )}
+  const componentProps = { ...other }
+  const Component = AspectRatio
 
-      {shouldRender && children}
+  let ContainerComponent = null
+  if (rootMargin) {
+    componentProps.onChange = handleIntersectionChange
+    componentProps.rootMargin = rootMargin
+    componentProps.triggerOnce = true
+    ContainerComponent = InView
+  }
+
+  if (ContainerComponent) {
+    return (
+      <ContainerComponent as={Component} ref={ref} {...componentProps}>
+        {children}
+        {placeholder}
+      </ContainerComponent>
+    )
+  }
+
+  return (
+    <Component ref={ref} {...componentProps}>
+      {children}
       {placeholder}
-    </AspectRatio>
+    </Component>
   )
 })
 
@@ -201,15 +143,10 @@ MediaLoader.propTypes = {
   children: elementAcceptingRef.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  lazy: PropTypes.bool,
-  lazyRootMargin: PropTypes.string,
-  onEnter: PropTypes.func,
-  onEntered: PropTypes.func,
-  onEntering: PropTypes.func,
+  in: PropTypes.bool,
   onLoaded: PropTypes.func,
   placeholder: PropTypes.element,
-  reveal: PropTypes.bool,
-  revealRootMargin: PropTypes.string,
+  rootMargin: PropTypes.string,
   TransitionComponent: PropTypes.elementType,
   transitionDuration: PropTypes.number,
   TransitionProps: PropTypes.object,

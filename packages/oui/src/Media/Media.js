@@ -1,29 +1,11 @@
-// @inheritedComponent CardMedia
+// @inheritedComponent MediaBase
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { chainPropTypes } from '@material-ui/utils'
-import withStyles from '@material-ui/core/styles/withStyles'
-import CardMedia from '@material-ui/core/CardMedia'
+import { InView } from 'react-intersection-observer'
+import MediaBase from '../MediaBase'
 import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
-
-export const styles = {
-  root: {},
-  media: {
-    // `CardMedia` doesn't stretch videos, patch it.
-    objectFit: 'cover',
-  },
-  img: {
-    // Complement `CardMedia` by styling child img's
-    '& > img': {
-      display: 'inherit',
-      width: 'inherit',
-      height: 'inherit',
-      objectFit: 'inherit',
-    },
-  },
-}
 
 const IMG_ATTRIBUTES = ['alt', 'height', 'loading', 'sizes', 'src', 'srcSet', 'width']
 
@@ -33,7 +15,7 @@ const IMG_ATTRIBUTES = ['alt', 'height', 'loading', 'sizes', 'src', 'srcSet', 'w
  * @param {object} props
  * @return {array} [imgProps, restProps]
  */
-export function imgAttrEntries(props) {
+export function extractImgProps(props) {
   return Object.keys(props).reduce(
     (acc, key) => {
       acc[Number(IMG_ATTRIBUTES.indexOf(key) === -1)][key] = props[key]
@@ -44,48 +26,56 @@ export function imgAttrEntries(props) {
 }
 
 const Media = React.forwardRef(function Media(props, ref) {
-  const { breakpoints, component, src, ...other } = props
+  const { breakpoints, loading, src, ...other } = props
+
+  const [lazy, setLazy] = React.useState(loading === 'lazy')
+  const handleIntersectionChange = React.useCallback((inView) => {
+    if (inView) {
+      setLazy(false)
+    }
+  }, [])
 
   let componentProps = { ...other }
-  let Component = CardMedia
+  let Component = MediaBase
 
-  if (component === 'picture') {
-    const [imgProps, restProps] = imgAttrEntries(other)
+  let ContainerComponent = null
+  if (loading === 'lazy') {
+    componentProps.onChange = handleIntersectionChange
+    componentProps.triggerOnce = true
+    ContainerComponent = InView
+  }
+
+  if (componentProps.component === 'picture') {
+    const [imgProps, restProps] = extractImgProps(componentProps)
     componentProps = {
       children: <img src={src} alt="" {...imgProps} />,
       ...restProps,
     }
     if (breakpoints) {
       componentProps.children = React.Children.toArray(componentProps.children)
-      componentProps.children.unshift(<MediaSources key="sources" breakpoints={breakpoints} />)
+      componentProps.children.unshift(
+        <MediaSources key="sources" breakpoints={breakpoints} lazy={lazy} />,
+      )
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
     Component = MediaWithWidth
   } else {
-    componentProps.image = src
+    componentProps.src = src
   }
 
-  return <Component component={component} ref={ref} {...componentProps} />
+  if (ContainerComponent) {
+    return <ContainerComponent as={Component} lazy={lazy} ref={ref} {...componentProps} />
+  }
+
+  return <Component ref={ref} {...componentProps} />
 })
 
 Media.propTypes = {
-  breakpoints: PropTypes.shape({
-    xs: PropTypes.any.isRequired,
-    sm: PropTypes.any,
-    md: PropTypes.any,
-    lg: PropTypes.any,
-    xl: PropTypes.any,
-  }),
-  children: chainPropTypes(PropTypes.node, (props) => {
-    if (!props.breakpoints && !props.children && !props.src) {
-      return new Error('OUI: either `breakpoints`, `children` or `src` prop must be specified.')
-    }
-    return null
-  }),
-  classes: PropTypes.object.isRequired,
-  component: PropTypes.elementType,
+  breakpoints: PropTypes.object,
+  children: PropTypes.node,
+  loading: PropTypes.string,
   src: PropTypes.string,
 }
 
-export default withStyles(styles, { name: 'OuiMedia' })(Media)
+export default Media
