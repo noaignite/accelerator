@@ -1,20 +1,20 @@
-// @inheritedComponent CardMedia
+// @inheritedComponent MediaBase
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import useTheme from '@material-ui/core/styles/useTheme'
-import CardMedia from '@material-ui/core/CardMedia'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
+import MediaBase from '../MediaBase'
 
 /**
  * @ignore - internal component.
  */
 const MediaWithWidth = React.forwardRef(function MediaWithWidth(props, ref) {
-  const { breakpoints, component, ...other } = props
+  const { breakpoints, ...other } = props
 
   const theme = useTheme()
   const keys = [...theme.breakpoints.keys].reverse()
-  const breakpoint = keys.reduce((output, key) => {
+  const src = keys.reduce((output, key) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const matches = useMediaQuery(theme.breakpoints.up(key))
     return !output && matches ? breakpoints[key] : output
@@ -27,13 +27,13 @@ const MediaWithWidth = React.forwardRef(function MediaWithWidth(props, ref) {
   //
   // An alternative is to implement a `ssrMatchMedia`.
   // https://material-ui.com/components/use-media-query/#server-side-rendering
-  if (breakpoint === null) {
+  if (src === null) {
     return null
   }
 
-  const { src, ...more } = typeof breakpoint !== 'object' ? { src: breakpoint } : breakpoint
+  const componentProps = typeof src !== 'object' ? { src } : src
 
-  return <CardMedia component={component} image={src} ref={ref} {...more} {...other} />
+  return <MediaBase ref={ref} {...componentProps} {...other} />
 })
 
 MediaWithWidth.propTypes = {
@@ -44,7 +44,6 @@ MediaWithWidth.propTypes = {
     lg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     xl: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }),
-  component: PropTypes.elementType,
 }
 
 export default MediaWithWidth
