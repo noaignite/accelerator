@@ -116,7 +116,8 @@ TransitionInDistanceThreshold.args = {
   style: { margin: '150vh 0' },
   rootMargin: '0% 0% -50%',
   mediaProps: {
-    component: 'img',
-    src: sources.replace.full,
+    component: 'picture',
+    breakpoints: sources.responsive,
+    loading: 'lazy',
   },
 }

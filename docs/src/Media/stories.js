@@ -104,8 +104,8 @@ Custom.args = {
 
 export const Lazy = Template.bind({})
 Lazy.args = {
-  component: 'img',
-  src: sources.jpg.xs,
+  component: 'picture',
+  breakpoints: sources.jpg,
   alt: 'Image description',
   loading: 'lazy',
   rootMargin: '0% 0% -50%',
