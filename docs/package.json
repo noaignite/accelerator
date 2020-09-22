@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.10.2",
-    "@oakwood/oui": "0.9.7",
+    "@oakwood/oui": "0.10.0",
     "@storybook/addon-a11y": "^6.0.21",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-controls": "^6.0.21",
