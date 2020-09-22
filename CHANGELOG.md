@@ -1,16 +1,35 @@
 ### Versions
 
-## 0.9.7
+## 0.10.0
+###### 2020-09-22
 
-###### _2020-06-25_
+- [MediaBase] Add custom MediaBase component replacing Mui CardMedia
+- [Media] Compose with new MediaBase instead of Mui CardMedia
+- [Media] Drop support for component="div"
+- [Media] Add functionality for lazy loading via native interface loading="lazy"
+- [MediaLoader] Deprecate lazy loading as moved to Media
+- [Rwiper] Remove Rwiper story and add a deprecation warning to component
+
+### Core
+
+- [core] Add lint-staged pre-commit git hook
+- [core] Let prettier run on all files at root
+- [core] Upgrade dependencies
+
+### Docs
+
+- [docs] Migrate to Storybook 6
+- [docs] Update affected component stories
+
+## 0.9.7
+###### 2020-06-25
 
 ### `@oakwood/oui@v0.9.7`
 
 - [MediaLoader] Fix MediaLoader from not forwarding external ref on the child element
 
 ## 0.9.6
-
-###### _2020-06-17_
+###### 2020-06-17
 
 ### `@oakwood/oui@v0.9.6`
 
@@ -28,8 +47,7 @@
 - [docs] Upgrade dependencies
 
 ## 0.9.5
-
-###### _2020-06-05_
+###### 2020-06-05
 
 ### `@oakwood/oui@v0.9.5`
 
@@ -49,16 +67,14 @@
 - [docs] Upgrade dependencies
 
 ## 0.9.4
-
-###### _2020-05-15_
+###### 2020-05-15
 
 ### `@oakwood/oui@v0.9.4`
 
 - [npm] Bump @maeertin/medialoaded from v1.2.0 to v1.2.1
 
 ## 0.9.3
-
-###### _2020-05-15_
+###### 2020-05-15
 
 ### `@oakwood/oui@v0.9.3`
 
@@ -66,8 +82,7 @@
 - [npm] Bump react-intersection-observer from v8.26.1 to v8.26.2
 
 ## 0.9.2
-
-###### _2020-05-15_
+###### 2020-05-15
 
 ### `@oakwood/oui@v0.9.2`
 
@@ -78,16 +93,14 @@
 - [docs] Use a bigger image in MediaLoader custom placeholder story
 
 ## 0.9.1
-
-###### _2020-04-24_
+###### 2020-04-24
 
 ### `@oakwood/oui@v0.9.1`
 
 - [BackgroundMedia] Less config needed
 
 ## 0.9.0
-
-###### _2020-04-24_
+###### 2020-04-24
 
 ### `@oakwood/oui@v0.9.0`
 
@@ -112,16 +125,14 @@
 - [docs] Upgrade dependencies
 
 ## 0.8.3
-
-###### _2020-03-27_
+###### 2020-03-27
 
 ### `@oakwood/oui@v0.8.3`
 
 - [Rwiper] Init hook no longer listens to navigation, pagination, scrollbar & on props
 
 ## 0.8.2
-
-###### _2020-03-19_
+###### 2020-03-19
 
 ### `@oakwood/oui@v0.8.2`
 
@@ -133,8 +144,7 @@
 - [core] Upgrade dependencies
 
 ## 0.8.1
-
-###### _2020-03-09_
+###### 2020-03-09
 
 ### `@oakwood/oui@v0.8.1`
 
@@ -145,8 +155,7 @@
 - [docs] Add documentation for custom Rwiper props
 
 ## 0.8.0
-
-###### _2020-02-26_
+###### 2020-02-26
 
 ### `@oakwood/oui@v0.8.0`
 
@@ -163,8 +172,7 @@
 - [docs] Add Rwiper documentation
 
 ## 0.7.1
-
-###### _2020-02-07_
+###### 2020-02-07
 
 ### `@oakwood/oui@v0.7.1`
 
@@ -176,8 +184,7 @@
 - [utils] mapRange now takes a sixth argument which will clamp the value if set to true
 
 ## 0.7.0
-
-###### _2020-01-29_
+###### 2020-01-29
 
 ### `@oakwood/oui@v0.7.0`
 
@@ -185,8 +192,7 @@
 - [ScrollProgress] onChange arguments no longer grouped into an object
 
 ## 0.6.3
-
-###### _2020-01-14_
+###### 2020-01-14
 
 ### `@oakwood/oui@v0.6.3`
 
@@ -194,16 +200,14 @@
 - [MediaLoader] component prop now validates to elementType instead of string
 
 ## 0.6.2
-
-###### _2020-01-09_
+###### 2020-01-09
 
 ### `@oakwood/oui@v0.6.2`
 
 - [npm] Upgrade to @maeertin/medialoaded@1.0.0 which can handle media erroring
 
 ## 0.6.1
-
-###### _2020-01-08_
+###### 2020-01-08
 
 ### `@oakwood/oui@v0.6.1`
 
@@ -214,8 +218,7 @@
 - [misc] Add additional stories showcasing functionality
 
 ## 0.6.0
-
-###### _2019-12-11_
+###### 2019-12-11
 
 ### `@oakwood/oui@v0.6.0`
 
@@ -245,24 +248,21 @@
 - [npm] Upgrade dependencies
 
 ## 0.5.2
-
-###### _2019-11-18_
+###### 2019-11-18
 
 ### `@oakwood/oui@v0.5.2`
 
 - [Media] Fix ref forwarding for MediaWithWidth by replacing deprecated withWidth HOC for useMediaQuery hook
 
 ## 0.5.1
-
-###### _2019-11-14_
+###### 2019-11-14
 
 ### `@oakwood/oui@v0.5.1`
 
 - [utils] Fix import paths as they were migrated to oui-utils
 
 ## 0.5.0
-
-###### _2019-11-13_
+###### 2019-11-13
 
 Migrate all utils previously found under oui/utils over to oui-utils package for a more straight forward separation of package contents
 
@@ -276,8 +276,7 @@ Migrate all utils previously found under oui/utils over to oui-utils package for
 - [utils] Add new mediaType util
 
 ## 0.4.1
-
-###### _2019-11-07_
+###### 2019-11-07
 
 ### `@oakwood/oui@v0.4.1`
 
@@ -288,8 +287,7 @@ Migrate all utils previously found under oui/utils over to oui-utils package for
 - [ScrollProgress] Add example with component prop usage
 
 ## 0.4.0
-
-###### _2019-11-01_
+###### 2019-11-01
 
 ### `@oakwood/oui@v0.4.0`
 
@@ -301,8 +299,7 @@ Migrate all utils previously found under oui/utils over to oui-utils package for
 - [utils] Add refType propType
 
 ## 0.3.0
-
-###### _2019-10-29_
+###### 2019-10-29
 
 ### `@oakwood/oui@v0.3.0`
 
@@ -310,8 +307,7 @@ Migrate all utils previously found under oui/utils over to oui-utils package for
 - [utils] Add debounce helper
 
 ## 0.2.0
-
-###### _2019-10-28_
+###### 2019-10-28
 
 ### `@oakwood/oui@v0.2.0`
 
@@ -322,8 +318,7 @@ Migrate all utils previously found under oui/utils over to oui-utils package for
 - [utils] Migrate component related utils to @oakwood/oui
 
 ## 0.1.0
-
-###### _2019-10-28_
+###### 2019-10-28
 
 - Add `.editorconfig` file
 - Add `.prettierignore` file
