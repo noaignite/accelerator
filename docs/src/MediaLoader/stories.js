@@ -121,3 +121,21 @@ TransitionInDistanceThreshold.args = {
     loading: 'lazy',
   },
 }
+
+// eslint-disable-next-line react/prop-types
+const Template2 = (args) => (
+  <>
+    {Array.from(new Array(200), (_, idx) => (
+      <MediaLoader key={idx} {...args}>
+        <img src={sources.responsive.sm} alt="" />
+      </MediaLoader>
+    ))}
+  </>
+)
+
+export const LoadTest = Template2.bind({})
+LoadTest.args = {
+  width: 16,
+  height: 9,
+  // rootMargin: '0% 0% -50%',
+}
