@@ -10,7 +10,6 @@ export const styles = {
     width: '100%',
   },
   bounds: {
-    paddingBottom: ({ height = 1, width = 1 }) => `${((height / width) * 100).toFixed(2)}%`,
     '& ~ *': {
       position: 'absolute',
       top: 0,
@@ -36,7 +35,12 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
 
   return (
     <Component className={classnames(classes.root, className)} ref={ref} {...other}>
-      {(height || width) && <div className={classes.bounds} />}
+      {height && width && (
+        <div
+          className={classes.bounds}
+          style={{ paddingBottom: `${((height / width) * 100).toFixed(2)}%` }}
+        />
+      )}
       {children}
     </Component>
   )
