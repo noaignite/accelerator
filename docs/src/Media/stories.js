@@ -107,7 +107,35 @@ Lazy.args = {
   component: 'picture',
   breakpoints: sources.jpg,
   alt: 'Image description',
-  loading: 'lazy',
+  lazy: true,
   rootMargin: '0% 0% -50%',
   style: { margin: '200vh 0' },
+}
+
+const Template2 = (args) => (
+  <>
+    {Array.from(new Array(1000), (_, idx) => (
+      <Media key={idx} alt="" {...args} />
+    ))}
+  </>
+)
+
+export const DefaultLoadTest = Template2.bind({})
+DefaultLoadTest.args = {
+  src: sources.jpg.xs,
+  style: { height: 500 },
+}
+
+export const LazyLoadTest = Template2.bind({})
+LazyLoadTest.args = {
+  src: sources.jpg.xs,
+  lazy: true,
+  style: { height: 500 },
+}
+
+export const NativeLazyLoadTest = Template2.bind({})
+NativeLazyLoadTest.args = {
+  src: sources.jpg.xs,
+  loading: 'lazy',
+  style: { height: 500 },
 }
