@@ -7,14 +7,22 @@ export default {
 }
 
 const Template = (args) => {
-  const [progress, setProgress] = React.useState(0)
+  const [state, setState] = React.useState({})
+  const handleChange = React.useCallback((progress, innerProgress, bounds) => {
+    setState({ progress, innerProgress, bounds })
+  }, [])
 
   return (
     <>
-      <div style={{ position: 'fixed', padding: 20 }}>Progress: {progress}</div>
+      <div style={{ position: 'fixed', padding: 20 }}>
+        Progress: {state.progress}
+        <br />
+        Inner Progress: {state.innerProgress}
+        <br />
+      </div>
 
       <div style={{ height: '110vh' }} />
-      <ScrollProgress onChange={setProgress} {...args} />
+      <ScrollProgress onChange={handleChange} {...args} />
       <div style={{ height: '110vh' }} />
     </>
   )

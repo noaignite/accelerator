@@ -1,10 +1,8 @@
 // @inheritedComponent MediaBase
 
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import { InView } from 'react-intersection-observer'
-import { setRef } from '@material-ui/core/utils'
+import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
@@ -28,36 +26,17 @@ export function extractImgProps(props) {
 }
 
 const Media = React.forwardRef(function Media(props, ref) {
-  const { breakpoints, loading, src, ...other } = props
+  const { breakpoints, component, loading, src, ...other } = props
 
   const [lazy, setLazy] = React.useState(loading === 'lazy')
-  const handleIntersectionChange = React.useCallback((inView) => {
-    if (inView) {
-      setLazy(false)
-    }
+  const handleEnter = React.useCallback(() => {
+    setLazy(false)
   }, [])
 
-  const handleRef = React.useCallback(
-    (instance) => {
-      if (ref) {
-        const node = ReactDOM.findDOMNode(instance)
-        setRef(ref, node)
-      }
-    },
-    [ref],
-  )
-
   let componentProps = { ...other }
-  let Component = MediaBase
+  let ContainerComponent = MediaBase
 
-  let ContainerComponent = null
-  if (loading === 'lazy') {
-    componentProps.onChange = handleIntersectionChange
-    componentProps.triggerOnce = true
-    ContainerComponent = InView
-  }
-
-  if (componentProps.component === 'picture') {
+  if (component === 'picture') {
     const [imgProps, restProps] = extractImgProps(componentProps)
     componentProps = {
       children: <img src={src} alt="" {...imgProps} />,
@@ -71,21 +50,38 @@ const Media = React.forwardRef(function Media(props, ref) {
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
-    Component = MediaWithWidth
+    ContainerComponent = MediaWithWidth
   } else {
     componentProps.src = src
   }
 
-  if (ContainerComponent) {
-    return <ContainerComponent as={Component} lazy={lazy} ref={handleRef} {...componentProps} />
+  if (loading === 'lazy') {
+    return (
+      <InView
+        ContainerComponent={ContainerComponent}
+        component={component}
+        onEnter={handleEnter}
+        lazy={lazy}
+        /**
+         * `rootMargin` default based on Chromium 4G load-in distance threshold
+         * https://web.dev/native-lazy-loading/#load-in-distance-threshold
+         * https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/settings.json5;drc=e8f3cf0bbe085fee0d1b468e84395aad3ebb2cad;l=971-1003?originalUrl=https:%2F%2Fcs.chromium.org%2Fchromium%2Fsrc%2Fthird_party%2Fblink%2Frenderer%2Fcore%2Fframe%2Fsettings.json5
+         */
+        rootMargin="3000px 0px"
+        triggerOnce
+        ref={ref}
+        {...componentProps}
+      />
+    )
   }
 
-  return <Component ref={ref} {...componentProps} />
+  return <ContainerComponent component={component} ref={ref} {...componentProps} />
 })
 
 Media.propTypes = {
   breakpoints: PropTypes.object,
   children: PropTypes.node,
+  component: PropTypes.elementType,
   loading: PropTypes.string,
   src: PropTypes.string,
 }
