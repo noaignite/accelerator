@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { useForkRef } from '@material-ui/core/utils'
+import { setRef } from '@material-ui/core/utils'
 import { clamp } from '@oakwood/oui-utils'
 import InView from '../InView'
 
@@ -15,7 +15,6 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   const { onChange, onEnter, onExit, ...other } = props
 
   const rootRef = React.useRef(null)
-  const handleRef = useForkRef(rootRef, ref)
 
   const handleScroll = React.useCallback(() => {
     const target = rootRef.current
@@ -53,9 +52,20 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
     [handleScroll, onExit],
   )
 
-  React.useEffect(() => {
-    handleScroll()
-  }, [handleScroll])
+  const handleRef = React.useCallback(
+    (node) => {
+      rootRef.current = node
+      setRef(ref, node)
+
+      if (node) {
+        handleScroll()
+      } else {
+        window.removeEventListener('scroll', handleScroll)
+        window.removeEventListener('resize', handleScroll)
+      }
+    },
+    [handleScroll, ref],
+  )
 
   return <InView onEnter={handleEnter} onExit={handleExit} ref={handleRef} {...other} />
 })
