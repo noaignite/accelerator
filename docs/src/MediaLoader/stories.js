@@ -70,7 +70,6 @@ Controlled.args = {
   height: 9,
   in: false,
   mediaProps: {
-    component: 'img',
     src: sources.responsive.xl,
   },
 }
@@ -79,9 +78,8 @@ export const Placeholder = Template.bind({})
 Placeholder.args = {
   width: 16,
   height: 9,
-  placeholder: <Media component="img" src={sources.replace.thumb} />,
+  placeholder: <Media src={sources.replace.thumb} />,
   mediaProps: {
-    component: 'img',
     src: sources.replace.full,
   },
 }
@@ -92,7 +90,6 @@ CustomTransition.args = {
   height: 9,
   TransitionComponent: Zoom,
   mediaProps: {
-    component: 'img',
     src: sources.responsive.sm,
   },
 }
@@ -104,7 +101,6 @@ PlaceholderAndCustomTransition.args = {
   placeholder: <div style={{ background: 'hotpink' }} />,
   TransitionComponent: Slide,
   mediaProps: {
-    component: 'img',
     src: sources.responsive.xl,
   },
 }
@@ -118,24 +114,30 @@ TransitionInDistanceThreshold.args = {
   mediaProps: {
     component: 'picture',
     breakpoints: sources.responsive,
-    loading: 'lazy',
+    rootMargin: '0px',
+    lazy: true,
   },
 }
 
-// eslint-disable-next-line react/prop-types
 const Template2 = (args) => (
   <>
     {Array.from(new Array(200), (_, idx) => (
       <MediaLoader key={idx} {...args}>
-        <img src={sources.responsive.sm} alt="" />
+        <img src="//placekitten.com/600/340" alt="" style={{ width: '100%' }} />
       </MediaLoader>
     ))}
   </>
 )
 
-export const LoadTest = Template2.bind({})
-LoadTest.args = {
+export const DefaultLoadTest = Template2.bind({})
+DefaultLoadTest.args = {
   width: 16,
   height: 9,
-  // rootMargin: '0% 0% -50%',
+}
+
+export const LazyLoadTest = Template2.bind({})
+LazyLoadTest.args = {
+  width: 16,
+  height: 9,
+  rootMargin: '0px',
 }
