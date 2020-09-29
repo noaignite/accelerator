@@ -1,7 +1,8 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { InView } from 'react-intersection-observer'
+import { useForkRef } from '@material-ui/core/utils'
 import { clamp } from '@oakwood/oui-utils'
+import InView from '../InView'
 
 export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = topOffset) {
   const vh = window.innerHeight
@@ -10,55 +11,59 @@ export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = 
   return 1 - clamp(progress, 0, 1)
 }
 
-const ScrollProgress = (props) => {
-  const { children, component, onChange, ...other } = props
+const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
+  const { onChange, onEnter, onExit, ...other } = props
 
-  const entryRef = React.useRef(null)
-  const [isInView, setIsInView] = React.useState(false)
-
-  const handleIntersect = React.useCallback((inView, entry) => {
-    entryRef.current = entry
-    setIsInView(inView)
-  }, [])
+  const rootRef = React.useRef(null)
+  const handleRef = useForkRef(rootRef, ref)
 
   const handleScroll = React.useCallback(() => {
-    const vh = window.innerHeight
-    const target = entryRef.current.target
+    const target = rootRef.current
+    const maxOffset = Math.min(target.clientHeight, window.innerHeight)
     const bounds = target.getBoundingClientRect()
     const progress = calculateVerticalProgress(bounds)
-    const innerProgress = calculateVerticalProgress(bounds, Math.min(target.clientHeight, vh))
+    const innerProgress = calculateVerticalProgress(bounds, maxOffset)
 
     if (onChange) {
       onChange(progress, innerProgress, bounds)
     }
   }, [onChange])
 
-  React.useEffect(() => {
-    if (isInView) {
+  const handleEnter = React.useCallback(
+    (entry) => {
       window.addEventListener('scroll', handleScroll, { passive: true })
       window.addEventListener('resize', handleScroll)
-      handleScroll()
 
-      return () => {
-        window.removeEventListener('scroll', handleScroll)
-        window.removeEventListener('resize', handleScroll)
+      if (onEnter) {
+        onEnter(entry)
       }
-    }
-
-    return undefined
-  }, [handleScroll, isInView])
-
-  return (
-    <InView as={component} onChange={handleIntersect} {...other}>
-      {children}
-    </InView>
+    },
+    [handleScroll, onEnter],
   )
-}
+
+  const handleExit = React.useCallback(
+    (entry) => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+
+      if (onExit) {
+        onExit(entry)
+      }
+    },
+    [handleScroll, onExit],
+  )
+
+  React.useEffect(() => {
+    handleScroll()
+  }, [handleScroll])
+
+  return <InView onEnter={handleEnter} onExit={handleExit} ref={handleRef} {...other} />
+})
 
 ScrollProgress.propTypes = {
-  children: PropTypes.node,
-  component: PropTypes.elementType,
   onChange: PropTypes.func,
+  onEnter: PropTypes.func,
+  onExit: PropTypes.func,
 }
 
 export default ScrollProgress

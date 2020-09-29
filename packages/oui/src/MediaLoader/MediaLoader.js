@@ -1,16 +1,15 @@
 // @inheritedComponent AspectRatio
 
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
-import { InView } from 'react-intersection-observer'
 import mediaLoaded from '@maeertin/medialoaded'
 import { elementAcceptingRef } from '@material-ui/utils'
-import { setRef, useControlled, useForkRef } from '@material-ui/core/utils'
+import { useControlled, useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
 import AspectRatio from '../AspectRatio'
+import InView from '../InView'
 
 export const styles = {
   placeholder: {
@@ -29,9 +28,10 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     children: childrenProp,
     classes,
     className,
+    in: inProp,
+    onEnter,
     onLoaded,
     placeholder: placeholderProp,
-    in: inProp,
     rootMargin,
     TransitionComponent = Fade,
     transitionDuration = 750,
@@ -51,23 +51,14 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   // Pointless to transition in a not loaded image.
   const reveal = loaded && inState
 
-  const handleRef = React.useCallback(
-    (instance) => {
-      if (ref) {
-        const node = ReactDOM.findDOMNode(instance)
-        setRef(ref, node)
+  const handleEnter = React.useCallback(
+    (entry) => {
+      setInState(true)
+      if (onEnter) {
+        onEnter(entry)
       }
     },
-    [ref],
-  )
-
-  const handleIntersectionChange = React.useCallback(
-    (inView) => {
-      if (inView) {
-        setInState(true)
-      }
-    },
-    [setInState],
+    [onEnter, setInState],
   )
 
   const handleLoaded = React.useCallback(
@@ -123,31 +114,27 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     }
   }
 
-  const componentProps = { ...other }
-  const Component = AspectRatio
-
-  let ContainerComponent = null
   if (rootMargin) {
-    componentProps.onChange = handleIntersectionChange
-    componentProps.rootMargin = rootMargin
-    componentProps.triggerOnce = true
-    ContainerComponent = InView
-  }
-
-  if (ContainerComponent) {
     return (
-      <ContainerComponent as={Component} ref={handleRef} {...componentProps}>
+      <InView
+        ContainerComponent={AspectRatio}
+        onEnter={handleEnter}
+        rootMargin={rootMargin}
+        triggerOnce
+        ref={ref}
+        {...other}
+      >
         {children}
         {placeholder}
-      </ContainerComponent>
+      </InView>
     )
   }
 
   return (
-    <Component ref={ref} {...componentProps}>
+    <AspectRatio ref={ref} {...other}>
       {children}
       {placeholder}
-    </Component>
+    </AspectRatio>
   )
 })
 
@@ -156,6 +143,7 @@ MediaLoader.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   in: PropTypes.bool,
+  onEnter: PropTypes.func,
   onLoaded: PropTypes.func,
   placeholder: PropTypes.element,
   rootMargin: PropTypes.string,
