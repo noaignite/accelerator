@@ -4,8 +4,7 @@ import * as React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
 import mediaLoaded from '@maeertin/medialoaded'
-import { elementAcceptingRef } from '@material-ui/utils'
-import { useControlled, useForkRef } from '@material-ui/core/utils'
+import { setRef, useControlled } from '@material-ui/core/utils'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
 import AspectRatio from '../AspectRatio'
@@ -39,7 +38,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     ...other
   } = props
 
-  const mediaRef = React.useRef(null)
+  const rootRef = React.useRef(null)
 
   const [loaded, setLoaded] = React.useState(false)
   const [inState, setInState] = useControlled({
@@ -48,12 +47,10 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     name: 'MediaLoader',
   })
 
-  // Pointless to transition in a not loaded image.
-  const reveal = loaded && inState
-
   const handleEnter = React.useCallback(
     (entry) => {
       setInState(true)
+
       if (onEnter) {
         onEnter(entry)
       }
@@ -63,8 +60,9 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 
   const handleLoaded = React.useCallback(
     (instance) => {
-      if (mediaRef.current) {
+      if (rootRef.current) {
         setLoaded(true)
+
         if (onLoaded) {
           onLoaded(instance)
         }
@@ -73,17 +71,20 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     [onLoaded],
   )
 
-  const handleOwnMediaRef = React.useCallback(
+  const handleRef = React.useCallback(
     (node) => {
-      mediaRef.current = node
+      rootRef.current = node
+      setRef(ref, node)
+
       if (node) {
         mediaLoaded(node, handleLoaded)
       }
     },
-    [handleLoaded],
+    [handleLoaded, ref],
   )
 
-  const handleMediaRef = useForkRef(handleOwnMediaRef, childrenProp?.ref)
+  // Pointless to transition in a not loaded image.
+  const reveal = loaded && inState
 
   let placeholder = null
   if (placeholderProp && React.isValidElement(placeholderProp)) {
@@ -101,17 +102,13 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
     )
   }
 
-  let children = null
-  if (childrenProp && React.isValidElement(childrenProp)) {
-    children = React.cloneElement(childrenProp, { ref: handleMediaRef })
-
-    if (!placeholder) {
-      children = (
-        <TransitionComponent in={reveal} timeout={transitionDuration} {...TransitionProps}>
-          {children}
-        </TransitionComponent>
-      )
-    }
+  let children = childrenProp
+  if (childrenProp && !placeholder) {
+    children = (
+      <TransitionComponent in={reveal} timeout={transitionDuration} {...TransitionProps}>
+        {children}
+      </TransitionComponent>
+    )
   }
 
   if (rootMargin) {
@@ -121,7 +118,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
         onEnter={handleEnter}
         rootMargin={rootMargin}
         triggerOnce
-        ref={ref}
+        ref={handleRef}
         {...other}
       >
         {children}
@@ -131,7 +128,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   }
 
   return (
-    <AspectRatio ref={ref} {...other}>
+    <AspectRatio ref={handleRef} {...other}>
       {children}
       {placeholder}
     </AspectRatio>
@@ -139,7 +136,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
 })
 
 MediaLoader.propTypes = {
-  children: elementAcceptingRef.isRequired,
+  children: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   in: PropTypes.bool,
