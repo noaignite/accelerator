@@ -26,9 +26,9 @@ export function extractImgProps(props) {
 }
 
 const Media = React.forwardRef(function Media(props, ref) {
-  const { breakpoints, component, loading, src, ...other } = props
+  const { breakpoints, component = 'img', lazy: lazyProp, src, ...other } = props
 
-  const [lazy, setLazy] = React.useState(loading === 'lazy')
+  const [lazy, setLazy] = React.useState(lazyProp)
   const handleEnter = React.useCallback(() => {
     setLazy(false)
   }, [])
@@ -55,7 +55,7 @@ const Media = React.forwardRef(function Media(props, ref) {
     componentProps.src = src
   }
 
-  if (loading === 'lazy') {
+  if (lazyProp) {
     return (
       <InView
         ContainerComponent={ContainerComponent}
@@ -82,7 +82,7 @@ Media.propTypes = {
   breakpoints: PropTypes.object,
   children: PropTypes.node,
   component: PropTypes.elementType,
-  loading: PropTypes.string,
+  lazy: PropTypes.bool,
   src: PropTypes.string,
 }
 
