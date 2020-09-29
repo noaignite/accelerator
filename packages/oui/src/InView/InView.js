@@ -50,8 +50,8 @@ const InView = React.forwardRef(function InView(props, ref) {
         observer.unobserve(rootRef.current, observerOptions)
       }
 
-      setRef(ref, node)
       rootRef.current = node
+      setRef(ref, node)
     },
     [handleEnter, observer, observerOptions, onExit, ref],
   )
