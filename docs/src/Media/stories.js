@@ -115,27 +115,20 @@ Lazy.args = {
 const Template2 = (args) => (
   <>
     {Array.from(new Array(1000), (_, idx) => (
-      <Media key={idx} alt="" {...args} />
+      <Media key={idx} src={sources.jpg.xs} style={{ height: 500 }} {...args} />
     ))}
   </>
 )
 
 export const DefaultLoadTest = Template2.bind({})
-DefaultLoadTest.args = {
-  src: sources.jpg.xs,
-  style: { height: 500 },
-}
+DefaultLoadTest.args = {}
 
 export const LazyLoadTest = Template2.bind({})
 LazyLoadTest.args = {
-  src: sources.jpg.xs,
   lazy: true,
-  style: { height: 500 },
 }
 
 export const NativeLazyLoadTest = Template2.bind({})
 NativeLazyLoadTest.args = {
-  src: sources.jpg.xs,
   loading: 'lazy',
-  style: { height: 500 },
 }
