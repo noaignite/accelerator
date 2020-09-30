@@ -9,17 +9,23 @@ export const styles = {
     position: 'relative',
     width: '100%',
   },
-  bounds: {
+  ratio: {
     '& ~ *': {
       position: 'absolute',
       top: 0,
       left: 0,
       width: '100%',
       height: '100%',
+    },
+    '& ~ video, & ~ picture, & ~ img': {
       // ⚠️ object-fit is not supported by IE 11.
       objectFit: 'cover',
     },
   },
+}
+
+export function calculateRatio(width, height) {
+  return ((height / width) * 100).toFixed(2)
 }
 
 const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
@@ -37,8 +43,8 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
     <Component className={classnames(classes.root, className)} ref={ref} {...other}>
       {height && width && (
         <div
-          className={classes.bounds}
-          style={{ paddingBottom: `${((height / width) * 100).toFixed(2)}%` }}
+          className={classes.ratio}
+          style={{ paddingBottom: `${calculateRatio(width, height)}%` }}
         />
       )}
       {children}
