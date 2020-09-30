@@ -1,7 +1,26 @@
 ### Versions
 
+## 0.11.0
+###### 2020-09-30
+
+### `@oakwood/oui@v0.11.0`
+
+- [AspectRatio] Small styles refactor and new calculateRatio export function
+- [MediaLoader] Now only notifies of loading of child media and no longer animates
+- [MediaReveal] A simpler version of previous MediaLoader
+
+### `@oakwood/oui-utils@v0.11.0`
+
+- [utils] New getObserverInstance util to get IntersectionObserverAdmin singleton
+
+### Docs
+
+- [docs] Update affected component stories
+
 ## 0.10.0
 ###### 2020-09-22
+
+### `@oakwood/oui@v0.10.0`
 
 - [MediaBase] Add custom MediaBase component replacing Mui CardMedia
 - [Media] Compose with new MediaBase instead of Mui CardMedia
