@@ -11,9 +11,7 @@ module.exports = {
   moduleNameMapper: {
     '^@oakwood/oui-utils(.*)$': '<rootDir>/packages/oui-utils/src$1',
   },
-  // testEnvironment: 'jsdom',
-  // modulePathIgnorePatterns: ['/build/'],
-  testPathIgnorePatterns: ['/build/'],
+  modulePathIgnorePatterns: ['build'],
   setupFiles: ['<rootDir>/test/setup.js'],
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
 }
