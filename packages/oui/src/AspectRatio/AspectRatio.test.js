@@ -1,20 +1,25 @@
 import * as React from 'react'
-import { createMount } from '@material-ui/core/test-utils'
+import { getClasses, createMount } from '@material-ui/core/test-utils'
+import { describeConformance, render } from '../test-utils'
 import AspectRatio from './AspectRatio'
 
 describe('<AspectRatio />', () => {
-  let mount
+  const mount = createMount()
+  let classes
 
   beforeAll(() => {
-    mount = createMount()
+    classes = getClasses(<AspectRatio />)
   })
 
-  afterAll(() => {
-    mount.cleanUp()
-  })
+  describeConformance(<AspectRatio />, () => ({
+    classes,
+    inheritComponent: 'div',
+    mount,
+    refInstanceof: window.HTMLDivElement,
+    testComponentPropWith: 'span',
+  }))
 
-  it('should work', () => {
-    // eslint-disable-next-line no-unused-vars
-    const wrapper = mount(<AspectRatio />)
+  it('should render a div containing an div', () => {
+    render(<AspectRatio width={1} height={1} />)
   })
 })
