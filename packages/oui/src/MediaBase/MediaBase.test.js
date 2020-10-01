@@ -1,20 +1,31 @@
 import * as React from 'react'
-import { createMount } from '@material-ui/core/test-utils'
+import { getClasses, createMount } from '@material-ui/core/test-utils'
+import { describeConformance } from '../test-utils'
 import MediaBase from './MediaBase'
 
 describe('<MediaBase />', () => {
-  let mount
+  const mount = createMount()
+  let classes
 
   beforeAll(() => {
-    mount = createMount()
+    classes = getClasses(<MediaBase src="/foo.jpg" />)
   })
 
-  afterAll(() => {
-    mount.cleanUp()
-  })
+  describeConformance(<MediaBase src="/foo.jpg" />, () => ({
+    classes,
+    inheritComponent: 'img',
+    mount,
+    refInstanceof: window.HTMLImageElement,
+    testComponentPropWith: 'picture',
+  }))
+  mount.cleanUp()
 
-  it('should work', () => {
-    // eslint-disable-next-line no-unused-vars
-    const wrapper = mount(<MediaBase component="picture" />)
+  it('should render a picture with content of nested children', () => {
+    const wrapper = mount(
+      <MediaBase component="picture">
+        <img src="foo.jpg" alt="" />
+      </MediaBase>,
+    )
+    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
   })
 })

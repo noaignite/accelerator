@@ -1,20 +1,37 @@
 import * as React from 'react'
-import { createMount } from '@material-ui/core/test-utils'
+import { getClasses, createMount } from '@material-ui/core/test-utils'
+import { describeConformance, render } from '../test-utils'
 import BackgroundMedia from './BackgroundMedia'
 
 describe('<BackgroundMedia />', () => {
-  let mount
+  const mount = createMount()
+  let classes
 
   beforeAll(() => {
-    mount = createMount()
+    classes = getClasses(<BackgroundMedia />)
   })
 
-  afterAll(() => {
-    mount.cleanUp()
+  describeConformance(<BackgroundMedia />, () => ({
+    classes,
+    inheritComponent: 'div',
+    mount,
+    refInstanceof: window.HTMLDivElement,
+    skip: ['componentProp'],
+  }))
+  mount.cleanUp()
+
+  it('should render a div containing the container & wrapper divs', () => {
+    const { getByTestId } = render(<BackgroundMedia />)
+    expect(getByTestId('container')).toBeInTheDocument()
+    expect(getByTestId('wrapper')).toBeInTheDocument()
   })
 
-  it('should work', () => {
-    // eslint-disable-next-line no-unused-vars
-    const wrapper = mount(<BackgroundMedia />)
+  it('should render a div with content of nested children', () => {
+    const wrapper = mount(
+      <BackgroundMedia>
+        <img src="foo.jpg" alt="" />
+      </BackgroundMedia>,
+    )
+    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
   })
 })
