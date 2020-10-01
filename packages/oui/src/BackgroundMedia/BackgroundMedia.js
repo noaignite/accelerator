@@ -69,8 +69,8 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
 
 BackgroundMedia.propTypes = {
   attachment: PropTypes.oneOf(['static', 'fixed', 'sticky']),
-  children: PropTypes.node.isRequired,
-  classes: PropTypes.object.isRequired,
+  children: PropTypes.node,
+  classes: PropTypes.object,
   className: PropTypes.string,
 }
 
