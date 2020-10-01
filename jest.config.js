@@ -1,5 +1,10 @@
 module.exports = {
-  collectCoverageFrom: ['packages/**/*.{js,jsx}', '!packages/**/*.test.{js,jsx}'],
+  collectCoverageFrom: [
+    'packages/**/*.{js,jsx}',
+    '!packages/**/*.test.{js,jsx}',
+    '!packages/**/index.{js,jsx}',
+    '!packages/oui/src/test-utils/*.{js,jsx}',
+  ],
   coverageThreshold: {
     global: {
       statements: 98,
