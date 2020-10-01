@@ -16,6 +16,7 @@ if (process.env.BABEL_ENV === 'es') {
 const productionPlugins = [
   '@babel/plugin-transform-react-constant-elements',
   'babel-plugin-transform-dev-warning',
+  ['babel-plugin-react-remove-properties', { properties: ['data-testid'] }],
   [
     'babel-plugin-transform-react-remove-prop-types',
     {
