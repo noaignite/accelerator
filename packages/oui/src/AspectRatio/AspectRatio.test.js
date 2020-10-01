@@ -18,6 +18,7 @@ describe('<AspectRatio />', () => {
     refInstanceof: window.HTMLDivElement,
     testComponentPropWith: 'span',
   }))
+  mount.cleanUp()
 
   describe('should render a div containing', () => {
     it('0 children', () => {
@@ -26,10 +27,18 @@ describe('<AspectRatio />', () => {
       expect(aspectRatio.children.length).toEqual(0)
     })
 
-    it('1 child', () => {
-      const { container } = render(<AspectRatio width={1} height={1} />)
-      const aspectRatio = container.firstChild
-      expect(aspectRatio.children.length).toEqual(1)
+    it('the ratio element', () => {
+      const { getByTestId } = render(<AspectRatio width={1} height={1} />)
+      expect(getByTestId('ratio')).toBeInTheDocument()
     })
+  })
+
+  it('should render a div with content of nested children', () => {
+    const wrapper = mount(
+      <AspectRatio>
+        <img src="foo.jpg" alt="" />
+      </AspectRatio>,
+    )
+    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
   })
 })

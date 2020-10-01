@@ -45,6 +45,7 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
         <div
           className={classes.ratio}
           style={{ paddingBottom: `${calculateRatio(width, height)}%` }}
+          data-testid="ratio"
         />
       )}
       {children}

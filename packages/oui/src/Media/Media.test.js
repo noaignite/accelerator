@@ -1,20 +1,17 @@
 import * as React from 'react'
 import { createMount } from '@material-ui/core/test-utils'
+import { describeConformance } from '../test-utils'
 import Media from './Media'
 
 describe('<Media />', () => {
-  let mount
+  const mount = createMount()
 
-  beforeAll(() => {
-    mount = createMount()
-  })
-
-  afterAll(() => {
-    mount.cleanUp()
-  })
-
-  it('should work', () => {
-    // eslint-disable-next-line no-unused-vars
-    const wrapper = mount(<Media component="picture" />)
-  })
+  describeConformance(<Media />, () => ({
+    inheritComponent: 'img',
+    mount,
+    refInstanceof: window.HTMLImageElement,
+    testComponentPropWith: 'picture',
+    skip: ['rootClass'],
+  }))
+  mount.cleanUp()
 })
