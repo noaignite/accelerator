@@ -7,7 +7,7 @@ module.exports = {
     es6: true,
     browser: true,
     node: true,
-    mocha: true,
+    jest: true,
   },
   extends: ['plugin:import/recommended', 'airbnb', 'prettier', 'prettier/react'],
   parser: 'babel-eslint',
@@ -92,4 +92,12 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': ['error', { additionalHooks: 'useEnhancedEffect' }],
   },
+  overrides: [
+    {
+      files: ['docs/src/**/*.js'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 }
