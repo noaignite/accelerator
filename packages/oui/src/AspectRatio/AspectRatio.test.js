@@ -19,7 +19,17 @@ describe('<AspectRatio />', () => {
     testComponentPropWith: 'span',
   }))
 
-  it('should render a div containing an div', () => {
-    render(<AspectRatio width={1} height={1} />)
+  describe('should render a div containing', () => {
+    it('0 children', () => {
+      const { container } = render(<AspectRatio />)
+      const aspectRatio = container.firstChild
+      expect(aspectRatio.children.length).toEqual(0)
+    })
+
+    it('1 child', () => {
+      const { container } = render(<AspectRatio width={1} height={1} />)
+      const aspectRatio = container.firstChild
+      expect(aspectRatio.children.length).toEqual(1)
+    })
   })
 })
