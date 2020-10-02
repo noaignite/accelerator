@@ -20,25 +20,25 @@ describe('<AspectRatio />', () => {
   }))
   mount.cleanUp()
 
-  describe('should render a div containing', () => {
-    it('0 children', () => {
-      const { container } = render(<AspectRatio />)
-      const aspectRatio = container.firstChild
-      expect(aspectRatio.children.length).toEqual(0)
+  describe('should render with', () => {
+    it('no children', () => {
+      const { getByTestId } = render(<AspectRatio data-testid="root" />)
+      expect(getByTestId('root')).toBeEmptyDOMElement()
     })
 
-    it('the ratio element', () => {
-      const { getByTestId } = render(<AspectRatio width={1} height={1} />)
-      expect(getByTestId('ratio')).toBeInTheDocument()
+    it('children', () => {
+      const { getByTestId } = render(<AspectRatio width={1} height={1} data-testid="root" />)
+      expect(getByTestId('root')).not.toBeEmptyDOMElement()
     })
-  })
 
-  it('should render a div with content of nested children', () => {
-    const wrapper = mount(
-      <AspectRatio>
-        <img src="foo.jpg" alt="" />
-      </AspectRatio>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <AspectRatio data-testid="root">
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </AspectRatio>,
+      )
+      expect(getByTestId('root').tagName).toEqual('DIV')
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
   })
 })
