@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createMount } from '@material-ui/core/test-utils'
-import { describeConformance } from '../test-utils'
+import { describeConformance, render } from '../test-utils'
 import InView from './InView'
 
 describe('<InView />', () => {
@@ -15,12 +15,14 @@ describe('<InView />', () => {
   }))
   mount.cleanUp()
 
-  it('should render a div with content of nested children', () => {
-    const wrapper = mount(
-      <InView>
-        <img src="foo.jpg" alt="" />
-      </InView>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+  describe('should render with', () => {
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <InView data-testid="root">
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </InView>,
+      )
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
   })
 })

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { describeConformance } from '../test-utils'
+import { describeConformance, render } from '../test-utils'
 import MediaBase from './MediaBase'
 
 describe('<MediaBase />', () => {
@@ -20,12 +20,24 @@ describe('<MediaBase />', () => {
   }))
   mount.cleanUp()
 
-  it('should render a picture with content of nested children', () => {
-    const wrapper = mount(
-      <MediaBase component="picture">
-        <img src="foo.jpg" alt="" />
-      </MediaBase>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+  describe('should render with', () => {
+    it('the `src` attribute specified', () => {
+      const { getByTestId } = render(<MediaBase src="/foo.jpg" data-testid="root" />)
+      expect(getByTestId('root')).toHaveAttribute('src', '/foo.jpg')
+    })
+
+    it('no `src` attribute when `lazy` is specified', () => {
+      const { getByTestId } = render(<MediaBase src="/foo.jpg" lazy data-testid="root" />)
+      expect(getByTestId('root')).not.toHaveAttribute('src', '/foo.jpg')
+    })
+
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <MediaBase component="picture" data-testid="root">
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </MediaBase>,
+      )
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
   })
 })

@@ -20,18 +20,20 @@ describe('<BackgroundMedia />', () => {
   }))
   mount.cleanUp()
 
-  it('should render a div containing the container & wrapper divs', () => {
-    const { getByTestId } = render(<BackgroundMedia />)
-    expect(getByTestId('container')).toBeInTheDocument()
-    expect(getByTestId('wrapper')).toBeInTheDocument()
-  })
+  describe('should render with', () => {
+    it('the container & wrapper divs', () => {
+      const { getByTestId } = render(<BackgroundMedia data-testid="root" />)
+      expect(getByTestId('container')).toBeInTheDocument()
+      expect(getByTestId('wrapper')).toBeInTheDocument()
+    })
 
-  it('should render a div with content of nested children', () => {
-    const wrapper = mount(
-      <BackgroundMedia>
-        <img src="foo.jpg" alt="" />
-      </BackgroundMedia>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <BackgroundMedia data-testid="root">
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </BackgroundMedia>,
+      )
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
   })
 })
