@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { describeConformance } from '../test-utils'
+import { describeConformance, render } from '../test-utils'
 import MediaLoader from '../MediaLoader'
 import MediaReveal from './MediaReveal'
 
@@ -28,4 +28,15 @@ describe('<MediaReveal />', () => {
     ],
   }))
   mount.cleanUp()
+
+  describe('should render with', () => {
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <MediaReveal>
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </MediaReveal>,
+      )
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
+  })
 })

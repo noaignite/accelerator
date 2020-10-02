@@ -33,7 +33,7 @@ const MediaWithWidth = React.forwardRef(function MediaWithWidth(props, ref) {
 
   const componentProps = typeof src !== 'object' ? { src } : src
 
-  return <MediaBase ref={ref} {...componentProps} {...other} />
+  return <MediaBase ref={ref} {...other} {...componentProps} />
 })
 
 MediaWithWidth.propTypes = {
