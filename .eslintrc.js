@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   root: true, // So parent files don't get applied
   globals: {
@@ -18,7 +20,9 @@ module.exports = {
   plugins: ['babel', 'react-hooks'],
   settings: {
     'import/resolver': {
-      'babel-module': {},
+      webpack: {
+        config: path.join(__dirname, './docs/.storybook/webpackBaseConfig.js'),
+      },
     },
   },
   /**
