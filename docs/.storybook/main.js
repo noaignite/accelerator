@@ -1,6 +1,5 @@
-const path = require('path')
-
-const workspaceRoot = path.join(__dirname, '../../')
+const deepmerge = require('@material-ui/utils/deepmerge').default
+const webpackBaseConfig = require('./webpackBaseConfig')
 
 module.exports = {
   stories: ['../src/**/*stories.js'],
@@ -10,15 +9,7 @@ module.exports = {
     // You can change the configuration based on that.
     // 'PRODUCTION' is used when building the static version of storybook.
 
-    // required to transpile ../packages/
-    config.module.rules = config.module.rules.map((rule) => {
-      if (Array.isArray(rule.use) && rule.use[0].loader === 'babel-loader') {
-        rule.exclude = /node_modules/
-        rule.include = [workspaceRoot]
-      }
-
-      return rule
-    })
+    config = deepmerge(config, webpackBaseConfig)
 
     // Return the altered config
     return config
