@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { createMount } from '@material-ui/core/test-utils'
-import { describeConformance, render } from '../test-utils'
+import { render } from 'test/utils'
+import describeConformance from '../test-utils/describeConformance'
 import InView from './InView'
 
 describe('<InView />', () => {

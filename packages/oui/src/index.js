@@ -12,8 +12,5 @@ export * from './Media'
 export { default as MediaLoader } from './MediaLoader'
 export * from './MediaLoader'
 
-export { default as Rwiper } from './Rwiper'
-export * from './Rwiper'
-
 export { default as ScrollProgress } from './ScrollProgress'
 export * from './ScrollProgress'
