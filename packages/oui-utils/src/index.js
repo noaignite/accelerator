@@ -8,6 +8,7 @@ export { default as elementAcceptingRef } from '@material-ui/utils/elementAccept
 export { default as elementTypeAcceptingRef } from '@material-ui/utils/elementTypeAcceptingRef'
 export { default as getObserverInstance } from './getObserverInstance'
 export { default as interpolateDouble } from './interpolateDouble'
+export { default as keyframer } from './keyframer'
 export { default as lerp } from './lerp'
 export { default as mapRange } from './mapRange'
 export { default as mediaType } from './mediaType'
