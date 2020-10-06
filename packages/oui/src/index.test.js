@@ -6,7 +6,7 @@
 
 import * as OakwoodUI from './index'
 
-describe('material-ui', () => {
+describe('oakwood-ui', () => {
   it('should have exports', () => {
     expect(typeof OakwoodUI).toEqual('object')
   })
