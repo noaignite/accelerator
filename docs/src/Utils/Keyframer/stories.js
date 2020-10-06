@@ -101,7 +101,12 @@ const UI = ({ widthP, colorP, ...args }) => {
 const Template = ({ widthKeyframes, colorKeyframes, ...args }) => {
   const widthP = React.useMemo(
     () =>
-      keyframer(widthKeyframes.map((frame) => frame.split('|').map((i) => parseInt(i, 10) || 0))),
+      keyframer(
+        widthKeyframes.map((frame) => frame.split('|').map((i) => parseInt(i, 10) || 0)),
+        (x) => {
+          return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
+        },
+      ),
     [widthKeyframes],
   )
   const colorP = React.useMemo(

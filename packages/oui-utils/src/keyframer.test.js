@@ -58,9 +58,9 @@ describe('keyframer', () => {
     ).toThrow('Invalid frames supplied')
   })
 
-  it('should not accept an invalid interpolator', () => {
-    expect(() => keyframer([[0, 0]], 'hej')).toThrow('Invalid interpolator supplied')
-    expect(() => keyframer([[0, 0]], (a, b) => a + b)).toThrow('Invalid interpolator supplied')
+  it('should not accept an invalid easing function', () => {
+    expect(() => keyframer([[0, 0]], 'hej')).toThrow('Invalid easing function supplied')
+    expect(() => keyframer([[0, 0]], (a, b) => a + b)).toThrow('Invalid easing function supplied')
   })
 
   it('should handle a single keyframe', () => {

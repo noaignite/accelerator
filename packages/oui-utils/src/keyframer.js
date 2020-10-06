@@ -1,6 +1,6 @@
 import lerp from './lerp'
 
-export default function keyframer(framesInput, interpolator = lerp) {
+export default function keyframer(framesInput, easing = (x) => x) {
   if (
     !Array.isArray(framesInput) ||
     framesInput.length < 1 ||
@@ -8,8 +8,8 @@ export default function keyframer(framesInput, interpolator = lerp) {
   ) {
     throw new Error('Invalid frames supplied')
   }
-  if (typeof interpolator !== 'function' || interpolator.length !== 3) {
-    throw new Error('Invalid interpolator supplied')
+  if (typeof easing !== 'function' || easing.length !== 1) {
+    throw new Error('Invalid easing function supplied')
   }
   const sorted = framesInput.slice(0).sort((a, b) => a[0] - b[0])
   const [min, startValue] = sorted[0]
@@ -27,6 +27,6 @@ export default function keyframer(framesInput, interpolator = lerp) {
     }
     const [inMin, outMin] = sorted[i - 1]
     const [inMax, outMax] = sorted[i]
-    return interpolator(outMin, outMax, (p - inMin) / (inMax - inMin))
+    return lerp(outMin, outMax, easing((p - inMin) / (inMax - inMin)))
   }
 }
