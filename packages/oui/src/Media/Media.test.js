@@ -2,7 +2,8 @@ import * as React from 'react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
 import { createMount } from '@material-ui/core/test-utils'
-import { describeConformance, render } from '../test-utils'
+import { render } from 'test/utils'
+import describeConformance from '../test-utils/describeConformance'
 import Media from './Media'
 
 function createMatchMedia(width, ref) {
