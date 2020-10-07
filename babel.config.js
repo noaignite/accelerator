@@ -13,9 +13,16 @@ if (process.env.BABEL_ENV === 'es') {
   ]
 }
 
+const defaultAlias = {
+  '@oakwood/oui': './packages/oui/src',
+  '@oakwood/oui-utils': './packages/oui-utils/src',
+  '/test': './test',
+}
+
 const productionPlugins = [
   '@babel/plugin-transform-react-constant-elements',
   'babel-plugin-transform-dev-warning',
+  ['babel-plugin-react-remove-properties', { properties: ['data-testid'] }],
   [
     'babel-plugin-transform-react-remove-prop-types',
     {
@@ -48,6 +55,29 @@ module.exports = {
     },
     production: {
       plugins: [...productionPlugins, ['@babel/plugin-transform-runtime', { useESModules: true }]],
+    },
+    coverage: {
+      plugins: [
+        [
+          'babel-plugin-module-resolver',
+          {
+            root: ['./'],
+            alias: defaultAlias,
+          },
+        ],
+      ],
+    },
+    test: {
+      sourceMaps: 'both',
+      plugins: [
+        [
+          'babel-plugin-module-resolver',
+          {
+            root: ['./'],
+            alias: defaultAlias,
+          },
+        ],
+      ],
     },
   },
 }

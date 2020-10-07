@@ -54,11 +54,13 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
         className={classnames(classes.container, {
           [classes[`container${capitalize(attachment)}`]]: attachment !== 'static',
         })}
+        data-testid="container"
       >
         <div
           className={classnames(classes.wrapper, {
             [classes[`wrapper${capitalize(attachment)}`]]: attachment !== 'static',
           })}
+          data-testid="wrapper"
         >
           {children}
         </div>
@@ -69,8 +71,8 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
 
 BackgroundMedia.propTypes = {
   attachment: PropTypes.oneOf(['static', 'fixed', 'sticky']),
-  children: PropTypes.node.isRequired,
-  classes: PropTypes.object.isRequired,
+  children: PropTypes.node,
+  classes: PropTypes.object,
   className: PropTypes.string,
 }
 

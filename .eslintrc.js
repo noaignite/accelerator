@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   root: true, // So parent files don't get applied
   globals: {
@@ -7,7 +9,7 @@ module.exports = {
     es6: true,
     browser: true,
     node: true,
-    mocha: true,
+    jest: true,
   },
   extends: ['plugin:import/recommended', 'airbnb', 'prettier', 'prettier/react'],
   parser: 'babel-eslint',
@@ -18,7 +20,9 @@ module.exports = {
   plugins: ['babel', 'react-hooks'],
   settings: {
     'import/resolver': {
-      'babel-module': {},
+      webpack: {
+        config: path.join(__dirname, './docs/.storybook/webpackBaseConfig.js'),
+      },
     },
   },
   /**
@@ -92,4 +96,12 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': ['error', { additionalHooks: 'useEnhancedEffect' }],
   },
+  overrides: [
+    {
+      files: ['docs/src/**/*.js'],
+      rules: {
+        'react/prop-types': 'off',
+      },
+    },
+  ],
 }
