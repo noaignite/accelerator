@@ -1,7 +1,8 @@
 *.md
 /.git
 /coverage
-/docs/oui-docs
+/docs/.storybook-static
 /tmp
 build
 node_modules
+yarn.lock
