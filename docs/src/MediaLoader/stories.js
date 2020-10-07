@@ -19,7 +19,6 @@ const sources = {
   video: '//www.w3schools.com/tags/movie.mp4',
 }
 
-// eslint-disable-next-line react/prop-types
 const Template = ({ mediaProps, ...args }) => {
   const rootRef = React.useRef(null)
   const handleLoaded = React.useCallback(() => {
@@ -55,7 +54,6 @@ Default.args = {
   },
 }
 
-// eslint-disable-next-line react/prop-types
 const Template2 = ({ mediaProps, ...args }) => (
   <MediaLoader {...args}>
     {({ loaded }) => (

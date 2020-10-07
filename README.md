@@ -1,23 +1,40 @@
-# Oakwood-UI
+<p align="center">
+  <img width="150" src="/docs/public/logo.svg" alt="Oakwood-UI logo">
+</p>
 
-[Oakwood](https://oakwood.se) UI components built with [React](https://reactjs.org/) and [Material-UI](https://material-ui.com/).
+<h1 align="center">Oakwood-UI</h1>
+
+<div align="center">
+
+[Oakwood](https://oakwood.se) UI components built on top of [React](https://reactjs.org/) and [Material-UI](https://material-ui.com/).
+
+</div>
 
 ## Installation
 
-The project is dependent upon Node v12.x.x in order to run in development. It is recommended to have [nvm](https://github.com/nvm-sh/nvm#node-version-manager---) installed to convenientyle manage your node versions between projects. Once you have it installed you can install the node version denoted in the `.nvmrc` file:
+Oakwood-UI is available as an [npm package](https://www.npmjs.com/package/@oakwood/oui).
 
-```bash
-nvm use
+```sh
+// with npm
+npm install @oakwood/oui
+
+// with yarn
+yarn add @oakwood/oui
 ```
 
-Install project dependencies:
+## Documentation
 
-```bash
-yarn
-```
+Check out our xxx.
 
-Running the project in development uses [storybook](https://storybook.js.org/) within the `docs/` directory. Run the project with:
+## Contributing
 
-```bash
-yarn start
-```
+Read our [contributing guide](/CONTRIBUTING.md) to learn about our development process.
+
+## Changelog
+
+Please read the [changelog](/CHANGELOG.md).
+
+## License
+
+This project is licensed under the terms of the
+[MIT license](/LICENSE).

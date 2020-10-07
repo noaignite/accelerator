@@ -1,5 +1,3 @@
-import mapRange from './mapRange'
-
-export default function normalize(value, x, y) {
-  return mapRange(value, x, y, 0, 1)
+export default function normalize(value, min, max) {
+  return ((value - min) * (1 - 0)) / (max - min) + 0
 }

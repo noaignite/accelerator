@@ -53,8 +53,8 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
 })
 
 AspectRatio.propTypes = {
-  children: PropTypes.node.isRequired,
-  classes: PropTypes.object.isRequired,
+  children: PropTypes.node,
+  classes: PropTypes.object,
   className: PropTypes.string,
   component: PropTypes.elementType,
   height: PropTypes.number,
