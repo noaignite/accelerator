@@ -20,18 +20,18 @@ const actionWithPromise = (eventName, timeout) => async (values, { setSubmitting
   console.log(eventName, values)
 }
 
-const initialValues = {
-  email: '',
-  password: '',
+const formitProps = {
+  initialValues: {
+    email: '',
+    password: '',
+  },
+  errorMessages: {
+    email: 'Must be a valid email address',
+    password: 'Must contain UpperCase, LowerCase, Number/SpecialChar and min 8 Chars',
+  },
+  onReset: actionWithPromise('onReset', 1000),
+  onSubmit: actionWithPromise('onSubmit', 1000),
 }
-
-const errorMessages = {
-  email: 'Must be a valid email address',
-  password: 'Must contain UpperCase, LowerCase, Number/SpecialChar and min 8 Chars',
-}
-
-const onReset = actionWithPromise('onReset', 1000)
-const onSubmit = actionWithPromise('onSubmit', 1000)
 
 const fieldEmailProps = {
   placeholder: 'jon@formit.com',
@@ -46,7 +46,6 @@ const fieldPasswordProps = {
   label: 'Password',
   type: 'password',
   inputProps: {
-    // eslint-disable-next-line no-useless-escape
     pattern: '(?=^.{8,}$)((?=.*d)|(?=.*W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$',
   },
   margin: 'normal',
@@ -54,93 +53,73 @@ const fieldPasswordProps = {
   required: true,
 }
 
-const Template1 = () => {
-  const { handleSubmit, handleReset, getFieldProps, submitting } = useFormit({
-    initialValues,
-    errorMessages,
-    onReset,
-    onSubmit,
-  })
+const Template1 = () => (
+  <Formit {...formitProps}>
+    <Form>
+      <Field component={TextField} name="email" {...fieldEmailProps} />
+      <Field name="password">
+        {(fieldProps) => <TextField {...fieldPasswordProps} {...fieldProps} />}
+      </Field>
 
-  return (
-    <form onSubmit={handleSubmit} onReset={handleReset} action="#">
-      <TextField {...fieldEmailProps} {...getFieldProps('email')} />
+      <FormitConsumer>
+        {({ isSubmitting }) => (
+          <>
+            <input type="reset" value="Reset" disabled={isSubmitting} />
+            <button type="submit" disabled={isSubmitting}>
+              Submit
+            </button>
 
-      <TextField {...fieldPasswordProps} {...getFieldProps('password')} />
+            {isSubmitting && <p>Loading...</p>}
+          </>
+        )}
+      </FormitConsumer>
+    </Form>
+  </Formit>
+)
 
-      <input type="reset" value="Reset" disabled={submitting} />
-      <button type="submit" disabled={submitting}>
-        Submit
-      </button>
+export const FormitContext = Template1.bind({})
+FormitContext.args = {}
 
-      {submitting && <p>Loading...</p>}
-    </form>
-  )
-}
+const Template2 = () => (
+  <Formit {...formitProps}>
+    {({ getFieldProps, isSubmitting, onReset, onSubmit }) => (
+      <form onReset={onReset} onSubmit={onSubmit} action="#">
+        <TextField {...fieldEmailProps} {...getFieldProps('email')} />
+        <TextField {...fieldPasswordProps} {...getFieldProps('password')} />
 
-export const UseFormit = Template1.bind({})
-UseFormit.args = {}
+        <input type="reset" value="Reset" disabled={isSubmitting} />
+        <button type="submit" disabled={isSubmitting}>
+          Submit
+        </button>
 
-const Template2 = () => {
-  return (
-    <Formit
-      initialValues={initialValues}
-      errorMessages={errorMessages}
-      onReset={onReset}
-      onSubmit={onSubmit}
-    >
-      {({ handleSubmit, handleReset, getFieldProps, submitting }) => (
-        <form onSubmit={handleSubmit} onReset={handleReset} action="#">
-          <TextField {...fieldEmailProps} {...getFieldProps('email')} />
-
-          <TextField {...fieldPasswordProps} {...getFieldProps('password')} />
-
-          <input type="reset" value="Reset" disabled={submitting} />
-          <button type="submit" disabled={submitting}>
-            Submit
-          </button>
-
-          {submitting && <p>Loading...</p>}
-        </form>
-      )}
-    </Formit>
-  )
-}
+        {isSubmitting && <p>Loading...</p>}
+      </form>
+    )}
+  </Formit>
+)
 
 export const FormitRenderProps = Template2.bind({})
 FormitRenderProps.args = {}
 
 const Template3 = () => {
+  const { getFieldProps, isSubmitting, onReset, onSubmit } = useFormit(formitProps)
+
   return (
-    <Formit
-      initialValues={initialValues}
-      errorMessages={errorMessages}
-      onReset={onReset}
-      onSubmit={onSubmit}
-    >
-      <Form>
-        <Field component={TextField} name="email" {...fieldEmailProps} />
+    <section>
+      <form onReset={onReset} onSubmit={onSubmit} action="#">
+        <TextField {...fieldEmailProps} {...getFieldProps('email')} />
+        <TextField {...fieldPasswordProps} {...getFieldProps('password')} />
 
-        <Field name="password">
-          {(fieldProps) => <TextField {...fieldPasswordProps} {...fieldProps} />}
-        </Field>
+        <input type="reset" value="Reset" disabled={isSubmitting} />
+        <button type="submit" disabled={isSubmitting}>
+          Submit
+        </button>
 
-        <FormitConsumer>
-          {({ submitting }) => (
-            <>
-              <input type="reset" value="Reset" disabled={submitting} />
-              <button type="submit" disabled={submitting}>
-                Submit
-              </button>
-
-              {submitting && <p>Loading...</p>}
-            </>
-          )}
-        </FormitConsumer>
-      </Form>
-    </Formit>
+        {isSubmitting && <p>Loading...</p>}
+      </form>
+    </section>
   )
 }
 
-export const FormitContext = Template3.bind({})
-FormitContext.args = {}
+export const UseFormit = Template3.bind({})
+UseFormit.args = {}

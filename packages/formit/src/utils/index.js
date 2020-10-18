@@ -1,0 +1,7 @@
+export { default as getIn } from './getIn'
+export { default as isFunction } from './isFunction'
+export { default as isObject } from './isObject'
+export { default as isPromise } from './isPromise'
+export { default as isStringInteger } from './isStringInteger'
+export { default as setIn } from './setIn'
+export { default as useEventCallback } from './useEventCallback'

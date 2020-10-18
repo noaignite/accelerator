@@ -1,33 +1,13 @@
 /* eslint-disable no-plusplus, no-multi-assign */
 
-import toPath from 'lodash.topath'
 import clone from 'lodash.clone'
+import toPath from 'lodash.topath'
+import getIn from './getIn'
+import isStringInteger from './isStringInteger'
+import isObject from './isObject'
 
-export function isFunction(value) {
-  return typeof value === 'function'
-}
-
-export function isObject(value) {
-  return value !== null && typeof value === 'object'
-}
-
-export function isInteger(value) {
-  return String(Math.floor(Number(value))) === value
-}
-
-export function isPromise(value) {
-  return isObject(value) && isFunction(value.then)
-}
-
-export function getIn(obj, key, def, p = 0) {
-  const path = toPath(key)
-  while (obj && p < path.length) {
-    obj = obj[path[p++]]
-  }
-  return obj === undefined ? def : obj
-}
-
-export function setIn(obj, path, value) {
+// Based on: https://github.com/formium/formik/blob/559667c823331e8be85a50e8240e45f7c782fa3c/packages/formik/src/utils.ts
+export default function setIn(obj, path, value) {
   const res = clone(obj) // this keeps inheritance when obj is a class
   const pathArray = toPath(path)
   let resVal = res
@@ -41,7 +21,7 @@ export function setIn(obj, path, value) {
       resVal = resVal[currentPath] = clone(currentObj)
     } else {
       const nextPath = pathArray[i + 1]
-      resVal = resVal[currentPath] = isInteger(nextPath) && Number(nextPath) >= 0 ? [] : {}
+      resVal = resVal[currentPath] = isStringInteger(nextPath) && Number(nextPath) >= 0 ? [] : {}
     }
   }
 
