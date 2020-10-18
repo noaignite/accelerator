@@ -1,7 +1,6 @@
 import * as React from 'react'
 import isEqual from 'react-fast-compare'
-import useEventCallback from '@oakwood/oui-utils/useEventCallback'
-import { isPromise, getIn, setIn } from './utils'
+import { isPromise, getIn, setIn, useEventCallback } from './utils'
 
 const emptyErrorMessages = {}
 const emptyErrors = {}
@@ -9,26 +8,32 @@ const emptyValues = {}
 
 /**
  * Universal Form Hanlder, heavily inspired by Formik.
- *
  * Github: https://github.com/formik/formik/
  */
-function useFormit(props = {}) {
-  const errorMessagesRef = React.useRef(props.errorMessages || emptyErrorMessages)
-  const initialErrorsRef = React.useRef(props.initialErrors || emptyErrors)
-  const initialValuesRef = React.useRef(props.initialValues || emptyValues)
+function useFormit(options = {}) {
+  const initialStatusRef = React.useRef(options.initialStatus)
+  const errorMessagesRef = React.useRef(options.errorMessages || emptyErrorMessages)
+  const initialErrorsRef = React.useRef(options.initialErrors || emptyErrors)
+  const initialValuesRef = React.useRef(options.initialValues || emptyValues)
   const mountedRef = React.useRef(false)
 
-  const [submitting, setSubmitting] = React.useState(false)
+  const [isSubmitting, setSubmitting] = React.useState(false)
   const [state, setState] = React.useState({
+    status: initialStatusRef.current,
     errors: initialErrorsRef.current,
     values: initialValuesRef.current,
   })
 
   const resetForm = React.useCallback(() => {
     setState({
+      status: initialStatusRef.current,
       errors: initialErrorsRef.current,
       values: initialValuesRef.current,
     })
+  }, [])
+
+  const setStatus = React.useCallback((status) => {
+    setState((prev) => ({ ...prev, status }))
   }, [])
 
   const setErrors = React.useCallback((errors) => {
@@ -47,7 +52,7 @@ function useFormit(props = {}) {
     setState((prev) => ({ ...prev, values: setIn(prev.values, name, value) }))
   }, [])
 
-  const handleChange = React.useCallback((event, syntheticValue) => {
+  const onChange = React.useCallback((event, valueOrChild) => {
     const { name, validity, value: eventValue } = event.target
 
     let error
@@ -56,8 +61,8 @@ function useFormit(props = {}) {
     }
 
     let value = eventValue
-    if (syntheticValue !== undefined) {
-      value = syntheticValue?.props?.value ?? syntheticValue // `syntheticValue` for MuiSelect & MuiCheckbox/MuiRadio
+    if (valueOrChild !== undefined) {
+      value = valueOrChild.props?.value ?? valueOrChild
     }
 
     setState((prev) => ({
@@ -71,17 +76,18 @@ function useFormit(props = {}) {
     setErrors,
     setFieldError,
     setFieldValue,
+    setStatus,
     setSubmitting,
     setValues,
   }
 
-  const handleReset = useEventCallback((event) => {
+  const onReset = useEventCallback((event) => {
     if (event && event.preventDefault) {
       event.preventDefault()
     }
 
-    if (props.onReset) {
-      const maybePromisedOnReset = props.onReset(state.values, imperativeMethods)
+    if (options.onReset) {
+      const maybePromisedOnReset = options.onReset(state.values, imperativeMethods)
 
       if (isPromise(maybePromisedOnReset)) {
         maybePromisedOnReset.then(resetForm)
@@ -93,13 +99,13 @@ function useFormit(props = {}) {
     }
   })
 
-  const handleSubmit = useEventCallback((event) => {
+  const onSubmit = useEventCallback((event) => {
     if (event && event.preventDefault) {
       event.preventDefault()
     }
 
-    if (props.onSubmit) {
-      props.onSubmit(state.values, imperativeMethods)
+    if (options.onSubmit) {
+      options.onSubmit(state.values, imperativeMethods)
     }
   })
 
@@ -115,7 +121,7 @@ function useFormit(props = {}) {
     (name) => {
       const fieldProps = {
         name,
-        onChange: handleChange,
+        onChange,
         value: getIn(state.values, name),
       }
 
@@ -127,7 +133,7 @@ function useFormit(props = {}) {
 
       return fieldProps
     },
-    [handleChange, state],
+    [onChange, state],
   )
 
   React.useEffect(() => {
@@ -139,49 +145,52 @@ function useFormit(props = {}) {
 
   React.useEffect(() => {
     if (
-      props.enableReinitialize &&
+      options.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(errorMessagesRef.current, props.errorMessages)
+      !isEqual(errorMessagesRef.current, options.errorMessages)
     ) {
-      errorMessagesRef.current = props.errorMessages || emptyErrorMessages
+      errorMessagesRef.current = options.errorMessages || emptyErrorMessages
     }
-  }, [props.enableReinitialize, props.errorMessages])
+  }, [options.enableReinitialize, options.errorMessages])
 
   React.useEffect(() => {
     if (
-      props.enableReinitialize &&
+      options.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(initialErrorsRef.current, props.initialErrors)
+      !isEqual(initialErrorsRef.current, options.initialErrors)
     ) {
-      initialErrorsRef.current = props.initialErrors || emptyErrors
+      initialErrorsRef.current = options.initialErrors || emptyErrors
     }
-  }, [props.enableReinitialize, props.initialErrors])
+  }, [options.enableReinitialize, options.initialErrors])
 
   React.useEffect(() => {
     if (
-      props.enableReinitialize &&
+      options.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(initialValuesRef.current, props.initialValues)
+      !isEqual(initialValuesRef.current, options.initialValues)
     ) {
-      initialValuesRef.current = props.initialValues || emptyValues
+      initialValuesRef.current = options.initialValues || emptyValues
       resetForm()
     }
-  }, [props.enableReinitialize, props.initialValues, resetForm])
+  }, [options.enableReinitialize, options.initialValues, resetForm])
 
   return {
     ...state,
     getFieldHelpers,
     getFieldProps,
-    handleChange,
-    handleReset,
-    handleSubmit,
+    initialErrors: initialErrorsRef.current,
+    initialStatus: initialStatusRef.current,
+    initialValues: initialValuesRef.current,
+    isSubmitting,
+    onChange,
+    onReset,
+    onSubmit,
     resetForm,
     setErrors,
     setFieldError,
     setFieldValue,
     setSubmitting,
     setValues,
-    submitting,
   }
 }
 

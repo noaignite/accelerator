@@ -1,16 +1,17 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import useFormit from './useFormit'
+import { isFunction } from '../utils'
+import useFormit from '../useFormit'
 import FormitContext from './FormitContext'
 
 function Formit(props) {
   const { children, ...other } = props
 
-  const contextValue = useFormit(other)
+  const ctx = useFormit(other)
 
   return (
-    <FormitContext.Provider value={contextValue}>
-      {typeof children === 'function' ? children(contextValue) : children}
+    <FormitContext.Provider value={ctx}>
+      {isFunction(children) ? children(ctx) : children}
     </FormitContext.Provider>
   )
 }

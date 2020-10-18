@@ -1,14 +1,21 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { useFormitContext } from './FormitContext'
+import { isFunction } from '../utils'
+import { useFormitContext } from '../Formit/FormitContext'
 
 const Field = React.forwardRef(function Field(props, ref) {
   const { children, component: Component = 'input', name, ...other } = props
 
-  const { getFieldProps } = useFormitContext()
-  const fieldProps = getFieldProps(name)
+  // const { getFieldProps } = useFormitContext()
+  // const fieldProps = getFieldProps(name)
+  const formit = useFormitContext()
+  let fieldProps = {}
 
-  if (typeof children === 'function') {
+  if (formit && formit.getFieldProps) {
+    fieldProps = formit.getFieldProps(name)
+  }
+
+  if (isFunction(children)) {
     return children(fieldProps)
   }
 
