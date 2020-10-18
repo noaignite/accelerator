@@ -1,34 +1,29 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { render } from 'test/utils'
-import describeConformance from '../test-utils/describeConformance'
-import MediaLoader from '../MediaLoader'
+import { describeConformance, getClasses, render } from 'test/utils'
 import MediaReveal from './MediaReveal'
 
 describe('<MediaReveal />', () => {
-  const mount = createMount()
   let classes
 
   const defaultProps = {
     children: <div />,
   }
 
-  beforeAll(() => {
+  beforeEach(() => {
     classes = getClasses(<MediaReveal {...defaultProps} />)
   })
 
   describeConformance(<MediaReveal {...defaultProps} />, () => ({
     classes,
-    inheritComponent: MediaLoader,
-    mount,
+    inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
+    render,
     testComponentPropWith: 'span',
     skip: [
       // https://github.com/facebook/react/issues/11565
       'reactTestRenderer',
     ],
   }))
-  mount.cleanUp()
 
   describe('should render with', () => {
     it('content of nested children', () => {

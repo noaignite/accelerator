@@ -1,25 +1,21 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { render } from 'test/utils'
-import describeConformance from '../test-utils/describeConformance'
+import { describeConformance, getClasses, render } from 'test/utils'
 import MediaBase from './MediaBase'
 
 describe('<MediaBase />', () => {
-  const mount = createMount()
   let classes
 
-  beforeAll(() => {
+  beforeEach(() => {
     classes = getClasses(<MediaBase src="/foo.jpg" />)
   })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({
     classes,
     inheritComponent: 'img',
-    mount,
     refInstanceof: window.HTMLImageElement,
+    render,
     testComponentPropWith: 'picture',
   }))
-  mount.cleanUp()
 
   describe('should render with', () => {
     it('the `src` attribute specified', () => {

@@ -1,25 +1,21 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { render } from 'test/utils'
-import describeConformance from '../test-utils/describeConformance'
+import { describeConformance, getClasses, render } from 'test/utils'
 import BackgroundMedia from './BackgroundMedia'
 
 describe('<BackgroundMedia />', () => {
-  const mount = createMount()
   let classes
 
-  beforeAll(() => {
+  beforeEach(() => {
     classes = getClasses(<BackgroundMedia />)
   })
 
   describeConformance(<BackgroundMedia />, () => ({
     classes,
     inheritComponent: 'div',
-    mount,
     refInstanceof: window.HTMLDivElement,
+    render,
     skip: ['componentProp'],
   }))
-  mount.cleanUp()
 
   describe('should render with', () => {
     it('the container & wrapper divs', () => {
