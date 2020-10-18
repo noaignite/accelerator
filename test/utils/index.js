@@ -1,4 +1,5 @@
-import customRender from './customRender'
-
 export * from '@testing-library/react'
-export { customRender as render }
+
+export { default as render } from './render'
+export { default as describeConformance } from './describeConformance'
+export { default as getClasses } from './getClasses'
