@@ -1,7 +1,14 @@
 ### Versions
 
 ## 1.0.0
-###### 2020-10-07
+###### 2020-10-20
+
+### `@oakwood/formit@v1.0.0`
+
+- [useFormit] Introduce new custom hook to handle form state
+- [Formit] Introduce new ContextProvider component that utilizes the useFormit hook
+- [Form] Introduce new ContextConsumer component
+- [Field] Introduce new ContextConsumer component
 
 ### `@oakwood/oui@v1.0.0`
 
@@ -17,8 +24,9 @@
 
 - [core] Swap eslint-import-resolver-babel-module for eslint-import-resolver-webpack
 - [core] Configure eslint import resolver with docs/.storybook/webpackBaseConfig.js
-- [core] Add @testing-library/jest-dom @testing-library/react babel-plugin-react-remove-properties coveralls css-mediaquery enzyme enzyme-adapter-react-16 jest-cli jsdom react-test-renderer sinon
+- [core] Add @testing-library/jest-dom @testing-library/react babel-plugin-react-remove-properties coveralls css-mediaquery @testing-library/user-event eslint-plugin-jest-dom eslint-plugin-testing-library jest-cli jsdom react-test-renderer sinon
 - [test] Set up all new test suite with newly installed core packages
+- [test] Write tests for @oakwood/formit
 - [test] Write tests for @oakwood/oui-utils
 - [test] Write tests for @oakwood/oui
 
