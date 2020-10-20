@@ -1,5 +1,6 @@
 import getIn from './getIn'
 
+// Based on `getIn` in: https://github.com/formium/formik/blob/master/packages/formik/test/utils.test.tsx
 describe('getIn', () => {
   const obj = {
     a: {

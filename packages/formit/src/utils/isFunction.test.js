@@ -1,10 +1,8 @@
 import isFunction from './isFunction'
 
 describe('isFunction', () => {
-  it('is a function and returns if value is a function', () => {
-    expect(typeof isFunction).toEqual('function')
-    expect(typeof isFunction()).toEqual('boolean')
+  it('should return if value is a function', () => {
     expect(isFunction(isFunction)).toEqual(true)
-    expect(isFunction()).toEqual(false)
+    expect(isFunction('isFunction')).toEqual(false)
   })
 })

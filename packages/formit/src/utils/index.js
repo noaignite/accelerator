@@ -1,4 +1,6 @@
+export { default as getCheckboxValue } from './getCheckboxValue'
 export { default as getIn } from './getIn'
+export { default as getSelectMultipleValues } from './getSelectMultipleValues'
 export { default as isFunction } from './isFunction'
 export { default as isObject } from './isObject'
 export { default as isPromise } from './isPromise'

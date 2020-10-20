@@ -41,17 +41,14 @@ export default function createRender(globalOptions = {}) {
     const {
       strict = globalStrict,
       wrapper = globalWrapper,
-      wrapperProps,
+      wrapperProps = globalWrapperProps,
       ...localOptions
     } = options
 
     return render(element, {
       strict,
       wrapper,
-      wrapperProps: {
-        ...globalWrapperProps,
-        ...wrapperProps,
-      },
+      wrapperProps,
       ...localOptions,
     })
   }
