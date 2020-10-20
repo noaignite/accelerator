@@ -1,20 +1,65 @@
 import * as React from 'react'
 import isEqual from 'react-fast-compare'
-import { isPromise, getIn, setIn, useEventCallback } from './utils'
+import { isObject, isPromise, getIn, setIn, useEventCallback } from './utils'
 
-const emptyErrorMessages = {}
-const emptyErrors = {}
-const emptyValues = {}
+/** Return multi select values based on an array of options */
+function getSelectedValues(options) {
+  return Array.from(options)
+    .filter((el) => el.selected)
+    .map((el) => el.value)
+}
+
+/** Return the next value for a checkbox */
+function getValueForCheckbox(currentValue, checked, valueProp) {
+  // If the current value was a boolean, return a boolean
+  if (typeof currentValue === 'boolean') {
+    return Boolean(checked)
+  }
+
+  // If the currentValue was not a boolean we want to return an array
+  let currentArrayOfValues = []
+  let isValueInArray = false
+  let index = -1
+
+  if (!Array.isArray(currentValue)) {
+    // eslint-disable-next-line
+    if (!valueProp || valueProp == 'true' || valueProp == 'false') {
+      return Boolean(checked)
+    }
+  } else {
+    // If the current value is already an array, use it
+    currentArrayOfValues = currentValue
+    index = currentValue.indexOf(valueProp)
+    isValueInArray = index >= 0
+  }
+
+  // If the checkbox was checked and the value is not already present in the aray we want to add the new value to the array of values
+  if (checked && valueProp && !isValueInArray) {
+    return currentArrayOfValues.concat(valueProp)
+  }
+
+  // If the checkbox was unchecked and the value is not in the array, simply return the already existing array of values
+  if (!isValueInArray) {
+    return currentArrayOfValues
+  }
+
+  // If the checkbox was unchecked and the value is in the array, remove the value and return the array
+  return currentArrayOfValues.slice(0, index).concat(currentArrayOfValues.slice(index + 1))
+}
+
+const emptyValidationErrors = {}
+const emptyInitialErrors = {}
+const emptyInitialValues = {}
 
 /**
  * Universal Form Hanlder, heavily inspired by Formik.
  * Github: https://github.com/formik/formik/
  */
-function useFormit(options = {}) {
-  const initialStatusRef = React.useRef(options.initialStatus)
-  const errorMessagesRef = React.useRef(options.errorMessages || emptyErrorMessages)
-  const initialErrorsRef = React.useRef(options.initialErrors || emptyErrors)
-  const initialValuesRef = React.useRef(options.initialValues || emptyValues)
+function useFormit(props = {}) {
+  const initialStatusRef = React.useRef(props.initialStatus)
+  const validationErrorsRef = React.useRef(props.validationErrors || emptyValidationErrors)
+  const initialErrorsRef = React.useRef(props.initialErrors || emptyInitialErrors)
+  const initialValuesRef = React.useRef(props.initialValues || emptyInitialValues)
   const mountedRef = React.useRef(false)
 
   const [isSubmitting, setSubmitting] = React.useState(false)
@@ -52,24 +97,34 @@ function useFormit(options = {}) {
     setState((prev) => ({ ...prev, values: setIn(prev.values, name, value) }))
   }, [])
 
-  const onChange = React.useCallback((event, valueOrChild) => {
-    const { name, validity, value: eventValue } = event.target
+  const onChange = React.useCallback(
+    (event) => {
+      const { checked, multiple, name, options, type, validity, value: eventValue } = event.target
 
-    let error
-    if (validity && !validity.valid) {
-      error = errorMessagesRef.current[name]
-    }
+      let error
+      if (validity && !validity.valid) {
+        error = validationErrorsRef.current[name]
+      }
 
-    let value = eventValue
-    if (valueOrChild !== undefined) {
-      value = valueOrChild.props?.value ?? valueOrChild
-    }
+      let value
+      if (/checkbox/.test(type)) {
+        value = getValueForCheckbox(getIn(state.values, name), checked, eventValue)
+      } else if (/number|range/.test(type)) {
+        const parsed = parseFloat(eventValue)
+        value = isNaN(parsed) ? '' : parsed // eslint-disable-line no-restricted-globals
+      } else if (multiple) {
+        value = getSelectedValues(options)
+      } else {
+        value = eventValue
+      }
 
-    setState((prev) => ({
-      errors: setIn(prev.errors, name, error),
-      values: setIn(prev.values, name, value),
-    }))
-  }, [])
+      setState((prev) => ({
+        errors: setIn(prev.errors, name, error),
+        values: setIn(prev.values, name, value),
+      }))
+    },
+    [state.values],
+  )
 
   const imperativeMethods = {
     resetForm,
@@ -86,8 +141,8 @@ function useFormit(options = {}) {
       event.preventDefault()
     }
 
-    if (options.onReset) {
-      const maybePromisedOnReset = options.onReset(state.values, imperativeMethods)
+    if (props.onReset) {
+      const maybePromisedOnReset = props.onReset(state.values, imperativeMethods)
 
       if (isPromise(maybePromisedOnReset)) {
         maybePromisedOnReset.then(resetForm)
@@ -104,8 +159,8 @@ function useFormit(options = {}) {
       event.preventDefault()
     }
 
-    if (options.onSubmit) {
-      options.onSubmit(state.values, imperativeMethods)
+    if (props.onSubmit) {
+      props.onSubmit(state.values, imperativeMethods)
     }
   })
 
@@ -117,18 +172,71 @@ function useFormit(options = {}) {
     [setFieldError, setFieldValue],
   )
 
+  const getFieldMeta = React.useCallback(
+    (nameOrOptions) => {
+      const isOptions = isObject(nameOrOptions)
+      const name = isOptions ? nameOrOptions.name : nameOrOptions
+
+      const fieldMeta = {
+        error: !!getIn(state.errors, name),
+        helperText: getIn(state.errors, name),
+        // Should these accessible via meta?
+        // initialError: getIn(initialErrorsRef.current, name),
+        // initialValue: getIn(initialValuesRef.current, name),
+        // validationError: getIn(validationErrorsRef.current, name),
+      }
+
+      return fieldMeta
+    },
+    [state.errors],
+  )
+
   const getFieldProps = React.useCallback(
-    (name) => {
+    (nameOrOptions) => {
+      const isOptions = isObject(nameOrOptions)
+      const name = isOptions ? nameOrOptions.name : nameOrOptions
+      const valueState = getIn(state.values, name)
+
       const fieldProps = {
         name,
         onChange,
-        value: getIn(state.values, name),
+        value: valueState,
       }
 
-      const fieldError = getIn(state.errors, name)
-      if (fieldError) {
-        fieldProps.error = true
-        fieldProps.helperText = fieldError
+      if (isOptions) {
+        const {
+          component,
+          control,
+          multiple,
+          select,
+          type,
+          value: valueProp, // value is special for checkboxes
+        } = nameOrOptions
+
+        // Better way to typecheck this?
+        let formControlLabelType
+        if (control && React.isValidElement(control)) {
+          formControlLabelType = 'radio'
+
+          if (valueProp === undefined || Array.isArray(valueState)) {
+            formControlLabelType = 'checkbox'
+          }
+        }
+
+        if (type === 'checkbox' || formControlLabelType === 'checkbox') {
+          if (valueProp === undefined) {
+            fieldProps.checked = valueState
+          } else {
+            fieldProps.checked = Array.isArray(valueState) && valueState.includes(valueProp)
+            fieldProps.value = valueProp
+          }
+        } else if (type === 'radio' || formControlLabelType === 'radio') {
+          fieldProps.checked = valueState === valueProp
+          fieldProps.value = valueProp
+        } else if ((component === 'select' || select) && multiple) {
+          fieldProps.value = fieldProps.value || []
+          fieldProps.multiple = true
+        }
       }
 
       return fieldProps
@@ -145,38 +253,39 @@ function useFormit(options = {}) {
 
   React.useEffect(() => {
     if (
-      options.enableReinitialize &&
+      props.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(errorMessagesRef.current, options.errorMessages)
+      !isEqual(validationErrorsRef.current, props.validationErrors)
     ) {
-      errorMessagesRef.current = options.errorMessages || emptyErrorMessages
+      validationErrorsRef.current = props.validationErrors || emptyValidationErrors
     }
-  }, [options.enableReinitialize, options.errorMessages])
+  }, [props.enableReinitialize, props.validationErrors])
 
   React.useEffect(() => {
     if (
-      options.enableReinitialize &&
+      props.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(initialErrorsRef.current, options.initialErrors)
+      !isEqual(initialErrorsRef.current, props.initialErrors)
     ) {
-      initialErrorsRef.current = options.initialErrors || emptyErrors
+      initialErrorsRef.current = props.initialErrors || emptyInitialErrors
     }
-  }, [options.enableReinitialize, options.initialErrors])
+  }, [props.enableReinitialize, props.initialErrors])
 
   React.useEffect(() => {
     if (
-      options.enableReinitialize &&
+      props.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(initialValuesRef.current, options.initialValues)
+      !isEqual(initialValuesRef.current, props.initialValues)
     ) {
-      initialValuesRef.current = options.initialValues || emptyValues
+      initialValuesRef.current = props.initialValues || emptyInitialValues
       resetForm()
     }
-  }, [options.enableReinitialize, options.initialValues, resetForm])
+  }, [props.enableReinitialize, props.initialValues, resetForm])
 
   return {
     ...state,
     getFieldHelpers,
+    getFieldMeta,
     getFieldProps,
     initialErrors: initialErrorsRef.current,
     initialStatus: initialStatusRef.current,
@@ -191,6 +300,7 @@ function useFormit(options = {}) {
     setFieldValue,
     setSubmitting,
     setValues,
+    validationErrors: validationErrorsRef.current,
   }
 }
 
