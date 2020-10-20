@@ -1,5 +1,6 @@
 import setIn from './setIn'
 
+// Based on `setIn` in: https://github.com/formium/formik/blob/master/packages/formik/test/utils.test.tsx
 describe('setIn', () => {
   it('sets flat value', () => {
     const obj = { x: 'y' }

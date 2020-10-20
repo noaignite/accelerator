@@ -245,7 +245,7 @@ describe('<Field />', () => {
         }}
       </Field>,
       {
-        wrapperProps: { initialErrors: { name: 'Field is required' } },
+        wrapperProps: { ...wrapperProps, initialErrors: validationErrors },
       },
     )
 
@@ -253,7 +253,7 @@ describe('<Field />', () => {
     expect(injectedProps.field.value).toEqual(initialValues.name)
     expect(typeof injectedProps.field.onChange).toEqual('function')
     expect(injectedProps.meta.error).toEqual(true)
-    expect(injectedProps.meta.helperText).toEqual('Field is required')
+    expect(injectedProps.meta.helperText).toEqual(validationErrors.name)
   })
 
   it('should resolve mixed dot and bracket paths', () => {

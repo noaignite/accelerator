@@ -6,7 +6,7 @@ import getIn from './getIn'
 import isStringInteger from './isStringInteger'
 import isObject from './isObject'
 
-// Based on: https://github.com/formium/formik/blob/559667c823331e8be85a50e8240e45f7c782fa3c/packages/formik/src/utils.ts
+// Based on `setIn` in: https://github.com/formium/formik/blob/master/packages/formik/src/utils.ts
 export default function setIn(obj, path, value) {
   const res = clone(obj) // this keeps inheritance when obj is a class
   const pathArray = toPath(path)

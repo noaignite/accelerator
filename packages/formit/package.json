@@ -30,11 +30,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "@material-ui/core": "^4.11.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@material-ui/core": "^4.11.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.7.4",
     "clsx": "^1.1.1",

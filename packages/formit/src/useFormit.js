@@ -1,51 +1,14 @@
 import * as React from 'react'
 import isEqual from 'react-fast-compare'
-import { isObject, isPromise, getIn, setIn, useEventCallback } from './utils'
-
-/** Return multi select values based on an array of options */
-function getSelectedValues(options) {
-  return Array.from(options)
-    .filter((el) => el.selected)
-    .map((el) => el.value)
-}
-
-/** Return the next value for a checkbox */
-function getValueForCheckbox(currentValue, checked, valueProp) {
-  // If the current value was a boolean, return a boolean
-  if (typeof currentValue === 'boolean') {
-    return Boolean(checked)
-  }
-
-  // If the currentValue was not a boolean we want to return an array
-  let currentArrayOfValues = []
-  let isValueInArray = false
-  let index = -1
-
-  if (!Array.isArray(currentValue)) {
-    // eslint-disable-next-line
-    if (!valueProp || valueProp == 'true' || valueProp == 'false') {
-      return Boolean(checked)
-    }
-  } else {
-    // If the current value is already an array, use it
-    currentArrayOfValues = currentValue
-    index = currentValue.indexOf(valueProp)
-    isValueInArray = index >= 0
-  }
-
-  // If the checkbox was checked and the value is not already present in the aray we want to add the new value to the array of values
-  if (checked && valueProp && !isValueInArray) {
-    return currentArrayOfValues.concat(valueProp)
-  }
-
-  // If the checkbox was unchecked and the value is not in the array, simply return the already existing array of values
-  if (!isValueInArray) {
-    return currentArrayOfValues
-  }
-
-  // If the checkbox was unchecked and the value is in the array, remove the value and return the array
-  return currentArrayOfValues.slice(0, index).concat(currentArrayOfValues.slice(index + 1))
-}
+import {
+  getCheckboxValue,
+  getIn,
+  getSelectMultipleValues,
+  isObject,
+  isPromise,
+  setIn,
+  useEventCallback,
+} from './utils'
 
 const emptyValidationErrors = {}
 const emptyInitialErrors = {}
@@ -57,9 +20,9 @@ const emptyInitialValues = {}
  */
 function useFormit(props = {}) {
   const initialStatusRef = React.useRef(props.initialStatus)
-  const validationErrorsRef = React.useRef(props.validationErrors || emptyValidationErrors)
   const initialErrorsRef = React.useRef(props.initialErrors || emptyInitialErrors)
   const initialValuesRef = React.useRef(props.initialValues || emptyInitialValues)
+  const validationErrorsRef = React.useRef(props.validationErrors || emptyValidationErrors)
   const mountedRef = React.useRef(false)
 
   const [isSubmitting, setSubmitting] = React.useState(false)
@@ -108,12 +71,12 @@ function useFormit(props = {}) {
 
       let value
       if (/checkbox/.test(type)) {
-        value = getValueForCheckbox(getIn(state.values, name), checked, eventValue)
+        value = getCheckboxValue(getIn(state.values, name), checked, eventValue)
       } else if (/number|range/.test(type)) {
         const parsed = parseFloat(eventValue)
         value = isNaN(parsed) ? '' : parsed // eslint-disable-line no-restricted-globals
       } else if (multiple) {
-        value = getSelectedValues(options)
+        value = getSelectMultipleValues(options)
       } else {
         value = eventValue
       }
@@ -255,11 +218,12 @@ function useFormit(props = {}) {
     if (
       props.enableReinitialize &&
       mountedRef.current === true &&
-      !isEqual(validationErrorsRef.current, props.validationErrors)
+      !isEqual(initialStatusRef.current, props.initialStatus)
     ) {
-      validationErrorsRef.current = props.validationErrors || emptyValidationErrors
+      initialStatusRef.current = props.initialStatus
+      setStatus(props.initialStatus)
     }
-  }, [props.enableReinitialize, props.validationErrors])
+  }, [props.enableReinitialize, props.initialStatus, setStatus])
 
   React.useEffect(() => {
     if (
@@ -268,8 +232,9 @@ function useFormit(props = {}) {
       !isEqual(initialErrorsRef.current, props.initialErrors)
     ) {
       initialErrorsRef.current = props.initialErrors || emptyInitialErrors
+      setErrors(props.initialErrors || emptyInitialErrors)
     }
-  }, [props.enableReinitialize, props.initialErrors])
+  }, [props.enableReinitialize, props.initialErrors, setErrors])
 
   React.useEffect(() => {
     if (
@@ -281,6 +246,16 @@ function useFormit(props = {}) {
       resetForm()
     }
   }, [props.enableReinitialize, props.initialValues, resetForm])
+
+  React.useEffect(() => {
+    if (
+      props.enableReinitialize &&
+      mountedRef.current === true &&
+      !isEqual(validationErrorsRef.current, props.validationErrors)
+    ) {
+      validationErrorsRef.current = props.validationErrors || emptyValidationErrors
+    }
+  }, [props.enableReinitialize, props.validationErrors])
 
   return {
     ...state,
@@ -298,6 +273,7 @@ function useFormit(props = {}) {
     setErrors,
     setFieldError,
     setFieldValue,
+    setStatus,
     setSubmitting,
     setValues,
     validationErrors: validationErrorsRef.current,
