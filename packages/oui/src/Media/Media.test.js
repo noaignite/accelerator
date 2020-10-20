@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
-import { createMount } from '@material-ui/core/test-utils'
-import { render } from 'test/utils'
-import describeConformance from '../test-utils/describeConformance'
+import { createRender, describeConformance } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import Media from './Media'
 
 function createMatchMedia(width, ref) {
@@ -32,8 +31,8 @@ function createMatchMedia(width, ref) {
 }
 
 describe('<Media />', () => {
+  const render = createRender({ wrapper: TestProvider })
   let matchMediaInstances
-  const mount = createMount()
 
   beforeEach(() => {
     matchMediaInstances = []
@@ -56,12 +55,11 @@ describe('<Media />', () => {
 
   describeConformance(<Media />, () => ({
     inheritComponent: 'img',
-    mount,
     refInstanceof: window.HTMLImageElement,
+    render,
     testComponentPropWith: 'picture',
     skip: ['rootClass'],
   }))
-  mount.cleanUp()
 
   describe('should render with', () => {
     it('the `src` attribute specified', () => {
