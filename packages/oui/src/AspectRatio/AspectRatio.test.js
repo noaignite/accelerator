@@ -1,12 +1,14 @@
 import * as React from 'react'
-import { describeConformance, getClasses, render } from 'test/utils'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import AspectRatio from './AspectRatio'
 
 describe('<AspectRatio />', () => {
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
   beforeEach(() => {
-    classes = getClasses(<AspectRatio />)
+    classes = getClasses(<AspectRatio />, render)
   })
 
   describeConformance(<AspectRatio />, () => ({

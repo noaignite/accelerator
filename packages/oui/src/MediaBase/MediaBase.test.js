@@ -1,12 +1,14 @@
 import * as React from 'react'
-import { describeConformance, getClasses, render } from 'test/utils'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import MediaBase from './MediaBase'
 
 describe('<MediaBase />', () => {
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
   beforeEach(() => {
-    classes = getClasses(<MediaBase src="/foo.jpg" />)
+    classes = getClasses(<MediaBase src="/foo.jpg" />, render)
   })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({

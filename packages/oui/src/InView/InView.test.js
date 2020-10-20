@@ -1,8 +1,11 @@
 import * as React from 'react'
-import { describeConformance, render } from 'test/utils'
+import { createRender, describeConformance } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import InView from './InView'
 
 describe('<InView />', () => {
+  const render = createRender({ wrapper: TestProvider })
+
   describeConformance(<InView />, () => ({
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,

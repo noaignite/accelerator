@@ -1,8 +1,11 @@
 import * as React from 'react'
-import { describeConformance, render } from 'test/utils'
+import { createRender, describeConformance } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import MediaLoader from './MediaLoader'
 
 describe('<MediaLoader />', () => {
+  const render = createRender({ wrapper: TestProvider })
+
   describeConformance(<MediaLoader />, () => ({
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
