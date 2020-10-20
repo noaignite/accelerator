@@ -1,8 +1,11 @@
 import * as React from 'react'
-import { describeConformance, render } from 'test/utils'
+import { createRender, describeConformance } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import ScrollProgress from './ScrollProgress'
 
 describe('<ScrollProgress />', () => {
+  const render = createRender({ wrapper: TestProvider })
+
   describeConformance(<ScrollProgress />, () => ({
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,

@@ -1,8 +1,10 @@
 import * as React from 'react'
-import { describeConformance, getClasses, render } from 'test/utils'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import MediaReveal from './MediaReveal'
 
 describe('<MediaReveal />', () => {
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
   const defaultProps = {
@@ -10,7 +12,7 @@ describe('<MediaReveal />', () => {
   }
 
   beforeEach(() => {
-    classes = getClasses(<MediaReveal {...defaultProps} />)
+    classes = getClasses(<MediaReveal {...defaultProps} />, render)
   })
 
   describeConformance(<MediaReveal {...defaultProps} />, () => ({
