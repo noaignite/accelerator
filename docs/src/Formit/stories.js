@@ -1,5 +1,5 @@
 import * as React from 'react'
-import TextField from '@material-ui/core/TextField'
+import { TextField } from '@material-ui/core'
 import { Field, Form, Formit, FormitConsumer, useFormit } from '@oakwood/formit'
 
 export default {
@@ -25,7 +25,7 @@ const formitProps = {
     email: '',
     password: '',
   },
-  errorMessages: {
+  validationErrors: {
     email: 'Must be a valid email address',
     password: 'Must contain UpperCase, LowerCase, Number/SpecialChar and min 8 Chars',
   },
@@ -58,7 +58,7 @@ const Template1 = () => (
     <Form>
       <Field component={TextField} name="email" {...fieldEmailProps} />
       <Field name="password">
-        {(fieldProps) => <TextField {...fieldPasswordProps} {...fieldProps} />}
+        {({ field, meta }) => <TextField {...fieldPasswordProps} {...field} {...meta} />}
       </Field>
 
       <FormitConsumer>
@@ -82,10 +82,14 @@ FormitContext.args = {}
 
 const Template2 = () => (
   <Formit {...formitProps}>
-    {({ getFieldProps, isSubmitting, onReset, onSubmit }) => (
+    {({ getFieldMeta, getFieldProps, isSubmitting, onReset, onSubmit }) => (
       <form onReset={onReset} onSubmit={onSubmit} action="#">
-        <TextField {...fieldEmailProps} {...getFieldProps('email')} />
-        <TextField {...fieldPasswordProps} {...getFieldProps('password')} />
+        <TextField {...fieldEmailProps} {...getFieldProps('email')} {...getFieldMeta('email')} />
+        <TextField
+          {...fieldPasswordProps}
+          {...getFieldProps('password')}
+          {...getFieldMeta('password')}
+        />
 
         <input type="reset" value="Reset" disabled={isSubmitting} />
         <button type="submit" disabled={isSubmitting}>
@@ -102,13 +106,17 @@ export const FormitRenderProps = Template2.bind({})
 FormitRenderProps.args = {}
 
 const Template3 = () => {
-  const { getFieldProps, isSubmitting, onReset, onSubmit } = useFormit(formitProps)
+  const { getFieldMeta, getFieldProps, isSubmitting, onReset, onSubmit } = useFormit(formitProps)
 
   return (
     <section>
       <form onReset={onReset} onSubmit={onSubmit} action="#">
-        <TextField {...fieldEmailProps} {...getFieldProps('email')} />
-        <TextField {...fieldPasswordProps} {...getFieldProps('password')} />
+        <TextField {...fieldEmailProps} {...getFieldProps('email')} {...getFieldMeta('email')} />
+        <TextField
+          {...fieldPasswordProps}
+          {...getFieldProps('password')}
+          {...getFieldMeta('password')}
+        />
 
         <input type="reset" value="Reset" disabled={isSubmitting} />
         <button type="submit" disabled={isSubmitting}>
