@@ -21,7 +21,7 @@ const Form = React.forwardRef(function Form(props, ref) {
 
 Form.propTypes = {
   action: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
 }
 
 export default Form
