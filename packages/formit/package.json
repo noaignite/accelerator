@@ -1,6 +1,6 @@
 {
   "name": "@oakwood/formit",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": false,
   "author": "Oakwood Creative",
   "description": "Form helper components built with React and Material-UI in mind.",
