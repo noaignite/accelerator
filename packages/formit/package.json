@@ -1,21 +1,19 @@
 {
-  "name": "@oakwood/oui-utils",
-  "version": "1.0.0",
+  "name": "@oakwood/formit",
+  "version": "0.0.0",
   "private": false,
   "author": "Oakwood Creative",
-  "description": "Oakwood-UI Utils - Utility functions for Oakwood-UI.",
+  "description": "Form helper components built with React and Material-UI in mind.",
   "main": "./src/index.js",
   "keywords": [
     "react",
     "react-component",
-    "material design",
-    "material-ui",
-    "utils"
+    "material-ui"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/oakwood/oui.git",
-    "directory": "packages/oui-utils"
+    "directory": "packages/formit"
   },
   "license": "MIT",
   "bugs": {
@@ -35,11 +33,16 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@material-ui/core": "^4.11.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.7.4",
-    "intersection-observer-admin": "^0.2.12",
-    "prop-types": "^15.7.2"
+    "clsx": "^1.1.1",
+    "lodash.clone": "^4.5.0",
+    "lodash.topath": "^4.5.2",
+    "prop-types": "^15.7.2",
+    "react-fast-compare": "^3.2.0"
   },
   "sideEffects": false,
   "publishConfig": {

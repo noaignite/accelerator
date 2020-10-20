@@ -1,25 +1,23 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { render } from 'test/utils'
-import describeConformance from '../test-utils/describeConformance'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import AspectRatio from './AspectRatio'
 
 describe('<AspectRatio />', () => {
-  const mount = createMount()
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
-  beforeAll(() => {
-    classes = getClasses(<AspectRatio />)
+  beforeEach(() => {
+    classes = getClasses(<AspectRatio />, render)
   })
 
   describeConformance(<AspectRatio />, () => ({
     classes,
     inheritComponent: 'div',
-    mount,
     refInstanceof: window.HTMLDivElement,
+    render,
     testComponentPropWith: 'span',
   }))
-  mount.cleanUp()
 
   describe('should render with', () => {
     it('no children', () => {

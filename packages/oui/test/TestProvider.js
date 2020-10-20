@@ -5,9 +5,13 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 const theme = createMuiTheme({})
 
 function TestProvider(props) {
-  const { children } = props
+  const { children, ...other } = props
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+  return (
+    <ThemeProvider theme={theme} {...other}>
+      {children}
+    </ThemeProvider>
+  )
 }
 
 TestProvider.propTypes = {
