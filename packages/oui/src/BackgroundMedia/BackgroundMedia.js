@@ -17,25 +17,24 @@ export const styles = () => {
     root: {
       ...absolute,
       zIndex: -1,
+      '& *': {
+        height: '100%',
+      },
+    },
+    clipPath: {
       // ⚠️ clip-path is not supported by IE 11.
-      clipPath: 'inset(0 0 0 0)', // Use `clipPath` as `overflow="hidden"` breaks `position="sticky"`
-      WebkitClipPath: 'inset(0 0 0 0)',
+      clipPath: 'inset(-1px 0 -1px 0)', // Negative top & bottom due to sub-pixel rendering
+      WebkitClipPath: 'inset(-1px 0 -1px 0)', // Negative top & bottom due to sub-pixel rendering
     },
-    container: {
-      ...absolute,
-    },
+    container: absolute,
     containerFixed: {
       position: 'fixed',
     },
     containerSticky: {
       bottom: '-100%',
+      height: 'auto',
     },
-    wrapper: {
-      ...absolute,
-      '& *': {
-        height: '100%',
-      },
-    },
+    wrapper: absolute,
     wrapperFixed: {},
     wrapperSticky: {
       position: 'sticky',
@@ -46,25 +45,39 @@ export const styles = () => {
 }
 
 const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
-  const { attachment = 'static', children, classes, className, ...other } = props
+  const { attachment = 'static', children: childrenProp, classes, className, ...other } = props
 
-  return (
-    <div className={classnames(classes.root, className)} ref={ref} {...other}>
+  let children = childrenProp
+
+  if (attachment !== 'static') {
+    children = (
       <div
-        className={classnames(classes.container, {
-          [classes[`container${capitalize(attachment)}`]]: attachment !== 'static',
-        })}
-        data-testid="container"
+        className={classnames(classes.container, [classes[`container${capitalize(attachment)}`]])}
       >
         <div
-          className={classnames(classes.wrapper, {
-            [classes[`wrapper${capitalize(attachment)}`]]: attachment !== 'static',
+          className={classnames(classes.wrapper, [classes[`wrapper${capitalize(attachment)}`]], {
+            'mui-fixed': attachment === 'fixed',
           })}
-          data-testid="wrapper"
         >
           {children}
         </div>
       </div>
+    )
+  }
+
+  return (
+    <div
+      className={classnames(
+        classes.root,
+        {
+          [classes.clipPath]: attachment !== 'static',
+        },
+        className,
+      )}
+      ref={ref}
+      {...other}
+    >
+      {children}
     </div>
   )
 })
