@@ -2,12 +2,13 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
+import { getThemeProps, useTheme } from '@material-ui/styles'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
 
-const IMG_ATTRIBUTES = ['alt', 'height', 'loading', 'sizes', 'src', 'srcSet', 'width']
+const IMG_ATTRIBUTES = ['alt', 'decoding', 'height', 'loading', 'sizes', 'src', 'srcSet', 'width']
 
 /**
  * Separates the argument into two entries. First one containing attributes
@@ -25,21 +26,23 @@ export function extractImgProps(props) {
   )
 }
 
-const Media = React.forwardRef(function Media(props, ref) {
-  const { breakpoints, component = 'img', priority, src, ...other } = props
+const Media = React.forwardRef(function Media(inProps, ref) {
+  const theme = useTheme()
+  const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
+  const { breakpoints, component = 'img', generatePreload, priority, ...other } = props
 
   const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
     setLazy(false)
   }, [])
 
-  let componentProps = { ...other }
+  let componentProps = { component, ref, ...other }
   let ContainerComponent = MediaBase
 
   if (component === 'picture') {
     const [imgProps, restProps] = extractImgProps(componentProps)
     componentProps = {
-      children: <img src={src} alt="" {...imgProps} />,
+      children: <img alt="" {...imgProps} />,
       ...restProps,
     }
     if (breakpoints) {
@@ -51,32 +54,38 @@ const Media = React.forwardRef(function Media(props, ref) {
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
     ContainerComponent = MediaWithWidth
-  } else {
-    componentProps.src = src
   }
 
   if (!priority) {
     return (
       <InView
         ContainerComponent={ContainerComponent}
-        component={component}
         lazy={lazy}
         onEnter={handleEnter}
         rootMargin="256px" // Value based on: https://web.dev/lazy-loading-best-practices/
         triggerOnce
-        ref={ref}
         {...componentProps}
       />
     )
   }
 
-  return <ContainerComponent component={component} ref={ref} {...componentProps} />
+  // No need to add preloads on the client side. By the time the application is hydrated,
+  // it's too late for preloads.
+  const shouldPreload = generatePreload && typeof window === 'undefined'
+
+  return (
+    <>
+      {shouldPreload && generatePreload({ breakpoints, ...componentProps })}
+      <ContainerComponent decoding="async" {...componentProps} />
+    </>
+  )
 })
 
 Media.propTypes = {
   breakpoints: PropTypes.object,
   children: PropTypes.node,
   component: PropTypes.elementType,
+  generatePreload: PropTypes.func,
   lazy: (props) => {
     if (props.lazy) {
       throw new Error(
@@ -86,7 +95,6 @@ Media.propTypes = {
     }
   },
   priority: PropTypes.bool,
-  src: PropTypes.string,
 }
 
 export default Media
