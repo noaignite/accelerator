@@ -15,7 +15,7 @@ const initialValues = {
 }
 
 const validationErrors = {
-  name: 'Field is required',
+  name: 'Field is required.',
 }
 
 const wrapperProps = {
@@ -237,32 +237,49 @@ describe('<Field />', () => {
 
   it('should pass field props & meta when using render props', () => {
     let injectedProps
-    render(
+    const { getByRole } = render(
       <Field name="name">
         {(props) => {
           injectedProps = props
-          return null
+          return <input type="text" {...injectedProps.field} required />
         }}
       </Field>,
-      {
-        wrapperProps: { ...wrapperProps, initialErrors: validationErrors },
-      },
     )
+    const input = getByRole('textbox')
 
-    expect(injectedProps.field.name).toEqual('name')
-    expect(injectedProps.field.value).toEqual(initialValues.name)
-    expect(typeof injectedProps.field.onChange).toEqual('function')
+    expect(input).toHaveAttribute('name', 'name')
+    expect(input).toHaveValue(initialValues.name)
+    expect(injectedProps.meta.error).toEqual(false)
+
+    userEvent.clear(input)
     expect(injectedProps.meta.error).toEqual(true)
     expect(injectedProps.meta.helperText).toEqual(validationErrors.name)
   })
 
-  it('should resolve mixed dot and bracket paths', () => {
-    const { getByDisplayValue } = render(<Field name="user['permissions'].1" />, {
-      wrapperProps: {
-        initialValues: { user: { permissions: ['read', 'write'] } },
+  it('should resolve mixed dot and bracket paths for field props & meta', () => {
+    let injectedProps
+    const { getByRole } = render(
+      <Field name="user['permissions'].1">
+        {(props) => {
+          injectedProps = props
+          return <input type="text" {...injectedProps.field} required />
+        }}
+      </Field>,
+      {
+        wrapperProps: {
+          initialValues: { user: { permissions: ['read', 'write'] } },
+          validationErrors: { user: { permissions: ['', 'Field is required.'] } },
+        },
       },
-    })
+    )
+    const input = getByRole('textbox')
 
-    expect(getByDisplayValue('write')).toBeInTheDocument()
+    expect(input).toHaveAttribute('name', "user['permissions'].1")
+    expect(input).toHaveValue('write')
+    expect(injectedProps.meta.error).toEqual(false)
+
+    userEvent.clear(input)
+    expect(injectedProps.meta.error).toEqual(true)
+    expect(injectedProps.meta.helperText).toEqual('Field is required.')
   })
 })

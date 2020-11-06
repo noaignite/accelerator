@@ -66,7 +66,7 @@ function useFormit(props = {}) {
 
       let error
       if (validity && !validity.valid) {
-        error = validationErrorsRef.current[name]
+        error = getIn(validationErrorsRef.current, name)
       }
 
       let value
