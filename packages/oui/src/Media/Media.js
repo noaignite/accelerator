@@ -26,9 +26,9 @@ export function extractImgProps(props) {
 }
 
 const Media = React.forwardRef(function Media(props, ref) {
-  const { breakpoints, component = 'img', lazy: lazyProp, src, ...other } = props
+  const { breakpoints, component = 'img', priority, src, ...other } = props
 
-  const [lazy, setLazy] = React.useState(lazyProp)
+  const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
     setLazy(false)
   }, [])
@@ -55,19 +55,14 @@ const Media = React.forwardRef(function Media(props, ref) {
     componentProps.src = src
   }
 
-  if (lazyProp) {
+  if (!priority) {
     return (
       <InView
         ContainerComponent={ContainerComponent}
         component={component}
-        onEnter={handleEnter}
         lazy={lazy}
-        /**
-         * `rootMargin` default based on Chromium 4G load-in distance threshold
-         * https://web.dev/native-lazy-loading/#load-in-distance-threshold
-         * https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/settings.json5;drc=e8f3cf0bbe085fee0d1b468e84395aad3ebb2cad;l=971-1003?originalUrl=https:%2F%2Fcs.chromium.org%2Fchromium%2Fsrc%2Fthird_party%2Fblink%2Frenderer%2Fcore%2Fframe%2Fsettings.json5
-         */
-        rootMargin="3000px 0px"
+        onEnter={handleEnter}
+        rootMargin="256px" // Value based on: https://web.dev/lazy-loading-best-practices/
         triggerOnce
         ref={ref}
         {...componentProps}
@@ -82,7 +77,15 @@ Media.propTypes = {
   breakpoints: PropTypes.object,
   children: PropTypes.node,
   component: PropTypes.elementType,
-  lazy: PropTypes.bool,
+  lazy: (props) => {
+    if (props.lazy) {
+      throw new Error(
+        'Oakwood-UI: `lazy` was deprecated. Lazy loading is now enabled per ' +
+          'default, use `priority` instead to opt-out.',
+      )
+    }
+  },
+  priority: PropTypes.bool,
   src: PropTypes.string,
 }
 
