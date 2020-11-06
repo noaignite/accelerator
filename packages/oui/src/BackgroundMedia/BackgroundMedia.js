@@ -1,7 +1,8 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
-import { capitalize } from '@material-ui/core/utils'
+import innerHeight from 'ios-inner-height'
+import { capitalize, debounce } from '@material-ui/core/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
 
 export const styles = () => {
@@ -44,11 +45,31 @@ export const styles = () => {
   }
 }
 
+const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect
+
 const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
   const { attachment = 'static', children: childrenProp, classes, className, ...other } = props
 
-  let children = childrenProp
+  const [height, setHeight] = React.useState(0)
+  useEnhancedEffect(() => {
+    if (attachment === 'fixed') {
+      setHeight(innerHeight())
 
+      const handleResize = debounce(() => {
+        setHeight(innerHeight())
+      })
+
+      window.addEventListener('resize', handleResize)
+      return () => {
+        handleResize.clear()
+        window.removeEventListener('resize', handleResize)
+      }
+    }
+
+    return undefined
+  }, [attachment])
+
+  let children = childrenProp
   if (attachment !== 'static') {
     children = (
       <div
@@ -58,6 +79,7 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
           className={classnames(classes.wrapper, [classes[`wrapper${capitalize(attachment)}`]], {
             'mui-fixed': attachment === 'fixed',
           })}
+          style={attachment === 'fixed' ? { height } : undefined}
         >
           {children}
         </div>
