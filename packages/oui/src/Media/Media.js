@@ -2,7 +2,8 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { getThemeProps, useTheme } from '@material-ui/styles'
+import { getThemeProps } from '@material-ui/styles'
+import useTheme from '@material-ui/core/styles/useTheme'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaSources from './MediaSources'
