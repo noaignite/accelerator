@@ -54,8 +54,6 @@ Picture.args = {
   breakpoints: sources.jpg,
   src: sources.jpg.sm,
   alt: 'Image description',
-  // generatePreload: console.log,
-  // priority: true,
 }
 
 export const PictureMultiFormat = Template.bind({})
