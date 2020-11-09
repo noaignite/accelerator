@@ -62,18 +62,22 @@ describe('<Media />', () => {
   }))
 
   describe('should render with', () => {
-    it('the `src` attribute specified', () => {
-      const { getByTestId } = render(<Media src="/foo.jpg" data-testid="root" />)
-      expect(getByTestId('root')).toHaveAttribute('src', '/foo.jpg')
+    it('no initial `src` attribute specified', () => {
+      const { getByRole } = render(<Media src="/foo.jpg" />)
+      const img = getByRole('img')
+
+      expect(img).not.toHaveAttribute('src')
     })
 
-    it('no `src` attribute when `lazy` is specified', () => {
-      const { getByTestId } = render(<Media src="/foo.jpg" lazy data-testid="root" />)
-      expect(getByTestId('root')).not.toHaveAttribute('src', '/foo.jpg')
+    it('`src` attribute when `priority` is specified', () => {
+      const { getByRole } = render(<Media src="/foo.jpg" priority />)
+      const img = getByRole('img')
+
+      expect(img).toHaveAttribute('src', '/foo.jpg')
     })
 
-    it('no img attributes when `component="picture"` is specified', () => {
-      const { getByTestId } = render(
+    it('img attributes on child `img` when `component="picture"` is specified', () => {
+      const { getByRole, getByTestId } = render(
         <Media
           component="picture"
           alt="Hello"
@@ -83,16 +87,21 @@ describe('<Media />', () => {
           srcSet="/foo-480w.jpg 480w, /foo-800w.jpg 800w"
           sizes="(max-width: 600px) 480px, 800px"
           src="foo-800w.jpg"
+          priority
           data-testid="root"
         />,
       )
-      expect(getByTestId('root')).not.toHaveAttribute('alt')
-      expect(getByTestId('root')).not.toHaveAttribute('height')
-      expect(getByTestId('root')).not.toHaveAttribute('loading')
-      expect(getByTestId('root')).not.toHaveAttribute('sizes')
-      expect(getByTestId('root')).not.toHaveAttribute('src')
-      expect(getByTestId('root')).not.toHaveAttribute('srcSet')
-      expect(getByTestId('root')).not.toHaveAttribute('width')
+      const picture = getByTestId('root')
+      const img = getByRole('img')
+
+      expect(picture.tagName).toEqual('PICTURE')
+      expect(img).toHaveAttribute('alt')
+      expect(img).toHaveAttribute('height')
+      expect(img).toHaveAttribute('loading')
+      expect(img).toHaveAttribute('sizes')
+      expect(img).toHaveAttribute('src')
+      expect(img).toHaveAttribute('srcSet')
+      expect(img).toHaveAttribute('width')
     })
 
     it('source & img content when `component="picture"` & `breakpoints` is specified', () => {
@@ -101,13 +110,15 @@ describe('<Media />', () => {
           component="picture"
           breakpoints={{
             xs: '/foo.jpg',
+            sm: '/foo-big.jpg',
           }}
           data-testid="root"
         />,
       )
-      expect(getByTestId('root')).not.toBeEmptyDOMElement()
-      expect(getByTestId('root').getElementsByTagName('source').length).toEqual(1)
-      expect(getByTestId('root').getElementsByTagName('img').length).toEqual(1)
+      const picture = getByTestId('root')
+
+      expect(picture.getElementsByTagName('source')).toHaveLength(2)
+      expect(picture.getElementsByTagName('img')).toHaveLength(1)
     })
 
     it('source formats & img content when `component="picture"` & `breakpoints` is specified', () => {
@@ -120,26 +131,30 @@ describe('<Media />', () => {
           data-testid="root"
         />,
       )
-      expect(getByTestId('root')).not.toBeEmptyDOMElement()
-      expect(getByTestId('root').getElementsByTagName('source').length).toEqual(2)
-      expect(getByTestId('root').getElementsByTagName('img').length).toEqual(1)
+      const picture = getByTestId('root')
+
+      expect(picture.getElementsByTagName('source')).toHaveLength(2)
+      expect(picture.getElementsByTagName('img')).toHaveLength(1)
     })
 
-    it('no children & `src` attribute on root element when component is not `picture`', () => {
+    it('single element when `breakpoints` is specified & component is not `picture`', () => {
       const { getByTestId } = render(
         <Media
           component="video"
           breakpoints={{
             xs: '/foo.mp4',
           }}
+          priority
           data-testid="root"
         />,
       )
-      expect(getByTestId('root')).toBeEmptyDOMElement()
-      expect(getByTestId('root')).toHaveAttribute('src', '/foo.mp4')
+      const video = getByTestId('root')
+
+      expect(video).toBeEmptyDOMElement()
+      expect(video).toHaveAttribute('src', '/foo.mp4')
     })
 
-    it('no children & attributes spread on root element when component is not `picture`', () => {
+    it('spreadable props on a per breakpoint basis when component is not `picture`', () => {
       const { getByTestId } = render(
         <Media
           component="img"
@@ -150,22 +165,25 @@ describe('<Media />', () => {
               src: '/foo.mp4',
             },
           }}
+          priority
           data-testid="root"
         />,
       )
-      expect(getByTestId('root')).toBeEmptyDOMElement()
-      expect(getByTestId('root').tagName).toEqual('VIDEO')
-      expect(getByTestId('root')).toHaveAttribute('poster', '/foo.jpg')
-      expect(getByTestId('root')).toHaveAttribute('src', '/foo.mp4')
+      const video = getByTestId('root')
+
+      expect(video).toBeEmptyDOMElement()
+      expect(video).toHaveAttribute('poster', '/foo.jpg')
+      expect(video).toHaveAttribute('src', '/foo.mp4')
     })
 
     it('content of nested children', () => {
-      const { getByTestId } = render(
-        <Media component="picture" data-testid="root">
-          <img src="foo.jpg" alt="" data-testid="img" />
+      const { getByRole } = render(
+        <Media component="picture">
+          <img src="/foo.jpg" alt="" />
         </Media>,
       )
-      expect(getByTestId('img')).toBeInTheDocument()
+
+      expect(getByRole('img')).toHaveAttribute('src', '/foo.jpg')
     })
   })
 })
