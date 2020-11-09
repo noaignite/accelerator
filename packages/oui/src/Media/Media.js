@@ -31,6 +31,8 @@ const Media = React.forwardRef(function Media(inProps, ref) {
   const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
   const { breakpoints, component = 'img', generatePreload, priority, ...other } = props
 
+  const { current: breakpointKeys } = React.useRef([...theme.breakpoints.keys].reverse())
+
   const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
     setLazy(false)
@@ -38,6 +40,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
   let componentProps = { component, ref, ...other }
   let ContainerComponent = MediaBase
+  let sources
 
   if (component === 'picture') {
     const [imgProps, restProps] = extractImgProps(componentProps)
@@ -45,11 +48,30 @@ const Media = React.forwardRef(function Media(inProps, ref) {
       children: <img alt="" {...imgProps} />,
       ...restProps,
     }
+
     if (breakpoints) {
+      sources = []
+
+      breakpointKeys.forEach((key, idx) => {
+        const srcOrOptions = breakpoints[key]
+        if (!srcOrOptions) {
+          return
+        }
+
+        const min = theme.breakpoints.values[key]
+        const max = theme.breakpoints.values[breakpointKeys[idx - 1]] - 1 || 9999
+
+        if (typeof srcOrOptions === 'string') {
+          sources.push({ min, max, src: srcOrOptions })
+        } else if (Array.isArray(srcOrOptions)) {
+          srcOrOptions.forEach((options) => {
+            sources.push({ min, max, ...options })
+          })
+        }
+      })
+
       componentProps.children = React.Children.toArray(componentProps.children)
-      componentProps.children.unshift(
-        <MediaSources key="sources" breakpoints={breakpoints} lazy={lazy} />,
-      )
+      componentProps.children.unshift(<MediaSources key="sources" sources={sources} lazy={lazy} />)
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
@@ -75,7 +97,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
   return (
     <>
-      {shouldPreload && generatePreload({ breakpoints, ...componentProps })}
+      {shouldPreload && generatePreload({ sources, ...componentProps })}
       <ContainerComponent decoding="async" {...componentProps} />
     </>
   )
