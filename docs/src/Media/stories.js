@@ -111,16 +111,16 @@ const Template2 = (args) => (
   </>
 )
 
-export const PriorityLoadTest = Template2.bind({})
-PriorityLoadTest.args = {
-  priority: true,
-}
-
-export const LazyLoadTest = Template2.bind({})
-LazyLoadTest.args = {}
+export const DefaultLoadTest = Template2.bind({})
+DefaultLoadTest.args = {}
 
 export const NativeLazyLoadTest = Template2.bind({})
 NativeLazyLoadTest.args = {
   loading: 'lazy',
+  priority: true,
+}
+
+export const PriorityLoadTest = Template2.bind({})
+PriorityLoadTest.args = {
   priority: true,
 }
