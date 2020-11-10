@@ -30,15 +30,7 @@ export function extractImgProps(props) {
 const Media = React.forwardRef(function Media(inProps, ref) {
   const theme = useTheme()
   const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
-  const {
-    breakpoints,
-    children,
-    component = 'img',
-    generatePreload,
-    priority,
-    src,
-    ...other
-  } = props
+  const { breakpoints, component = 'img', generatePreload, priority, src, ...other } = props
 
   const { current: breakpointKeys } = React.useRef([...theme.breakpoints.keys].reverse())
 
@@ -47,7 +39,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     setLazy(false)
   }, [])
 
-  let componentProps = { children, component, ref, src, ...other }
+  let componentProps = { component, ref, src, ...other }
   let ContainerComponent = MediaBase
   let sources
 
@@ -114,7 +106,6 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
 Media.propTypes = {
   breakpoints: PropTypes.object,
-  children: PropTypes.node,
   component: PropTypes.elementType,
   generatePreload: PropTypes.func,
   lazy: (props) => {
