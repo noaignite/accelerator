@@ -106,7 +106,7 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
 })
 
 MediaReveal.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   classes: PropTypes.object,
   className: PropTypes.string,
   height: PropTypes.number,
