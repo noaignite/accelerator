@@ -10,22 +10,23 @@ export const styles = {
     width: '100%',
   },
   ratio: {
-    '& ~ *': {
+    '&:before': {
+      content: '""',
+      display: 'block',
+      paddingBottom: 'calc(100% / var(--aspect-ratio))',
+    },
+    '& > *': {
       position: 'absolute',
       top: 0,
       left: 0,
       width: '100%',
       height: '100%',
     },
-    '& ~ video, & ~ picture, & ~ img': {
+    '& > video, & > picture, & > img': {
       // ⚠️ object-fit is not supported by IE 11.
       objectFit: 'cover',
     },
   },
-}
-
-export function calculateRatio(width, height) {
-  return ((height / width) * 100).toFixed(2)
 }
 
 const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
@@ -35,18 +36,28 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
     className,
     component: Component = 'div',
     height,
+    ratio: ratioProp,
+    style,
     width,
     ...other
   } = props
 
+  const ratio = ratioProp || width / height
+  const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
+
   return (
-    <Component className={classnames(classes.root, className)} ref={ref} {...other}>
-      {height && width && (
-        <div
-          className={classes.ratio}
-          style={{ paddingBottom: `${calculateRatio(width, height)}%` }}
-        />
+    <Component
+      className={classnames(
+        classes.root,
+        {
+          [classes.ratio]: ratio,
+        },
+        className,
       )}
+      style={composedStyle}
+      ref={ref}
+      {...other}
+    >
       {children}
     </Component>
   )
@@ -58,6 +69,8 @@ AspectRatio.propTypes = {
   className: PropTypes.string,
   component: PropTypes.elementType,
   height: PropTypes.number,
+  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  style: PropTypes.object,
   width: PropTypes.number,
 }
 

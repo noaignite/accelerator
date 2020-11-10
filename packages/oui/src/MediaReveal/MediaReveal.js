@@ -6,7 +6,7 @@ import classnames from 'clsx'
 import { useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
-import { calculateRatio, styles as aspectRatioStyles } from '../AspectRatio/AspectRatio'
+import { styles as aspectRatioStyles } from '../AspectRatio/AspectRatio'
 import InView from '../InView'
 import MediaLoader from '../MediaLoader'
 
@@ -29,7 +29,9 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
     height,
     onEnter,
     onLoaded,
+    ratio: ratioProp,
     rootMargin,
+    style,
     TransitionComponent = Fade,
     transitionDuration = 750,
     TransitionProps,
@@ -45,6 +47,9 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
 
   const reveal = inView && loaded
   const isPlainChildren = typeof children !== 'function'
+
+  const ratio = ratioProp || width / height
+  const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
 
   const handleLoaded = React.useCallback(
     (instance) => {
@@ -73,8 +78,15 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
 
   return (
     <MediaLoader
-      className={classnames(classes.root, className)}
+      className={classnames(
+        classes.root,
+        {
+          [classes.ratio]: ratio,
+        },
+        className,
+      )}
       onLoaded={handleLoaded}
+      style={composedStyle}
       ref={handleRef}
       {...other}
     >
@@ -84,13 +96,6 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
           onEnter={handleEnter}
           rootMargin={rootMargin}
           triggerOnce
-        />
-      )}
-
-      {height && width && (
-        <div
-          className={classes.ratio}
-          style={{ paddingBottom: `${calculateRatio(width, height)}%` }}
         />
       )}
 
@@ -112,7 +117,9 @@ MediaReveal.propTypes = {
   height: PropTypes.number,
   onEnter: PropTypes.func,
   onLoaded: PropTypes.func,
+  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   rootMargin: PropTypes.string,
+  style: PropTypes.object,
   TransitionComponent: PropTypes.elementType,
   transitionDuration: PropTypes.number,
   TransitionProps: PropTypes.object,
