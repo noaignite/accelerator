@@ -28,6 +28,18 @@ describe('<MediaReveal />', () => {
   }))
 
   describe('should render with', () => {
+    it('className `ratio` if `width` & `height` are specified', () => {
+      const { getByTestId } = render(
+        <MediaReveal width={1} height={1} data-testid="root" {...defaultProps} />,
+      )
+      expect(getByTestId('root')).toHaveClass(classes.ratio)
+    })
+
+    it('className `ratio` if `ratio` is specified', () => {
+      const { getByTestId } = render(<MediaReveal ratio={1} data-testid="root" {...defaultProps} />)
+      expect(getByTestId('root')).toHaveClass(classes.ratio)
+    })
+
     it('content of nested children', () => {
       const { getByTestId } = render(
         <MediaReveal>

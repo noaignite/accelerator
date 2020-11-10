@@ -20,14 +20,14 @@ describe('<AspectRatio />', () => {
   }))
 
   describe('should render with', () => {
-    it('no children', () => {
-      const { getByTestId } = render(<AspectRatio data-testid="root" />)
-      expect(getByTestId('root')).toBeEmptyDOMElement()
+    it('className `ratio` if `width` & `height` are specified', () => {
+      const { getByTestId } = render(<AspectRatio width={1} height={1} data-testid="root" />)
+      expect(getByTestId('root')).toHaveClass(classes.ratio)
     })
 
-    it('children', () => {
-      const { getByTestId } = render(<AspectRatio width={1} height={1} data-testid="root" />)
-      expect(getByTestId('root')).not.toBeEmptyDOMElement()
+    it('className `ratio` if `ratio` is specified', () => {
+      const { getByTestId } = render(<AspectRatio ratio={1} data-testid="root" />)
+      expect(getByTestId('root')).toHaveClass(classes.ratio)
     })
 
     it('content of nested children', () => {
