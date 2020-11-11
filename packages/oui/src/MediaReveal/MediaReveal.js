@@ -48,7 +48,7 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
   const reveal = inView && loaded
   const isPlainChildren = typeof children !== 'function'
 
-  const ratio = ratioProp || width / height
+  const ratio = width && height ? width / height : ratioProp
   const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
 
   const handleLoaded = React.useCallback(
