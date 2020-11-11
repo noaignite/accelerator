@@ -6,7 +6,6 @@ import { getThemeProps } from '@material-ui/styles'
 import useTheme from '@material-ui/core/styles/useTheme'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
-import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
 
 const IMG_ATTRIBUTES = ['alt', 'decoding', 'height', 'loading', 'sizes', 'src', 'srcSet', 'width']
@@ -27,10 +26,22 @@ export function extractImgProps(props) {
   )
 }
 
+export function generateSource({ lazy, media, placeholder, src, ...other }) {
+  return <source key={src} media={media} srcSet={lazy ? placeholder : src} {...other} />
+}
+
 const Media = React.forwardRef(function Media(inProps, ref) {
   const theme = useTheme()
   const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
-  const { breakpoints, component = 'img', generatePreload, priority, src, ...other } = props
+  const {
+    breakpoints,
+    component = 'img',
+    generatePreload,
+    placeholder,
+    priority,
+    src,
+    ...other
+  } = props
 
   const { current: breakpointKeys } = React.useRef([...theme.breakpoints.keys].reverse())
 
@@ -39,7 +50,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     setLazy(false)
   }, [])
 
-  let componentProps = { component, ref, src, ...other }
+  let componentProps = { component, lazy, placeholder, src, ref, ...other }
   let ContainerComponent = MediaBase
   let sources
 
@@ -52,27 +63,31 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
     if (breakpoints) {
       sources = []
+      const children = []
 
       breakpointKeys.forEach((key, idx) => {
-        const srcOrOptions = breakpoints[key]
-        if (!srcOrOptions) {
+        const srcOrSources = breakpoints[key]
+        if (!srcOrSources) {
           return
         }
 
         const min = theme.breakpoints.values[key]
         const max = theme.breakpoints.values[breakpointKeys[idx - 1]] - 1 || 9999
+        const media = `(min-width: ${min}px)`
 
-        if (typeof srcOrOptions === 'string') {
-          sources.push({ min, max, src: srcOrOptions })
-        } else if (Array.isArray(srcOrOptions)) {
-          srcOrOptions.forEach((options) => {
-            sources.push({ min, max, ...options })
+        if (typeof srcOrSources === 'string') {
+          sources.push({ min, max, src: srcOrSources })
+          children.push(generateSource({ lazy, media, placeholder, src: srcOrSources }))
+        } else if (Array.isArray(srcOrSources)) {
+          srcOrSources.forEach((source) => {
+            sources.push({ min, max, ...source })
+            children.push(generateSource({ lazy, media, placeholder, ...source }))
           })
         }
       })
 
       componentProps.children = React.Children.toArray(componentProps.children)
-      componentProps.children.unshift(<MediaSources key="sources" sources={sources} lazy={lazy} />)
+      componentProps.children.unshift(children)
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
@@ -83,7 +98,6 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     return (
       <InView
         ContainerComponent={ContainerComponent}
-        lazy={lazy}
         onEnter={handleEnter}
         rootMargin="256px" // Value based on: https://web.dev/lazy-loading-best-practices/
         triggerOnce
@@ -105,7 +119,13 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 })
 
 Media.propTypes = {
-  breakpoints: PropTypes.object,
+  breakpoints: PropTypes.shape({
+    xs: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]).isRequired,
+    sm: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    md: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    lg: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    xl: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+  }),
   component: PropTypes.elementType,
   generatePreload: PropTypes.func,
   lazy: (props) => {
@@ -116,6 +136,7 @@ Media.propTypes = {
       )
     }
   },
+  placeholder: PropTypes.string,
   priority: PropTypes.bool,
   src: PropTypes.string,
 }
