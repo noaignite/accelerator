@@ -24,7 +24,16 @@ export const styles = {
 }
 
 const MediaBase = React.forwardRef(function MediaBase(props, ref) {
-  const { children, classes, className, component: Component = 'img', lazy, src, ...other } = props
+  const {
+    children,
+    classes,
+    className,
+    component: Component = 'img',
+    lazy,
+    placeholder,
+    src,
+    ...other
+  } = props
 
   return (
     <Component
@@ -36,7 +45,7 @@ const MediaBase = React.forwardRef(function MediaBase(props, ref) {
         },
         className,
       )}
-      src={!lazy ? src : undefined}
+      src={lazy ? placeholder : src}
       ref={ref}
       {...other}
     >
@@ -58,6 +67,7 @@ MediaBase.propTypes = {
   className: PropTypes.string,
   component: PropTypes.elementType,
   lazy: PropTypes.bool,
+  placeholder: PropTypes.string,
   src: PropTypes.string,
 }
 
