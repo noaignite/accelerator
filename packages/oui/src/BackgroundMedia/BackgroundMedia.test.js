@@ -16,7 +16,7 @@ describe('<BackgroundMedia />', () => {
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
-    skip: ['componentProp'],
+    testComponentPropWith: 'span',
   }))
 
   describe('should render with', () => {

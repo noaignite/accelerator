@@ -21,22 +21,22 @@ describe('<MediaBase />', () => {
 
   describe('should render with', () => {
     it('the `src` attribute specified', () => {
-      const { getByTestId } = render(<MediaBase src="/foo.jpg" data-testid="root" />)
-      expect(getByTestId('root')).toHaveAttribute('src', '/foo.jpg')
+      const { getByRole } = render(<MediaBase src="/foo.jpg" />)
+      expect(getByRole('img')).toHaveAttribute('src', '/foo.jpg')
     })
 
     it('no `src` attribute when `lazy` is specified', () => {
-      const { getByTestId } = render(<MediaBase src="/foo.jpg" lazy data-testid="root" />)
-      expect(getByTestId('root')).not.toHaveAttribute('src', '/foo.jpg')
+      const { getByRole } = render(<MediaBase src="/foo.jpg" lazy />)
+      expect(getByRole('img')).not.toHaveAttribute('src', '/foo.jpg')
     })
 
     it('content of nested children', () => {
-      const { getByTestId } = render(
-        <MediaBase component="picture" data-testid="root">
-          <img src="foo.jpg" alt="" data-testid="img" />
+      const { getByRole } = render(
+        <MediaBase component="picture">
+          <img src="foo.jpg" alt="" />
         </MediaBase>,
       )
-      expect(getByTestId('img')).toBeInTheDocument()
+      expect(getByRole('img')).toBeInTheDocument()
     })
   })
 })

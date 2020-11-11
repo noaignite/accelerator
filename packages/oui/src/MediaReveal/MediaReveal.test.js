@@ -27,26 +27,35 @@ describe('<MediaReveal />', () => {
     ],
   }))
 
-  describe('should render with', () => {
-    it('className `ratio` if `width` & `height` are specified', () => {
+  it('should render with content of nested children', () => {
+    const { getByTestId } = render(
+      <MediaReveal data-testid="root">
+        <img src="foo.jpg" alt="" data-testid="child" />
+      </MediaReveal>,
+    )
+    expect(getByTestId('root')).not.toHaveAttribute('style')
+    expect(getByTestId('child')).toBeInTheDocument()
+  })
+
+  describe('should apply the ratio class and inline style of `--aspect-ratio`', () => {
+    it('if `width` & `height` are specified', () => {
       const { getByTestId } = render(
-        <MediaReveal width={1} height={1} data-testid="root" {...defaultProps} />,
+        <MediaReveal width={2} height={1} data-testid="root" {...defaultProps} />,
       )
       expect(getByTestId('root')).toHaveClass(classes.ratio)
+      expect(getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
 
-    it('className `ratio` if `ratio` is specified', () => {
-      const { getByTestId } = render(<MediaReveal ratio={1} data-testid="root" {...defaultProps} />)
+    it('if `ratio` is specified', () => {
+      const { getByTestId } = render(<MediaReveal ratio={2} data-testid="root" {...defaultProps} />)
       expect(getByTestId('root')).toHaveClass(classes.ratio)
+      expect(getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
+  })
 
-    it('content of nested children', () => {
-      const { getByTestId } = render(
-        <MediaReveal>
-          <img src="foo.jpg" alt="" data-testid="img" />
-        </MediaReveal>,
-      )
-      expect(getByTestId('img')).toBeInTheDocument()
-    })
+  it('should apply the ratio class but no inline styles if `ratio` is specified as a boolean', () => {
+    const { getByTestId } = render(<MediaReveal ratio data-testid="root" {...defaultProps} />)
+    expect(getByTestId('root')).toHaveClass(classes.ratio)
+    expect(getByTestId('root')).not.toHaveAttribute('style')
   })
 })

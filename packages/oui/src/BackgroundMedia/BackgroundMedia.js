@@ -48,7 +48,14 @@ export const styles = () => {
 const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect
 
 const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
-  const { attachment = 'static', children: childrenProp, classes, className, ...other } = props
+  const {
+    attachment = 'static',
+    children: childrenProp,
+    classes,
+    className,
+    component: Component = 'div',
+    ...other
+  } = props
 
   const [height, setHeight] = React.useState(0)
   useEnhancedEffect(() => {
@@ -88,7 +95,7 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
   }
 
   return (
-    <div
+    <Component
       className={classnames(
         classes.root,
         {
@@ -100,7 +107,7 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
       {...other}
     >
       {children}
-    </div>
+    </Component>
   )
 })
 
@@ -109,6 +116,7 @@ BackgroundMedia.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object,
   className: PropTypes.string,
+  component: PropTypes.elementType,
 }
 
 export default withStyles(styles, { name: 'OuiBackgroundMedia' })(BackgroundMedia)

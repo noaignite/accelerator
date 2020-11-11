@@ -42,7 +42,7 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
     ...other
   } = props
 
-  const ratio = ratioProp || width / height
+  const ratio = width && height ? width / height : ratioProp
   const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
 
   return (
