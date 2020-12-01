@@ -20,25 +20,6 @@
 - [Media] Add support for media preloading
 - [Media] Skip destructuring of 'children' prop as it was overriding the composed 'children' prop
 
-### `@oakwood/oui-utils@v1.1.0`
-
-- [utils] Remove @material-ui exports
-
-## Core
-
-- [core] Swap eslint-import-resolver-babel-module for eslint-import-resolver-webpack
-- [core] Configure eslint import resolver with docs/.storybook/webpackBaseConfig.js
-- [core] Add @testing-library/jest-dom @testing-library/react babel-plugin-react-remove-properties coveralls css-mediaquery @testing-library/user-event eslint-plugin-jest-dom eslint-plugin-testing-library jest-cli jsdom react-test-renderer sinon
-- [test] Set up all new test suite with newly installed core packages
-- [test] Write tests for @oakwood/formit
-- [test] Write tests for @oakwood/oui-utils
-- [test] Write tests for @oakwood/oui
-
-### Docs
-
-- [docs] Set up aliases via webpack instead of babel
-- [docs] Bump @storybook/* to v6.0.26 and install @storybook/addon-essentials instead of standalone packages
-
 ## 1.0.0
 ###### 2020-10-20
 
