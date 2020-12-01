@@ -1,6 +1,6 @@
 {
   "name": "@oakwood/oui-utils",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": false,
   "author": "Oakwood Creative",
   "description": "Oakwood-UI Utils - Utility functions for Oakwood-UI.",
@@ -29,6 +29,7 @@
     "build:copy-files": "node ../../scripts/copy-files.js",
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish build --tag latest",
+    "release:verdaccio": "yarn build && npm publish build --tag latest --registry http://localhost:4873",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {

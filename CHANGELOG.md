@@ -1,5 +1,44 @@
 ### Versions
 
+## 1.1.0
+###### 2020-12-01
+
+### `@oakwood/formit@v1.1.0`
+
+- [useFormit] Fix issue where validationErrors could not resolve mixed dot and bracket paths
+
+### `@oakwood/oui@v1.1.0`
+
+- [BackgroundMedia] Simplify dom structure when attachment is set to static
+- [BackgroundMedia] Fix issue where image would resize when collapsing/expanding the iOS Safari menus when using attachment fixed
+- [AspectRatio] Aspect ratio is now created via css variables
+- [MediaReveal] Aspect ratio is now created via css variables
+- [MediaReveal] Fix children prop type
+- [MediaBase] Add 'placeholder' prop to be used as src while lazy is true
+- [Media] Move picture source generation into Media component so that only one breakpoints loop is done. Add new 'placeholder' prop similarily to MediaBase.
+- [Media] Deprecate 'lazy'. Lazy loading is now enabled per default, use 'priority' instead to opt-out. Change default lazy rootMargin to 256px.
+- [Media] Add support for media preloading
+- [Media] Skip destructuring of 'children' prop as it was overriding the composed 'children' prop
+
+### `@oakwood/oui-utils@v1.1.0`
+
+- [utils] Remove @material-ui exports
+
+## Core
+
+- [core] Swap eslint-import-resolver-babel-module for eslint-import-resolver-webpack
+- [core] Configure eslint import resolver with docs/.storybook/webpackBaseConfig.js
+- [core] Add @testing-library/jest-dom @testing-library/react babel-plugin-react-remove-properties coveralls css-mediaquery @testing-library/user-event eslint-plugin-jest-dom eslint-plugin-testing-library jest-cli jsdom react-test-renderer sinon
+- [test] Set up all new test suite with newly installed core packages
+- [test] Write tests for @oakwood/formit
+- [test] Write tests for @oakwood/oui-utils
+- [test] Write tests for @oakwood/oui
+
+### Docs
+
+- [docs] Set up aliases via webpack instead of babel
+- [docs] Bump @storybook/* to v6.0.26 and install @storybook/addon-essentials instead of standalone packages
+
 ## 1.0.0
 ###### 2020-10-20
 
