@@ -25,15 +25,15 @@ export default {
   component: Media,
   argTypes: {
     component: {
+      options: ['video', 'audio', 'picture', 'iframe', 'img'],
       control: {
         type: 'select',
-        options: ['video', 'audio', 'picture', 'iframe', 'img'],
       },
     },
     src: {
+      options: [sources.jpg.xs, sources.mp3.xs, sources.mp4.xs],
       control: {
         type: 'select',
-        options: [sources.jpg.xs, sources.mp3.xs, sources.mp4.xs],
       },
     },
   },
