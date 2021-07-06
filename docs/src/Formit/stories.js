@@ -11,13 +11,15 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const actionWithPromise = (eventName, timeout) => async (values, { setSubmitting }) => {
-  setSubmitting(true)
-  await sleep(timeout)
-  setSubmitting(false)
+function actionWithPromise(eventName, timeout) {
+  return async (values, { setSubmitting }) => {
+    setSubmitting(true)
+    await sleep(timeout)
+    setSubmitting(false)
 
-  // eslint-disable-next-line no-console
-  console.log(eventName, values)
+    // eslint-disable-next-line no-console
+    console.log(eventName, values)
+  }
 }
 
 const formitProps = {
