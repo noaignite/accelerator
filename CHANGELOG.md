@@ -1,5 +1,30 @@
 ### Versions
 
+## @next
+###### 2021-07-06
+
+### `@oakwood/formit@next`
+
+### `@oakwood/oui@next`
+
+- [ScrollProgress] Pass dom target as an onChange argument
+
+### `@oakwood/oui-utils@next`
+
+### Core
+
+- [prettier] Remove config entries which are default
+- [core] Remove deprecated babel-eslint in favor of new @babel/eslint-parser
+- [core] Remove pre-commit in favor of husky
+- [core] Bump eslint-config-prettier from v6.11.0 to v8.1.0, extending 'prettier/react' no longer needed.
+- [chore] Rename classnames import to clsx
+- [core] Bump eslint-import-resolver-webpack from v0.12.2 to v0.13.1
+- [core] Bump lint-staged from v10.3.0 to v11.0.0
+- [core/testing] Bump @testing-library/jest-dom @testing-library/react @testing-library/user-event eslint-plugin-jest-dom eslint-plugin-testing-library jest-cli jsdom to latest. Update eslint test env to extend plugin:testing-library/react and update test files accordingly.
+- [core] Bump react react-dom react-test-renderer from v16.14.0 to v17.0.2
+
+### Docs
+
 ## 1.1.0
 ###### 2020-12-01
 
@@ -40,7 +65,7 @@
 
 - [utils] Remove @material-ui exports
 
-## Core
+### Core
 
 - [core] Swap eslint-import-resolver-babel-module for eslint-import-resolver-webpack
 - [core] Configure eslint import resolver with docs/.storybook/webpackBaseConfig.js
