@@ -11,12 +11,12 @@ module.exports = {
     node: true,
   },
   extends: ['plugin:import/recommended', 'airbnb', 'prettier', 'prettier/react'],
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 7,
     sourceType: 'module',
   },
-  plugins: ['babel', 'react-hooks'],
+  plugins: ['eslint-plugin-babel', 'eslint-plugin-react-hooks'],
   settings: {
     'import/resolver': {
       webpack: {
@@ -31,35 +31,40 @@ module.exports = {
   rules: {
     'arrow-body-style': 'off', // Don't enforce, readability firsthand.
     'consistent-this': ['error', 'self'],
-    'linebreak-style': 'off', // Doesn't play nicely with Windows
     // just as bad as "max components per file"
     'max-classes-per-file': 'off',
+    // Too interruptive
     'no-alert': 'error',
     // Strict, airbnb is using warn; allow warn and error for dev environments
     'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-param-reassign': 'off', // It's fine.
     'no-constant-condition': 'error',
-    // Airbnb use error
-    'no-param-reassign': 'off',
+    // Use the proptype inheritance chain
     'no-prototype-builtins': 'off',
-    'nonblock-statement-body-position': 'error',
-    // Airbnb restricts isNaN and isFinite which are necessary for IE 11
-    // we have to be disciplined about the usage and ensure the Number type for its
-    // arguments
     'no-underscore-dangle': 'error',
+    'nonblock-statement-body-position': 'error',
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
-    'prefer-destructuring': 'off', // Destructuring harm grep potential.
+    // Destructuring harm grep potential.
+    'prefer-destructuring': 'off',
+
+    // Not sure why it doesn't work
+    'import/named': 'off',
+    // Missing yarn workspace support
+    'import/no-extraneous-dependencies': 'off',
 
     'jsx-a11y/label-has-associated-control': 'off',
-    'jsx-a11y/label-has-for': 'off', // deprecated
-    'jsx-a11y/no-autofocus': 'off', // We are a library, people do what they want.
+    'jsx-a11y/no-autofocus': 'off',
 
-    // This rule is great for raising people awareness of what a key is and how it works.
-    'react/no-array-index-key': 'off',
+    'react-hooks/exhaustive-deps': ['error', { additionalHooks: 'useEnhancedEffect' }],
+    'react-hooks/rules-of-hooks': 'error',
+
+    // Can add verbosity to small functions making them harder to grok.
+    // Though we have to manually enforce it for function components with default values.
     'react/destructuring-assignment': 'off',
-    // It's buggy
-    'react/forbid-prop-types': 'off',
-    'react/jsx-curly-brace-presence': 'off',
-    'react/jsx-filename-extension': ['error', { extensions: ['.js'] }], // airbnb is using .jsx
+    'react/forbid-prop-types': 'off', // Too strict, no time for that
+    'react/jsx-curly-brace-presence': 'off', // broken
+    // airbnb is using .jsx
+    'react/jsx-filename-extension': ['error', { extensions: ['.js'] }],
     'react/jsx-handler-names': [
       'error',
       {
@@ -68,32 +73,17 @@ module.exports = {
         eventHandlerPropPrefix: 'on',
       },
     ],
-    // not a good rule for components close to the DOM
     'react/jsx-props-no-spreading': 'off',
+    // This rule is great for raising people awareness of what a key is and how it works.
+    'react/no-array-index-key': 'off',
     'react/no-danger': 'error',
-    // Strict, airbnb is using off
     'react/no-direct-mutation-state': 'error',
-    'react/no-find-dom-node': 'off',
-    'react/no-multi-comp': 'off',
+    // Not always relevant
     'react/require-default-props': 'off',
-    'react/sort-prop-types': 'off',
     // This depends entirely on what you're doing. There's no universal pattern
     'react/state-in-constructor': 'off',
     // stylistic opinion. For conditional assignment we want it outside, otherwise as static
     'react/static-property-placement': 'off',
-
-    'import/namespace': ['error', { allowComputed: true }],
-    'import/no-extraneous-dependencies': 'off', // It would be better to enable this rule.
-    'import/order': [
-      'error',
-      {
-        groups: [['index', 'sibling', 'parent', 'internal', 'external', 'builtin']],
-        'newlines-between': 'never',
-      },
-    ],
-
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': ['error', { additionalHooks: 'useEnhancedEffect' }],
   },
   overrides: [
     {
