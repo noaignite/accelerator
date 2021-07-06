@@ -39,7 +39,7 @@
   "devDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.7.4",
-    "intersection-observer-admin": "^0.2.12",
+    "intersection-observer-admin": "^0.3.2",
     "prop-types": "^15.7.2"
   },
   "sideEffects": false,
