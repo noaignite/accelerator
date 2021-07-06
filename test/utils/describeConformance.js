@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'
+import { screen } from '@testing-library/react'
 
 function randomStringValue() {
   return `s${Math.random().toString(36).slice(2)}`
@@ -18,9 +19,9 @@ function testClassName(element, getOptions) {
     const { render } = getOptions()
     const className = randomStringValue()
 
-    const { container } = render(React.cloneElement(element, { className }))
+    render(React.cloneElement(element, { 'data-testid': 'root', className }))
 
-    expect(container.firstChild).toHaveClass(className)
+    expect(screen.getByTestId('root')).toHaveClass(className)
   })
 }
 
@@ -35,17 +36,17 @@ function testComponentProp(element, getOptions) {
     it('renders correct initial root component', () => {
       const { inheritComponent, render } = getOptions()
 
-      const { container } = render(element)
+      render(React.cloneElement(element, { 'data-testid': 'root' }))
 
-      expect(container.firstChild.tagName.toLowerCase()).toEqual(inheritComponent)
+      expect(screen.getByTestId('root').tagName.toLowerCase()).toEqual(inheritComponent)
     })
 
     it('renders another root component with the `component` prop', () => {
       const { render, testComponentPropWith: component = 'em' } = getOptions()
 
-      const { container } = render(React.cloneElement(element, { component }))
+      render(React.cloneElement(element, { 'data-testid': 'root', component }))
 
-      expect(container.firstChild.tagName.toLowerCase()).toEqual(component)
+      expect(screen.getByTestId('root').tagName.toLowerCase()).toEqual(component)
     })
   })
 }
@@ -60,9 +61,9 @@ function testPropsSpread(element, getOptions) {
   it(`spreads props to the root component`, () => {
     const { render } = getOptions()
 
-    const { getByTestId } = render(React.cloneElement(element, { 'data-testid': 'root' }))
+    render(React.cloneElement(element, { 'data-testid': 'root' }))
 
-    expect(getByTestId('root')).toBeInTheDocument()
+    expect(screen.getByTestId('root')).toBeInTheDocument()
   })
 }
 
@@ -80,9 +81,9 @@ function describeRef(element, getOptions) {
       const { refInstanceof, render } = getOptions()
 
       const ref = React.createRef()
-      const { container } = render(React.cloneElement(element, { ref }))
+      render(React.cloneElement(element, { 'data-testid': 'root', ref }))
 
-      expect(container.firstChild).toEqual(ref.current)
+      expect(screen.getByTestId('root')).toEqual(ref.current)
       expect(ref.current).toBeInstanceOf(refInstanceof)
     })
   })
@@ -101,14 +102,14 @@ function testRootClass(element, getOptions) {
     }
 
     const className = randomStringValue()
-    const { container } = render(React.cloneElement(element, { className }))
+    render(React.cloneElement(element, { 'data-testid': 'root', className }))
 
     // we established that the root component renders the outermost host previously. We immediately
     // jump to the host component because some components pass the `root` class
     // to the `classes` prop of the root component.
     // https://github.com/mui-org/material-ui/blob/f9896bcd129a1209153106296b3d2487547ba205/packages/material-ui/src/OutlinedInput/OutlinedInput.js#L101
-    expect(container.firstChild).toHaveClass(classes.root)
-    expect(container.firstChild).toHaveClass(className)
+    expect(screen.getByTestId('root')).toHaveClass(classes.root)
+    expect(screen.getByTestId('root')).toHaveClass(className)
   })
 }
 

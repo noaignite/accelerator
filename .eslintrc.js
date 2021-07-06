@@ -91,7 +91,10 @@ module.exports = {
       env: {
         jest: true,
       },
-      extends: ['plugin:testing-library/recommended', 'plugin:jest-dom/recommended'],
+      extends: ['plugin:testing-library/react', 'plugin:jest-dom/recommended'],
+      rules: {
+        'testing-library/render-result-naming-convention': 'off',
+      },
     },
     {
       files: ['docs/src/**/*.js'],
