@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'clsx'
+import clsx from 'clsx'
 import withStyles from '@material-ui/core/styles/withStyles'
 
 export const styles = {
@@ -47,7 +47,7 @@ const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
 
   return (
     <Component
-      className={classnames(
+      className={clsx(
         classes.root,
         {
           [classes.ratio]: ratio,

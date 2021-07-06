@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'clsx'
+import clsx from 'clsx'
 import { useForkRef } from '@material-ui/core/utils'
 import withStyles from '@material-ui/styles/withStyles'
 import Fade from '@material-ui/core/Fade'
@@ -78,7 +78,7 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
 
   return (
     <MediaLoader
-      className={classnames(
+      className={clsx(
         classes.root,
         {
           [classes.ratio]: ratio,

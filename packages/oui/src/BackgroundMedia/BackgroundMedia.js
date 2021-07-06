@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'clsx'
+import clsx from 'clsx'
 import innerHeight from 'ios-inner-height'
 import { capitalize, debounce } from '@material-ui/core/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
@@ -79,11 +79,9 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
   let children = childrenProp
   if (attachment !== 'static') {
     children = (
-      <div
-        className={classnames(classes.container, [classes[`container${capitalize(attachment)}`]])}
-      >
+      <div className={clsx(classes.container, [classes[`container${capitalize(attachment)}`]])}>
         <div
-          className={classnames(classes.wrapper, [classes[`wrapper${capitalize(attachment)}`]], {
+          className={clsx(classes.wrapper, [classes[`wrapper${capitalize(attachment)}`]], {
             'mui-fixed': attachment === 'fixed',
           })}
           style={attachment === 'fixed' ? { height } : undefined}
@@ -96,7 +94,7 @@ const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
 
   return (
     <Component
-      className={classnames(
+      className={clsx(
         classes.root,
         {
           [classes.clipPath]: attachment !== 'static',

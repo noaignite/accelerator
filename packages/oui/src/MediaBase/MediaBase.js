@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'clsx'
+import clsx from 'clsx'
 import { chainPropTypes } from '@material-ui/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
 
@@ -37,7 +37,7 @@ const MediaBase = React.forwardRef(function MediaBase(props, ref) {
 
   return (
     <Component
-      className={classnames(
+      className={clsx(
         classes.root,
         {
           [classes.cover]: ['video', 'picture', 'img'].includes(Component),
