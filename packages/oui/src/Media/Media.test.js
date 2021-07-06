@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { screen } from '@testing-library/react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
 import { createRender, describeConformance } from 'test/utils'
@@ -63,21 +64,21 @@ describe('<Media />', () => {
 
   describe('should render with', () => {
     it('no initial `src` attribute specified', () => {
-      const { getByRole } = render(<Media src="/foo.jpg" />)
-      const img = getByRole('img')
+      render(<Media src="/foo.jpg" />)
+      const img = screen.getByRole('img')
 
       expect(img).not.toHaveAttribute('src')
     })
 
     it('`src` attribute when `priority` is specified', () => {
-      const { getByRole } = render(<Media src="/foo.jpg" priority />)
-      const img = getByRole('img')
+      render(<Media src="/foo.jpg" priority />)
+      const img = screen.getByRole('img')
 
       expect(img).toHaveAttribute('src', '/foo.jpg')
     })
 
     it('img attributes on child `img` when `component="picture"` is specified', () => {
-      const { getByRole, getByTestId } = render(
+      render(
         <Media
           component="picture"
           alt="Hello"
@@ -91,8 +92,8 @@ describe('<Media />', () => {
           data-testid="root"
         />,
       )
-      const picture = getByTestId('root')
-      const img = getByRole('img')
+      const picture = screen.getByTestId('root')
+      const img = screen.getByRole('img')
 
       expect(picture.tagName).toEqual('PICTURE')
       expect(img).toHaveAttribute('alt')
@@ -105,7 +106,7 @@ describe('<Media />', () => {
     })
 
     it('source & img content when `component="picture"` & `breakpoints` is specified', () => {
-      const { getByTestId } = render(
+      render(
         <Media
           component="picture"
           breakpoints={{
@@ -115,14 +116,16 @@ describe('<Media />', () => {
           data-testid="root"
         />,
       )
-      const picture = getByTestId('root')
+      const picture = screen.getByTestId('root')
 
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.getElementsByTagName('source')).toHaveLength(2)
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.getElementsByTagName('img')).toHaveLength(1)
     })
 
     it('source formats & img content when `component="picture"` & `breakpoints` is specified', () => {
-      const { getByTestId } = render(
+      render(
         <Media
           component="picture"
           breakpoints={{
@@ -131,14 +134,16 @@ describe('<Media />', () => {
           data-testid="root"
         />,
       )
-      const picture = getByTestId('root')
+      const picture = screen.getByTestId('root')
 
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.getElementsByTagName('source')).toHaveLength(2)
+      // eslint-disable-next-line testing-library/no-node-access
       expect(picture.getElementsByTagName('img')).toHaveLength(1)
     })
 
     it('single element when `breakpoints` is specified & component is not `picture`', () => {
-      const { getByTestId } = render(
+      render(
         <Media
           component="video"
           breakpoints={{
@@ -148,14 +153,14 @@ describe('<Media />', () => {
           data-testid="root"
         />,
       )
-      const video = getByTestId('root')
+      const video = screen.getByTestId('root')
 
       expect(video).toBeEmptyDOMElement()
       expect(video).toHaveAttribute('src', '/foo.mp4')
     })
 
     it('spreadable props on a per breakpoint basis when component is not `picture`', () => {
-      const { getByTestId } = render(
+      render(
         <Media
           component="img"
           breakpoints={{
@@ -169,7 +174,7 @@ describe('<Media />', () => {
           data-testid="root"
         />,
       )
-      const video = getByTestId('root')
+      const video = screen.getByTestId('root')
 
       expect(video).toBeEmptyDOMElement()
       expect(video).toHaveAttribute('poster', '/foo.jpg')
@@ -177,13 +182,13 @@ describe('<Media />', () => {
     })
 
     it('content of nested children', () => {
-      const { getByRole } = render(
+      render(
         <Media component="picture">
           <img src="/foo.jpg" alt="" />
         </Media>,
       )
 
-      expect(getByRole('img')).toHaveAttribute('src', '/foo.jpg')
+      expect(screen.getByRole('img')).toHaveAttribute('src', '/foo.jpg')
     })
   })
 })
