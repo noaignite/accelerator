@@ -8,6 +8,7 @@
 ### `@oakwood/oui@next`
 
 - [ScrollProgress] Pass dom target as an onChange argument
+- [InView/Media] Remove non working useRef's
 
 ### `@oakwood/oui-utils@next`
 
@@ -22,8 +23,12 @@
 - [core] Bump lint-staged from v10.3.0 to v11.0.0
 - [core/testing] Bump @testing-library/jest-dom @testing-library/react @testing-library/user-event eslint-plugin-jest-dom eslint-plugin-testing-library jest-cli jsdom to latest. Update eslint test env to extend plugin:testing-library/react and update test files accordingly.
 - [core] Bump react react-dom react-test-renderer from v16.14.0 to v17.0.2
+- [core] Bump @storybook/* from v6.0.26 to v6.3.2
+- [core] Bump intersection-observer-admin from v0.2.12 to v0.3.2
 
 ### Docs
+
+- [docs] Update to new storybook argTypes api format
 
 ## 1.1.0
 ###### 2020-12-01
