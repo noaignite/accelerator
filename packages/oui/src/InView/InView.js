@@ -16,7 +16,7 @@ const InView = React.forwardRef(function InView(props, ref) {
     ...other
   } = props
 
-  const { current: observer } = React.useRef(getObserverInstance())
+  const observer = getObserverInstance()
   const rootRef = React.useRef(null)
 
   const observerOptions = React.useMemo(

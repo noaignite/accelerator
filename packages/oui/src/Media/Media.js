@@ -43,7 +43,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     ...other
   } = props
 
-  const { current: breakpointKeys } = React.useRef([...theme.breakpoints.keys].reverse())
+  const reversedBreakpointKeys = [...theme.breakpoints.keys].reverse()
 
   const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
@@ -65,14 +65,14 @@ const Media = React.forwardRef(function Media(inProps, ref) {
       sources = []
       const children = []
 
-      breakpointKeys.forEach((key, idx) => {
+      reversedBreakpointKeys.forEach((key, idx) => {
         const srcOrSources = breakpoints[key]
         if (!srcOrSources) {
           return
         }
 
         const min = theme.breakpoints.values[key]
-        const max = theme.breakpoints.values[breakpointKeys[idx - 1]] - 1 || 9999
+        const max = theme.breakpoints.values[reversedBreakpointKeys[idx - 1]] - 1 || 9999
         const media = `(min-width: ${min}px)`
 
         if (typeof srcOrSources === 'string') {
