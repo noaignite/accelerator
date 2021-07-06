@@ -1,8 +1,8 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 
-const theme = createMuiTheme({})
+const theme = createTheme({})
 
 function TestProvider(props) {
   const { children, ...other } = props
