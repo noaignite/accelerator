@@ -9,6 +9,7 @@
 
 - [ScrollProgress] Pass dom target as an onChange argument
 - [InView/Media] Remove non working useRef's
+- [Media] rootMargin is now safely destructed out and used where it's needed
 
 ### `@oakwood/oui-utils@next`
 

@@ -39,6 +39,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     generatePreload,
     placeholder,
     priority,
+    rootMargin = '256px', // Value based on: https://web.dev/lazy-loading-best-practices/,
     src,
     ...other
   } = props
@@ -99,7 +100,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
       <InView
         ContainerComponent={ContainerComponent}
         onEnter={handleEnter}
-        rootMargin="256px" // Value based on: https://web.dev/lazy-loading-best-practices/
+        rootMargin={rootMargin}
         triggerOnce
         {...componentProps}
       />
@@ -138,6 +139,7 @@ Media.propTypes = {
   },
   placeholder: PropTypes.string,
   priority: PropTypes.bool,
+  rootMargin: PropTypes.string,
   src: PropTypes.string,
 }
 
