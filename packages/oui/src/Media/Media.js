@@ -2,8 +2,7 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { getThemeProps } from '@material-ui/styles'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme, useThemeProps } from '@material-ui/core'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaWithWidth from './MediaWithWidth'
@@ -31,8 +30,7 @@ export function generateSource({ lazy, media, placeholder, src, ...other }) {
 }
 
 const Media = React.forwardRef(function Media(inProps, ref) {
-  const theme = useTheme()
-  const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
+  const props = useThemeProps({ props: inProps, name: 'OuiMedia' })
   const {
     breakpoints,
     component = 'img',
@@ -44,6 +42,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     ...other
   } = props
 
+  const theme = useTheme()
   const reversedBreakpointKeys = [...theme.breakpoints.keys].reverse()
 
   const [lazy, setLazy] = React.useState(!priority)
@@ -129,14 +128,6 @@ Media.propTypes = {
   }),
   component: PropTypes.elementType,
   generatePreload: PropTypes.func,
-  lazy: (props) => {
-    if (props.lazy) {
-      throw new Error(
-        'Oakwood-UI: `lazy` was deprecated. Lazy loading is now enabled per ' +
-          'default, use `priority` instead to opt-out.',
-      )
-    }
-  },
   placeholder: PropTypes.string,
   priority: PropTypes.bool,
   rootMargin: PropTypes.string,

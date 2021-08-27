@@ -1,77 +1,53 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
-import withStyles from '@material-ui/core/styles/withStyles'
+import { styled } from '@material-ui/system'
+import { useThemeProps } from '@material-ui/core'
 
-export const styles = {
-  root: {
+const AspectRatioRoot = styled('div', {
+  name: 'OuiAspectRatio',
+  slot: 'Root',
+})({
+  display: 'block',
+  position: 'relative',
+  width: '100%',
+  '&:before': {
+    content: '""',
     display: 'block',
-    position: 'relative',
+    paddingBottom: 'calc(100% / var(--aspect-ratio))',
+  },
+  '& > *': {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     width: '100%',
+    height: '100%',
   },
-  ratio: {
-    '&:before': {
-      content: '""',
-      display: 'block',
-      paddingBottom: 'calc(100% / var(--aspect-ratio))',
-    },
-    '& > *': {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    },
-    '& > video, & > picture, & > img': {
-      // ⚠️ object-fit is not supported by IE 11.
-      objectFit: 'cover',
-    },
+  '& > video, & > picture, & > img': {
+    objectFit: 'cover',
   },
-}
+})
 
-const AspectRatio = React.forwardRef(function AspectRatio(props, ref) {
-  const {
-    children,
-    classes,
-    className,
-    component: Component = 'div',
-    height,
-    ratio: ratioProp,
-    style,
-    width,
-    ...other
-  } = props
+const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
+  const props = useThemeProps({ props: inProps, name: 'OuiAspectRatio' })
+  const { children, component = 'div', height, ratio: ratioProp, style, width, ...other } = props
 
   const ratio = width && height ? width / height : ratioProp
   const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
 
   return (
-    <Component
-      className={clsx(
-        classes.root,
-        {
-          [classes.ratio]: ratio,
-        },
-        className,
-      )}
-      style={composedStyle}
-      ref={ref}
-      {...other}
-    >
+    <AspectRatioRoot as={component} style={composedStyle} ref={ref} {...other}>
       {children}
-    </Component>
+    </AspectRatioRoot>
   )
 })
 
 AspectRatio.propTypes = {
   children: PropTypes.node,
-  classes: PropTypes.object,
-  className: PropTypes.string,
   component: PropTypes.elementType,
   height: PropTypes.number,
-  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  ratio: PropTypes.number,
   style: PropTypes.object,
   width: PropTypes.number,
 }
 
-export default withStyles(styles, { name: 'OuiAspectRatio' })(AspectRatio)
+export default AspectRatio
