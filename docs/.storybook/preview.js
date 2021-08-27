@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { CssBaseline } from '@material-ui/core'
 
 const theme = createTheme({})
 

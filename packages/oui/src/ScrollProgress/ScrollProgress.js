@@ -24,7 +24,7 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
     const innerProgress = calculateVerticalProgress(bounds, maxOffset)
 
     if (onChange) {
-      onChange(progress, innerProgress, bounds, target)
+      onChange({ bounds, innerProgress, progress, target })
     }
   }, [onChange])
 

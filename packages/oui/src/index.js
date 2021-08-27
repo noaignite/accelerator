@@ -3,8 +3,8 @@
 export { default as AspectRatio } from './AspectRatio'
 export * from './AspectRatio'
 
-export { default as BackgroundMedia } from './BackgroundMedia'
-export * from './BackgroundMedia'
+// export { default as BackgroundMedia } from './BackgroundMedia'
+// export * from './BackgroundMedia'
 
 export { default as InView } from './InView'
 export * from './InView'

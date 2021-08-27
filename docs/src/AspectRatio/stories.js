@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Media from '@oakwood/oui/Media'
 import AspectRatio from '@oakwood/oui/AspectRatio'
 
 export default {
@@ -9,7 +8,7 @@ export default {
 
 const Template = (args) => (
   <AspectRatio {...args}>
-    <Media component="img" src="//source.unsplash.com/960x540" />
+    <img src="//source.unsplash.com/960x540" alt="" style={{ display: 'block', width: '100%' }} />
   </AspectRatio>
 )
 

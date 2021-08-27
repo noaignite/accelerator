@@ -1,4 +1,5 @@
 export { default as clamp } from './clamp'
+export { default as getObserverInstance } from './getObserverInstance'
 export { default as lerp } from './lerp'
 export { default as mapRange } from './mapRange'
 export { default as mediaType } from './mediaType'

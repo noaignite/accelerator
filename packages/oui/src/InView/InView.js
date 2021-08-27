@@ -1,9 +1,11 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import { setRef } from '@material-ui/core/utils'
-import getObserverInstance from '@oakwood/oui-utils/getObserverInstance'
+import { useThemeProps } from '@material-ui/core'
+import { getObserverInstance } from '@oakwood/oui-utils'
 
-const InView = React.forwardRef(function InView(props, ref) {
+const InView = React.forwardRef(function InView(inProps, ref) {
+  const props = useThemeProps({ props: inProps, name: 'OuiInView' })
   const {
     component: Component = 'div',
     ContainerComponent,

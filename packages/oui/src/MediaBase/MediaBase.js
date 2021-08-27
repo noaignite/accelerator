@@ -1,56 +1,47 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
 import { chainPropTypes } from '@material-ui/utils'
-import withStyles from '@material-ui/core/styles/withStyles'
+import { styled } from '@material-ui/system'
+import { useThemeProps } from '@material-ui/core'
 
-export const styles = {
-  root: {
-    display: 'block',
-    width: '100%',
-  },
-  cover: {
-    // ⚠️ object-fit is not supported by IE 11.
+const MediaBaseRoot = styled('img', {
+  name: 'OuiMediaBase',
+  slot: 'Root',
+})(({ ownerState }) => ({
+  display: 'block',
+  width: '100%',
+  ...(ownerState.isMediaComponent && {
     objectFit: 'cover',
-  },
-  picture: {
+  }),
+  ...(ownerState.isPictureComponent && {
     '& img': {
       display: 'inherit',
       width: 'inherit',
       height: 'inherit',
       objectFit: 'inherit',
     },
-  },
-}
+  }),
+}))
 
-const MediaBase = React.forwardRef(function MediaBase(props, ref) {
-  const {
-    children,
-    classes,
-    className,
-    component: Component = 'img',
-    lazy,
-    placeholder,
-    src,
-    ...other
-  } = props
+const MediaBase = React.forwardRef(function MediaBase(inProps, ref) {
+  const props = useThemeProps({ props: inProps, name: 'OuiMediaBase' })
+  const { children, component = 'img', lazy, placeholder, src, ...other } = props
+
+  const ownerState = {
+    isMediaComponent: ['video', 'picture', 'img'].includes(component),
+    isPictureComponent: ['picture'].includes(component),
+  }
 
   return (
-    <Component
-      className={clsx(
-        classes.root,
-        {
-          [classes.cover]: ['video', 'picture', 'img'].includes(Component),
-          [classes.picture]: ['picture'].includes(Component),
-        },
-        className,
-      )}
+    <MediaBaseRoot
+      as={component}
+      ownerState={ownerState}
       src={lazy ? placeholder : src}
       ref={ref}
       {...other}
     >
       {children}
-    </Component>
+    </MediaBaseRoot>
   )
 })
 
@@ -63,12 +54,10 @@ MediaBase.propTypes = {
     }
     return null
   }),
-  classes: PropTypes.object,
-  className: PropTypes.string,
   component: PropTypes.elementType,
   lazy: PropTypes.bool,
   placeholder: PropTypes.string,
   src: PropTypes.string,
 }
 
-export default withStyles(styles, { name: 'OuiMediaBase' })(MediaBase)
+export default MediaBase
