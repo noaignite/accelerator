@@ -9,7 +9,7 @@ function randomStringValue() {
 }
 
 /**
- * Oakwood-UI components have a `className` prop. The `className` is applied to
+ * OUI components have a `className` prop. The `className` is applied to
  * the root component.
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -26,7 +26,7 @@ function testClassName(element, getOptions) {
 }
 
 /**
- * Oakwood-UI components have a `component` prop that allows rendering a different
+ * OUI components have a `component` prop that allows rendering a different
  * Component from @inheritComponent
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -52,7 +52,7 @@ function testComponentProp(element, getOptions) {
 }
 
 /**
- * Oakwood-UI components can spread additional props to a documented component.
+ * OUI components can spread additional props to a documented component.
  * It's set via @inheritComponent in the source.
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -151,14 +151,14 @@ const fullSuite = {
  */
 
 /**
- * Tests various aspects of a component that should be equal across Oakwood-UI
+ * Tests various aspects of a component that should be equal across OUI
  * components.
  * @param {React.ReactElement} minimalElement - the component with it's minimal required props
  * @param {() => ConformanceOptions} getOptions
  */
 export default function describeConformance(minimalElement, getOptions) {
   const { after: runAfterHook = () => {}, only = Object.keys(fullSuite), skip = [] } = getOptions()
-  describe('Oakwood-UI component API', () => {
+  describe('OUI component API', () => {
     afterAll(runAfterHook)
 
     Object.keys(fullSuite)

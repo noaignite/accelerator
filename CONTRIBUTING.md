@@ -1,4 +1,4 @@
-# Contributing to Oakwood-UI
+# Contributing to OUI
 
 Thank you for helping out!
 

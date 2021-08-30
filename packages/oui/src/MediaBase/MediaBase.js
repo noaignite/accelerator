@@ -48,9 +48,7 @@ const MediaBase = React.forwardRef(function MediaBase(inProps, ref) {
 MediaBase.propTypes = {
   children: chainPropTypes(PropTypes.node, (props) => {
     if (!props.children && !props.src && !props.component) {
-      return new Error(
-        'Oakwood-UI: Either `children`, `src` or `component` prop must be specified.',
-      )
+      return new Error('OUI: Either `children`, `src` or `component` prop must be specified.')
     }
     return null
   }),
