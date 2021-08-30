@@ -1,3 +1,3 @@
-# Oakwood-UI docs
+# OUI docs
 
-This is the documentation website of Oakwood-UI.
+This is the documentation website of OUI.

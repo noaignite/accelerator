@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "private": false,
   "author": "Oakwood Creative",
-  "description": "Oakwood-UI Utils - Utility functions for Oakwood-UI.",
+  "description": "OUI Utils - Utility functions for OUI.",
   "main": "./src/index.js",
   "keywords": [
     "react",

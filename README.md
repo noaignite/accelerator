@@ -1,8 +1,8 @@
 <p align="center">
-  <img width="150" src="/docs/public/logo.svg" alt="Oakwood-UI logo">
+  <img width="150" src="/docs/public/logo.svg" alt="OUI logo">
 </p>
 
-<h1 align="center">Oakwood-UI</h1>
+<h1 align="center">OUI</h1>
 
 <div align="center">
 
@@ -12,7 +12,7 @@
 
 ## Installation
 
-Oakwood-UI is available as an [npm package](https://www.npmjs.com/package/@oakwood/oui).
+OUI is available as an [npm package](https://www.npmjs.com/package/@oakwood/oui).
 
 ```sh
 // with npm
