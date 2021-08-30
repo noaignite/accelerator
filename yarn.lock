@@ -8041,11 +8041,6 @@ invariant@^2.2.3, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ios-inner-height@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ios-inner-height/-/ios-inner-height-1.1.1.tgz#987c62350a04586b4025a21fa0e8bef054b7b64e"
-  integrity sha512-1/eCW+slv9Zm83Ugsq34dOU3QDzf/mcQQnOH0W8fLgvNKWYH3Kn8lod83K6JHDNWRgZCRJ1swFNiQrZqiJOiwA==
-
 ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
