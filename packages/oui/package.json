@@ -43,7 +43,6 @@
     "@maeertin/medialoaded": "^1.2.1",
     "@oakwood/oui-utils": "1.1.0",
     "clsx": "^1.1.1",
-    "ios-inner-height": "^1.1.1",
     "prop-types": "^15.7.2"
   },
   "sideEffects": false,
