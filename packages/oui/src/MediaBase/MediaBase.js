@@ -7,6 +7,15 @@ import { useThemeProps } from '@material-ui/core'
 const MediaBaseRoot = styled('img', {
   name: 'OuiMediaBase',
   slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const { ownerState } = props
+
+    return [
+      styles.root,
+      ownerState.isMediaComponent && styles.media,
+      ownerState.isPictureComponent && styles.picture,
+    ]
+  },
 })(({ ownerState }) => ({
   display: 'block',
   width: '100%',

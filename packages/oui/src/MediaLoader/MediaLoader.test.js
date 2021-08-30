@@ -8,10 +8,12 @@ describe('<MediaLoader />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<MediaLoader />, () => ({
+    ouiName: 'OuiMediaLoader',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
     testComponentPropWith: 'span',
+    skip: ['themeDefaultProps', 'themeStyleOverrides'],
   }))
 
   describe('should render with', () => {

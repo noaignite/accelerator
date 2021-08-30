@@ -3,6 +3,7 @@
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'
 import { screen } from '@testing-library/react'
+import { createTheme } from '@material-ui/core/styles'
 
 function randomStringValue() {
   return `s${Math.random().toString(36).slice(2)}`
@@ -106,14 +107,111 @@ function testReactTestRenderer(element) {
   })
 }
 
+function throwMissingPropError(field) {
+  throw new Error(`missing "${field}" in options
+
+  > describeConformance(element, () => options)
+`)
+}
+
+/**
+ * OUI theme has a components section that allows specifying default props.
+ * Components from @inheritComponent
+ * @param {React.ReactElement} element
+ * @param {() => ConformanceOptions} getOptions
+ */
+function testThemeDefaultProps(element, getOptions) {
+  describe('theme default components:', () => {
+    it("respect theme's defaultProps", () => {
+      const testProp = 'data-oui-test'
+      const { ouiName, render } = getOptions()
+
+      if (!ouiName) {
+        throwMissingPropError('ouiName')
+      }
+
+      const theme = createTheme({
+        components: {
+          [ouiName]: {
+            defaultProps: {
+              [testProp]: 'testProp',
+            },
+          },
+        },
+      })
+
+      render(React.cloneElement(element, { 'data-testid': 'root' }), { wrapperProps: { theme } })
+
+      expect(screen.getByTestId('root')).toHaveAttribute(testProp, 'testProp')
+    })
+  })
+}
+
+/**
+ * OUI theme has a components section that allows specifying style overrides.
+ * Components from @inheritComponent
+ * @param {React.ReactElement} element
+ * @param {() => ConformanceOptions} getOptions
+ */
+function testThemeStyleOverrides(element, getOptions) {
+  describe('theme style overrides:', () => {
+    it("respect theme's styleOverrides slots", () => {
+      const {
+        ouiName,
+        testDeepOverrides,
+        testRootOverrides = { slotName: 'root' },
+        render,
+      } = getOptions()
+
+      const theme = createTheme({
+        components: {
+          [ouiName]: {
+            styleOverrides: {
+              [testRootOverrides.slotName]: {
+                mixBlendMode: 'darken',
+                ...(testDeepOverrides && {
+                  [`& .${testDeepOverrides.slotClassName}`]: {
+                    fontVariantCaps: 'all-petite-caps',
+                  },
+                }),
+              },
+              ...(testDeepOverrides && {
+                [testDeepOverrides.slotName]: {
+                  mixBlendMode: 'darken',
+                },
+              }),
+            },
+          },
+        },
+      })
+
+      render(React.cloneElement(element, { 'data-testid': 'root' }), { wrapperProps: { theme } })
+
+      const rootElement = screen.getByTestId('root')
+      const rootComputedStyles = getComputedStyle(rootElement)
+
+      expect(rootComputedStyles.getPropertyValue('mix-blend-mode')).toEqual('darken')
+
+      if (testDeepOverrides) {
+        // eslint-disable-next-line testing-library/no-node-access
+        const deepElement = rootElement.querySelector(`.${testDeepOverrides.slotClassName}`)
+        const deepComputedStyles = getComputedStyle(deepElement)
+
+        expect(deepComputedStyles.getPropertyValue('font-variant-caps')).toEqual('all-petite-caps')
+        expect(deepComputedStyles.getPropertyValue('mix-blend-mode')).toEqual('darken')
+      }
+    })
+  })
+}
+
 const fullSuite = {
   componentProp: testComponentProp,
   mergeClassName: testClassName,
   propsSpread: testPropsSpread,
   refForwarding: describeRef,
   reactTestRenderer: testReactTestRenderer,
-  // themeDefaultProps: testThemeDefaultProps,
-  // themeStyleOverrides: testThemeStyleOverrides,
+  themeDefaultProps: testThemeDefaultProps,
+  themeStyleOverrides: testThemeStyleOverrides,
 }
 
 /**

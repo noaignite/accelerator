@@ -8,10 +8,12 @@ describe('<InView />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<InView />, () => ({
+    ouiName: 'OuiInView',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
     testComponentPropWith: 'span',
+    skip: ['themeStyleOverrides'],
   }))
 
   describe('should render with', () => {

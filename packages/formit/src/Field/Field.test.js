@@ -33,7 +33,7 @@ describe('<Field />', () => {
     refInstanceof: window.HTMLInputElement,
     render,
     testComponentPropWith: 'textarea',
-    skip: ['componentsProp', 'rootClass'],
+    only: ['componentProp', 'mergeClassName', 'propsSpread', 'refForwarding', 'reactTestRenderer'],
   }))
 
   describe('should receive name, value, onChange & with/out helperText', () => {

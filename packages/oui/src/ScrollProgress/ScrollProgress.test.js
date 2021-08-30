@@ -8,10 +8,12 @@ describe('<ScrollProgress />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<ScrollProgress />, () => ({
+    ouiName: 'OuiScrollProgress',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
     testComponentPropWith: 'span',
+    skip: ['themeDefaultProps', 'themeStyleOverrides'],
   }))
 
   describe('should render with', () => {

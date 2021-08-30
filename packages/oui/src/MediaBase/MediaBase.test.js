@@ -8,6 +8,7 @@ describe('<MediaBase />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({
+    ouiName: 'OuiMediaBase',
     inheritComponent: 'img',
     refInstanceof: window.HTMLImageElement,
     render,
