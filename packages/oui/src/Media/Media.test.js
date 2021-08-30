@@ -59,7 +59,6 @@ describe('<Media />', () => {
     refInstanceof: window.HTMLImageElement,
     render,
     testComponentPropWith: 'picture',
-    skip: ['rootClass'],
   }))
 
   describe('should render with', () => {

@@ -12,7 +12,6 @@ describe('<MediaLoader />', () => {
     refInstanceof: window.HTMLDivElement,
     render,
     testComponentPropWith: 'span',
-    skip: ['rootClass'],
   }))
 
   describe('should render with', () => {
