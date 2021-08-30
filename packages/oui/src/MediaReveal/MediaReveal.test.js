@@ -12,6 +12,7 @@ describe('<MediaReveal />', () => {
   }
 
   describeConformance(<MediaReveal {...defaultProps} />, () => ({
+    ouiName: 'OuiMediaReveal',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,

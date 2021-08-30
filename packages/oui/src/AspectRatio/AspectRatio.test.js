@@ -8,6 +8,7 @@ describe('<AspectRatio />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<AspectRatio />, () => ({
+    ouiName: 'OuiAspectRatio',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,

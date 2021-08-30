@@ -55,10 +55,12 @@ describe('<Media />', () => {
   })
 
   describeConformance(<Media />, () => ({
+    ouiName: 'OuiMedia',
     inheritComponent: 'img',
     refInstanceof: window.HTMLImageElement,
     render,
     testComponentPropWith: 'picture',
+    skip: ['themeStyleOverrides'],
   }))
 
   describe('should render with', () => {

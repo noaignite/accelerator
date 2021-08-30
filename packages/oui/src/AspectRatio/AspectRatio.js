@@ -6,6 +6,7 @@ import { useThemeProps } from '@material-ui/core'
 const AspectRatioRoot = styled('div', {
   name: 'OuiAspectRatio',
   slot: 'Root',
+  overridesResolver: (props, styles) => styles.root,
 })({
   display: 'block',
   position: 'relative',

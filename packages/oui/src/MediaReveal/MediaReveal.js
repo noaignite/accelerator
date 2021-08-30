@@ -11,6 +11,11 @@ import MediaLoader from '../MediaLoader'
 const MediaRevealRoot = styled(MediaLoader, {
   name: 'OuiMediaReveal',
   slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const { ownerState } = props
+
+    return [styles.root, ownerState.ratio && styles.ratio]
+  },
 })(({ ownerState }) => ({
   display: 'block',
   position: 'relative',
@@ -34,9 +39,10 @@ const MediaRevealRoot = styled(MediaLoader, {
   }),
 }))
 
-const MediaRevealInView = styled(InView, {
+const MediaRevealBounds = styled(InView, {
   name: 'OuiMediaReveal',
-  slot: 'InView',
+  slot: 'Bounds',
+  overridesResolver: (props, styles) => styles.bounds,
 })({
   position: 'absolute',
   top: 0,
@@ -112,7 +118,7 @@ const MediaReveal = React.forwardRef(function MediaReveal(inProps, ref) {
       {...other}
     >
       {rootMargin && !inView && (
-        <MediaRevealInView onEnter={handleEnter} rootMargin={rootMargin} triggerOnce />
+        <MediaRevealBounds onEnter={handleEnter} rootMargin={rootMargin} triggerOnce />
       )}
 
       {isPlainChildren ? (

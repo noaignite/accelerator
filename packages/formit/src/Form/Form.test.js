@@ -17,7 +17,7 @@ describe('<Field />', () => {
     inheritComponent: 'form',
     refInstanceof: window.HTMLFormElement,
     render,
-    skip: ['componentProp', 'componentsProp', 'rootClass'],
+    only: ['mergeClassName', 'propsSpread', 'refForwarding', 'reactTestRenderer'],
   }))
 
   it('should pass formit context when using render props', () => {
