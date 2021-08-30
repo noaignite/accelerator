@@ -1,23 +1,17 @@
 import * as React from 'react'
 import { screen } from '@testing-library/react'
-import { createRender, describeConformance, getClasses } from 'test/utils'
+import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import MediaReveal from './MediaReveal'
 
 describe('<MediaReveal />', () => {
   const render = createRender({ wrapper: TestProvider })
-  let classes
 
   const defaultProps = {
     children: <div />,
   }
 
-  beforeEach(() => {
-    classes = getClasses(<MediaReveal {...defaultProps} />, render)
-  })
-
   describeConformance(<MediaReveal {...defaultProps} />, () => ({
-    classes,
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
@@ -38,23 +32,15 @@ describe('<MediaReveal />', () => {
     expect(screen.getByTestId('child')).toBeInTheDocument()
   })
 
-  describe('should apply the ratio class and inline style of `--aspect-ratio`', () => {
+  describe('should apply the inline style of `--aspect-ratio`', () => {
     it('if `width` & `height` are specified', () => {
       render(<MediaReveal width={2} height={1} data-testid="root" {...defaultProps} />)
-      expect(screen.getByTestId('root')).toHaveClass(classes.ratio)
       expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
 
-    it('if `ratio` is specified', () => {
+    it('if `ratio` is specified as a number', () => {
       render(<MediaReveal ratio={2} data-testid="root" {...defaultProps} />)
-      expect(screen.getByTestId('root')).toHaveClass(classes.ratio)
       expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
-  })
-
-  it('should apply the ratio class but no inline styles if `ratio` is specified as a boolean', () => {
-    render(<MediaReveal ratio data-testid="root" {...defaultProps} />)
-    expect(screen.getByTestId('root')).toHaveClass(classes.ratio)
-    expect(screen.getByTestId('root')).not.toHaveAttribute('style')
   })
 })

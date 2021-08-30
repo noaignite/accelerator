@@ -1,19 +1,13 @@
 import * as React from 'react'
 import { screen } from '@testing-library/react'
-import { createRender, describeConformance, getClasses } from 'test/utils'
+import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import MediaBase from './MediaBase'
 
 describe('<MediaBase />', () => {
   const render = createRender({ wrapper: TestProvider })
-  let classes
-
-  beforeEach(() => {
-    classes = getClasses(<MediaBase src="/foo.jpg" />, render)
-  })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({
-    classes,
     inheritComponent: 'img',
     refInstanceof: window.HTMLImageElement,
     render,

@@ -90,30 +90,6 @@ function describeRef(element, getOptions) {
 }
 
 /**
- * Tests that the root component has the root class
- * @param {React.ReactElement} element
- * @param {() => ConformanceOptions} getOptions
- */
-function testRootClass(element, getOptions) {
-  it('applies the root class to the root component if it has this class', () => {
-    const { classes, render } = getOptions()
-    if (classes.root == null) {
-      return
-    }
-
-    const className = randomStringValue()
-    render(React.cloneElement(element, { 'data-testid': 'root', className }))
-
-    // we established that the root component renders the outermost host previously. We immediately
-    // jump to the host component because some components pass the `root` class
-    // to the `classes` prop of the root component.
-    // https://github.com/mui-org/material-ui/blob/f9896bcd129a1209153106296b3d2487547ba205/packages/material-ui/src/OutlinedInput/OutlinedInput.js#L101
-    expect(screen.getByTestId('root')).toHaveClass(classes.root)
-    expect(screen.getByTestId('root')).toHaveClass(className)
-  })
-}
-
-/**
  * Tests that the component can be rendered with react-test-renderer.
  * This is important for snapshot testing with Jest (even if we don't encourage it).
  * @param {React.ReactElement} element
@@ -135,20 +111,10 @@ const fullSuite = {
   mergeClassName: testClassName,
   propsSpread: testPropsSpread,
   refForwarding: describeRef,
-  rootClass: testRootClass,
   reactTestRenderer: testReactTestRenderer,
+  // themeDefaultProps: testThemeDefaultProps,
+  // themeStyleOverrides: testThemeStyleOverrides,
 }
-
-/**
- * @typedef {Object} ConformanceOptions
- * @property {Record<string, string>} classes - `classes` of the component provided by `@material-ui/styles`
- * @property {import('react').ElementType} inheritComponent - The element type that receives spread props.
- * @property {(node: React.ReactNode) => void} render - Should be a return value from createRender
- * @property {Array<keyof typeof fullSuite>} [only] - If specified only run the tests listed
- * @property {any} refInstanceof - `ref` will be an instanceof this constructor.
- * @property {Array<keyof typeof fullSuite>} [skip] - Skip the specified tests
- * @property {string} [testComponentPropWith] - The host component that should be rendered instead.
- */
 
 /**
  * Tests various aspects of a component that should be equal across OUI
@@ -157,15 +123,22 @@ const fullSuite = {
  * @param {() => ConformanceOptions} getOptions
  */
 export default function describeConformance(minimalElement, getOptions) {
-  const { after: runAfterHook = () => {}, only = Object.keys(fullSuite), skip = [] } = getOptions()
   describe('OUI component API', () => {
+    const {
+      after: runAfterHook = () => {},
+      only = Object.keys(fullSuite),
+      skip = [],
+    } = getOptions()
+
+    const filteredTests = Object.keys(fullSuite).filter(
+      (testKey) => only.indexOf(testKey) !== -1 && skip.indexOf(testKey) === -1,
+    )
+
     afterAll(runAfterHook)
 
-    Object.keys(fullSuite)
-      .filter((testKey) => only.indexOf(testKey) !== -1 && skip.indexOf(testKey) === -1)
-      .forEach((testKey) => {
-        const test = fullSuite[testKey]
-        test(minimalElement, getOptions)
-      })
+    filteredTests.forEach((testKey) => {
+      const test = fullSuite[testKey]
+      test(minimalElement, getOptions)
+    })
   })
 }

@@ -33,7 +33,7 @@ describe('<Field />', () => {
     refInstanceof: window.HTMLInputElement,
     render,
     testComponentPropWith: 'textarea',
-    skip: ['rootClass'],
+    skip: ['componentsProp', 'rootClass'],
   }))
 
   describe('should receive name, value, onChange & with/out helperText', () => {
@@ -146,8 +146,10 @@ describe('<Field />', () => {
       expect(input).toBeChecked()
     })
 
-    it('<Field component={FormControlLabel} control={<Checkbox />} />', () => {
-      render(<Field component={FormControlLabel} control={<Checkbox />} name="agree" />)
+    it('<Field component={FormControlLabel} control={<Checkbox />} label="Label" />', () => {
+      render(
+        <Field component={FormControlLabel} control={<Checkbox />} label="Label" name="agree" />,
+      )
       const input = screen.getByRole('checkbox')
 
       expect(input).toBeInTheDocument()
@@ -177,11 +179,25 @@ describe('<Field />', () => {
       expect(inputs[1]).toBeChecked()
     })
 
-    it('<Field component={FormControlLabel} control={<Radio />} />', () => {
+    it('<Field component={FormControlLabel} control={<Radio />} label="Label" />', () => {
       render(
         <>
-          <Field component={FormControlLabel} control={<Radio />} name="fruit" value="Apple" />,
-          <Field component={FormControlLabel} control={<Radio />} name="fruit" value="Banana" />,
+          <Field
+            component={FormControlLabel}
+            control={<Radio />}
+            label="Label"
+            name="fruit"
+            value="Apple"
+          />
+          ,
+          <Field
+            component={FormControlLabel}
+            control={<Radio />}
+            label="Label"
+            name="fruit"
+            value="Banana"
+          />
+          ,
         </>,
       )
       const inputs = screen.getAllByRole('radio')
@@ -215,11 +231,23 @@ describe('<Field />', () => {
       expect(inputs[1]).toBeChecked()
     })
 
-    it('<Field component={FormControlLabel} control={<Checkbox />} />', () => {
+    it('<Field component={FormControlLabel} control={<Checkbox />} label="Label" />', () => {
       render(
         <>
-          <Field component={FormControlLabel} control={<Checkbox />} name="fruits" value="Apple" />
-          <Field component={FormControlLabel} control={<Checkbox />} name="fruits" value="Banana" />
+          <Field
+            component={FormControlLabel}
+            control={<Checkbox />}
+            label="Label"
+            name="fruits"
+            value="Apple"
+          />
+          <Field
+            component={FormControlLabel}
+            control={<Checkbox />}
+            label="Label"
+            name="fruits"
+            value="Banana"
+          />
         </>,
       )
       const inputs = screen.getAllByRole('checkbox')
