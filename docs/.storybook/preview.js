@@ -3,17 +3,7 @@ import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { CssBaseline } from '@material-ui/core'
 
-const theme = createTheme({
-  components: {
-    OuiAspectRatio: {
-      styleOverrides: {
-        root: {
-          marginTop: 200,
-        },
-      },
-    },
-  },
-})
+const theme = createTheme({})
 
 export const parameters = {
   layout: 'fullscreen',

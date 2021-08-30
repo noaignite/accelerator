@@ -2,7 +2,7 @@ import * as React from 'react'
 import { screen } from '@testing-library/react'
 import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
-import InView from './InView'
+import InView from '.'
 
 describe('<InView />', () => {
   const render = createRender({ wrapper: TestProvider })

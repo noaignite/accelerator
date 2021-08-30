@@ -4,7 +4,7 @@ import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
 import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
-import Media from './Media'
+import Media from '.'
 
 function createMatchMedia(width, ref) {
   return (query) => {
