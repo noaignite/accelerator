@@ -2,7 +2,7 @@ import * as React from 'react'
 import { screen } from '@testing-library/react'
 import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
-import MediaReveal from './MediaReveal'
+import MediaReveal, { mediaRevealClasses as classes } from '.'
 
 describe('<MediaReveal />', () => {
   const render = createRender({ wrapper: TestProvider })
@@ -11,12 +11,13 @@ describe('<MediaReveal />', () => {
     children: <div />,
   }
 
-  describeConformance(<MediaReveal {...defaultProps} />, () => ({
+  describeConformance(<MediaReveal rootMargin="100px" {...defaultProps} />, () => ({
     ouiName: 'OuiMediaReveal',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
     testComponentPropWith: 'span',
+    testDeepOverrides: { slotName: 'bounds', slotClassName: classes.bounds },
     skip: [
       // https://github.com/facebook/react/issues/11565
       'reactTestRenderer',

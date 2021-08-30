@@ -7,6 +7,7 @@ import { styled } from '@material-ui/system'
 import { Fade, useThemeProps } from '@material-ui/core'
 import InView from '../InView'
 import MediaLoader from '../MediaLoader'
+import classes from './mediaRevealClasses'
 
 const MediaRevealRoot = styled(MediaLoader, {
   name: 'OuiMediaReveal',
@@ -118,7 +119,12 @@ const MediaReveal = React.forwardRef(function MediaReveal(inProps, ref) {
       {...other}
     >
       {rootMargin && !inView && (
-        <MediaRevealBounds onEnter={handleEnter} rootMargin={rootMargin} triggerOnce />
+        <MediaRevealBounds
+          className={classes.bounds}
+          onEnter={handleEnter}
+          rootMargin={rootMargin}
+          triggerOnce
+        />
       )}
 
       {isPlainChildren ? (

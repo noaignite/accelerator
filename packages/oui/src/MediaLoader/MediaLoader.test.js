@@ -2,7 +2,7 @@ import * as React from 'react'
 import { screen } from '@testing-library/react'
 import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
-import MediaLoader from './MediaLoader'
+import MediaLoader from '.'
 
 describe('<MediaLoader />', () => {
   const render = createRender({ wrapper: TestProvider })
