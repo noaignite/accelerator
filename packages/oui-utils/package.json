@@ -1,15 +1,14 @@
 {
   "name": "@oakwood/oui-utils",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": false,
-  "author": "Oakwood Creative",
+  "author": "NoA Ignite",
   "description": "OUI Utils - Utility functions for OUI.",
   "main": "./src/index.js",
   "keywords": [
     "react",
     "react-component",
-    "material design",
-    "material-ui",
+    "mui",
     "utils"
   ],
   "repository": {
@@ -30,6 +29,7 @@
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish build --tag latest",
     "release:verdaccio": "yarn build && npm publish build --tag latest --registry http://localhost:4873",
+    "release:yalc": "yarn build && yalc publish build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {},
