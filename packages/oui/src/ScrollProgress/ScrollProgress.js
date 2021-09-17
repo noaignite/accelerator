@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { setRef } from '@material-ui/core/utils'
+import { setRef } from '@mui/material/utils'
 import { clamp } from '@oakwood/oui-utils'
 import InView from '../InView'
 

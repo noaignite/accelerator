@@ -1,7 +1,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import mediaLoaded from '@maeertin/medialoaded'
-import { setRef } from '@material-ui/core/utils'
+import { setRef } from '@mui/material/utils'
 
 const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   const { children, component: Component = 'div', onLoaded, ...other } = props

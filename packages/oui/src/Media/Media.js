@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { useTheme, useThemeProps } from '@material-ui/core'
+import { useTheme, useThemeProps } from '@mui/material'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaWithWidth from './MediaWithWidth'
@@ -113,7 +113,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
   return (
     <>
       {shouldPreload && generatePreload({ component, sources, src, ...other })}
-      <ContainerComponent decoding="async" {...componentProps} />
+      <ContainerComponent {...componentProps} />
     </>
   )
 })

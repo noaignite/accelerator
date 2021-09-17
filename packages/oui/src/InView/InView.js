@@ -1,7 +1,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { setRef } from '@material-ui/core/utils'
-import { useThemeProps } from '@material-ui/core'
+import { setRef } from '@mui/material/utils'
+import { useThemeProps } from '@mui/material'
 import { getObserverInstance } from '@oakwood/oui-utils'
 
 const InView = React.forwardRef(function InView(inProps, ref) {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { styled } from '@material-ui/system'
-import { useThemeProps } from '@material-ui/core'
+import { styled } from '@mui/system'
+import { useThemeProps } from '@mui/material'
 
 const AspectRatioRoot = styled('div', {
   name: 'OuiAspectRatio',

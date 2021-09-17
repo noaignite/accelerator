@@ -1,8 +1,8 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { chainPropTypes } from '@material-ui/utils'
-import { styled } from '@material-ui/system'
-import { useThemeProps } from '@material-ui/core'
+import { chainPropTypes } from '@mui/utils'
+import { styled } from '@mui/system'
+import { useThemeProps } from '@mui/material'
 
 const MediaBaseRoot = styled('img', {
   name: 'OuiMediaBase',
