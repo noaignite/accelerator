@@ -6,7 +6,7 @@
 
 <div align="center">
 
-[Oakwood](https://oakwood.se) UI components built on top of [React](https://reactjs.org/) and [Material-UI](https://material-ui.com/).
+[Oakwood](https://oakwood.se) UI components built on top of [React](https://reactjs.org/) and [MUI](https://mui.com/).
 
 </div>
 

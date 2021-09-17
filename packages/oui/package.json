@@ -1,13 +1,13 @@
 {
   "name": "@oakwood/oui",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": false,
-  "author": "Oakwood Creative",
-  "description": "Oakwood UI components built with React and Material-UI.",
+  "author": "NoA Ignite",
+  "description": "OUI components built with React and MUI.",
   "keywords": [
     "react",
     "react-component",
-    "material-ui",
+    "mui",
     "utils"
   ],
   "repository": {
@@ -28,6 +28,7 @@
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish build --tag latest",
     "release:verdaccio": "yarn build && npm publish build --tag latest --registry http://localhost:4873",
+    "release:yalc": "yarn build && yalc publish build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
@@ -41,7 +42,7 @@
   "dependencies": {
     "@babel/runtime": "^7.7.4",
     "@maeertin/medialoaded": "^1.2.1",
-    "@oakwood/oui-utils": "1.1.0",
+    "@oakwood/oui-utils": "2.0.0",
     "clsx": "^1.1.1",
     "prop-types": "^15.7.2"
   },
