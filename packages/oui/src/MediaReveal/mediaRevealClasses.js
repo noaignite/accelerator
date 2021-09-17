@@ -1,4 +1,4 @@
-import { generateUtilityClass, generateUtilityClasses } from '@material-ui/unstyled'
+import { generateUtilityClass, generateUtilityClasses } from '@mui/core'
 
 export function getAvatarUtilityClass(slot) {
   return generateUtilityClass('OuiMediaReveal', slot)

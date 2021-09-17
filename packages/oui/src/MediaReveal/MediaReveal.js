@@ -2,9 +2,9 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { useForkRef } from '@material-ui/core/utils'
-import { styled } from '@material-ui/system'
-import { Fade, useThemeProps } from '@material-ui/core'
+import { useForkRef } from '@mui/material/utils'
+import { styled } from '@mui/system'
+import { Fade, useThemeProps } from '@mui/material'
 import InView from '../InView'
 import MediaLoader from '../MediaLoader'
 import classes from './mediaRevealClasses'

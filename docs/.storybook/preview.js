@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming'
-import { createTheme, ThemeProvider } from '@material-ui/core/styles'
-import { CssBaseline } from '@material-ui/core'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { CssBaseline } from '@mui/material'
 
 const theme = createTheme({})
 

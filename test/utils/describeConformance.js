@@ -3,7 +3,7 @@
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'
 import { screen } from '@testing-library/react'
-import { createTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 
 function randomStringValue() {
   return `s${Math.random().toString(36).slice(2)}`

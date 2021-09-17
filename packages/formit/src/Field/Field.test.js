@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { screen } from '@testing-library/react'
-import { Checkbox, FormControlLabel, Radio, TextField } from '@material-ui/core'
+import { Checkbox, FormControlLabel, Radio, TextField } from '@mui/material'
 import userEvent from '@testing-library/user-event'
 import { createRender, describeConformance } from 'test/utils'
 import Formit from '../Formit'
