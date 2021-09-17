@@ -1,8 +1,8 @@
 {
   "name": "docs",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "author": "Oakwood Creative",
+  "author": "NoA Ignite",
   "license": "MIT",
   "scripts": {
     "build": "build-storybook -s ./public -o .storybook-static",
@@ -13,8 +13,8 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@mui/material": "^5.0.0",
-    "@oakwood/formit": "1.1.0",
-    "@oakwood/oui": "1.1.0",
+    "@oakwood/formit": "2.0.0",
+    "@oakwood/oui": "2.0.0",
     "@storybook/addon-a11y": "^6.3.2",
     "@storybook/addon-essentials": "^6.3.2",
     "@storybook/react": "^6.3.2",

@@ -1,9 +1,9 @@
 {
   "name": "@oakwood/formit",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "private": false,
-  "author": "Oakwood Creative",
-  "description": "Form helper components built with React and Material-UI in mind.",
+  "author": "NoA Ignite",
+  "description": "Form helper components built with React and MUI in mind.",
   "main": "./src/index.js",
   "keywords": [
     "react",
@@ -28,17 +28,14 @@
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish build --tag latest",
     "release:verdaccio": "yarn build && npm publish build --tag latest --registry http://localhost:4873",
+    "release:yalc": "yarn build && yalc publish build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0"
   },
-  "devDependencies": {
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "@mui/material": "^5.0.0"
-  },
+  "devDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.7.4",
     "clsx": "^1.1.1",
