@@ -14,6 +14,7 @@ OUI has now been rewritten to work with the latest release, version 5, of [MUI](
 - [Media] rootMargin is now safely destructed out and used where it's needed
 - [Media] Remove decoding="async" on root component when priority set to true
 - [BackgroundMedia] Remove BackgroundMedia
+- [utils] Add mediaType prop validation util
 
 ### `@oakwood/oui-utils@v2.0.0`
 
@@ -21,6 +22,7 @@ OUI has now been rewritten to work with the latest release, version 5, of [MUI](
 - [useSmoothing] Remove react type util & remove react as package peer dependency
 - [range] Introduce new range util @deriel
 - [keyframer] Introduce new keyframer util @deriel
+- [mediaType] Move mediaType util into oui core and remove prop-types package dependency
 
 ### Core
 
