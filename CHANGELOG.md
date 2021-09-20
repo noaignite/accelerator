@@ -19,6 +19,8 @@ OUI has now been rewritten to work with the latest release, version 5, of [MUI](
 
 - [getObserverInstance] Util now exported in index.js
 - [useSmoothing] Remove react type util & remove react as package peer dependency
+- [range] Introduce new range util @deriel
+- [keyframer] Introduce new keyframer util @deriel
 
 ### Core
 
