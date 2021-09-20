@@ -163,10 +163,10 @@ describe('<Field />', () => {
   describe('should render with `checked` when of type radio', () => {
     it('<Field type="radio" />', () => {
       render(
-        <>
+        <React.Fragment>
           <Field name="fruit" value="Apple" type="radio" />
           <Field name="fruit" value="Banana" type="radio" />
-        </>,
+        </React.Fragment>,
       )
       const inputs = screen.getAllByRole('radio')
 
@@ -181,7 +181,7 @@ describe('<Field />', () => {
 
     it('<Field component={FormControlLabel} control={<Radio />} label="Label" />', () => {
       render(
-        <>
+        <React.Fragment>
           <Field
             component={FormControlLabel}
             control={<Radio />}
@@ -198,7 +198,7 @@ describe('<Field />', () => {
             value="Banana"
           />
           ,
-        </>,
+        </React.Fragment>,
       )
       const inputs = screen.getAllByRole('radio')
 
@@ -215,10 +215,10 @@ describe('<Field />', () => {
   describe('should handle multiple checkboxes when initial value is of type array', () => {
     it('<Field type="checkbox" />', () => {
       render(
-        <>
+        <React.Fragment>
           <Field name="fruits" value="Apple" type="checkbox" />
           <Field name="fruits" value="Banana" type="checkbox" />
-        </>,
+        </React.Fragment>,
       )
       const inputs = screen.getAllByRole('checkbox')
 
@@ -233,7 +233,7 @@ describe('<Field />', () => {
 
     it('<Field component={FormControlLabel} control={<Checkbox />} label="Label" />', () => {
       render(
-        <>
+        <React.Fragment>
           <Field
             component={FormControlLabel}
             control={<Checkbox />}
@@ -248,7 +248,7 @@ describe('<Field />', () => {
             name="fruits"
             value="Banana"
           />
-        </>,
+        </React.Fragment>,
       )
       const inputs = screen.getAllByRole('checkbox')
 

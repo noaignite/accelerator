@@ -111,10 +111,10 @@ const Media = React.forwardRef(function Media(inProps, ref) {
   const shouldPreload = generatePreload && typeof window === 'undefined'
 
   return (
-    <>
+    <React.Fragment>
       {shouldPreload && generatePreload({ component, sources, src, ...other })}
       <ContainerComponent {...componentProps} />
-    </>
+    </React.Fragment>
   )
 })
 

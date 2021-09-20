@@ -65,14 +65,14 @@ const Template1 = () => (
 
       <FormitConsumer>
         {({ isSubmitting }) => (
-          <>
+          <React.Fragment>
             <input type="reset" value="Reset" disabled={isSubmitting} />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
 
             {isSubmitting && <p>Loading...</p>}
-          </>
+          </React.Fragment>
         )}
       </FormitConsumer>
     </Form>
