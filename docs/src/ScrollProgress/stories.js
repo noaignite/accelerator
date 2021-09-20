@@ -8,12 +8,12 @@ export default {
 
 const Template = (args) => {
   const [state, setState] = React.useState({})
-  const handleChange = React.useCallback((progress, innerProgress, bounds) => {
+  const handleChange = React.useCallback(({ progress, innerProgress, bounds }) => {
     setState({ progress, innerProgress, bounds })
   }, [])
 
   return (
-    <>
+    <React.Fragment>
       <div style={{ position: 'fixed', padding: 20 }}>
         Progress: {state.progress}
         <br />
@@ -24,7 +24,7 @@ const Template = (args) => {
       <div style={{ height: '110vh' }} />
       <ScrollProgress onChange={handleChange} {...args} />
       <div style={{ height: '110vh' }} />
-    </>
+    </React.Fragment>
   )
 }
 

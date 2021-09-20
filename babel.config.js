@@ -37,10 +37,10 @@ module.exports = {
     'babel-plugin-optimize-clsx',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
+    ['@babel/plugin-proposal-private-methods', { loose: true }],
+    ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
     // any package needs to declare 7.4.4 as a runtime dependency. default is ^7.0.0
     ['@babel/plugin-transform-runtime', { version: '^7.4.4' }],
-    // for IE 11 support
-    '@babel/plugin-transform-object-assign',
   ],
   ignore: [/@babel[\\|/]runtime/], // Fix a Windows issue.
   env: {

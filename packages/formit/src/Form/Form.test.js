@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createRender, describeConformance } from 'test/utils'
 import Formit from '../Formit'
@@ -16,7 +17,7 @@ describe('<Field />', () => {
     inheritComponent: 'form',
     refInstanceof: window.HTMLFormElement,
     render,
-    skip: ['componentProp', 'rootClass'],
+    only: ['mergeClassName', 'propsSpread', 'refForwarding', 'reactTestRenderer'],
   }))
 
   it('should pass formit context when using render props', () => {
@@ -32,7 +33,7 @@ describe('<Field />', () => {
       },
     }
 
-    const { getAllByRole, getByRole } = render(
+    render(
       <Form>
         <Field name="name" />
         <input type="submit" value="Submit" />
@@ -40,8 +41,8 @@ describe('<Field />', () => {
       </Form>,
       renderOptions,
     )
-    const input = getByRole('textbox')
-    const [submitButton, resetButton] = getAllByRole('button')
+    const input = screen.getByRole('textbox')
+    const [submitButton, resetButton] = screen.getAllByRole('button')
 
     userEvent.type(input, 'Jon Snow')
     userEvent.click(submitButton)

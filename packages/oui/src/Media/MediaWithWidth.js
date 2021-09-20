@@ -2,8 +2,7 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import useTheme from '@material-ui/core/styles/useTheme'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useMediaQuery, useTheme } from '@mui/material'
 import MediaBase from '../MediaBase'
 
 /**

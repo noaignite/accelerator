@@ -25,15 +25,15 @@ export default {
   component: Media,
   argTypes: {
     component: {
+      options: ['video', 'audio', 'picture', 'iframe', 'img'],
       control: {
         type: 'select',
-        options: ['video', 'audio', 'picture', 'iframe', 'img'],
       },
     },
     src: {
+      options: [sources.jpg.xs, sources.mp3.xs, sources.mp4.xs],
       control: {
         type: 'select',
-        options: [sources.jpg.xs, sources.mp3.xs, sources.mp4.xs],
       },
     },
   },
@@ -104,11 +104,11 @@ Custom.args = {
 }
 
 const Template2 = (args) => (
-  <>
+  <React.Fragment>
     {Array.from(new Array(1000), (_, idx) => (
       <Media key={idx} src={sources.jpg.xs} style={{ height: 500 }} {...args} />
     ))}
-  </>
+  </React.Fragment>
 )
 
 export const DefaultLoadTest = Template2.bind({})

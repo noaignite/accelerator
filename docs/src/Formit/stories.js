@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TextField } from '@material-ui/core'
+import { TextField } from '@mui/material'
 import { Field, Form, Formit, FormitConsumer, useFormit } from '@oakwood/formit'
 
 export default {
@@ -11,13 +11,15 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const actionWithPromise = (eventName, timeout) => async (values, { setSubmitting }) => {
-  setSubmitting(true)
-  await sleep(timeout)
-  setSubmitting(false)
+function actionWithPromise(eventName, timeout) {
+  return async (values, { setSubmitting }) => {
+    setSubmitting(true)
+    await sleep(timeout)
+    setSubmitting(false)
 
-  // eslint-disable-next-line no-console
-  console.log(eventName, values)
+    // eslint-disable-next-line no-console
+    console.log(eventName, values)
+  }
 }
 
 const formitProps = {
@@ -63,14 +65,14 @@ const Template1 = () => (
 
       <FormitConsumer>
         {({ isSubmitting }) => (
-          <>
+          <React.Fragment>
             <input type="reset" value="Reset" disabled={isSubmitting} />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
 
             {isSubmitting && <p>Loading...</p>}
-          </>
+          </React.Fragment>
         )}
       </FormitConsumer>
     </Form>

@@ -1,5 +1,5 @@
 const { merge } = require('webpack-merge')
-const webpackBaseConfig = require('./webpackBaseConfig')
+const webpackBaseConfig = require('../../webpackBaseConfig')
 
 module.exports = {
   stories: ['../src/**/*stories.js'],

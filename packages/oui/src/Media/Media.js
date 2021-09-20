@@ -2,8 +2,7 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { getThemeProps } from '@material-ui/styles'
-import useTheme from '@material-ui/core/styles/useTheme'
+import { useTheme, useThemeProps } from '@mui/material'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaWithWidth from './MediaWithWidth'
@@ -31,19 +30,20 @@ export function generateSource({ lazy, media, placeholder, src, ...other }) {
 }
 
 const Media = React.forwardRef(function Media(inProps, ref) {
-  const theme = useTheme()
-  const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
+  const props = useThemeProps({ props: inProps, name: 'OuiMedia' })
   const {
     breakpoints,
     component = 'img',
     generatePreload,
     placeholder,
     priority,
+    rootMargin = '256px', // Value based on: https://web.dev/lazy-loading-best-practices/,
     src,
     ...other
   } = props
 
-  const { current: breakpointKeys } = React.useRef([...theme.breakpoints.keys].reverse())
+  const theme = useTheme()
+  const reversedBreakpointKeys = [...theme.breakpoints.keys].reverse()
 
   const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
@@ -65,14 +65,14 @@ const Media = React.forwardRef(function Media(inProps, ref) {
       sources = []
       const children = []
 
-      breakpointKeys.forEach((key, idx) => {
+      reversedBreakpointKeys.forEach((key, idx) => {
         const srcOrSources = breakpoints[key]
         if (!srcOrSources) {
           return
         }
 
         const min = theme.breakpoints.values[key]
-        const max = theme.breakpoints.values[breakpointKeys[idx - 1]] - 1 || 9999
+        const max = theme.breakpoints.values[reversedBreakpointKeys[idx - 1]] - 1 || 9999
         const media = `(min-width: ${min}px)`
 
         if (typeof srcOrSources === 'string') {
@@ -99,7 +99,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
       <InView
         ContainerComponent={ContainerComponent}
         onEnter={handleEnter}
-        rootMargin="256px" // Value based on: https://web.dev/lazy-loading-best-practices/
+        rootMargin={rootMargin}
         triggerOnce
         {...componentProps}
       />
@@ -111,10 +111,10 @@ const Media = React.forwardRef(function Media(inProps, ref) {
   const shouldPreload = generatePreload && typeof window === 'undefined'
 
   return (
-    <>
+    <React.Fragment>
       {shouldPreload && generatePreload({ component, sources, src, ...other })}
-      <ContainerComponent decoding="async" {...componentProps} />
-    </>
+      <ContainerComponent {...componentProps} />
+    </React.Fragment>
   )
 })
 
@@ -128,16 +128,9 @@ Media.propTypes = {
   }),
   component: PropTypes.elementType,
   generatePreload: PropTypes.func,
-  lazy: (props) => {
-    if (props.lazy) {
-      throw new Error(
-        'Oakwood-UI: `lazy` was deprecated. Lazy loading is now enabled per ' +
-          'default, use `priority` instead to opt-out.',
-      )
-    }
-  },
   placeholder: PropTypes.string,
   priority: PropTypes.bool,
+  rootMargin: PropTypes.string,
   src: PropTypes.string,
 }
 

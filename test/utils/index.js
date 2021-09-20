@@ -6,4 +6,3 @@ export function render() {
 
 export { default as createRender } from './createRender'
 export { default as describeConformance } from './describeConformance'
-export { default as getClasses } from './getClasses'

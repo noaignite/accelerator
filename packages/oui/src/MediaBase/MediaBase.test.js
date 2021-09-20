@@ -1,18 +1,14 @@
 import * as React from 'react'
-import { createRender, describeConformance, getClasses } from 'test/utils'
+import { screen } from '@testing-library/react'
+import { createRender, describeConformance } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
-import MediaBase from './MediaBase'
+import MediaBase from '.'
 
 describe('<MediaBase />', () => {
   const render = createRender({ wrapper: TestProvider })
-  let classes
-
-  beforeEach(() => {
-    classes = getClasses(<MediaBase src="/foo.jpg" />, render)
-  })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({
-    classes,
+    ouiName: 'OuiMediaBase',
     inheritComponent: 'img',
     refInstanceof: window.HTMLImageElement,
     render,
@@ -21,22 +17,22 @@ describe('<MediaBase />', () => {
 
   describe('should render with', () => {
     it('the `src` attribute specified', () => {
-      const { getByRole } = render(<MediaBase src="/foo.jpg" />)
-      expect(getByRole('img')).toHaveAttribute('src', '/foo.jpg')
+      render(<MediaBase src="/foo.jpg" />)
+      expect(screen.getByRole('img')).toHaveAttribute('src', '/foo.jpg')
     })
 
     it('no `src` attribute when `lazy` is specified', () => {
-      const { getByRole } = render(<MediaBase src="/foo.jpg" lazy />)
-      expect(getByRole('img')).not.toHaveAttribute('src', '/foo.jpg')
+      render(<MediaBase src="/foo.jpg" lazy />)
+      expect(screen.getByRole('img')).not.toHaveAttribute('src', '/foo.jpg')
     })
 
     it('content of nested children', () => {
-      const { getByRole } = render(
+      render(
         <MediaBase component="picture">
           <img src="foo.jpg" alt="" />
         </MediaBase>,
       )
-      expect(getByRole('img')).toBeInTheDocument()
+      expect(screen.getByRole('img')).toBeInTheDocument()
     })
   })
 })
