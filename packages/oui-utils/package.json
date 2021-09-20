@@ -28,7 +28,6 @@
     "build:copy-files": "node ../../scripts/copy-files.js",
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish build --tag latest",
-    "release:verdaccio": "yarn build && npm publish build --tag latest --registry http://localhost:4873",
     "release:yalc": "yarn build && yalc publish build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
