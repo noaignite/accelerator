@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { CssBaseline } from '@mui/material'
 
-const theme = createMuiTheme({})
+const theme = createTheme({})
 
 export const parameters = {
   layout: 'fullscreen',
@@ -15,9 +16,15 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Story />
-    </ThemeProvider>
+    <EmotionThemeProvider
+      // Bug: Custom theme not propagated within Storybook.js
+      // https://github.com/mui-org/material-ui/issues/24282#issuecomment-859393395
+      theme={theme}
+    >
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Story />
+      </ThemeProvider>
+    </EmotionThemeProvider>
   ),
 ]

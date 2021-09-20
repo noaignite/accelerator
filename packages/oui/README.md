@@ -1,3 +1,3 @@
 # @oakwood/oui
 
-Oakwood UI components built with React and Material-UI.
+OUI components built with React and MUI.

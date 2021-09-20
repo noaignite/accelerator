@@ -4,16 +4,14 @@
  * import the entire lib for coverage reporting
  */
 
-import * as OakwoodUI from './index'
+import * as OUI from './index'
 
-describe('oakwood-ui', () => {
+describe('oui', () => {
   it('should have exports', () => {
-    expect(typeof OakwoodUI).toEqual('object')
+    expect(typeof OUI).toEqual('object')
   })
 
   it('should not do undefined exports', () => {
-    Object.keys(OakwoodUI).forEach((exportKey) =>
-      expect(Boolean(OakwoodUI[exportKey])).toEqual(true),
-    )
+    Object.keys(OUI).forEach((exportKey) => expect(Boolean(OUI[exportKey])).toEqual(true))
   })
 })

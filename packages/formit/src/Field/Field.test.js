@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { Checkbox, FormControlLabel, Radio, TextField } from '@material-ui/core'
+import { screen } from '@testing-library/react'
+import { Checkbox, FormControlLabel, Radio, TextField } from '@mui/material'
 import userEvent from '@testing-library/user-event'
 import { createRender, describeConformance } from 'test/utils'
 import Formit from '../Formit'
@@ -32,13 +33,13 @@ describe('<Field />', () => {
     refInstanceof: window.HTMLInputElement,
     render,
     testComponentPropWith: 'textarea',
-    skip: ['rootClass'],
+    only: ['componentProp', 'mergeClassName', 'propsSpread', 'refForwarding', 'reactTestRenderer'],
   }))
 
   describe('should receive name, value, onChange & with/out helperText', () => {
     it('<Field />', () => {
-      const { getByRole } = render(<Field name="name" required />)
-      const input = getByRole('textbox')
+      render(<Field name="name" required />)
+      const input = screen.getByRole('textbox')
 
       expect(input).toBeInTheDocument()
       expect(input).toHaveAttribute('name', 'name')
@@ -51,8 +52,8 @@ describe('<Field />', () => {
     })
 
     it('<Field component={TextField} />', () => {
-      const { getByRole, getByText } = render(<Field component={TextField} name="name" required />)
-      const input = getByRole('textbox')
+      render(<Field component={TextField} name="name" required />)
+      const input = screen.getByRole('textbox')
 
       expect(input).toBeInTheDocument()
       expect(input).toHaveAttribute('name', 'name')
@@ -62,56 +63,56 @@ describe('<Field />', () => {
       expect(input).toHaveValue(`${initialValues.name} Snow`)
 
       userEvent.clear(input)
-      expect(getByText(validationErrors.name)).toBeInTheDocument()
+      expect(screen.getByText(validationErrors.name)).toBeInTheDocument()
     })
   })
 
   describe('should render with content of nested children if `component` prop allows it', () => {
     it('<Field component="select" />', () => {
-      const { getAllByRole, getByRole } = render(
+      render(
         <Field component="select" name="name">
           <option value="Jon" label="Jon" />
           <option value="Ben" label="Ben" />
         </Field>,
       )
 
-      expect(getByRole('combobox')).toBeInTheDocument()
-      expect(getAllByRole('option')).toHaveLength(2)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+      expect(screen.getAllByRole('option')).toHaveLength(2)
     })
 
     it('<Field component={TextField} SelectProps={{ native: true }} select />', () => {
-      const { getAllByRole, getByRole } = render(
+      render(
         <Field component={TextField} SelectProps={{ native: true }} select name="name">
           <option value="Ben" label="Ben" />
           <option value="Jon" label="Jon" />
         </Field>,
       )
 
-      expect(getByRole('combobox')).toBeInTheDocument()
-      expect(getAllByRole('option')).toHaveLength(2)
+      expect(screen.getByRole('combobox')).toBeInTheDocument()
+      expect(screen.getAllByRole('option')).toHaveLength(2)
     })
   })
 
   describe('should receive name, value, onChange', () => {
     it('<Field component={TextField} SelectProps={{ native: true }} select />', () => {
-      const { getAllByRole, getByRole } = render(
+      render(
         <Field component={TextField} SelectProps={{ native: true }} select name="name">
           <option value="Ben" label="Ben" />
           <option value="Jon" label="Jon" />
         </Field>,
       )
-      const options = getAllByRole('option')
+      const options = screen.getAllByRole('option')
 
       expect(options[0].selected).toBe(false)
       expect(options[1].selected).toBe(true)
 
-      userEvent.selectOptions(getByRole('combobox'), 'Ben')
+      userEvent.selectOptions(screen.getByRole('combobox'), 'Ben')
       expect(options[0].selected).toBe(true)
       expect(options[1].selected).toBe(false)
     })
 
     it('<Field component={TextField} SelectProps={{ multiple: true, native: true }} select />', () => {
-      const { getAllByRole, getByRole } = render(
+      render(
         <Field
           component={TextField}
           SelectProps={{ multiple: true, native: true }}
@@ -122,12 +123,12 @@ describe('<Field />', () => {
           <option value="Apple" label="Apple" />
         </Field>,
       )
-      const options = getAllByRole('option')
+      const options = screen.getAllByRole('option')
 
       expect(options[0].selected).toBe(false)
       expect(options[1].selected).toBe(true)
 
-      userEvent.selectOptions(getByRole('listbox'), 'Banana')
+      userEvent.selectOptions(screen.getByRole('listbox'), 'Banana')
       expect(options[0].selected).toBe(true)
       expect(options[1].selected).toBe(true)
     })
@@ -135,8 +136,8 @@ describe('<Field />', () => {
 
   describe('should render with `checked` when of type checkbox', () => {
     it('<Field type="checkbox" />', () => {
-      const { getByRole } = render(<Field name="agree" type="checkbox" />)
-      const input = getByRole('checkbox')
+      render(<Field name="agree" type="checkbox" />)
+      const input = screen.getByRole('checkbox')
 
       expect(input).toBeInTheDocument()
       expect(input).not.toBeChecked()
@@ -145,11 +146,11 @@ describe('<Field />', () => {
       expect(input).toBeChecked()
     })
 
-    it('<Field component={FormControlLabel} control={<Checkbox />} />', () => {
-      const { getByRole } = render(
-        <Field component={FormControlLabel} control={<Checkbox />} name="agree" />,
+    it('<Field component={FormControlLabel} control={<Checkbox />} label="Label" />', () => {
+      render(
+        <Field component={FormControlLabel} control={<Checkbox />} label="Label" name="agree" />,
       )
-      const input = getByRole('checkbox')
+      const input = screen.getByRole('checkbox')
 
       expect(input).toBeInTheDocument()
       expect(input).not.toBeChecked()
@@ -161,13 +162,13 @@ describe('<Field />', () => {
 
   describe('should render with `checked` when of type radio', () => {
     it('<Field type="radio" />', () => {
-      const { getAllByRole } = render(
-        <>
+      render(
+        <React.Fragment>
           <Field name="fruit" value="Apple" type="radio" />
           <Field name="fruit" value="Banana" type="radio" />
-        </>,
+        </React.Fragment>,
       )
-      const inputs = getAllByRole('radio')
+      const inputs = screen.getAllByRole('radio')
 
       expect(inputs).toHaveLength(2)
       expect(inputs[0]).toBeChecked()
@@ -178,14 +179,28 @@ describe('<Field />', () => {
       expect(inputs[1]).toBeChecked()
     })
 
-    it('<Field component={FormControlLabel} control={<Radio />} />', () => {
-      const { getAllByRole } = render(
-        <>
-          <Field component={FormControlLabel} control={<Radio />} name="fruit" value="Apple" />,
-          <Field component={FormControlLabel} control={<Radio />} name="fruit" value="Banana" />,
-        </>,
+    it('<Field component={FormControlLabel} control={<Radio />} label="Label" />', () => {
+      render(
+        <React.Fragment>
+          <Field
+            component={FormControlLabel}
+            control={<Radio />}
+            label="Label"
+            name="fruit"
+            value="Apple"
+          />
+          ,
+          <Field
+            component={FormControlLabel}
+            control={<Radio />}
+            label="Label"
+            name="fruit"
+            value="Banana"
+          />
+          ,
+        </React.Fragment>,
       )
-      const inputs = getAllByRole('radio')
+      const inputs = screen.getAllByRole('radio')
 
       expect(inputs).toHaveLength(2)
       expect(inputs[0]).toBeChecked()
@@ -199,13 +214,13 @@ describe('<Field />', () => {
 
   describe('should handle multiple checkboxes when initial value is of type array', () => {
     it('<Field type="checkbox" />', () => {
-      const { getAllByRole } = render(
-        <>
+      render(
+        <React.Fragment>
           <Field name="fruits" value="Apple" type="checkbox" />
           <Field name="fruits" value="Banana" type="checkbox" />
-        </>,
+        </React.Fragment>,
       )
-      const inputs = getAllByRole('checkbox')
+      const inputs = screen.getAllByRole('checkbox')
 
       expect(inputs).toHaveLength(2)
       expect(inputs[0]).toBeChecked()
@@ -216,14 +231,26 @@ describe('<Field />', () => {
       expect(inputs[1]).toBeChecked()
     })
 
-    it('<Field component={FormControlLabel} control={<Checkbox />} />', () => {
-      const { getAllByRole } = render(
-        <>
-          <Field component={FormControlLabel} control={<Checkbox />} name="fruits" value="Apple" />
-          <Field component={FormControlLabel} control={<Checkbox />} name="fruits" value="Banana" />
-        </>,
+    it('<Field component={FormControlLabel} control={<Checkbox />} label="Label" />', () => {
+      render(
+        <React.Fragment>
+          <Field
+            component={FormControlLabel}
+            control={<Checkbox />}
+            label="Label"
+            name="fruits"
+            value="Apple"
+          />
+          <Field
+            component={FormControlLabel}
+            control={<Checkbox />}
+            label="Label"
+            name="fruits"
+            value="Banana"
+          />
+        </React.Fragment>,
       )
-      const inputs = getAllByRole('checkbox')
+      const inputs = screen.getAllByRole('checkbox')
 
       expect(inputs).toHaveLength(2)
       expect(inputs[0]).toBeChecked()
@@ -237,7 +264,7 @@ describe('<Field />', () => {
 
   it('should pass field props & meta when using render props', () => {
     let injectedProps
-    const { getByRole } = render(
+    render(
       <Field name="name">
         {(props) => {
           injectedProps = props
@@ -245,7 +272,7 @@ describe('<Field />', () => {
         }}
       </Field>,
     )
-    const input = getByRole('textbox')
+    const input = screen.getByRole('textbox')
 
     expect(input).toHaveAttribute('name', 'name')
     expect(input).toHaveValue(initialValues.name)
@@ -258,7 +285,7 @@ describe('<Field />', () => {
 
   it('should resolve mixed dot and bracket paths for field props & meta', () => {
     let injectedProps
-    const { getByRole } = render(
+    render(
       <Field name="user['permissions'].1">
         {(props) => {
           injectedProps = props
@@ -272,7 +299,7 @@ describe('<Field />', () => {
         },
       },
     )
-    const input = getByRole('textbox')
+    const input = screen.getByRole('textbox')
 
     expect(input).toHaveAttribute('name', "user['permissions'].1")
     expect(input).toHaveValue('write')

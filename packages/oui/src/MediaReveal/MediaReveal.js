@@ -2,30 +2,60 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'clsx'
-import { useForkRef } from '@material-ui/core/utils'
-import withStyles from '@material-ui/styles/withStyles'
-import Fade from '@material-ui/core/Fade'
-import { styles as aspectRatioStyles } from '../AspectRatio/AspectRatio'
+import { useForkRef } from '@mui/material/utils'
+import { styled } from '@mui/system'
+import { Fade, useThemeProps } from '@mui/material'
 import InView from '../InView'
 import MediaLoader from '../MediaLoader'
+import classes from './mediaRevealClasses'
 
-export const styles = {
-  ...aspectRatioStyles,
-  bounds: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
+const MediaRevealRoot = styled(MediaLoader, {
+  name: 'OuiMediaReveal',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const { ownerState } = props
+
+    return [styles.root, ownerState.ratio && styles.ratio]
   },
-}
+})(({ ownerState }) => ({
+  display: 'block',
+  position: 'relative',
+  width: '100%',
+  ...(ownerState.ratio && {
+    '&:before': {
+      content: '""',
+      display: 'block',
+      paddingBottom: 'calc(100% / var(--aspect-ratio))',
+    },
+    '& > *': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    },
+    '& > video, & > picture, & > img': {
+      objectFit: 'cover',
+    },
+  }),
+}))
 
-const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
+const MediaRevealBounds = styled(InView, {
+  name: 'OuiMediaReveal',
+  slot: 'Bounds',
+  overridesResolver: (props, styles) => styles.bounds,
+})({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+})
+
+const MediaReveal = React.forwardRef(function MediaReveal(inProps, ref) {
+  const props = useThemeProps({ props: inProps, name: 'OuiMediaReveal' })
   const {
     children,
-    classes,
-    className,
     height,
     onEnter,
     onLoaded,
@@ -49,7 +79,7 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
   const isPlainChildren = typeof children !== 'function'
 
   const ratio = width && height ? width / height : ratioProp
-  const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
+  const composedStyle = ratio ? { '--aspect-ratio': ratio, ...style } : style
 
   const handleLoaded = React.useCallback(
     (instance) => {
@@ -76,22 +106,20 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
     [onEnter],
   )
 
+  const ownerState = {
+    ratio,
+  }
+
   return (
-    <MediaLoader
-      className={classnames(
-        classes.root,
-        {
-          [classes.ratio]: ratio,
-        },
-        className,
-      )}
+    <MediaRevealRoot
+      ownerState={ownerState}
       onLoaded={handleLoaded}
       style={composedStyle}
       ref={handleRef}
       {...other}
     >
       {rootMargin && !inView && (
-        <InView
+        <MediaRevealBounds
           className={classes.bounds}
           onEnter={handleEnter}
           rootMargin={rootMargin}
@@ -106,18 +134,16 @@ const MediaReveal = React.forwardRef(function MediaReveal(props, ref) {
       ) : (
         children({ inView, loaded, reveal })
       )}
-    </MediaLoader>
+    </MediaRevealRoot>
   )
 })
 
 MediaReveal.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-  classes: PropTypes.object,
-  className: PropTypes.string,
   height: PropTypes.number,
   onEnter: PropTypes.func,
   onLoaded: PropTypes.func,
-  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   rootMargin: PropTypes.string,
   style: PropTypes.object,
   TransitionComponent: PropTypes.elementType,
@@ -126,4 +152,4 @@ MediaReveal.propTypes = {
   width: PropTypes.number,
 }
 
-export default withStyles(styles, { name: 'OuiMediaReveal' })(MediaReveal)
+export default MediaReveal

@@ -1,3 +1,3 @@
 # @oakwood/oui-utils
 
-Oakwood-UI Utils - Utility functions for Oakwood-UI.
+OUI Utils - Utility functions for OUI.

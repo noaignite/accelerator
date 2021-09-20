@@ -110,7 +110,7 @@ const Template = ({ widthKeyframes, colorKeyframes, ...args }) => {
       keyframer(
         widthKeyframes.map((frame) => frame.split('|').map((i) => parseInt(i, 10) || 0)),
         (x) => {
-          return x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2
+          return x < 0.5 ? 8 * x * x * x * x : 1 - (-2 * x + 2) ** 4 / 2
         },
       ),
     [widthKeyframes],
