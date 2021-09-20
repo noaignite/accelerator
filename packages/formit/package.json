@@ -32,12 +32,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {},
   "dependencies": {
-    "@babel/runtime": "^7.7.4",
+    "@babel/runtime": "^7.14.8",
     "clsx": "^1.1.1",
     "lodash.clone": "^4.5.0",
     "lodash.topath": "^4.5.2",

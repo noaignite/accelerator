@@ -72,13 +72,10 @@
     "webpack-merge": "^5.2.0"
   },
   "resolutions": {
-    "**/@babel/runtime": "^7.10.2"
+    "@babel/runtime": "^7.14.8"
   },
   "workspaces": [
     "docs",
     "packages/*"
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.10.2"
-  }
+  ]
 }
