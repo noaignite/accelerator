@@ -2,18 +2,20 @@ import * as React from 'react'
 import { keyframer, range } from '@oakwood/oui-utils'
 
 export default {
-  title: 'Utils/Keyframer',
+  title: 'utils/keyframer',
   component: keyframer,
 }
 
 const UI = ({ widthP, colorP, ...args }) => {
   const [progress, setProgress] = React.useState(0)
+
   const handleChange = React.useCallback(
-    (e) => {
-      setProgress(e.target.value)
+    (event) => {
+      setProgress(event.target.value)
     },
     [setProgress],
   )
+
   const handleRef = React.useCallback(
     (canvas) => {
       if (canvas == null) {
@@ -47,11 +49,13 @@ const UI = ({ widthP, colorP, ...args }) => {
     },
     [widthP, colorP],
   )
+
   const background = `rgb(${colorP(progress).toFixed(2)}, ${colorP(progress).toFixed(2)}, ${colorP(
     progress,
   ).toFixed(2)})`
+
   return (
-    <>
+    <React.Fragment>
       <div>
         <input
           type="range"
@@ -73,6 +77,7 @@ const UI = ({ widthP, colorP, ...args }) => {
         <br />
         Color: {background}
       </div>
+
       <div
         onChange={handleChange}
         style={{
@@ -81,6 +86,7 @@ const UI = ({ widthP, colorP, ...args }) => {
           width: `${widthP(progress)}%`,
         }}
       />
+
       <div style={{ position: 'relative', width: '100%', height: 50, top: 10 }}>
         <canvas ref={handleRef} style={{ width: '100%', height: 150 }} {...args} />
         <div
@@ -94,7 +100,7 @@ const UI = ({ widthP, colorP, ...args }) => {
           }}
         />
       </div>
-    </>
+    </React.Fragment>
   )
 }
 
