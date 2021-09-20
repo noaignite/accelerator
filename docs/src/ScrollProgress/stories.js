@@ -13,7 +13,7 @@ const Template = (args) => {
   }, [])
 
   return (
-    <>
+    <React.Fragment>
       <div style={{ position: 'fixed', padding: 20 }}>
         Progress: {state.progress}
         <br />
@@ -24,7 +24,7 @@ const Template = (args) => {
       <div style={{ height: '110vh' }} />
       <ScrollProgress onChange={handleChange} {...args} />
       <div style={{ height: '110vh' }} />
-    </>
+    </React.Fragment>
   )
 }
 

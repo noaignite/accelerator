@@ -104,11 +104,11 @@ Custom.args = {
 }
 
 const Template2 = (args) => (
-  <>
+  <React.Fragment>
     {Array.from(new Array(1000), (_, idx) => (
       <Media key={idx} src={sources.jpg.xs} style={{ height: 500 }} {...args} />
     ))}
-  </>
+  </React.Fragment>
 )
 
 export const DefaultLoadTest = Template2.bind({})
