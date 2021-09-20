@@ -36,12 +36,17 @@ describe('<MediaReveal />', () => {
 
   describe('should apply the inline style of `--aspect-ratio`', () => {
     it('if `width` & `height` are specified', () => {
-      render(<MediaReveal width={2} height={1} data-testid="root" {...defaultProps} />)
+      render(<MediaReveal width={4} height={2} data-testid="root" {...defaultProps} />)
       expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
 
     it('if `ratio` is specified as a number', () => {
       render(<MediaReveal ratio={2} data-testid="root" {...defaultProps} />)
+      expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
+    })
+
+    it('if `ratio` is specified as a string', () => {
+      render(<MediaReveal ratio="2" data-testid="root" {...defaultProps} />)
       expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
   })

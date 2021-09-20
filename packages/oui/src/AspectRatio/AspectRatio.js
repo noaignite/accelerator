@@ -33,7 +33,7 @@ const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
   const { children, component = 'div', height, ratio: ratioProp, style, width, ...other } = props
 
   const ratio = width && height ? width / height : ratioProp
-  const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
+  const composedStyle = ratio ? { '--aspect-ratio': ratio, ...style } : style
 
   return (
     <AspectRatioRoot as={component} style={composedStyle} ref={ref} {...other}>
@@ -46,7 +46,7 @@ AspectRatio.propTypes = {
   children: PropTypes.node,
   component: PropTypes.elementType,
   height: PropTypes.number,
-  ratio: PropTypes.number,
+  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   style: PropTypes.object,
   width: PropTypes.number,
 }

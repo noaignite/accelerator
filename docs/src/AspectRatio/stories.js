@@ -12,8 +12,13 @@ const Template = (args) => (
   </AspectRatio>
 )
 
-export const Default = Template.bind({})
-Default.args = {
+export const Ratio = Template.bind({})
+Ratio.args = {
+  ratio: 10 / 5,
+}
+
+export const WithAndHeight = Template.bind({})
+WithAndHeight.args = {
   width: 10,
   height: 5,
 }
