@@ -1,17 +1,24 @@
 ### Versions
 
-## @next
-###### 2021-07-06
+## 2.0.0
+###### 2021-09-20
 
-### `@oakwood/formit@next`
+OUI has now been rewritten to work with the latest release, version 5, of [MUI](https://mui.com/).
 
-### `@oakwood/oui@next`
+### `@oakwood/formit@v2.0.0`
 
-- [ScrollProgress] Pass dom target as an onChange argument
+### `@oakwood/oui@v2.0.0`
+
+- [ScrollProgress] onChange arguments now passed as an object
 - [InView/Media] Remove non working useRef's
 - [Media] rootMargin is now safely destructed out and used where it's needed
+- [Media] Remove decoding="async" on root component when priority set to true
+- [BackgroundMedia] Remove BackgroundMedia
 
-### `@oakwood/oui-utils@next`
+### `@oakwood/oui-utils@v2.0.0`
+
+- [getObserverInstance] Util now exported in index.js
+- [useSmoothing] Remove react type util & remove react as package peer dependency
 
 ### Core
 
@@ -30,6 +37,7 @@
 ### Docs
 
 - [docs] Update to new storybook argTypes api format
+- [docs] Remove BackgroundMedia
 
 ## 1.1.0
 ###### 2020-12-01
