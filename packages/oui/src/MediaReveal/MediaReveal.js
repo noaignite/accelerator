@@ -79,7 +79,7 @@ const MediaReveal = React.forwardRef(function MediaReveal(inProps, ref) {
   const isPlainChildren = typeof children !== 'function'
 
   const ratio = width && height ? width / height : ratioProp
-  const composedStyle = typeof ratio === 'number' ? { '--aspect-ratio': ratio, ...style } : style
+  const composedStyle = ratio ? { '--aspect-ratio': ratio, ...style } : style
 
   const handleLoaded = React.useCallback(
     (instance) => {
@@ -143,7 +143,7 @@ MediaReveal.propTypes = {
   height: PropTypes.number,
   onEnter: PropTypes.func,
   onLoaded: PropTypes.func,
-  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   rootMargin: PropTypes.string,
   style: PropTypes.object,
   TransitionComponent: PropTypes.elementType,

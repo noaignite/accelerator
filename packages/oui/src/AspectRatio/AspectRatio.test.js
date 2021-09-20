@@ -35,5 +35,10 @@ describe('<AspectRatio />', () => {
       render(<AspectRatio ratio={2} data-testid="root" />)
       expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
+
+    it('if `ratio` is specified as a string', () => {
+      render(<AspectRatio ratio="2" data-testid="root" />)
+      expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
+    })
   })
 })
