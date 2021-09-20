@@ -1,13 +1,69 @@
 ### Versions
 
+## 1.1.0
+###### 2020-12-01
+
+### `@oakwood/formit@v1.1.0`
+
+- [useFormit] Fix issue where validationErrors could not resolve mixed dot and bracket paths
+
+### `@oakwood/oui@v1.1.0`
+
+- [BackgroundMedia] Simplify dom structure when attachment is set to static
+- [BackgroundMedia] Fix issue where image would resize when collapsing/expanding the iOS Safari menus when using attachment fixed
+- [AspectRatio] Aspect ratio is now created via css variables
+- [MediaReveal] Aspect ratio is now created via css variables
+- [MediaReveal] Fix children prop type
+- [MediaBase] Add 'placeholder' prop to be used as src while lazy is true
+- [Media] Move picture source generation into Media component so that only one breakpoints loop is done. Add new 'placeholder' prop similarily to MediaBase.
+- [Media] Deprecate 'lazy'. Lazy loading is now enabled per default, use 'priority' instead to opt-out. Change default lazy rootMargin to 256px.
+- [Media] Add support for media preloading
+- [Media] Skip destructuring of 'children' prop as it was overriding the composed 'children' prop
+
+## 1.0.0
+###### 2020-10-20
+
+### `@oakwood/formit@v1.0.0`
+
+- [useFormit] Introduce new custom hook to handle form state
+- [Formit] Introduce new ContextProvider component that utilizes the useFormit hook
+- [Form] Introduce new ContextConsumer component
+- [Field] Introduce new ContextConsumer component
+
+### `@oakwood/oui@v1.0.0`
+
+- [Media] Fix issue where props would not spread correctly when using MediaWithWidth and object breakpoints
+- [Rwiper] Remove deprecated component
+- [index.js] Add missing components in common exports file with accompanying test file to test the exports
+
+### `@oakwood/oui-utils@v1.0.0`
+
+- [utils] Remove @material-ui exports
+
+## Core
+
+- [core] Swap eslint-import-resolver-babel-module for eslint-import-resolver-webpack
+- [core] Configure eslint import resolver with docs/.storybook/webpackBaseConfig.js
+- [core] Add @testing-library/jest-dom @testing-library/react babel-plugin-react-remove-properties coveralls css-mediaquery @testing-library/user-event eslint-plugin-jest-dom eslint-plugin-testing-library jest-cli jsdom react-test-renderer sinon
+- [test] Set up all new test suite with newly installed core packages
+- [test] Write tests for @oakwood/formit
+- [test] Write tests for @oakwood/oui-utils
+- [test] Write tests for @oakwood/oui
+
+### Docs
+
+- [docs] Set up aliases via webpack instead of babel
+- [docs] Bump @storybook/* to v6.0.26 and install @storybook/addon-essentials instead of standalone packages
+
 ## 0.11.0
 ###### 2020-09-30
 
 ### `@oakwood/oui@v0.11.0`
 
 - [AspectRatio] Small styles refactor and new calculateRatio export function
-- [MediaLoader] Now only notifies of loading of child media and no longer animates
-- [MediaReveal] A simpler version of previous MediaLoader
+- [InView] Create custom tailored OUI component which tracks when elements enter/exit the viewport via '@oakwood/oui-utils/getObserverInstance'. This replaces InView from 'react-intersection-observer' and drops npm dependency.
+- [MediaLoader] No longer handles lazy loading or animations, this functionality has been moved to the all new OUI MediaReveal component. MediaLoader is now purely for tracking unloaded/loaded media states. Single element child restriction has been dropped and can now track multiple child media.
+- [MediaReveal] Utilize the new OUI InView & MediaLoader components to animate in media based on if media has been loaded and has been scrolled into viewport. Also no longer composed with the OUI AspectRatio component but rather directly composed by the OUI AspectRatio styles object & new 'calculateRatio' util.
 
 ### `@oakwood/oui-utils@v0.11.0`
 

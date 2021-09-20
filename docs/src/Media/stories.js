@@ -52,6 +52,7 @@ export const Picture = Template.bind({})
 Picture.args = {
   component: 'picture',
   breakpoints: sources.jpg,
+  src: sources.jpg.sm,
   alt: 'Image description',
 }
 
@@ -102,16 +103,6 @@ Custom.args = {
   },
 }
 
-export const Lazy = Template.bind({})
-Lazy.args = {
-  component: 'picture',
-  breakpoints: sources.jpg,
-  alt: 'Image description',
-  lazy: true,
-  rootMargin: '0% 0% -50%',
-  style: { margin: '200vh 0' },
-}
-
 const Template2 = (args) => (
   <>
     {Array.from(new Array(1000), (_, idx) => (
@@ -123,12 +114,13 @@ const Template2 = (args) => (
 export const DefaultLoadTest = Template2.bind({})
 DefaultLoadTest.args = {}
 
-export const LazyLoadTest = Template2.bind({})
-LazyLoadTest.args = {
-  lazy: true,
-}
-
 export const NativeLazyLoadTest = Template2.bind({})
 NativeLazyLoadTest.args = {
   loading: 'lazy',
+  priority: true,
+}
+
+export const PriorityLoadTest = Template2.bind({})
+PriorityLoadTest.args = {
+  priority: true,
 }

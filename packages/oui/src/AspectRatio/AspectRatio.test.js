@@ -1,44 +1,51 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { describeConformance, render } from '../test-utils'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import AspectRatio from './AspectRatio'
 
 describe('<AspectRatio />', () => {
-  const mount = createMount()
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
-  beforeAll(() => {
-    classes = getClasses(<AspectRatio />)
+  beforeEach(() => {
+    classes = getClasses(<AspectRatio />, render)
   })
 
   describeConformance(<AspectRatio />, () => ({
     classes,
     inheritComponent: 'div',
-    mount,
     refInstanceof: window.HTMLDivElement,
+    render,
     testComponentPropWith: 'span',
   }))
-  mount.cleanUp()
 
-  describe('should render a div containing', () => {
-    it('0 children', () => {
-      const { container } = render(<AspectRatio />)
-      const aspectRatio = container.firstChild
-      expect(aspectRatio.children.length).toEqual(0)
+  it('should render with content of nested children', () => {
+    const { getByTestId } = render(
+      <AspectRatio data-testid="root">
+        <img src="foo.jpg" alt="" data-testid="child" />
+      </AspectRatio>,
+    )
+    expect(getByTestId('root')).not.toHaveAttribute('style')
+    expect(getByTestId('child')).toBeInTheDocument()
+  })
+
+  describe('should apply the ratio class and inline style of `--aspect-ratio`', () => {
+    it('if `width` & `height` are specified', () => {
+      const { getByTestId } = render(<AspectRatio width={2} height={1} data-testid="root" />)
+      expect(getByTestId('root')).toHaveClass(classes.ratio)
+      expect(getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
 
-    it('the ratio element', () => {
-      const { getByTestId } = render(<AspectRatio width={1} height={1} />)
-      expect(getByTestId('ratio')).toBeInTheDocument()
+    it('if `ratio` is specified', () => {
+      const { getByTestId } = render(<AspectRatio ratio={2} data-testid="root" />)
+      expect(getByTestId('root')).toHaveClass(classes.ratio)
+      expect(getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
     })
   })
 
-  it('should render a div with content of nested children', () => {
-    const wrapper = mount(
-      <AspectRatio>
-        <img src="foo.jpg" alt="" />
-      </AspectRatio>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+  it('should apply the ratio class but no inline styles if `ratio` is specified as a boolean', () => {
+    const { getByTestId } = render(<AspectRatio ratio data-testid="root" />)
+    expect(getByTestId('root')).toHaveClass(classes.ratio)
+    expect(getByTestId('root')).not.toHaveAttribute('style')
   })
 })

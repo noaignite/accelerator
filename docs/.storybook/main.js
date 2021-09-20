@@ -1,26 +1,8 @@
-const path = require('path')
-
-const workspaceRoot = path.join(__dirname, '../../')
+const { merge } = require('webpack-merge')
+const webpackBaseConfig = require('./webpackBaseConfig')
 
 module.exports = {
   stories: ['../src/**/*stories.js'],
-  addons: ['@storybook/addon-controls', '@storybook/addon-actions', '@storybook/addon-a11y'],
-  webpackFinal: async (config /*, { configType }*/) => {
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
-
-    // required to transpile ../packages/
-    config.module.rules = config.module.rules.map((rule) => {
-      if (Array.isArray(rule.use) && rule.use[0].loader === 'babel-loader') {
-        rule.exclude = /node_modules/
-        rule.include = [workspaceRoot]
-      }
-
-      return rule
-    })
-
-    // Return the altered config
-    return config
-  },
+  addons: ['@storybook/addon-essentials', '@storybook/addon-a11y'],
+  webpackFinal: async (config) => merge(config, webpackBaseConfig),
 }
