@@ -1,7 +1,8 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'clsx'
-import { capitalize } from '@material-ui/core/utils'
+import innerHeight from 'ios-inner-height'
+import { capitalize, debounce } from '@material-ui/core/utils'
 import withStyles from '@material-ui/core/styles/withStyles'
 
 export const styles = () => {
@@ -17,25 +18,24 @@ export const styles = () => {
     root: {
       ...absolute,
       zIndex: -1,
+      '& *': {
+        height: '100%',
+      },
+    },
+    clipPath: {
       // ⚠️ clip-path is not supported by IE 11.
-      clipPath: 'inset(0 0 0 0)', // Use `clipPath` as `overflow="hidden"` breaks `position="sticky"`
-      WebkitClipPath: 'inset(0 0 0 0)',
+      clipPath: 'inset(-1px 0 -1px 0)', // Negative top & bottom due to sub-pixel rendering
+      WebkitClipPath: 'inset(-1px 0 -1px 0)', // Negative top & bottom due to sub-pixel rendering
     },
-    container: {
-      ...absolute,
-    },
+    container: absolute,
     containerFixed: {
       position: 'fixed',
     },
     containerSticky: {
       bottom: '-100%',
+      height: 'auto',
     },
-    wrapper: {
-      ...absolute,
-      '& *': {
-        height: '100%',
-      },
-    },
+    wrapper: absolute,
     wrapperFixed: {},
     wrapperSticky: {
       position: 'sticky',
@@ -45,27 +45,69 @@ export const styles = () => {
   }
 }
 
-const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
-  const { attachment = 'static', children, classes, className, ...other } = props
+const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect
 
-  return (
-    <div className={classnames(classes.root, className)} ref={ref} {...other}>
+const BackgroundMedia = React.forwardRef(function BackgroundMedia(props, ref) {
+  const {
+    attachment = 'static',
+    children: childrenProp,
+    classes,
+    className,
+    component: Component = 'div',
+    ...other
+  } = props
+
+  const [height, setHeight] = React.useState(0)
+  useEnhancedEffect(() => {
+    if (attachment === 'fixed') {
+      setHeight(innerHeight())
+
+      const handleResize = debounce(() => {
+        setHeight(innerHeight())
+      })
+
+      window.addEventListener('resize', handleResize)
+      return () => {
+        handleResize.clear()
+        window.removeEventListener('resize', handleResize)
+      }
+    }
+
+    return undefined
+  }, [attachment])
+
+  let children = childrenProp
+  if (attachment !== 'static') {
+    children = (
       <div
-        className={classnames(classes.container, {
-          [classes[`container${capitalize(attachment)}`]]: attachment !== 'static',
-        })}
-        data-testid="container"
+        className={classnames(classes.container, [classes[`container${capitalize(attachment)}`]])}
       >
         <div
-          className={classnames(classes.wrapper, {
-            [classes[`wrapper${capitalize(attachment)}`]]: attachment !== 'static',
+          className={classnames(classes.wrapper, [classes[`wrapper${capitalize(attachment)}`]], {
+            'mui-fixed': attachment === 'fixed',
           })}
-          data-testid="wrapper"
+          style={attachment === 'fixed' ? { height } : undefined}
         >
           {children}
         </div>
       </div>
-    </div>
+    )
+  }
+
+  return (
+    <Component
+      className={classnames(
+        classes.root,
+        {
+          [classes.clipPath]: attachment !== 'static',
+        },
+        className,
+      )}
+      ref={ref}
+      {...other}
+    >
+      {children}
+    </Component>
   )
 })
 
@@ -74,6 +116,7 @@ BackgroundMedia.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object,
   className: PropTypes.string,
+  component: PropTypes.elementType,
 }
 
 export default withStyles(styles, { name: 'OuiBackgroundMedia' })(BackgroundMedia)

@@ -50,7 +50,6 @@ Default.args = {
   mediaProps: {
     component: 'img',
     src: sources.img,
-    lazy: true,
   },
 }
 

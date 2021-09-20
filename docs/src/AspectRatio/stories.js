@@ -9,7 +9,7 @@ export default {
 
 const Template = (args) => (
   <AspectRatio {...args}>
-    <Media component="img" src="//images3.alphacoders.com/975/975999.png" />
+    <Media component="img" src="//source.unsplash.com/960x540" />
   </AspectRatio>
 )
 

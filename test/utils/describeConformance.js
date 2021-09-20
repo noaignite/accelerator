@@ -2,50 +2,6 @@
 
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'
-import { findOutermostIntrinsic } from '@material-ui/core/test-utils'
-
-function assertDOMNode(node) {
-  // duck typing a DOM node
-  expect(typeof node.nodeName).toEqual('string')
-}
-
-/**
- * Utility method to make assertions about the ref on an element
- * @param {React.ReactElement} element - The element should have a component wrapped
- *                                       in withStyles as the root
- * @param {function} mount - Should be returnvalue of createMount
- * @param {function} onRef - Callback, first arg is the ref.
- *                           Assert that the ref is a DOM node by default
- */
-function testRef(element, mount, onRef = assertDOMNode) {
-  const ref = React.createRef()
-  const wrapper = mount(<>{React.cloneElement(element, { ref })}</>)
-  onRef(ref.current, wrapper)
-}
-
-/**
- * Glossary
- * - root component:
- *   - renders the outermost host component
- *   - has the `root` class if the component has one
- *   - excess props are spread to this component
- *   - has the type of `inheritComponent`
- */
-
-/**
- * Returns the component with the same constructor as `component` that renders
- * the outermost host
- * @param {import('enzyme').ReactWrapper} wrapper
- * @param {object} options
- * @param {import('react').ElementType} component
- */
-function findRootComponent(wrapper, { component }) {
-  const outermostHostElement = findOutermostIntrinsic(wrapper).getElement()
-
-  return wrapper.find(component).filterWhere((componentWrapper) => {
-    return componentWrapper.contains(outermostHostElement)
-  })
-}
 
 function randomStringValue() {
   return `s${Math.random().toString(36).slice(2)}`
@@ -59,15 +15,12 @@ function randomStringValue() {
  */
 function testClassName(element, getOptions) {
   it('applies the className to the root component', () => {
-    const { mount } = getOptions()
+    const { render } = getOptions()
     const className = randomStringValue()
 
-    const wrapper = mount(React.cloneElement(element, { className }))
+    const { container } = render(React.cloneElement(element, { className }))
 
-    expect(findOutermostIntrinsic(wrapper).hasClass(className)).toEqual(
-      true,
-      'does have a custom `className`',
-    )
+    expect(container.firstChild).toHaveClass(className)
   })
 }
 
@@ -79,12 +32,20 @@ function testClassName(element, getOptions) {
  */
 function testComponentProp(element, getOptions) {
   describe('prop: component', () => {
-    it('can render another root component with the `component` prop', () => {
-      const { classes, mount, testComponentPropWith: component = 'em' } = getOptions()
+    it('renders correct initial root component', () => {
+      const { inheritComponent, render } = getOptions()
 
-      const wrapper = mount(React.cloneElement(element, { component }))
+      const { container } = render(element)
 
-      expect(findRootComponent(wrapper, { classes, component }).exists()).toEqual(true)
+      expect(container.firstChild.tagName.toLowerCase()).toEqual(inheritComponent)
+    })
+
+    it('renders another root component with the `component` prop', () => {
+      const { render, testComponentPropWith: component = 'em' } = getOptions()
+
+      const { container } = render(React.cloneElement(element, { component }))
+
+      expect(container.firstChild.tagName.toLowerCase()).toEqual(component)
     })
   })
 }
@@ -97,15 +58,11 @@ function testComponentProp(element, getOptions) {
  */
 function testPropsSpread(element, getOptions) {
   it(`spreads props to the root component`, () => {
-    // type def in ConformanceOptions
-    const { classes, inheritComponent, mount } = getOptions()
-    const testProp = 'data-test-props-spread'
-    const value = randomStringValue()
+    const { render } = getOptions()
 
-    const wrapper = mount(React.cloneElement(element, { [testProp]: value }))
-    const root = findRootComponent(wrapper, { classes, component: inheritComponent })
+    const { getByTestId } = render(React.cloneElement(element, { 'data-testid': 'root' }))
 
-    expect(root.props()[testProp]).toEqual(value)
+    expect(getByTestId('root')).toBeInTheDocument()
   })
 }
 
@@ -120,17 +77,13 @@ function testPropsSpread(element, getOptions) {
 function describeRef(element, getOptions) {
   describe('ref', () => {
     it(`attaches the ref`, () => {
-      // type def in ConformanceOptions
-      const { inheritComponent, mount, refInstanceof } = getOptions()
+      const { refInstanceof, render } = getOptions()
 
-      testRef(element, mount, (instance, wrapper) => {
-        expect(instance).toBeInstanceOf(refInstanceof)
+      const ref = React.createRef()
+      const { container } = render(React.cloneElement(element, { ref }))
 
-        if (inheritComponent && instance.nodeType === 1) {
-          const rootHost = findOutermostIntrinsic(wrapper)
-          expect(instance).toEqual(rootHost.instance())
-        }
-      })
+      expect(container.firstChild).toEqual(ref.current)
+      expect(ref.current).toBeInstanceOf(refInstanceof)
     })
   })
 }
@@ -142,20 +95,20 @@ function describeRef(element, getOptions) {
  */
 function testRootClass(element, getOptions) {
   it('applies the root class to the root component if it has this class', () => {
-    const { classes, mount } = getOptions()
+    const { classes, render } = getOptions()
     if (classes.root == null) {
       return
     }
 
     const className = randomStringValue()
-    const wrapper = mount(React.cloneElement(element, { className }))
+    const { container } = render(React.cloneElement(element, { className }))
 
     // we established that the root component renders the outermost host previously. We immediately
     // jump to the host component because some components pass the `root` class
     // to the `classes` prop of the root component.
     // https://github.com/mui-org/material-ui/blob/f9896bcd129a1209153106296b3d2487547ba205/packages/material-ui/src/OutlinedInput/OutlinedInput.js#L101
-    expect(findOutermostIntrinsic(wrapper).hasClass(classes.root)).toEqual(true)
-    expect(findOutermostIntrinsic(wrapper).hasClass(className)).toEqual(true)
+    expect(container.firstChild).toHaveClass(classes.root)
+    expect(container.firstChild).toHaveClass(className)
   })
 }
 
@@ -189,7 +142,7 @@ const fullSuite = {
  * @typedef {Object} ConformanceOptions
  * @property {Record<string, string>} classes - `classes` of the component provided by `@material-ui/styles`
  * @property {import('react').ElementType} inheritComponent - The element type that receives spread props.
- * @property {(node: React.ReactNode) => void} mount - Should be a return value from createMount
+ * @property {(node: React.ReactNode) => void} render - Should be a return value from createRender
  * @property {Array<keyof typeof fullSuite>} [only] - If specified only run the tests listed
  * @property {any} refInstanceof - `ref` will be an instanceof this constructor.
  * @property {Array<keyof typeof fullSuite>} [skip] - Skip the specified tests

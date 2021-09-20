@@ -1,7 +1,7 @@
 import * as React from 'react'
 import BackgroundMedia from '@oakwood/oui/BackgroundMedia'
 import Media from '@oakwood/oui/Media'
-import MediaLoader from '@oakwood/oui/MediaLoader'
+import MediaReveal from '@oakwood/oui/MediaReveal'
 
 export default {
   title: 'Components/BackgroundMedia',
@@ -14,9 +14,9 @@ const Template = () => (
       <Media component="img" src="//source.unsplash.com/800x400" style={{ opacity: 0 }} />
 
       <BackgroundMedia attachment="sticky">
-        <MediaLoader>
+        <MediaReveal>
           <Media component="img" src="//source.unsplash.com/800x400" />
-        </MediaLoader>
+        </MediaReveal>
       </BackgroundMedia>
 
       <div style={{ position: 'absolute', top: 0, padding: 20, background: '#fff' }}>
@@ -26,9 +26,9 @@ const Template = () => (
 
     <section style={{ position: 'relative', height: 650 }}>
       <BackgroundMedia attachment="static">
-        <MediaLoader>
+        <MediaReveal>
           <Media component="img" src="//source.unsplash.com/800x410" />
-        </MediaLoader>
+        </MediaReveal>
       </BackgroundMedia>
 
       <div style={{ position: 'absolute', top: 0, padding: 20, background: '#fff' }}>

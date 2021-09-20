@@ -1,0 +1,55 @@
+{
+  "name": "@oakwood/formit",
+  "version": "1.1.0",
+  "private": false,
+  "author": "Oakwood Creative",
+  "description": "Form helper components built with React and Material-UI in mind.",
+  "main": "./src/index.js",
+  "keywords": [
+    "react",
+    "react-component",
+    "material-ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oakwood/oui.git",
+    "directory": "packages/formit"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oakwood/oui/issues"
+  },
+  "scripts": {
+    "build": "yarn build:cjs && yarn build:esm && yarn build:es && yarn build:copy-files",
+    "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./build --ignore 'src/**/*.test.js'",
+    "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./build/esm --ignore 'src/**/*.test.js'",
+    "build:es": "cross-env NODE_ENV=production BABEL_ENV=es babel --config-file ../../babel.config.js ./src --out-dir ./build/es --ignore 'src/**/*.test.js'",
+    "build:copy-files": "node ../../scripts/copy-files.js",
+    "prebuild": "rimraf build",
+    "release": "yarn build && npm publish build --tag latest",
+    "release:verdaccio": "yarn build && npm publish build --tag latest --registry http://localhost:4873",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "@material-ui/core": "^4.11.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.4",
+    "clsx": "^1.1.1",
+    "lodash.clone": "^4.5.0",
+    "lodash.topath": "^4.5.2",
+    "prop-types": "^15.7.2",
+    "react-fast-compare": "^3.2.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

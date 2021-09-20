@@ -2,12 +2,13 @@
 
 import * as React from 'react'
 import PropTypes from 'prop-types'
+import { getThemeProps } from '@material-ui/styles'
+import useTheme from '@material-ui/core/styles/useTheme'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
-import MediaSources from './MediaSources'
 import MediaWithWidth from './MediaWithWidth'
 
-const IMG_ATTRIBUTES = ['alt', 'height', 'loading', 'sizes', 'src', 'srcSet', 'width']
+const IMG_ATTRIBUTES = ['alt', 'decoding', 'height', 'loading', 'sizes', 'src', 'srcSet', 'width']
 
 /**
  * Separates the argument into two entries. First one containing attributes
@@ -25,64 +26,118 @@ export function extractImgProps(props) {
   )
 }
 
-const Media = React.forwardRef(function Media(props, ref) {
-  const { breakpoints, component = 'img', lazy: lazyProp, src, ...other } = props
+export function generateSource({ lazy, media, placeholder, src, ...other }) {
+  return <source key={src} media={media} srcSet={lazy ? placeholder : src} {...other} />
+}
 
-  const [lazy, setLazy] = React.useState(lazyProp)
+const Media = React.forwardRef(function Media(inProps, ref) {
+  const theme = useTheme()
+  const props = getThemeProps({ name: 'OuiMedia', props: { ...inProps }, theme })
+  const {
+    breakpoints,
+    component = 'img',
+    generatePreload,
+    placeholder,
+    priority,
+    src,
+    ...other
+  } = props
+
+  const { current: breakpointKeys } = React.useRef([...theme.breakpoints.keys].reverse())
+
+  const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
     setLazy(false)
   }, [])
 
-  let componentProps = { ...other }
+  let componentProps = { component, lazy, placeholder, src, ref, ...other }
   let ContainerComponent = MediaBase
+  let sources
 
   if (component === 'picture') {
     const [imgProps, restProps] = extractImgProps(componentProps)
     componentProps = {
-      children: <img src={src} alt="" {...imgProps} />,
+      children: <img alt="" {...imgProps} />,
       ...restProps,
     }
+
     if (breakpoints) {
+      sources = []
+      const children = []
+
+      breakpointKeys.forEach((key, idx) => {
+        const srcOrSources = breakpoints[key]
+        if (!srcOrSources) {
+          return
+        }
+
+        const min = theme.breakpoints.values[key]
+        const max = theme.breakpoints.values[breakpointKeys[idx - 1]] - 1 || 9999
+        const media = `(min-width: ${min}px)`
+
+        if (typeof srcOrSources === 'string') {
+          sources.push({ min, max, src: srcOrSources })
+          children.push(generateSource({ lazy, media, placeholder, src: srcOrSources }))
+        } else if (Array.isArray(srcOrSources)) {
+          srcOrSources.forEach((source) => {
+            sources.push({ min, max, ...source })
+            children.push(generateSource({ lazy, media, placeholder, ...source }))
+          })
+        }
+      })
+
       componentProps.children = React.Children.toArray(componentProps.children)
-      componentProps.children.unshift(
-        <MediaSources key="sources" breakpoints={breakpoints} lazy={lazy} />,
-      )
+      componentProps.children.unshift(children)
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
     ContainerComponent = MediaWithWidth
-  } else {
-    componentProps.src = src
   }
 
-  if (lazyProp) {
+  if (!priority) {
     return (
       <InView
         ContainerComponent={ContainerComponent}
-        component={component}
         onEnter={handleEnter}
-        lazy={lazy}
-        /**
-         * `rootMargin` default based on Chromium 4G load-in distance threshold
-         * https://web.dev/native-lazy-loading/#load-in-distance-threshold
-         * https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/settings.json5;drc=e8f3cf0bbe085fee0d1b468e84395aad3ebb2cad;l=971-1003?originalUrl=https:%2F%2Fcs.chromium.org%2Fchromium%2Fsrc%2Fthird_party%2Fblink%2Frenderer%2Fcore%2Fframe%2Fsettings.json5
-         */
-        rootMargin="3000px 0px"
+        rootMargin="256px" // Value based on: https://web.dev/lazy-loading-best-practices/
         triggerOnce
-        ref={ref}
         {...componentProps}
       />
     )
   }
 
-  return <ContainerComponent component={component} ref={ref} {...componentProps} />
+  // No need to add preloads on the client side. By the time the application is hydrated,
+  // it's too late for preloads.
+  const shouldPreload = generatePreload && typeof window === 'undefined'
+
+  return (
+    <>
+      {shouldPreload && generatePreload({ component, sources, src, ...other })}
+      <ContainerComponent decoding="async" {...componentProps} />
+    </>
+  )
 })
 
 Media.propTypes = {
-  breakpoints: PropTypes.object,
-  children: PropTypes.node,
+  breakpoints: PropTypes.shape({
+    xs: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]).isRequired,
+    sm: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    md: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    lg: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+    xl: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
+  }),
   component: PropTypes.elementType,
-  lazy: PropTypes.bool,
+  generatePreload: PropTypes.func,
+  lazy: (props) => {
+    if (props.lazy) {
+      throw new Error(
+        'Oakwood-UI: `lazy` was deprecated. Lazy loading is now enabled per ' +
+          'default, use `priority` instead to opt-out.',
+      )
+    }
+  },
+  placeholder: PropTypes.string,
+  priority: PropTypes.bool,
   src: PropTypes.string,
 }
 

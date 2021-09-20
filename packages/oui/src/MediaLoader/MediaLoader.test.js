@@ -1,26 +1,27 @@
 import * as React from 'react'
-import { createMount } from '@material-ui/core/test-utils'
-import { describeConformance } from '../test-utils'
+import { createRender, describeConformance } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import MediaLoader from './MediaLoader'
 
 describe('<MediaLoader />', () => {
-  const mount = createMount()
+  const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<MediaLoader />, () => ({
     inheritComponent: 'div',
-    mount,
     refInstanceof: window.HTMLDivElement,
+    render,
     testComponentPropWith: 'span',
     skip: ['rootClass'],
   }))
-  mount.cleanUp()
 
-  it('should render a div with content of nested children', () => {
-    const wrapper = mount(
-      <MediaLoader>
-        <img src="foo.jpg" alt="" />
-      </MediaLoader>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+  describe('should render with', () => {
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <MediaLoader>
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </MediaLoader>,
+      )
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
   })
 })

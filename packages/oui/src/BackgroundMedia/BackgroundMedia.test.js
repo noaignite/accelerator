@@ -1,37 +1,34 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { describeConformance, render } from '../test-utils'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import BackgroundMedia from './BackgroundMedia'
 
 describe('<BackgroundMedia />', () => {
-  const mount = createMount()
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
-  beforeAll(() => {
-    classes = getClasses(<BackgroundMedia />)
+  beforeEach(() => {
+    classes = getClasses(<BackgroundMedia />, render)
   })
 
   describeConformance(<BackgroundMedia />, () => ({
     classes,
     inheritComponent: 'div',
-    mount,
     refInstanceof: window.HTMLDivElement,
-    skip: ['componentProp'],
+    render,
+    testComponentPropWith: 'span',
   }))
-  mount.cleanUp()
 
-  it('should render a div containing the container & wrapper divs', () => {
-    const { getByTestId } = render(<BackgroundMedia />)
-    expect(getByTestId('container')).toBeInTheDocument()
-    expect(getByTestId('wrapper')).toBeInTheDocument()
-  })
+  describe('should render with', () => {
+    it('content of nested children', () => {
+      const { getByTestId } = render(
+        <BackgroundMedia data-testid="root">
+          <img src="foo.jpg" alt="" data-testid="img" />
+        </BackgroundMedia>,
+      )
 
-  it('should render a div with content of nested children', () => {
-    const wrapper = mount(
-      <BackgroundMedia>
-        <img src="foo.jpg" alt="" />
-      </BackgroundMedia>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+      expect(getByTestId('root')).toBeInTheDocument()
+      expect(getByTestId('img')).toBeInTheDocument()
+    })
   })
 })

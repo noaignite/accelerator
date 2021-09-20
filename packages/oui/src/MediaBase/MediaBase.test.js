@@ -1,31 +1,42 @@
 import * as React from 'react'
-import { getClasses, createMount } from '@material-ui/core/test-utils'
-import { describeConformance } from '../test-utils'
+import { createRender, describeConformance, getClasses } from 'test/utils'
+import TestProvider from '../../test/TestProvider'
 import MediaBase from './MediaBase'
 
 describe('<MediaBase />', () => {
-  const mount = createMount()
+  const render = createRender({ wrapper: TestProvider })
   let classes
 
-  beforeAll(() => {
-    classes = getClasses(<MediaBase src="/foo.jpg" />)
+  beforeEach(() => {
+    classes = getClasses(<MediaBase src="/foo.jpg" />, render)
   })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({
     classes,
     inheritComponent: 'img',
-    mount,
     refInstanceof: window.HTMLImageElement,
+    render,
     testComponentPropWith: 'picture',
   }))
-  mount.cleanUp()
 
-  it('should render a picture with content of nested children', () => {
-    const wrapper = mount(
-      <MediaBase component="picture">
-        <img src="foo.jpg" alt="" />
-      </MediaBase>,
-    )
-    expect(wrapper.contains(<img src="foo.jpg" alt="" />)).toEqual(true)
+  describe('should render with', () => {
+    it('the `src` attribute specified', () => {
+      const { getByRole } = render(<MediaBase src="/foo.jpg" />)
+      expect(getByRole('img')).toHaveAttribute('src', '/foo.jpg')
+    })
+
+    it('no `src` attribute when `lazy` is specified', () => {
+      const { getByRole } = render(<MediaBase src="/foo.jpg" lazy />)
+      expect(getByRole('img')).not.toHaveAttribute('src', '/foo.jpg')
+    })
+
+    it('content of nested children', () => {
+      const { getByRole } = render(
+        <MediaBase component="picture">
+          <img src="foo.jpg" alt="" />
+        </MediaBase>,
+      )
+      expect(getByRole('img')).toBeInTheDocument()
+    })
   })
 })
