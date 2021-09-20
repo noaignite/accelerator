@@ -31,12 +31,9 @@
     "release:yalc": "yarn build && yalc publish build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "peerDependencies": {},
-  "devDependencies": {},
   "dependencies": {
     "@babel/runtime": "^7.14.8",
-    "intersection-observer-admin": "^0.3.2",
-    "prop-types": "^15.7.2"
+    "intersection-observer-admin": "^0.3.2"
   },
   "sideEffects": false,
   "publishConfig": {
