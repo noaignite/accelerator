@@ -1,6 +1,5 @@
 import * as React from 'react'
-import Media from '@oakwood/oui/Media'
-import MediaLoader from '@oakwood/oui/MediaLoader'
+import { Media, MediaLoader } from '@noaignite/oui'
 
 export default {
   title: 'Components/MediaLoader',

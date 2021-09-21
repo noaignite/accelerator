@@ -30,7 +30,7 @@ git checkout -b my-topic-branch
 git push -u origin HEAD
 ```
 
-4. Go to [the repository](https://github.com/oakwood/oui) and make a Pull Request.
+4. Go to [the repository](https://github.com/noaignite/oui) and make a Pull Request.
 
 ### Trying the changes on the documentation site
 

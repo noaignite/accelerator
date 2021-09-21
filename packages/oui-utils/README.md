@@ -1,3 +1,3 @@
-# @oakwood/oui-utils
+# @noaignite/oui-utils
 
 OUI Utils - Utility functions for OUI.

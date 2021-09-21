@@ -1,8 +1,7 @@
 import * as React from 'react'
 import Fade from '@mui/material/Fade'
 import Zoom from '@mui/material/Zoom'
-import Media from '@oakwood/oui/Media'
-import MediaReveal from '@oakwood/oui/MediaReveal'
+import { Media, MediaReveal } from '@noaignite/oui'
 
 export default {
   title: 'Components/MediaReveal',

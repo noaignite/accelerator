@@ -1,5 +1,5 @@
 {
-  "name": "@oakwood/formit",
+  "name": "@noaignite/formit",
   "version": "2.0.0",
   "private": false,
   "author": "NoA Ignite",
@@ -12,12 +12,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/oakwood/oui.git",
+    "url": "https://github.com/noaignite/oui.git",
     "directory": "packages/formit"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/oakwood/oui/issues"
+    "url": "https://github.com/noaignite/oui/issues"
   },
   "scripts": {
     "build": "yarn build:cjs && yarn build:esm && yarn build:es && yarn build:copy-files",

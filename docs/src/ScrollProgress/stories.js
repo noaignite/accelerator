@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ScrollProgress from '@oakwood/oui/ScrollProgress'
+import { ScrollProgress } from '@noaignite/oui'
 
 export default {
   title: 'Components/ScrollProgress',

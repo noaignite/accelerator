@@ -1,7 +1,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import { setRef } from '@mui/material/utils'
-import { clamp } from '@oakwood/oui-utils'
+import { clamp } from '@noaignite/oui-utils'
 import InView from '../InView'
 
 export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = topOffset) {
