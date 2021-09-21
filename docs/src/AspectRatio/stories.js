@@ -1,5 +1,5 @@
 import * as React from 'react'
-import AspectRatio from '@oakwood/oui/AspectRatio'
+import { AspectRatio } from '@noaignite/oui'
 
 export default {
   title: 'Components/AspectRatio',

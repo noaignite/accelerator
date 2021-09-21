@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { TextField } from '@mui/material'
-import { Field, Form, Formit, FormitConsumer, useFormit } from '@oakwood/formit'
+import { Field, Form, Formit, FormitConsumer, useFormit } from '@noaignite/formit'
 
 export default {
   title: 'Components/Formit',

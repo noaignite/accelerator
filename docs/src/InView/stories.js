@@ -1,5 +1,5 @@
 import * as React from 'react'
-import InView from '@oakwood/oui/InView'
+import { InView } from '@noaignite/oui'
 
 export default {
   title: 'Components/InView',

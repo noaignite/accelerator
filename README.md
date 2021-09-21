@@ -6,20 +6,20 @@
 
 <div align="center">
 
-[Oakwood](https://oakwood.se) UI components built on top of [React](https://reactjs.org/) and [MUI](https://mui.com/).
+[NoA Ignite](https://noaignite.se/) UI components built on top of [React](https://reactjs.org/) and [MUI](https://mui.com/).
 
 </div>
 
 ## Installation
 
-OUI is available as an [npm package](https://www.npmjs.com/package/@oakwood/oui).
+OUI is available as an [npm package](https://www.npmjs.com/package/@noaignite/oui).
 
 ```sh
 // with npm
-npm install @oakwood/oui
+npm install @noaignite/oui
 
 // with yarn
-yarn add @oakwood/oui
+yarn add @noaignite/oui
 ```
 
 ## Documentation

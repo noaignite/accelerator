@@ -14,9 +14,9 @@ if (process.env.BABEL_ENV === 'es') {
 }
 
 const defaultAlias = {
-  '@oakwood/formit': './packages/formit/src',
-  '@oakwood/oui': './packages/oui/src',
-  '@oakwood/oui-utils': './packages/oui-utils/src',
+  '@noaignite/formit': './packages/formit/src',
+  '@noaignite/oui': './packages/oui/src',
+  '@noaignite/oui-utils': './packages/oui-utils/src',
   '/test': './test',
 }
 
