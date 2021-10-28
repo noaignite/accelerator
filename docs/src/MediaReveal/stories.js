@@ -8,9 +8,9 @@ export default {
   component: MediaReveal,
 }
 
-const Template = (args) => (
+const Template = ({ mediaProps, ...args }) => (
   <MediaReveal {...args}>
-    <Media src="//source.unsplash.com/1920x1080" />
+    <Media src="//source.unsplash.com/1920x1080" {...mediaProps} />
   </MediaReveal>
 )
 
@@ -18,6 +18,21 @@ export const Default = Template.bind({})
 Default.args = {
   width: 16,
   height: 9,
+}
+
+export const WithVideo = Template.bind({})
+WithVideo.args = {
+  width: 16,
+  height: 9,
+  mediaProps: {
+    component: 'video',
+    src: '//www.w3schools.com/html/mov_bbb.mp4',
+    autoPlay: true,
+    controls: true,
+    loop: true,
+    muted: true,
+    playsInline: true,
+  },
 }
 
 export const CustomTransition = Template.bind({})
