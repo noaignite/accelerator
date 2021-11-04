@@ -64,7 +64,7 @@ describe('<Media />', () => {
   }))
 
   describe('should render with', () => {
-    it('no initial `src` attribute specified', () => {
+    it('no initial `src` attribute specified because lazy loaded', () => {
       render(<Media src="/foo.jpg" />)
       const img = screen.getByRole('img')
 
@@ -106,7 +106,17 @@ describe('<Media />', () => {
       expect(img).toHaveAttribute('width')
     })
 
-    it('source & img content when `component="picture"` & `breakpoints` is specified', () => {
+    it('no initial `srcset` attribute on source tag specified because lazy loaded', () => {
+      render(<Media component="picture" breakpoints={{ xs: '/foo.jpg' }} data-testid="root" />)
+      const picture = screen.getByTestId('root')
+
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')).toHaveLength(1)
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')[0]).not.toHaveAttribute('srcset')
+    })
+
+    it('one source tag per breakpoint when breakpoint keys are strings and component is `picture`', () => {
       render(
         <Media
           component="picture"
@@ -114,6 +124,7 @@ describe('<Media />', () => {
             xs: '/foo.jpg',
             sm: '/foo-big.jpg',
           }}
+          priority
           data-testid="root"
         />,
       )
@@ -122,15 +133,18 @@ describe('<Media />', () => {
       // eslint-disable-next-line testing-library/no-node-access
       expect(picture.getElementsByTagName('source')).toHaveLength(2)
       // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('img')).toHaveLength(1)
+      expect(picture.getElementsByTagName('source')[0]).toHaveAttribute('srcset')
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')[1]).toHaveAttribute('srcset')
     })
 
-    it('source formats & img content when `component="picture"` & `breakpoints` is specified', () => {
+    it('one source tag per breakpoint with spreaded props when breakpoint keys are objects and component is `picture`', () => {
       render(
         <Media
           component="picture"
           breakpoints={{
-            xs: [{ src: '/foo.webp', type: 'image/webp' }, { src: '/foo.jpg' }],
+            xs: { src: '/foo.webp', type: 'image/webp' },
+            sm: { src: '/bar.webp', type: 'image/webp' },
           }}
           data-testid="root"
         />,
@@ -140,7 +154,32 @@ describe('<Media />', () => {
       // eslint-disable-next-line testing-library/no-node-access
       expect(picture.getElementsByTagName('source')).toHaveLength(2)
       // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('img')).toHaveLength(1)
+      expect(picture.getElementsByTagName('source')[0]).toHaveAttribute('type')
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')[1]).toHaveAttribute('type')
+    })
+
+    it('multiple source tags per breakpoint with spreaded props when breakpoint keys are arrays of objects and component is `picture`', () => {
+      render(
+        <Media
+          component="picture"
+          breakpoints={{
+            xs: [
+              { src: '/foo.webp', type: 'image/webp' },
+              { src: '/foo.jpg', type: 'image/jpg' },
+            ],
+          }}
+          data-testid="root"
+        />,
+      )
+      const picture = screen.getByTestId('root')
+
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')).toHaveLength(2)
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')[0]).toHaveAttribute('type')
+      // eslint-disable-next-line testing-library/no-node-access
+      expect(picture.getElementsByTagName('source')[1]).toHaveAttribute('type')
     })
 
     it('single element when `breakpoints` is specified & component is not `picture`', () => {

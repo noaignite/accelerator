@@ -3,6 +3,7 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import { useTheme, useThemeProps } from '@mui/material'
+import mediaBreakpointsType from '../utils/mediaBreakpointsType'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaWithWidth from './MediaWithWidth'
@@ -43,7 +44,6 @@ const Media = React.forwardRef(function Media(inProps, ref) {
   } = props
 
   const theme = useTheme()
-  const reversedBreakpointKeys = [...theme.breakpoints.keys].reverse()
 
   const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
@@ -52,7 +52,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
   let componentProps = { component, lazy, placeholder, src, ref, ...other }
   let ContainerComponent = MediaBase
-  let sources
+  let preloadSources
 
   if (component === 'picture') {
     const [imgProps, restProps] = extractImgProps(componentProps)
@@ -62,32 +62,38 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     }
 
     if (breakpoints) {
-      sources = []
-      const children = []
+      preloadSources = []
 
-      reversedBreakpointKeys.forEach((key, idx) => {
+      const validateBreakpointKey = (key) => Boolean(breakpoints[key])
+      const filteredBreakpointKeys = theme.breakpoints.keys.filter(validateBreakpointKey)
+
+      const sources = []
+
+      filteredBreakpointKeys.forEach((key, idx, arr) => {
         const srcOrSources = breakpoints[key]
-        if (!srcOrSources) {
-          return
-        }
 
-        const min = theme.breakpoints.values[key]
-        const max = theme.breakpoints.values[reversedBreakpointKeys[idx - 1]] - 1 || 9999
-        const media = `(min-width: ${min}px)`
+        let media = theme.breakpoints.up(key)
+        if ((idx === 0 && arr.length > 1) || idx !== arr.length - 1) {
+          media = theme.breakpoints.between(key, arr[idx + 1])
+        }
+        media = media.replace('@media ', '')
 
         if (typeof srcOrSources === 'string') {
-          sources.push({ min, max, src: srcOrSources })
-          children.push(generateSource({ lazy, media, placeholder, src: srcOrSources }))
+          preloadSources.unshift({ media, src: srcOrSources })
+          sources.unshift(generateSource({ lazy, media, placeholder, src: srcOrSources }))
+        } else if ('src' in srcOrSources) {
+          preloadSources.unshift({ media, ...srcOrSources })
+          sources.unshift(generateSource({ lazy, media, placeholder, ...srcOrSources }))
         } else if (Array.isArray(srcOrSources)) {
           srcOrSources.forEach((source) => {
-            sources.push({ min, max, ...source })
-            children.push(generateSource({ lazy, media, placeholder, ...source }))
+            preloadSources.unshift({ media, ...source })
+            sources.unshift(generateSource({ lazy, media, placeholder, ...source }))
           })
         }
       })
 
       componentProps.children = React.Children.toArray(componentProps.children)
-      componentProps.children.unshift(children)
+      componentProps.children.unshift(sources)
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
@@ -112,20 +118,14 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
   return (
     <React.Fragment>
-      {shouldPreload && generatePreload({ component, sources, src, ...other })}
+      {shouldPreload && generatePreload({ component, sources: preloadSources, src, ...other })}
       <ContainerComponent {...componentProps} />
     </React.Fragment>
   )
 })
 
 Media.propTypes = {
-  breakpoints: PropTypes.shape({
-    xs: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]).isRequired,
-    sm: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
-    md: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
-    lg: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
-    xl: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
-  }),
+  breakpoints: mediaBreakpointsType,
   component: PropTypes.elementType,
   generatePreload: PropTypes.func,
   placeholder: PropTypes.string,
