@@ -3,8 +3,9 @@ import { Media } from '@noaignite/oui'
 
 const sources = {
   jpg: {
-    xs: '//source.unsplash.com/960x540',
-    sm: '//source.unsplash.com/1920x1080',
+    xs: '//source.unsplash.com/DmD8HVOjy4c',
+    sm: '//source.unsplash.com/Sl03gvNZuss',
+    md: '//source.unsplash.com/m1m2EZOZVwA',
   },
   webp: {
     xs: '//www.gstatic.com/webp/gallery/1.sm.webp',
@@ -46,13 +47,28 @@ Default.args = {
   component: 'img',
   src: sources.jpg.xs,
   alt: 'Image description',
+  width: 960,
+  height: 540,
 }
 
 export const Picture = Template.bind({})
 Picture.args = {
   component: 'picture',
   breakpoints: sources.jpg,
-  src: sources.jpg.sm,
+  src: sources.jpg[sources.jpg.length - 1],
+  alt: 'Image description',
+  width: 960,
+  height: 540,
+}
+
+export const PictureSizeAttributes = Template.bind({})
+PictureSizeAttributes.args = {
+  component: 'picture',
+  breakpoints: {
+    xs: { src: `${sources.jpg.xs}/960x540`, width: 960, height: 540 },
+    md: { src: `${sources.jpg.sm}/540x960`, width: 540, height: 960 },
+    xl: { src: `${sources.jpg.md}/960x960`, width: 960, height: 960 },
+  },
   alt: 'Image description',
 }
 
@@ -60,10 +76,12 @@ export const PictureMultiFormat = Template.bind({})
 PictureMultiFormat.args = {
   component: 'picture',
   breakpoints: {
-    xs: [{ src: sources.webp.xs, type: 'image/webp' }, { src: sources.jpg.xs }],
-    sm: [{ src: sources.webp.sm, type: 'image/webp' }, { src: sources.jpg.sm }],
+    xs: [{ src: sources.jpg.xs }, { src: sources.webp.xs, type: 'image/webp' }],
+    sm: [{ src: sources.jpg.sm }, { src: sources.webp.sm, type: 'image/webp' }],
   },
   alt: 'Image description',
+  width: 960,
+  height: 540,
 }
 
 export const Audio = Template.bind({})
