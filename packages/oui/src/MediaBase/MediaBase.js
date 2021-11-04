@@ -20,6 +20,7 @@ const MediaBaseRoot = styled('img', {
   display: 'block',
   width: '100%',
   ...(ownerState.isMediaComponent && {
+    height: 'auto',
     objectFit: 'cover',
   }),
   ...(ownerState.isPictureComponent && {
