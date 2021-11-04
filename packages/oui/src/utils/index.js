@@ -1,2 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as mediaType } from './mediaType'
+export { default as mediaBreakpointsType } from './mediaBreakpointsType'
+export { default as mediaBreakpointType } from './mediaBreakpointType'
+export { default as pictureSourceType } from './pictureSourceType'
