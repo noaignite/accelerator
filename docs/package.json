@@ -12,7 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@mui/material": "^5.0.0",
+    "@mui/material": "^5.0.6",
     "@noaignite/formit": "2.0.0",
     "@noaignite/oui": "2.0.0",
     "@storybook/addon-a11y": "^6.3.12",
