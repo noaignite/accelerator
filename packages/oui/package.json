@@ -38,7 +38,7 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.8",
+    "@babel/runtime": "^7.16.0",
     "@maeertin/medialoaded": "^1.2.1",
     "@noaignite/oui-utils": "2.0.0",
     "clsx": "^1.1.1",
