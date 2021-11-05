@@ -48,6 +48,7 @@
     "babel-plugin-optimize-clsx": "^2.6.2",
     "babel-plugin-react-remove-properties": "^0.3.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "core-js": "^2.6.11",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "css-mediaquery": "^0.1.2",
