@@ -1,11 +1,24 @@
 ### Versions
 
+## 3.0.0
+###### 2021-11-05
+
+### `@oakwood/oui@v3.0.0`
+
+- [MediaBase] Fix media responsiveness when width & height html attributes are set
+- [Media] Picture source tag media queries are now created with min-width & max-width for simpler implementation of generatePreload
+- [Media] Breakpoint keys are now allowed as objects when component is 'picture'
+- [utils] Remove mediaType util and let OuiMedia component handle validation
+- [utils] Add new mediaBreakpointsType, mediaBreakpointType & pictureSourceType utils
+
+### Core
+
+- [core] Bump @babel/* to v7.16.0 and update babel.config.js
+
 ## 2.0.0
 ###### 2021-09-20
 
 OUI has now been rewritten to work with the latest release, version 5, of [MUI](https://mui.com/).
-
-### `@oakwood/formit@v2.0.0`
 
 ### `@oakwood/oui@v2.0.0`
 
