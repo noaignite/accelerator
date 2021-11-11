@@ -1,9 +1,9 @@
 {
-  "name": "@noaignite/oui-utils",
-  "version": "2.0.1",
+  "name": "@noaignite/utils",
+  "version": "1.0.0",
   "private": false,
   "author": "NoA Ignite",
-  "description": "OUI Utils - Utility functions for OUI.",
+  "description": "Utils - Utility functions.",
   "main": "./src/index.js",
   "keywords": [
     "react",
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/oui.git",
-    "directory": "packages/oui-utils"
+    "directory": "packages/utils"
   },
   "license": "MIT",
   "bugs": {
@@ -32,8 +32,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@babel/runtime": "^7.16.0",
-    "intersection-observer-admin": "^0.3.2"
+    "@babel/runtime": "^7.16.0"
   },
   "sideEffects": false,
   "publishConfig": {
