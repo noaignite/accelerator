@@ -2,7 +2,7 @@ import * as React from 'react'
 import PropTypes from 'prop-types'
 import { setRef } from '@mui/material/utils'
 import { useThemeProps } from '@mui/material'
-import { getObserverInstance } from '@noaignite/oui-utils'
+import { getObserverInstance } from '../utils'
 
 const InView = React.forwardRef(function InView(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiInView' })
