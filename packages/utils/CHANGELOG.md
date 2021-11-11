@@ -77,4 +77,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # 0.0.0 (2019-10-25)
 
-**Note:** Version bump only for package @noaignite/oui-utils
+**Note:** Version bump only for package @noaignite/utils
