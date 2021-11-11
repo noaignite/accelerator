@@ -52,15 +52,9 @@ async function createPackageFile() {
 
 async function run() {
   try {
-    const packageData = await createPackageFile()
+    await createPackageFile()
 
-    await Promise.all(
-      [
-        // use enhanced readme from workspace root for `@noaignite/oui`
-        packageData.name === '@noaignite/oui' ? '../../README.md' : './README.md',
-        '../../CHANGELOG.md',
-      ].map((file) => includeFileInBuild(file)),
-    )
+    await Promise.all(['./README.md', './CHANGELOG.md'].map((file) => includeFileInBuild(file)))
 
     await createModulePackages({ from: srcPath, to: buildPath })
   } catch (err) {
