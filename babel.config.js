@@ -1,7 +1,7 @@
 const defaultAlias = {
   '@noaignite/formit': './packages/formit/src',
   '@noaignite/oui': './packages/oui/src',
-  '@noaignite/oui-utils': './packages/oui-utils/src',
+  '@noaignite/utils': './packages/utils/src',
   '/test': './test',
 }
 
