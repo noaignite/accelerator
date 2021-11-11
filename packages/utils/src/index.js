@@ -1,5 +1,4 @@
 export { default as clamp } from './clamp'
-export { default as getObserverInstance } from './getObserverInstance'
 export { default as interpolateDouble } from './interpolateDouble'
 export { default as keyframer } from './keyframer'
 export { default as lerp } from './lerp'
