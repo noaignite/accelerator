@@ -5,6 +5,7 @@
     "release:version": "lerna version --conventional-commits --no-push",
     "release:build": "lerna run --parallel --scope \"@noaignite/*\" build",
     "release:publish": "lerna publish from-package --dist-tag latest --contents build",
+    "release:publish:dry-run": "lerna publish from-package --dist-tag latest --contents build --registry=\"http://localhost:4873/\"",
     "docs:build": "yarn workspace docs build",
     "docs:dev": "yarn workspace docs dev",
     "start": "yarn docs:dev",
