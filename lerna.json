@@ -1,0 +1,15 @@
+{
+  "command": {
+    "publish": {
+      "ignoreChanges": ["**/*.test.js", "**/*.md"],
+      "message": "chore: publish"
+    },
+    "version": {
+      "allowBranch": "master",
+      "message": "chore: publish"
+    }
+  },
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent"
+}
