@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { keyframer, range } from '@noaignite/oui-utils'
+import { keyframer, range } from '@noaignite/utils'
 
 export default {
   title: 'utils/keyframer',
