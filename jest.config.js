@@ -3,8 +3,7 @@ module.exports = {
     'packages/**/*.{js,jsx}',
     '!packages/**/*.test.{js,jsx}',
     '!packages/**/index.{js,jsx}',
-    '!packages/oui/src/test-utils/*.{js,jsx}',
-    '!packages/oui/test/*.{js,jsx}',
+    '!packages/**/test/*.{js,jsx}',
   ],
   coverageThreshold: {
     global: {

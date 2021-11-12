@@ -28,7 +28,7 @@
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/oui"
   },
   "peerDependencies": {
     "@mui/material": "^5.0.0",
