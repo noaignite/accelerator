@@ -2,7 +2,7 @@ import * as React from 'react'
 import { InView } from '@noaignite/oui'
 
 export default {
-  title: 'Components/InView',
+  title: 'Oui/InView',
   component: InView,
   argTypes: {
     onEnter: { action: 'onEnter' },

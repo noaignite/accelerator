@@ -4,7 +4,7 @@ import Zoom from '@mui/material/Zoom'
 import { Media, MediaReveal } from '@noaignite/oui'
 
 export default {
-  title: 'Components/MediaReveal',
+  title: 'Oui/MediaReveal',
   component: MediaReveal,
 }
 

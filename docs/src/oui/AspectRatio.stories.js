@@ -2,7 +2,7 @@ import * as React from 'react'
 import { AspectRatio } from '@noaignite/oui'
 
 export default {
-  title: 'Components/AspectRatio',
+  title: 'Oui/AspectRatio',
   component: AspectRatio,
 }
 
