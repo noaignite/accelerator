@@ -22,7 +22,7 @@ const sources = {
 }
 
 export default {
-  title: 'Components/Media',
+  title: 'Oui/Media',
   component: Media,
   argTypes: {
     component: {

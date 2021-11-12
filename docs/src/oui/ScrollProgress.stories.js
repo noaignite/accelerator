@@ -2,7 +2,7 @@ import * as React from 'react'
 import { ScrollProgress } from '@noaignite/oui'
 
 export default {
-  title: 'Components/ScrollProgress',
+  title: 'Oui/ScrollProgress',
   component: ScrollProgress,
 }
 

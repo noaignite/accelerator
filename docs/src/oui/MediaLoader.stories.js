@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Media, MediaLoader } from '@noaignite/oui'
 
 export default {
-  title: 'Components/MediaLoader',
+  title: 'Oui/MediaLoader',
   component: MediaLoader,
 }
 

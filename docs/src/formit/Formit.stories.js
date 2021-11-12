@@ -1,14 +1,11 @@
 import * as React from 'react'
 import { TextField } from '@mui/material'
-import { Field, Form, Formit, FormitConsumer, useFormit } from '@noaignite/formit'
+import { Field, Form, Formit, FormitConsumer } from '@noaignite/formit'
+import { sleep } from '@noaignite/utils'
 
 export default {
-  title: 'Components/Formit',
+  title: 'formit/Formit',
   component: Formit,
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 function actionWithPromise(eventName, timeout) {
@@ -79,8 +76,8 @@ const Template1 = () => (
   </Formit>
 )
 
-export const FormitContext = Template1.bind({})
-FormitContext.args = {}
+export const Context = Template1.bind({})
+Context.args = {}
 
 const Template2 = () => (
   <Formit {...formitProps}>
@@ -104,32 +101,5 @@ const Template2 = () => (
   </Formit>
 )
 
-export const FormitRenderProps = Template2.bind({})
-FormitRenderProps.args = {}
-
-const Template3 = () => {
-  const { getFieldMeta, getFieldProps, isSubmitting, onReset, onSubmit } = useFormit(formitProps)
-
-  return (
-    <section>
-      <form onReset={onReset} onSubmit={onSubmit} action="#">
-        <TextField {...fieldEmailProps} {...getFieldProps('email')} {...getFieldMeta('email')} />
-        <TextField
-          {...fieldPasswordProps}
-          {...getFieldProps('password')}
-          {...getFieldMeta('password')}
-        />
-
-        <input type="reset" value="Reset" disabled={isSubmitting} />
-        <button type="submit" disabled={isSubmitting}>
-          Submit
-        </button>
-
-        {isSubmitting && <p>Loading...</p>}
-      </form>
-    </section>
-  )
-}
-
-export const UseFormit = Template3.bind({})
-UseFormit.args = {}
+export const RenderProps = Template2.bind({})
+RenderProps.args = {}
