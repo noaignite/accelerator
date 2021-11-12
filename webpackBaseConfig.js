@@ -1,7 +1,8 @@
 const path = require('path')
 
-// This module is also used as the eslint resolver
+// This module is used by the docs and by eslint-plugin-import.
 module.exports = {
+  context: path.resolve(__dirname),
   resolve: {
     modules: [__dirname, 'node_modules'],
     alias: {
@@ -10,4 +11,5 @@ module.exports = {
       '@noaignite/utils': path.join(__dirname, './packages/utils/src'),
     },
   },
+  extensions: ['.js', '.ts', '.tsx', '.d.ts'],
 }
