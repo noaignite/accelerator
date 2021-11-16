@@ -11,5 +11,4 @@ module.exports = {
       '@noaignite/utils': path.join(__dirname, './packages/utils/src'),
     },
   },
-  extensions: ['.js', '.ts', '.tsx', '.d.ts'],
 }
