@@ -7,36 +7,45 @@ const AspectRatioRoot = styled('div', {
   name: 'OuiAspectRatio',
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root,
-})({
+})(({ ownerState }) => ({
+  '--aspect-ratio': ownerState.ratio,
   display: 'block',
   position: 'relative',
   width: '100%',
-  '&:before': {
-    content: '""',
-    display: 'block',
-    paddingBottom: 'calc(100% / var(--aspect-ratio))',
-  },
-  '& > *': {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  },
-  '& > video, & > picture, & > img': {
-    objectFit: 'cover',
-  },
-})
+  ...(ownerState.ratio && {
+    '&:before': {
+      content: '""',
+      display: 'block',
+      paddingBottom: 'calc(100% / var(--aspect-ratio))',
+    },
+    '& > :not(style)': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    },
+    '& > video, & > picture, & > img': {
+      objectFit: 'cover',
+    },
+  }),
+}))
 
 const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiAspectRatio' })
-  const { children, component = 'div', height, ratio: ratioProp, style, width, ...other } = props
+  const { children, component = 'div', height, ratio: ratioProp, width, ...other } = props
 
-  const ratio = width && height ? width / height : ratioProp
-  const composedStyle = ratio ? { '--aspect-ratio': ratio, ...style } : style
+  let ratio = ratioProp
+  if (width && height) {
+    ratio = +width / +height
+  }
+
+  const ownerState = {
+    ratio,
+  }
 
   return (
-    <AspectRatioRoot as={component} style={composedStyle} ref={ref} {...other}>
+    <AspectRatioRoot ownerState={ownerState} as={component} ref={ref} {...other}>
       {children}
     </AspectRatioRoot>
   )
@@ -45,10 +54,9 @@ const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
 AspectRatio.propTypes = {
   children: PropTypes.node,
   component: PropTypes.elementType,
-  height: PropTypes.number,
-  ratio: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  style: PropTypes.object,
-  width: PropTypes.number,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  ratio: PropTypes.oneOfType([PropTypes.bool, PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default AspectRatio
