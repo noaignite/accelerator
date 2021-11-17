@@ -15,15 +15,16 @@ const Template = ({ mediaProps, ...args }) => (
 )
 
 export const Default = Template.bind({})
-Default.args = {
-  width: 16,
-  height: 9,
+Default.args = {}
+
+export const WithRatio = Template.bind({})
+WithRatio.args = {
+  ratio: 16 / 9,
 }
 
 export const WithVideo = Template.bind({})
 WithVideo.args = {
-  width: 16,
-  height: 9,
+  ratio: 16 / 9,
   mediaProps: {
     component: 'video',
     src: '//www.w3schools.com/html/mov_bbb.mp4',
@@ -37,15 +38,13 @@ WithVideo.args = {
 
 export const CustomTransition = Template.bind({})
 CustomTransition.args = {
-  width: 16,
-  height: 9,
+  ratio: 16 / 9,
   TransitionComponent: Zoom,
 }
 
 export const RootMargin = Template.bind({})
 RootMargin.args = {
-  width: 16,
-  height: 9,
+  ratio: 16 / 9,
   rootMargin: '0% 0% -50%',
   style: { margin: '150vh 0' },
 }
@@ -66,8 +65,7 @@ const Template2 = (args) => (
 
 export const Placeholder = Template2.bind({})
 Placeholder.args = {
-  width: 16,
-  height: 9,
+  ratio: 16 / 9,
 }
 
 const Template3 = (args) => (
@@ -82,13 +80,11 @@ const Template3 = (args) => (
 
 export const DefaultLoadTest = Template3.bind({})
 DefaultLoadTest.args = {
-  width: 16,
-  height: 9,
+  ratio: 16 / 9,
 }
 
 export const RootMarginLoadTest = Template3.bind({})
 RootMarginLoadTest.args = {
-  width: 16,
-  height: 9,
+  ratio: 16 / 9,
   rootMargin: '0px',
 }
