@@ -78,42 +78,35 @@ describe('<Media />', () => {
       expect(img).toHaveAttribute('src', '/foo.jpg')
     })
 
-    it('img attributes on child `img` when `component="picture"` is specified', () => {
-      render(
-        <Media
-          component="picture"
-          alt="Hello"
-          height="100"
-          width="100"
-          loading="lazy"
-          srcSet="/foo-480w.jpg 480w, /foo-800w.jpg 800w"
-          sizes="(max-width: 600px) 480px, 800px"
-          src="foo-800w.jpg"
-          priority
-          data-testid="root"
-        />,
-      )
+    it('img attributes forwarded to child `img` when `component="picture"` is specified', () => {
+      const imgAttributes = {
+        alt: 'Hello',
+        height: '100',
+        width: '100',
+        loading: 'lazy',
+        srcSet: '/foo-480w.jpg 480w, /foo-800w.jpg 800w',
+        sizes: '(max-width: 600px) 480px, 800px',
+        src: '/foo-800w.jpg',
+      }
+
+      render(<Media component="picture" priority data-testid="root" {...imgAttributes} />)
       const picture = screen.getByTestId('root')
       const img = screen.getByRole('img')
 
       expect(picture.tagName).toEqual('PICTURE')
-      expect(img).toHaveAttribute('alt')
-      expect(img).toHaveAttribute('height')
-      expect(img).toHaveAttribute('loading')
-      expect(img).toHaveAttribute('sizes')
-      expect(img).toHaveAttribute('src')
-      expect(img).toHaveAttribute('srcSet')
-      expect(img).toHaveAttribute('width')
+      Object.entries(imgAttributes).forEach(([key, val]) => {
+        expect(img).toHaveAttribute(key, val)
+      })
     })
 
     it('no initial `srcset` attribute on source tag specified because lazy loaded', () => {
       render(<Media component="picture" breakpoints={{ xs: '/foo.jpg' }} data-testid="root" />)
       const picture = screen.getByTestId('root')
+      // eslint-disable-next-line testing-library/no-node-access
+      const sources = picture.getElementsByTagName('source')
 
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')).toHaveLength(1)
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[0]).not.toHaveAttribute('srcset')
+      expect(sources).toHaveLength(1)
+      expect(sources[0]).not.toHaveAttribute('srcset')
     })
 
     it('one source tag per breakpoint when breakpoint keys are strings and component is `picture`', () => {
@@ -129,13 +122,12 @@ describe('<Media />', () => {
         />,
       )
       const picture = screen.getByTestId('root')
+      // eslint-disable-next-line testing-library/no-node-access
+      const sources = picture.getElementsByTagName('source')
 
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')).toHaveLength(2)
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[0]).toHaveAttribute('srcset')
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[1]).toHaveAttribute('srcset')
+      expect(sources).toHaveLength(2)
+      expect(sources[0]).toHaveAttribute('srcset', '/foo-big.jpg')
+      expect(sources[1]).toHaveAttribute('srcset', '/foo.jpg')
     })
 
     it('one source tag per breakpoint with spreaded props when breakpoint keys are objects and component is `picture`', () => {
@@ -150,13 +142,12 @@ describe('<Media />', () => {
         />,
       )
       const picture = screen.getByTestId('root')
+      // eslint-disable-next-line testing-library/no-node-access
+      const sources = picture.getElementsByTagName('source')
 
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')).toHaveLength(2)
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[0]).toHaveAttribute('type')
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[1]).toHaveAttribute('type')
+      expect(sources).toHaveLength(2)
+      expect(sources[0]).toHaveAttribute('type', 'image/webp')
+      expect(sources[1]).toHaveAttribute('type', 'image/webp')
     })
 
     it('multiple source tags per breakpoint with spreaded props when breakpoint keys are arrays of objects and component is `picture`', () => {
@@ -165,21 +156,20 @@ describe('<Media />', () => {
           component="picture"
           breakpoints={{
             xs: [
-              { src: '/foo.webp', type: 'image/webp' },
               { src: '/foo.jpg', type: 'image/jpg' },
+              { src: '/foo.webp', type: 'image/webp' },
             ],
           }}
           data-testid="root"
         />,
       )
       const picture = screen.getByTestId('root')
+      // eslint-disable-next-line testing-library/no-node-access
+      const sources = picture.getElementsByTagName('source')
 
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')).toHaveLength(2)
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[0]).toHaveAttribute('type')
-      // eslint-disable-next-line testing-library/no-node-access
-      expect(picture.getElementsByTagName('source')[1]).toHaveAttribute('type')
+      expect(sources).toHaveLength(2)
+      expect(sources[0]).toHaveAttribute('type', 'image/webp')
+      expect(sources[1]).toHaveAttribute('type', 'image/jpg')
     })
 
     it('single element when `breakpoints` is specified & component is not `picture`', () => {
@@ -223,12 +213,15 @@ describe('<Media />', () => {
 
     it('content of nested children', () => {
       render(
-        <Media component="picture">
+        <Media component="picture" data-testid="root">
           <img src="/foo.jpg" alt="" />
         </Media>,
       )
+      const root = screen.getByTestId('root')
+      const img = screen.getByRole('img')
 
-      expect(screen.getByRole('img')).toHaveAttribute('src', '/foo.jpg')
+      expect(root).toContainElement(img)
+      expect(img).toHaveAttribute('src', '/foo.jpg')
     })
   })
 })

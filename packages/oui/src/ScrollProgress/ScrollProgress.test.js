@@ -19,11 +19,15 @@ describe('<ScrollProgress />', () => {
   describe('should render with', () => {
     it('content of nested children', () => {
       render(
-        <ScrollProgress>
-          <img src="foo.jpg" alt="" data-testid="img" />
+        <ScrollProgress data-testid="root">
+          <img src="/foo.jpg" alt="" />
         </ScrollProgress>,
       )
-      expect(screen.getByTestId('img')).toBeInTheDocument()
+      const root = screen.getByTestId('root')
+      const img = screen.getByRole('img')
+
+      expect(root).toContainElement(img)
+      expect(img).toHaveAttribute('src', '/foo.jpg')
     })
   })
 })
