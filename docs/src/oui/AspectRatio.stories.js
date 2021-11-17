@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { AspectRatio } from '@noaignite/oui'
+import { AspectRatio, MediaBase } from '@noaignite/oui'
 
 export default {
   title: 'Oui/AspectRatio',
@@ -8,17 +8,23 @@ export default {
 
 const Template = (args) => (
   <AspectRatio {...args}>
-    <img src="//source.unsplash.com/960x540" alt="" style={{ display: 'block', width: '100%' }} />
+    <MediaBase src="//source.unsplash.com/960x540" />
   </AspectRatio>
 )
-
-export const Ratio = Template.bind({})
-Ratio.args = {
-  ratio: 10 / 5,
-}
 
 export const WithAndHeight = Template.bind({})
 WithAndHeight.args = {
   width: 10,
   height: 5,
+}
+
+export const RatioAsNumber = Template.bind({})
+RatioAsNumber.args = {
+  ratio: 10 / 5,
+}
+
+export const RatioAsBoolean = Template.bind({})
+RatioAsBoolean.args = {
+  ratio: true,
+  style: { '--aspect-ratio': 10 / 5 },
 }
