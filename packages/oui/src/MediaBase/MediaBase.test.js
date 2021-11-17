@@ -17,22 +17,39 @@ describe('<MediaBase />', () => {
 
   describe('should render with', () => {
     it('the `src` attribute specified', () => {
-      render(<MediaBase src="/foo.jpg" />)
-      expect(screen.getByRole('img')).toHaveAttribute('src', '/foo.jpg')
+      render(<MediaBase src="/foo.jpg" data-testid="root" />)
+      const root = screen.getByTestId('root')
+      const img = screen.getByRole('img')
+
+      expect(root).toBe(img)
+      expect(root).toHaveAttribute('src', '/foo.jpg')
+    })
+
+    it('content of nested children when `component="picture"` is specified', () => {
+      render(
+        <MediaBase component="picture" data-testid="root">
+          <img src="/foo.jpg" alt="" />
+        </MediaBase>,
+      )
+      const root = screen.getByTestId('root')
+      const img = screen.getByRole('img')
+
+      expect(root).toContainElement(img)
+      expect(img).toHaveAttribute('src', '/foo.jpg')
     })
 
     it('no `src` attribute when `lazy` is specified', () => {
-      render(<MediaBase src="/foo.jpg" lazy />)
-      expect(screen.getByRole('img')).not.toHaveAttribute('src', '/foo.jpg')
+      render(<MediaBase src="/foo.jpg" lazy data-testid="root" />)
+      const root = screen.getByTestId('root')
+
+      expect(root).not.toHaveAttribute('src')
     })
 
-    it('content of nested children', () => {
-      render(
-        <MediaBase component="picture">
-          <img src="foo.jpg" alt="" />
-        </MediaBase>,
-      )
-      expect(screen.getByRole('img')).toBeInTheDocument()
+    it('the `src` attribute set by `placeholder` when `lazy` is specified', () => {
+      render(<MediaBase src="/foo.jpg" placeholder="/bar.jpg" lazy data-testid="root" />)
+      const root = screen.getByTestId('root')
+
+      expect(root).toHaveAttribute('src', '/bar.jpg')
     })
   })
 })

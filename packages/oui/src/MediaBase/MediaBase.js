@@ -13,33 +13,39 @@ const MediaBaseRoot = styled('img', {
     return [
       styles.root,
       ownerState.isMediaComponent && styles.media,
-      ownerState.isPictureComponent && styles.picture,
+      ownerState.isImageComponent && styles.image,
+      ownerState.isVideoComponent && styles.video,
     ]
   },
 })(({ ownerState }) => ({
   display: 'block',
-  width: '100%',
+  '& > img': {
+    display: 'inherit',
+    width: '100%',
+    height: 'inherit',
+    objectFit: 'inherit',
+  },
   ...(ownerState.isMediaComponent && {
+    width: '100%',
     height: 'auto',
+  }),
+  ...((ownerState.isImageComponent || ownerState.isVideoComponent) && {
     objectFit: 'cover',
   }),
-  ...(ownerState.isPictureComponent && {
-    '& img': {
-      display: 'inherit',
-      width: 'inherit',
-      height: 'inherit',
-      objectFit: 'inherit',
-    },
-  }),
 }))
+
+const MEDIA_COMPONENTS = ['video', 'audio', 'picture', 'iframe', 'img']
+const IMAGE_COMPONENTS = ['picture', 'img']
 
 const MediaBase = React.forwardRef(function MediaBase(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiMediaBase' })
   const { children, component = 'img', lazy, placeholder, src, ...other } = props
 
   const ownerState = {
-    isMediaComponent: ['video', 'picture', 'img'].includes(component),
-    isPictureComponent: ['picture'].includes(component),
+    component,
+    isMediaComponent: MEDIA_COMPONENTS.includes(component),
+    isImageComponent: IMAGE_COMPONENTS.includes(component),
+    isVideoComponent: component === 'video',
   }
 
   return (
