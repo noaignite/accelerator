@@ -8,10 +8,10 @@ describe('<MediaReveal />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   const defaultProps = {
-    children: <div />,
+    children: <img src="/foo.jpg" data-testid="img" alt="" />,
   }
 
-  describeConformance(<MediaReveal rootMargin="100px" {...defaultProps} />, () => ({
+  describeConformance(<MediaReveal {...defaultProps} />, () => ({
     ouiName: 'OuiMediaReveal',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
@@ -21,33 +21,34 @@ describe('<MediaReveal />', () => {
     skip: [
       // https://github.com/facebook/react/issues/11565
       'reactTestRenderer',
+      'themeStyleOverrides',
     ],
   }))
 
-  it('should render with content of nested children', () => {
-    render(
-      <MediaReveal data-testid="root">
-        <img src="foo.jpg" alt="" data-testid="child" />
-      </MediaReveal>,
-    )
-    expect(screen.getByTestId('root')).not.toHaveAttribute('style')
-    expect(screen.getByTestId('child')).toBeInTheDocument()
+  it('should render with a non visible nested `img`', () => {
+    render(<MediaReveal data-testid="root" {...defaultProps} />)
+    const root = screen.getByTestId('root')
+    const img = screen.getByTestId('img')
+
+    expect(root).not.toContainHTML(classes.bounds)
+    expect(root).toContainElement(img)
+    expect(img).not.toBeVisible()
   })
 
-  describe('should apply the inline style of `--aspect-ratio`', () => {
-    it('if `width` & `height` are specified', () => {
-      render(<MediaReveal width={4} height={2} data-testid="root" {...defaultProps} />)
-      expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
-    })
+  it('should render with a visible nested `img`', () => {
+    render(<MediaReveal TransitionProps={{ in: true }} data-testid="root" {...defaultProps} />)
+    const root = screen.getByTestId('root')
+    const img = screen.getByTestId('img')
 
-    it('if `ratio` is specified as a number', () => {
-      render(<MediaReveal ratio={2} data-testid="root" {...defaultProps} />)
-      expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
-    })
+    expect(root).not.toContainHTML(classes.bounds)
+    expect(root).toContainElement(img)
+    expect(img).toBeVisible()
+  })
 
-    it('if `ratio` is specified as a string', () => {
-      render(<MediaReveal ratio="2" data-testid="root" {...defaultProps} />)
-      expect(screen.getByTestId('root')).toHaveStyle('--aspect-ratio: 2')
-    })
+  it('should render with nested `bounds` element', () => {
+    render(<MediaReveal rootMargin="100px" data-testid="root" {...defaultProps} />)
+    const root = screen.getByTestId('root')
+
+    expect(root).toContainHTML(classes.bounds)
   })
 })
