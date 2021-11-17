@@ -19,11 +19,15 @@ describe('<MediaLoader />', () => {
   describe('should render with', () => {
     it('content of nested children', () => {
       render(
-        <MediaLoader>
-          <img src="foo.jpg" alt="" data-testid="img" />
+        <MediaLoader data-testid="root">
+          <img src="/foo.jpg" alt="" />
         </MediaLoader>,
       )
-      expect(screen.getByTestId('img')).toBeInTheDocument()
+      const root = screen.getByTestId('root')
+      const img = screen.getByRole('img')
+
+      expect(root).toContainElement(img)
+      expect(img).toHaveAttribute('src', '/foo.jpg')
     })
   })
 })

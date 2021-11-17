@@ -20,10 +20,14 @@ describe('<InView />', () => {
     it('content of nested children', () => {
       render(
         <InView data-testid="root">
-          <img src="foo.jpg" alt="" data-testid="img" />
+          <img src="/foo.jpg" alt="" />
         </InView>,
       )
-      expect(screen.getByTestId('img')).toBeInTheDocument()
+      const root = screen.getByTestId('root')
+      const img = screen.getByRole('img')
+
+      expect(root).toContainElement(img)
+      expect(img).toHaveAttribute('src', '/foo.jpg')
     })
   })
 })
