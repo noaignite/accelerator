@@ -6,7 +6,7 @@ const defaultAlias = {
 }
 
 const productionPlugins = [
-  ['babel-plugin-react-remove-properties', { properties: ['data-testid'] }],
+  ['babel-plugin-react-remove-properties', { properties: ['data-ign-test'] }],
 ]
 
 const useESModules = ['esm'].includes(process.env.BABEL_ENV)
