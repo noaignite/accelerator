@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react",
+    "lib": ["es2016", "dom"],
+    "target": "es6",
+    "module": "es6",
+    "declaration": true,
+    "moduleResolution": "node"
+  }
+}

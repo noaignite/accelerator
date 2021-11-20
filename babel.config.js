@@ -2,6 +2,7 @@ const defaultAlias = {
   '@noaignite/formit': './packages/formit/src',
   '@noaignite/oui': './packages/oui/src',
   '@noaignite/utils': './packages/utils/src',
+  '@noaignite/react-centra-checkout': './packages/react-centra-checkout/src',
   '/test': './test',
 }
 
@@ -13,38 +14,26 @@ const useESModules = ['esm'].includes(process.env.BABEL_ENV)
 
 const presets = [
   [
-    '@babel/preset-env',
-    {
-      // bugfixes: true,
-      // browserslistEnv: process.env.BABEL_ENV || process.env.NODE_ENV,
-      modules: useESModules ? false : 'commonjs',
-      // shippedProposals: api.env('modern'),
-    },
-  ],
-  [
     '@babel/preset-react',
     {
       runtime: 'automatic',
+    },
+  ],
+  '@babel/preset-typescript',
+  [
+    '@babel/preset-env',
+    {
+      modules: useESModules ? false : 'commonjs',
+      targets: {
+        browsers: 'defaults, not dead, not IE 11, not op_mini all',
+      },
     },
   ],
 ]
 
 const plugins = [
   'babel-plugin-optimize-clsx',
-  // Need the following 3 proposals for all targets in .browserslistrc.
-  // With our usage the transpiled loose mode is equivalent to spec mode.
-  ['@babel/plugin-proposal-class-properties', { loose: true }],
-  ['@babel/plugin-proposal-private-methods', { loose: true }],
-  ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
-  ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
-  [
-    '@babel/plugin-transform-runtime',
-    {
-      useESModules,
-      // any package needs to declare 7.4.4 as a runtime dependency. default is ^7.0.0
-      version: '^7.4.4',
-    },
-  ],
+  '@babel/plugin-transform-runtime',
   [
     'babel-plugin-transform-react-remove-prop-types',
     {

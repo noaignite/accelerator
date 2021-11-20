@@ -6,3 +6,4 @@
 build
 node_modules
 yarn.lock
+/packages/react-centra-checkout/docs
