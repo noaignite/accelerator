@@ -144,12 +144,7 @@ export interface SelectionProductModel {
   showAsNew?: boolean
 
   /** Size table to sort sizes properly, supports both X and Y axes */
-  itemTable?: {
-    unit?: string
-    x?: string[]
-    y?: string[]
-    dividerSymbol?: string
-  }
+  itemTable?: { unit?: string; x?: string[]; y?: string[]; dividerSymbol?: string }
   items?: {
     item?: string
     ean?: string
@@ -1250,12 +1245,7 @@ export interface RelatedProductModel {
   showAsNew?: boolean
 
   /** Size table to sort sizes properly, supports both X and Y axes */
-  itemTable?: {
-    unit?: string
-    x?: string[]
-    y?: string[]
-    dividerSymbol?: string
-  }
+  itemTable?: { unit?: string; x?: string[]; y?: string[]; dividerSymbol?: string }
   items?: {
     item?: string
     ean?: string
@@ -1426,12 +1416,7 @@ export interface ProductModel {
   showAsNew?: boolean
 
   /** Size table to sort sizes properly, supports both X and Y axes */
-  itemTable?: {
-    unit?: string
-    x?: string[]
-    y?: string[]
-    dividerSymbol?: string
-  }
+  itemTable?: { unit?: string; x?: string[]; y?: string[]; dividerSymbol?: string }
   items?: {
     item?: string
     ean?: string
@@ -1785,12 +1770,7 @@ export interface RelatedProductAllModel {
   priceBeforeDiscountAsNumber?: number
 
   /** Size table to sort sizes properly, supports both X and Y axes */
-  itemTable?: {
-    unit?: string
-    x?: string[]
-    y?: string[]
-    dividerSymbol?: string
-  }
+  itemTable?: { unit?: string; x?: string[]; y?: string[]; dividerSymbol?: string }
   items?: {
     item?: string
     ean?: string
@@ -1965,12 +1945,7 @@ export interface ProductAllModel {
   priceBeforeDiscountAsNumber?: number
 
   /** Size table to sort sizes properly, supports both X and Y axes */
-  itemTable?: {
-    unit?: string
-    x?: string[]
-    y?: string[]
-    dividerSymbol?: string
-  }
+  itemTable?: { unit?: string; x?: string[]; y?: string[]; dividerSymbol?: string }
   items?: {
     item?: string
     ean?: string
