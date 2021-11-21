@@ -1,31 +1,22 @@
 import unfetch from 'isomorphic-unfetch'
 
 class ApiClient {
-  token: string
-
   baseUrl: string
+
+  static default: ApiClient
+
+  headers: Headers = new Headers({
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  })
 
   constructor(baseUrl = '') {
     this.baseUrl = baseUrl
-    this.token = ''
   }
 
   async request(method = 'GET', endpoint: string, data: Record<string, unknown> = {}) {
-    const headers: {
-      Accept: string
-      'Content-Type': string
-      'api-token'?: string
-    } = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    }
-
-    if (this.token !== '') {
-      headers['api-token'] = this.token
-    }
-
     const response = await unfetch(`${this.baseUrl}/${endpoint}`, {
-      headers,
+      headers: this.headers,
       mode: 'cors',
       method,
       body: ['POST', 'PUT'].includes(method) ? JSON.stringify(data) : undefined,
@@ -35,6 +26,11 @@ class ApiClient {
 
     return json
   }
+}
+
+// create default singleton instance
+if (!ApiClient.default) {
+  ApiClient.default = new ApiClient()
 }
 
 export default ApiClient
