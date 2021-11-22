@@ -34,7 +34,7 @@ git push -u origin HEAD
 
 ### Trying the changes on the documentation site
 
-The documentation site is built with Material-UI and contains examples of all the components.
+The documentation site is built with Storybook and contains examples of the components.
 This is a great place to experiment with your changes.
 
 To get started:
