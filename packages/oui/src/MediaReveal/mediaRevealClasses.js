@@ -1,6 +1,6 @@
 import { generateUtilityClass, generateUtilityClasses } from '@mui/core'
 
-export function getAvatarUtilityClass(slot) {
+export function getMediaRevealUtilityClass(slot) {
   return generateUtilityClass('OuiMediaReveal', slot)
 }
 
