@@ -19,7 +19,7 @@ const ImageZoomRoot = styled('div', {
 })
 
 const ImageZoomDetails = styled('div', {
-  name: 'ImageZoom',
+  name: 'OuiImageZoom',
   slot: 'Details',
   overridesResolver: (props, styles) => styles.details,
 })(({ theme, ownerState }) => ({
