@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/noaignite/oui/compare/docs@2.0.1...docs@2.1.0) (2021-12-02)
+
+
+### Features
+
+* **ImageZoom:** add new image zoom component ([c208255](https://github.com/noaignite/oui/commit/c20825523fe0f6ee98d8e1132aa1e94163108ffa))
+
+
+
+
+
 ## 2.0.1 (2021-11-11)
 
 
