@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/oui",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "private": false,
   "author": "NoA Ignite",
   "description": "OUI components built with React and MUI.",
