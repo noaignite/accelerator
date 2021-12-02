@@ -38,7 +38,7 @@
   "dependencies": {
     "@babel/runtime": "^7.16.0",
     "@maeertin/medialoaded": "^1.2.1",
-    "@noaignite/utils": "^1.0.0",
+    "@noaignite/utils": "^1.1.0",
     "clsx": "^1.1.1",
     "intersection-observer-admin": "^0.3.2",
     "prop-types": "^15.7.2"
