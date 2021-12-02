@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/noaignite/oui/compare/@noaignite/oui@3.0.0...@noaignite/oui@3.0.1) (2021-12-02)
+
+
+### Bug Fixes
+
+* **ImageZoom, MediaReveal:** @mui/core was renamed to @mui/base ([2f9fefc](https://github.com/noaignite/oui/commit/2f9fefcff4c496276e2b41550d647bcdf164e259))
+
+
+
+
+
 # [3.0.0](https://github.com/noaignite/oui/compare/@noaignite/oui@2.0.1...@noaignite/oui@3.0.0) (2021-12-02)
 
 
