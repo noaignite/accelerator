@@ -17,35 +17,35 @@ const stepsPerRange = precision
 const makeFunc = (minIn, midIn, maxIn, minOut, midOut, maxOut) => (i) =>
   interpolateDouble(i, minIn, midIn, maxIn, minOut, midOut, maxOut)
 
-const makeTest = (inRange, outRange) => () => {
-  const inStartSpan = inRange[1] - inRange[0]
-  const inEndSpan = inRange[2] - inRange[1]
-  const inStartRange = range(inRange[0], inRange[1], inStartSpan / stepsPerRange, true)
-  const inEndRange = range(inRange[1], inRange[2], inEndSpan / stepsPerRange, true)
-  const inValues = inStartRange.concat(inEndRange)
-
-  const outStartRange = inStartRange.map((i) =>
-    mapRange(i, inRange[0], inRange[1], outRange[0], outRange[1]),
-  )
-  const outEndRange = inEndRange.map((i) =>
-    mapRange(i, inRange[1], inRange[2], outRange[1], outRange[2]),
-  )
-  const outValues = outStartRange.concat(outEndRange).map(round)
-
-  const results = inValues
-    .map(makeFunc(inRange[0], inRange[1], inRange[2], outRange[0], outRange[1], outRange[2]))
-    .map(round)
-  expect(results).toEqual(outValues)
-}
-
 describe('interpolateDouble', () => {
   inRanges.forEach((inRange) => {
     outRanges.forEach((outRange) => {
       ;[true, false].forEach((reverseOut) => {
         ;[false, true].forEach((reverseIn) => {
           const input = reverseIn ? [].concat(inRange).reverse() : [].concat(inRange)
-          const out = reverseOut ? [].concat(outRange).reverse() : [].concat(outRange)
-          it(`interpolates ${inRange.join('>')} into ${outRange.join('>')}`, makeTest(input, out))
+          const output = reverseOut ? [].concat(outRange).reverse() : [].concat(outRange)
+
+          it(`interpolates ${inRange.join('>')} into ${outRange.join('>')}`, () => {
+            const inStartSpan = input[1] - input[0]
+            const inEndSpan = input[2] - input[1]
+            const inStartRange = range(input[0], input[1], inStartSpan / stepsPerRange, true)
+            const inEndRange = range(input[1], input[2], inEndSpan / stepsPerRange, true)
+            const inValues = inStartRange.concat(inEndRange)
+
+            const outStartRange = inStartRange.map((i) =>
+              mapRange(i, input[0], input[1], output[0], output[1]),
+            )
+            const outEndRange = inEndRange.map((i) =>
+              mapRange(i, input[1], input[2], output[1], output[2]),
+            )
+            const outValues = outStartRange.concat(outEndRange).map(round)
+
+            const results = inValues
+              .map(makeFunc(input[0], input[1], input[2], output[0], output[1], output[2]))
+              .map(round)
+
+            expect(results).toEqual(outValues)
+          })
         })
       })
     })

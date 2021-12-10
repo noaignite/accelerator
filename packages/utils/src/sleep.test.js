@@ -9,7 +9,7 @@ describe('sleep', () => {
 
   it('then', async () => {
     const start = performance.now()
-    sleep(20).then(() => {
+    return sleep(20).then(() => {
       expect(performance.now() - start).toBeGreaterThanOrEqual(19)
     })
   })
@@ -21,7 +21,7 @@ describe('sleep', () => {
 
     await sleep(20)
 
-    sleepPromise.then(() => {
+    return sleepPromise.then(() => {
       const end = performance.now()
 
       expect(end - start).toBeGreaterThanOrEqual(19)

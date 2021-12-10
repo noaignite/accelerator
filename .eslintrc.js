@@ -15,7 +15,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 7,
   },
-  plugins: ['eslint-plugin-babel', 'eslint-plugin-react-hooks'],
+  plugins: ['eslint-plugin-react-hooks'],
   settings: {
     'import/resolver': {
       webpack: {
@@ -28,8 +28,11 @@ module.exports = {
    * their own groups.
    */
   rules: {
-    'arrow-body-style': 'off', // Don't enforce, readability firsthand.
+    // Stylistic opinion
+    'arrow-body-style': 'off',
+    // Consistency is key
     'consistent-this': ['error', 'self'],
+    curly: ['error', 'all'],
     // just as bad as "max components per file"
     'max-classes-per-file': 'off',
     // Too interruptive
@@ -40,6 +43,8 @@ module.exports = {
     'no-constant-condition': 'error',
     // Use the proptype inheritance chain
     'no-prototype-builtins': 'off',
+    // Allow default exports
+    'no-restricted-exports': 'off',
     'no-underscore-dangle': 'error',
     'nonblock-statement-body-position': 'error',
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
@@ -47,9 +52,11 @@ module.exports = {
     'prefer-destructuring': 'off',
 
     // Not sure why it doesn't work
-    'import/named': 'off',
+    // 'import/named': 'off',
     // Missing yarn workspace support
     'import/no-extraneous-dependencies': 'off',
+    // The code is already coupled to webpack. Prefer explicit coupling.
+    'import/no-webpack-loader-syntax': 'off',
 
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/no-autofocus': 'off',
@@ -57,10 +64,21 @@ module.exports = {
     'react-hooks/exhaustive-deps': ['error', { additionalHooks: 'useEnhancedEffect' }],
     'react-hooks/rules-of-hooks': 'error',
 
+    'react/default-props-match-prop-types': [
+      'error',
+      {
+        // Otherwise the rule thinks inner props = outer props
+        // But in TypeScript we want to know that a certain prop is defined during render
+        // while it can be ommitted from the callsite.
+        // Then defaultProps (or default values) will make sure that the prop is defined during render
+        allowRequiredDefaults: true,
+      },
+    ],
     // Can add verbosity to small functions making them harder to grok.
     // Though we have to manually enforce it for function components with default values.
     'react/destructuring-assignment': 'off',
     'react/forbid-prop-types': 'off', // Too strict, no time for that
+    'react/function-component-definition': 'off', // Could this be useful?
     'react/jsx-curly-brace-presence': 'off', // broken
     // airbnb is using .jsx
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
@@ -87,7 +105,7 @@ module.exports = {
       env: {
         jest: true,
       },
-      extends: ['plugin:testing-library/react', 'plugin:jest-dom/recommended'],
+      extends: ['plugin:testing-library/react', 'plugin:jest/recommended'],
       rules: {
         'testing-library/render-result-naming-convention': 'off',
       },
