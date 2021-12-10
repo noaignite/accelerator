@@ -20,7 +20,7 @@ describe('<Field />', () => {
     only: ['mergeClassName', 'propsSpread', 'refForwarding', 'reactTestRenderer'],
   }))
 
-  it('should pass formit context when using render props', () => {
+  it('should pass formit values & methods as onSubmit arguments', () => {
     let injectedValues
     let injectedMethods
     const renderOptions = {
@@ -79,5 +79,8 @@ describe('<Field />', () => {
     )
 
     expect(typeof injectedProps).toEqual('object')
+    expect('status' in injectedProps).toEqual(true)
+    expect('errors' in injectedProps).toEqual(true)
+    expect('values' in injectedProps).toEqual(true)
   })
 })
