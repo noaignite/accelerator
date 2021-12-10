@@ -40,7 +40,7 @@ async function createPackageFile() {
     ...packageDataOther,
     private: false,
     main: './index.js',
-    module: './esm/index.js',
+    module: !packageDataOther.name.includes('eslint-config') ? './esm/index.js' : undefined,
   }
   const targetPath = path.resolve(buildPath, './package.json')
 
