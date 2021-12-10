@@ -3,12 +3,9 @@
   "version": "1.1.0",
   "private": false,
   "author": "NoA Ignite",
-  "description": "Utils - Utility functions.",
+  "description": "Utility functions used by NoA Ignite",
   "main": "./src/index.js",
   "keywords": [
-    "react",
-    "react-component",
-    "mui",
     "utils"
   ],
   "repository": {
