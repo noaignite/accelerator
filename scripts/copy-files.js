@@ -54,7 +54,9 @@ async function run() {
   try {
     await createPackageFile()
 
-    await Promise.all(['./README.md', './CHANGELOG.md'].map((file) => includeFileInBuild(file)))
+    await Promise.all(
+      ['../../LICENSE', './README.md', './CHANGELOG.md'].map((file) => includeFileInBuild(file)),
+    )
 
     await createModulePackages({ from: srcPath, to: buildPath })
   } catch (err) {
