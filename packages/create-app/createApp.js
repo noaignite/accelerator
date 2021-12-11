@@ -2,7 +2,6 @@
 const chalk = require('chalk')
 const commander = require('commander')
 const execSync = require('child_process').execSync
-const fs = require('fs')
 const fse = require('fs-extra')
 const path = require('path')
 const spawn = require('cross-spawn')
@@ -15,7 +14,7 @@ let projectPath
 
 function validateAppPath() {
   try {
-    fs.mkdirSync(projectPath)
+    fse.mkdirSync(projectPath)
   } catch (err) {
     if (err.code === 'EEXIST') {
       console.error(
