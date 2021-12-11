@@ -12,8 +12,8 @@
     "create-app": "./index.js"
   },
   "files": [
-    "./index.js",
-    "./createApp.js"
+    "index.js",
+    "createApp.js"
   ],
   "repository": {
     "type": "git",
