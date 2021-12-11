@@ -45,15 +45,6 @@ async function createPackageFile() {
     ...(packageDataOther.module && {
       module: './esm/index.js',
     }),
-    ...(packageDataOther.bin && {
-      bin: Object.entries(packageDataOther.bin).reduce((acc, [key, val]) => {
-        acc[key] = val.replace('/src', '')
-        return acc
-      }, {}),
-    }),
-    ...(packageDataOther.files && {
-      files: packageDataOther.files.map((val) => val.replace('/src', '')),
-    }),
   }
   const targetPath = path.resolve(buildPath, './package.json')
 
