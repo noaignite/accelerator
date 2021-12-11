@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/create-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "author": "NoA Ignite",
   "description": "Create NoA Ignite react apps with one command",
