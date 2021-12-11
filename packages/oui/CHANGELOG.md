@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.0.1...@noaignite/oui@3.0.2) (2021-12-11)
+
+**Note:** Version bump only for package @noaignite/oui
+
+
+
+
+
 ## [3.0.1](https://github.com/noaignite/oui/compare/@noaignite/oui@3.0.0...@noaignite/oui@3.0.1) (2021-12-02)
 
 
