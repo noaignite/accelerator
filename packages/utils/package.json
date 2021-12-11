@@ -4,16 +4,17 @@
   "private": false,
   "author": "NoA Ignite",
   "description": "Utility functions used by NoA Ignite",
-  "main": "./src/index.js",
   "keywords": [
     "utils"
   ],
+  "license": "MIT",
+  "main": "./src/index.js",
+  "module": "./src/esm/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/utils"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
