@@ -4,24 +4,24 @@
   "private": false,
   "author": "NoA Ignite",
   "description": "ESLint configuration used by NoA Ignite",
-  "main": "./src/index.js",
   "keywords": [
     "eslint",
     "eslint-config",
     "prettier",
     "react"
   ],
+  "license": "MIT",
+  "main": "./index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/eslint-config"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "cp -r src build && node ../../scripts/copy-files.js",
+    "build": "mkdir build && cp index.js build && node ../../scripts/copy-files.js",
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build"
