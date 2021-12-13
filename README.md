@@ -1,4 +1,4 @@
-# @noaignite/accelerator
+# NoA Ignite Accelerator
 
 ## Documentation
 
