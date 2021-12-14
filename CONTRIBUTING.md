@@ -1,4 +1,4 @@
-# Contributing to OUI
+# Contributing
 
 Thank you for helping out!
 
