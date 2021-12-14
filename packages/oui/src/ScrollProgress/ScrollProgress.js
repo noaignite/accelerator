@@ -4,9 +4,15 @@ import { setRef } from '@mui/material/utils'
 import { clamp } from '@noaignite/utils'
 import InView from '../InView'
 
-export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = topOffset) {
+export function calculateVerticalProgress(
+  bounds,
+  elementTop = 0,
+  topOffset = 0,
+  bottomOffset = topOffset,
+) {
   const vh = window.innerHeight
-  const progress = (bounds.bottom - topOffset) / (vh + bounds.height - bottomOffset * 2)
+  const bottom = bounds.height - window.scrollY + elementTop
+  const progress = (bottom - topOffset) / (vh + bounds.height - bottomOffset * 2)
 
   return 1 - clamp(progress, 0, 1)
 }
@@ -15,41 +21,51 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   const { onChange, onEnter, onExit, ...other } = props
 
   const rootRef = React.useRef(null)
+  const bounds = React.useRef(null)
+  const elementTop = React.useRef(0)
 
   const handleScroll = React.useCallback(() => {
     const target = rootRef.current
     const maxOffset = Math.min(target.clientHeight, window.innerHeight)
-    const bounds = target.getBoundingClientRect()
-    const progress = calculateVerticalProgress(bounds)
-    const innerProgress = calculateVerticalProgress(bounds, maxOffset)
+    const progress = calculateVerticalProgress(bounds.current, elementTop.current)
+    const innerProgress = calculateVerticalProgress(bounds.current, elementTop.current, maxOffset)
 
     if (onChange) {
       onChange({ bounds, innerProgress, progress, target })
     }
   }, [onChange])
 
+  const handleResize = React.useCallback(() => {
+    const target = rootRef.current
+    bounds.current = target.getBoundingClientRect()
+    elementTop.current = bounds.current.top + window.scrollY
+
+    // make sure scroll logic is updated when resizing
+    handleScroll()
+  }, [handleScroll])
+
   const handleEnter = React.useCallback(
     (entry) => {
       window.addEventListener('scroll', handleScroll, { passive: true })
-      window.addEventListener('resize', handleScroll)
+      window.addEventListener('resize', handleResize)
 
       if (onEnter) {
         onEnter(entry)
       }
     },
-    [handleScroll, onEnter],
+    [handleScroll, handleResize, onEnter],
   )
 
   const handleExit = React.useCallback(
     (entry) => {
       window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleScroll)
+      window.removeEventListener('resize', handleResize)
 
       if (onExit) {
         onExit(entry)
       }
     },
-    [handleScroll, onExit],
+    [handleScroll, handleResize, onExit],
   )
 
   const handleRef = React.useCallback(
@@ -58,13 +74,14 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
       setRef(ref, node)
 
       if (node) {
+        handleResize()
         handleScroll()
       } else {
         window.removeEventListener('scroll', handleScroll)
-        window.removeEventListener('resize', handleScroll)
+        window.removeEventListener('resize', handleResize)
       }
     },
-    [handleScroll, ref],
+    [handleScroll, handleResize, ref],
   )
 
   return <InView onEnter={handleEnter} onExit={handleExit} ref={handleRef} {...other} />
