@@ -1,5 +1,3 @@
-import unfetch from 'isomorphic-unfetch'
-
 class ApiClient {
   baseUrl: string
 
@@ -15,7 +13,7 @@ class ApiClient {
   }
 
   async request(method = 'GET', endpoint: string, data: Record<string, unknown> = {}) {
-    const response = await unfetch(`${this.baseUrl}/${endpoint}`, {
+    const response = await fetch(`${this.baseUrl}/${endpoint}`, {
       headers: this.headers,
       mode: 'cors',
       method,

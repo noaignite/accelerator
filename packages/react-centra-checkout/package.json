@@ -23,8 +23,5 @@
   "license": "ISC",
   "devDependencies": {
     "swagger-typescript-api": "^9.3.1"
-  },
-  "dependencies": {
-    "isomorphic-unfetch": "^3.1.0"
   }
 }
