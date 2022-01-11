@@ -39,7 +39,25 @@ export interface ContextProperties extends ContextMethods, SelectionResponse {
   apiUrl?: string
 }
 
-const INITIAL_SELECTION = {}
+const DEFAULT_VALUE = {
+  countries: [],
+  languages: [],
+  location: {},
+  paymentFields: {
+    address: {},
+    shippingAddress: {},
+    termsAndConditions: {},
+  },
+  paymentMethods: [],
+  selection: {
+    address: {},
+    discounts: {},
+    items: [],
+    totals: {},
+  },
+  shippingMethods: [],
+}
+
 const HandlersContext = React.createContext<ContextMethods>({})
 const Context = React.createContext<ContextProperties>({})
 
@@ -53,7 +71,7 @@ export function CentraProvider(props: ProviderProps) {
     disableInitialSelection = false,
   } = props
 
-  const [selection, setSelection] = React.useState<SelectionResponse>(INITIAL_SELECTION)
+  const [selection, setSelection] = React.useState<SelectionResponse>(DEFAULT_VALUE)
 
   // set api client url
   apiClient.baseUrl = apiUrl
@@ -117,7 +135,7 @@ export function CentraProvider(props: ProviderProps) {
   }, [disableInitialSelection, init, centraCheckoutCallback])
 
   const addItem = React.useCallback(
-    (item: string, quantity: number) =>
+    (item: string, quantity = 1) =>
       selectionApiCall(apiClient.request('POST', `items/${item}/quantity/${quantity}`)),
     [selectionApiCall],
   )
@@ -273,7 +291,7 @@ export function useCentra(): ContextProperties {
 
 /** This hook only returns the centra selection */
 export function useCentraSelection(): SelectionModel {
-  return React.useContext(Context).selection ?? INITIAL_SELECTION
+  return React.useContext(Context).selection ?? DEFAULT_VALUE.selection
 }
 
 /** This hook only returns update handlers and should be used when you don't need to subscribe to
