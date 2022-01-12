@@ -1,0 +1,55 @@
+{
+  "name": "@noaignite/eslint-config",
+  "version": "0.1.1",
+  "private": false,
+  "author": "NoA Ignite",
+  "description": "ESLint configuration used by NoA Ignite",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "prettier",
+    "react"
+  ],
+  "license": "MIT",
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/eslint-config"
+  },
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "scripts": {
+    "build": "mkdir build && cp index.js build && node ../../scripts/copy-files.js",
+    "prebuild": "rimraf build",
+    "release": "yarn build && npm publish ./build --tag latest",
+    "release:yalc": "yarn build && yalc publish ./build"
+  },
+  "peerDependencies": {
+    "eslint": "^7.32.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-testing-library": "^5.0.1"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

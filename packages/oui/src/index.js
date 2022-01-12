@@ -5,6 +5,9 @@ export * from './utils'
 export { default as AspectRatio } from './AspectRatio'
 export * from './AspectRatio'
 
+export { default as ImageZoom } from './ImageZoom'
+export * from './ImageZoom'
+
 export { default as InView } from './InView'
 export * from './InView'
 

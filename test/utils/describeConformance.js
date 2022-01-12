@@ -1,4 +1,5 @@
 // Based on: https://github.com/mui-org/material-ui/blob/next/test/utils/describeConformance.js
+/* eslint-disable jest/expect-expect, jest/no-conditional-expect, jest/no-export, jest/valid-title */
 
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'

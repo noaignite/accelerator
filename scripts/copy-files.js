@@ -39,8 +39,12 @@ async function createPackageFile() {
   const newPackageData = {
     ...packageDataOther,
     private: false,
-    main: './node/index.js',
-    module: './index.js',
+    ...(packageDataOther.main && {
+      main: './node/index.js',
+    }),
+    ...(packageDataOther.module && {
+      module: './index.js',
+    }),
   }
   const targetPath = path.resolve(buildPath, './package.json')
 
@@ -54,7 +58,9 @@ async function run() {
   try {
     await createPackageFile()
 
-    await Promise.all(['./README.md', './CHANGELOG.md'].map((file) => includeFileInBuild(file)))
+    await Promise.all(
+      ['../../LICENSE', './README.md', './CHANGELOG.md'].map((file) => includeFileInBuild(file)),
+    )
 
     await createModulePackages({ from: srcPath, to: buildPath })
   } catch (err) {

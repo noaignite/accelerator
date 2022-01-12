@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/oui",
-  "version": "2.0.1",
+  "version": "3.0.2",
   "private": false,
   "author": "NoA Ignite",
   "description": "OUI components built with React and MUI.",
@@ -10,14 +10,16 @@
     "mui",
     "utils"
   ],
+  "license": "MIT",
+  "main": "./src/index.js",
+  "module": "./src/esm/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/noaignite/oui.git",
+    "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/oui"
   },
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/noaignite/oui/issues"
+    "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
     "build": "yarn build:cjs && yarn build:esm && yarn build:es && yarn build:copy-files",
@@ -31,14 +33,14 @@
     "test": "cd ../../ && cross-env NODE_ENV=test jest packages/oui"
   },
   "peerDependencies": {
-    "@mui/material": "^5.0.0",
+    "@mui/material": "^5.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
     "@maeertin/medialoaded": "^1.2.1",
-    "@noaignite/utils": "^1.0.0",
+    "@noaignite/utils": "^1.1.1",
     "clsx": "^1.1.1",
     "intersection-observer-admin": "^0.3.2",
     "prop-types": "^15.7.2"
