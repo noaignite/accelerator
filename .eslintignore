@@ -4,3 +4,6 @@
 /tmp
 build
 node_modules
+
+# react-centra-checkout
+/packages/react-centra-checkout/docs
