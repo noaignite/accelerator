@@ -16,3 +16,6 @@
 build
 node_modules
 package-lock.json
+
+# react-centra-checkout
+/packages/react-centra-checkout/docs
