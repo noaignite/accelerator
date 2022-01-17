@@ -1,14 +1,10 @@
 import * as React from 'react'
+import * as Centra from '@noaignite/centra-types'
 import ApiClient from '../ApiClient'
-import {
-  SelectionResponse,
-  SelectionItemModel,
-  SelectionModel,
-  OrderCompleteResponse,
-} from '../types/centra.types'
 
 const apiClient = ApiClient.default
 
+/** The prop types that CentraProvider accepts */
 export interface ProviderProps {
   apiUrl: string
   children: React.ReactNode
@@ -23,19 +19,19 @@ export interface ContextMethods {
   addVoucher?(voucher: string): Promise<Response>
   decreaseCartItem?(line: string): Promise<Response>
   increaseCartItem?(line: string): Promise<Response>
-  init?(selectionData?: SelectionResponse): Promise<void>
+  init?(selectionData?: Centra.SelectionResponse): Promise<void>
   removeCartItem?(line: string): Promise<Response>
   removeVoucher?(voucher: string): Promise<Response>
   submitPayment?(data: Record<string, unknown>, locale: string): Promise<Record<string, unknown>>
   updateCountry?(country: string, data: { language: string }): Promise<Response>
   updateCartItemQuantity?(line: string, quantity: number): Promise<Response>
-  updateCartItemSize?(cartItem: SelectionItemModel, item: string): Promise<Response>
+  updateCartItemSize?(cartItem: Centra.SelectionItemModel, item: string): Promise<Response>
   updateLanguage?(language: string): Promise<Response>
   updatePaymentMethod?(paymentMethod: string): Promise<Response>
   updateShippingMethod?(shippingMethod: string): Promise<Response>
 }
 
-export interface ContextProperties extends ContextMethods, SelectionResponse {
+export interface ContextProperties extends ContextMethods, Centra.SelectionResponse {
   apiUrl?: string
 }
 
@@ -71,7 +67,7 @@ export function CentraProvider(props: ProviderProps) {
     disableInitialSelection = false,
   } = props
 
-  const [selection, setSelection] = React.useState<SelectionResponse>(DEFAULT_VALUE)
+  const [selection, setSelection] = React.useState<Centra.SelectionResponse>(DEFAULT_VALUE)
 
   // set api client url
   apiClient.baseUrl = apiUrl
@@ -82,7 +78,7 @@ export function CentraProvider(props: ProviderProps) {
         'PUT',
         'payment-fields',
         event.detail,
-      )) as SelectionResponse
+      )) as Centra.SelectionResponse
       setSelection(response)
     }
   }, [])
@@ -100,10 +96,10 @@ export function CentraProvider(props: ProviderProps) {
     return response
   }, [])
 
-  const init = React.useCallback(async (selectionData?: SelectionResponse) => {
+  const init = React.useCallback(async (selectionData?: Centra.SelectionResponse) => {
     let response
     if (!selectionData) {
-      response = (await apiClient.request('GET', 'selection')) as SelectionResponse
+      response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponse
     } else {
       response = selectionData
     }
@@ -290,7 +286,7 @@ export function useCentra(): ContextProperties {
 }
 
 /** This hook only returns the centra selection */
-export function useCentraSelection(): SelectionModel {
+export function useCentraSelection(): Centra.SelectionModel {
   return React.useContext(Context).selection ?? DEFAULT_VALUE.selection
 }
 
@@ -301,7 +297,7 @@ export function useCentraHandlers(): ContextMethods {
 }
 
 /** Returns the latest order receipt given a selection token */
-export function useCentraReceipt(token: string): OrderCompleteResponse | null {
+export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | null {
   const [receipt, setReceipt] = React.useState(null)
   const { apiUrl } = useCentra()
 

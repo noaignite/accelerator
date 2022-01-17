@@ -11,7 +11,6 @@
     "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel src --config-file ../../babel.config.js --out-dir build --extensions \".ts,.tsx\" --ignore \"**/*.d.ts,**/*.types.ts\"",
     "build:node": "cross-env NODE_ENV=production BABEL_ENV=node babel src --config-file ../../babel.config.js --out-dir build/node --extensions \".ts,.tsx\" --ignore \"**/*.d.ts,**/*.types.ts\"",
     "build:types": "tsc --emitDeclarationOnly",
-    "generate:centra-types": "swagger-typescript-api --path https://demo2.centra.com/api/checkout/swagger --output ./src/types --name centra.types.ts --no-client && prettier ./src/types/centra.types.ts --write",
     "release:yalc": "yarn build && yalc publish ./build",
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch"
@@ -20,9 +19,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
+  "dependencies": {
+    "@noaignite/centra-types": "^0.0.1"
+  },
   "author": "NoA Ignite",
-  "license": "ISC",
-  "devDependencies": {
-    "swagger-typescript-api": "^9.3.1"
-  }
+  "license": "ISC"
 }

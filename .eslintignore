@@ -7,3 +7,6 @@ node_modules
 
 # react-centra-checkout
 /packages/react-centra-checkout/docs
+
+# centra-types
+/packages/centra-types/docs
