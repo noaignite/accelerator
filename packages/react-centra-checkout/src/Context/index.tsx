@@ -36,7 +36,7 @@ export interface ContextProperties extends ContextMethods, Centra.SelectionRespo
   apiClient?: ApiClient
 }
 
-const DEFAULT_VALUE = {
+const SELECTION_INITIAL_VALUE = {
   countries: [],
   languages: [],
   location: {},
@@ -68,7 +68,8 @@ export function CentraProvider(props: ProviderProps) {
     paymentReturnPage,
   } = props
 
-  const [selection, setSelection] = React.useState<Centra.SelectionResponseExtended>(DEFAULT_VALUE)
+  const [selection, setSelection] =
+    React.useState<Centra.SelectionResponseExtended>(SELECTION_INITIAL_VALUE)
 
   // set api client url
   apiClient.baseUrl = apiUrl
@@ -327,7 +328,7 @@ export function useCentra(): ContextProperties {
 
 /** This hook only returns the centra selection */
 export function useCentraSelection(): Centra.SelectionModel {
-  return React.useContext(Context).selection ?? DEFAULT_VALUE.selection
+  return React.useContext(Context).selection ?? SELECTION_INITIAL_VALUE.selection
 }
 
 /** This hook only returns update handlers and should be used when you don't need to subscribe to
