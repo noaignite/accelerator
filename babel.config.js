@@ -14,13 +14,6 @@ const useESModules = ['esm'].includes(process.env.BABEL_ENV)
 
 const presets = [
   [
-    '@babel/preset-react',
-    {
-      runtime: 'automatic',
-    },
-  ],
-  '@babel/preset-typescript',
-  [
     '@babel/preset-env',
     {
       modules: useESModules ? false : 'commonjs',
@@ -29,6 +22,13 @@ const presets = [
       },
     },
   ],
+  [
+    '@babel/preset-react',
+    {
+      runtime: 'automatic',
+    },
+  ],
+  '@babel/preset-typescript',
 ]
 
 const plugins = [
