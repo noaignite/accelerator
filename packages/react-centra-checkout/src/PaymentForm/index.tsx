@@ -78,7 +78,6 @@ function PaymentForm(props: PaymentFormProps): React.ReactElement | null {
     }
   }, [paymentResult, onSuccess, onError])
 
-  // eslint-disable-next-line react/no-danger
   return formHtml ? <PaymentFormEmbed html={formHtml} /> : null
 }
 
