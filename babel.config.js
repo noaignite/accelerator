@@ -1,8 +1,8 @@
 const defaultAlias = {
   '@noaignite/formit': './packages/formit/src',
   '@noaignite/oui': './packages/oui/src',
-  '@noaignite/utils': './packages/utils/src',
   '@noaignite/react-centra-checkout': './packages/react-centra-checkout/src',
+  '@noaignite/utils': './packages/utils/src',
   '/test': './test',
 }
 
@@ -14,13 +14,6 @@ const useESModules = ['esm'].includes(process.env.BABEL_ENV)
 
 const presets = [
   [
-    '@babel/preset-react',
-    {
-      runtime: 'automatic',
-    },
-  ],
-  '@babel/preset-typescript',
-  [
     '@babel/preset-env',
     {
       modules: useESModules ? false : 'commonjs',
@@ -29,6 +22,13 @@ const presets = [
       },
     },
   ],
+  [
+    '@babel/preset-react',
+    {
+      runtime: 'automatic',
+    },
+  ],
+  '@babel/preset-typescript',
 ]
 
 const plugins = [

@@ -1,20 +1,37 @@
 {
   "name": "@noaignite/centra-types",
   "version": "0.0.1",
+  "private": false,
+  "author": "NoA Ignite",
   "description": "Typescript definitions for centra apis",
-  "main": "./src/index",
-  "types": "./src/index",
+  "keywords": [
+    "typescript",
+    "types",
+    "centra"
+  ],
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/centra-types"
+  },
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
   "scripts": {
     "generate:centra-types": "swagger-typescript-api --path https://demo2.centra.com/api/checkout/swagger --output ./src --name centra.ts --no-client && prettier ./src/centra.ts --write",
     "build:docs": "typedoc"
   },
-  "peerDependencies": {},
-  "author": "NoA Ignite",
-  "license": "ISC",
   "devDependencies": {
     "swagger-typescript-api": "^9.3.1"
   },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=14.0.0"
   }
 }
