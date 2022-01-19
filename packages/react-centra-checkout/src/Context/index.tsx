@@ -8,7 +8,9 @@ const apiClient = ApiClient.default
 export interface ProviderProps {
   apiUrl: string
   children: React.ReactNode
-  disableInitialSelection: boolean
+  disableInitialSelection?: boolean
+  paymentFailedPage: string
+  paymentReturnPage: string
 }
 
 export interface ContextMethods {
@@ -17,15 +19,10 @@ export interface ContextMethods {
   addVoucher?(voucher: string): Promise<Response>
   decreaseCartItem?(line: string): Promise<Response>
   increaseCartItem?(line: string): Promise<Response>
-  init?(selectionData?: Centra.SelectionResponse): Promise<void>
+  init?(selectionData?: Centra.SelectionResponseExtended): Promise<void>
   removeCartItem?(line: string): Promise<Response>
   removeVoucher?(voucher: string): Promise<Response>
-  submitPayment?(
-    paymentReturnPage: string,
-    paymentFailedPage: string,
-    data: Record<string, unknown>,
-    locale?: string,
-  ): Promise<Record<string, unknown>>
+  submitPayment?(data: Record<string, unknown>, locale?: string): Promise<Centra.PaymentResponse>
   updateCountry?(country: string, data: { language: string }): Promise<Response>
   updateCartItemQuantity?(line: string, quantity: number): Promise<Response>
   updateCartItemSize?(cartItem: Centra.SelectionItemModel, item: string): Promise<Response>
@@ -34,7 +31,7 @@ export interface ContextMethods {
   updateShippingMethod?(shippingMethod: string): Promise<Response>
 }
 
-export interface ContextProperties extends ContextMethods, Centra.SelectionResponse {
+export interface ContextProperties extends ContextMethods, Centra.SelectionResponseExtended {
   apiUrl?: string
   apiClient?: ApiClient
 }
@@ -63,9 +60,15 @@ const Context = React.createContext<ContextProperties>({})
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
-  const { children, apiUrl, disableInitialSelection = false } = props
+  const {
+    apiUrl,
+    children,
+    disableInitialSelection = false,
+    paymentFailedPage,
+    paymentReturnPage,
+  } = props
 
-  const [selection, setSelection] = React.useState<Centra.SelectionResponse>(DEFAULT_VALUE)
+  const [selection, setSelection] = React.useState<Centra.SelectionResponseExtended>(DEFAULT_VALUE)
 
   // set api client url
   apiClient.baseUrl = apiUrl
@@ -76,7 +79,7 @@ export function CentraProvider(props: ProviderProps) {
         'PUT',
         'payment-fields',
         event.detail,
-      )) as Centra.SelectionResponse
+      )) as Centra.SelectionResponseExtended
       setSelection(response)
     }
   }, [])
@@ -97,7 +100,7 @@ export function CentraProvider(props: ProviderProps) {
   const init = React.useCallback<NonNullable<ContextMethods['init']>>(async (selectionData) => {
     let response
     if (!selectionData) {
-      response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponse
+      response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponseExtended
     } else {
       response = selectionData
     }
@@ -116,17 +119,7 @@ export function CentraProvider(props: ProviderProps) {
     }
   }, [])
 
-  React.useEffect(() => {
-    if (!disableInitialSelection) {
-      init()
-    }
-
-    document.addEventListener('centra_checkout_callback', centraCheckoutCallback)
-
-    return () => {
-      document.removeEventListener('centra_checkout_callback', centraCheckoutCallback)
-    }
-  }, [disableInitialSelection, init, centraCheckoutCallback])
+  /* HANDLER METHODS */
 
   const addItem = React.useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
@@ -207,19 +200,31 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const submitPayment = React.useCallback<NonNullable<ContextMethods['submitPayment']>>(
-    async (paymentReturnPage, paymentFailedPage, data, locale) => {
+    async (data, locale) => {
       const param = locale ? `?lang=${locale}` : ''
 
-      const response = await apiClient.request('POST', 'payment', {
+      const response = (await apiClient.request('POST', 'payment', {
         paymentReturnPage: `${paymentReturnPage}/${selection.token}${param}`,
         paymentFailedPage: `${paymentFailedPage}/${selection.token}${param}`,
-        termsAndConditions: true,
         ...data,
-      })
+      })) as Centra.PaymentResponse
 
+      // handle redirecting here
+      switch (response.action) {
+        case 'redirect':
+          if (response.url) {
+            window.location.href = response.url
+          }
+          break
+        case 'success':
+          window.location.href = `${paymentReturnPage}/${selection.token}${param}`
+          break
+        default:
+          return response
+      }
       return response
     },
-    [selection.token],
+    [paymentFailedPage, paymentReturnPage, selection.token],
   )
 
   const addNewsletterSubscription = React.useCallback<
@@ -228,6 +233,38 @@ export function CentraProvider(props: ProviderProps) {
     (email) => selectionApiCall(apiClient.request('POST', 'newsletter-subscription', { email })),
     [selectionApiCall],
   )
+
+  /* EFFECTS */
+
+  React.useEffect(() => {
+    if (!disableInitialSelection) {
+      init()
+    }
+
+    // always add event listener for centra_checkout_callback in case it is used
+    document.addEventListener('centra_checkout_callback', centraCheckoutCallback)
+
+    return () => {
+      document.removeEventListener('centra_checkout_callback', centraCheckoutCallback)
+    }
+  }, [disableInitialSelection, init, centraCheckoutCallback])
+
+  // run centra checkout script if it is available in the selection
+  React.useEffect(() => {
+    let script: HTMLScriptElement | null = null
+    if (selection?.selection?.centraCheckoutScript) {
+      script = document.createElement('script')
+      script.innerHTML = selection.selection.centraCheckoutScript
+      script.id = 'centra-checkout-script'
+      document.head.appendChild(script)
+    }
+
+    return () => {
+      if (script) {
+        document.head.removeChild(script)
+      }
+    }
+  }, [selection])
 
   const centraHandlersContext = React.useMemo<ContextMethods>(
     (): ContextMethods => ({
@@ -304,15 +341,21 @@ export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | 
   const [receipt, setReceipt] = React.useState(null)
   const { apiUrl } = useCentra()
 
-  // create a new ApiClient in order to temporarily use a different token
-  const tempApiClient = new ApiClient(apiUrl)
-  tempApiClient.headers.set('api-token', token)
+  if (!token) {
+    console.error('@noaignite/react-centra-checkout: useReceipt requires a selection id')
+  }
 
-  tempApiClient.request('GET', '/receipt').then((response) => {
-    if (response.order) {
-      setReceipt(response.order)
-    }
-  })
+  React.useEffect(() => {
+    // create a new ApiClient in order to temporarily use a different token
+    const tempApiClient = new ApiClient(apiUrl)
+    tempApiClient.headers.set('api-token', token)
+
+    tempApiClient.request('GET', 'receipt').then((response) => {
+      if (response.order) {
+        setReceipt(response.order)
+      }
+    })
+  }, [apiUrl, token])
 
   return receipt
 }
