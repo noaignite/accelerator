@@ -36,7 +36,7 @@ export interface ContextProperties extends ContextMethods, Centra.SelectionRespo
   apiClient?: ApiClient
 }
 
-const SELECTION_INITIAL_VALUE = {
+export const SELECTION_INITIAL_VALUE = {
   countries: [],
   languages: [],
   location: {},
