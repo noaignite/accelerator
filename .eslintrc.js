@@ -38,6 +38,10 @@ module.exports = {
         'no-restricted-exports': 'off',
         '@typescript-eslint/no-use-before-define': ['error'],
         'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
+        'react/jsx-props-no-spreading': 'off',
+        'react/require-default-props': 'off',
+        // doesn't play well with importing TS types as devDependencies
+        'import/no-extraneous-dependencies': 'off',
       },
     },
   ],
