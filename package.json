@@ -37,7 +37,6 @@
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
     "@babel/eslint-parser": "^7.16.3",
-    "@babel/plugin-transform-object-assign": "^7.16.0",
     "@babel/plugin-transform-react-constant-elements": "^7.16.0",
     "@babel/plugin-transform-runtime": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
@@ -74,18 +73,6 @@
     "typedoc": "^0.22.9",
     "webpack-merge": "^5.8.0",
     "yalc": "^1.0.0-pre.53"
-  },
-  "resolutions": {
-    "**/@babel/core": "^7.16.0",
-    "**/@babel/plugin-proposal-class-properties": "^7.16.0",
-    "**/@babel/plugin-proposal-object-rest-spread": "^7.16.0",
-    "**/@babel/plugin-proposal-nullish-coalescing-operator": "^7.16.0",
-    "**/@babel/plugin-proposal-numeric-separator": "^7.16.0",
-    "**/@babel/plugin-proposal-optional-chaining": "^7.16.0",
-    "**/@babel/plugin-transform-runtime": "^7.16.0",
-    "**/@babel/preset-env": "^7.16.0",
-    "**/@babel/preset-react": "^7.16.0",
-    "**/@babel/runtime": "^7.16.0"
   },
   "workspaces": [
     "docs",
