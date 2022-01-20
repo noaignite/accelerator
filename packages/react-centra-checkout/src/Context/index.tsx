@@ -55,7 +55,7 @@ export const SELECTION_INITIAL_VALUE = {
   shippingMethods: [],
 }
 
-const HandlersContext = React.createContext<ContextMethods>({})
+export const HandlersContext = React.createContext<ContextMethods>({})
 const Context = React.createContext<ContextProperties>({})
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */

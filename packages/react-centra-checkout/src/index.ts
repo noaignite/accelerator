@@ -4,5 +4,5 @@ export * from './ApiClient'
 
 export { default as PaymentForm } from './PaymentForm'
 
-export { default } from './Context'
+export { default as CentraContext } from './Context'
 export * from './Context'
