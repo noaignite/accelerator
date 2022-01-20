@@ -14,21 +14,27 @@ export interface ProviderProps {
 }
 
 export interface ContextMethods {
-  addItem?(item: string, quantity?: number): Promise<Response>
-  addNewsletterSubscription?(email: string): Promise<Response>
-  addVoucher?(voucher: string): Promise<Response>
-  decreaseCartItem?(line: string): Promise<Response>
-  increaseCartItem?(line: string): Promise<Response>
+  addItem?(item: string, quantity?: number): Promise<Centra.SelectionResponseExtended>
+  addNewsletterSubscription?(email: string): Promise<Centra.SelectionResponseExtended>
+  addVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
+  decreaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  increaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
   init?(selectionData?: Centra.SelectionResponseExtended): Promise<void>
-  removeCartItem?(line: string): Promise<Response>
-  removeVoucher?(voucher: string): Promise<Response>
+  removeCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  removeVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
   submitPayment?(data: Record<string, unknown>, locale?: string): Promise<Centra.PaymentResponse>
-  updateCountry?(country: string, data: { language: string }): Promise<Response>
-  updateCartItemQuantity?(line: string, quantity: number): Promise<Response>
-  updateCartItemSize?(cartItem: Centra.SelectionItemModel, item: string): Promise<Response>
-  updateLanguage?(language: string): Promise<Response>
-  updatePaymentMethod?(paymentMethod: string): Promise<Response>
-  updateShippingMethod?(shippingMethod: string): Promise<Response>
+  updateCartItemQuantity?(line: string, quantity: number): Promise<Centra.SelectionResponseExtended>
+  updateCartItemSize?(
+    cartItem: Centra.SelectionItemModel,
+    item: string,
+  ): Promise<Centra.SelectionResponseExtended>
+  updateCountry?(
+    country: string,
+    data: { language: string },
+  ): Promise<Centra.SelectionResponseExtended>
+  updateLanguage?(language: string): Promise<Centra.SelectionResponseExtended>
+  updatePaymentMethod?(paymentMethod: string): Promise<Centra.SelectionResponseExtended>
+  updateShippingMethod?(shippingMethod: string): Promise<Centra.SelectionResponseExtended>
 }
 
 export interface ContextProperties extends ContextMethods, Centra.SelectionResponseExtended {
@@ -85,18 +91,25 @@ export function CentraProvider(props: ProviderProps) {
     }
   }, [])
 
-  const selectionApiCall = React.useCallback(async (apiCall) => {
-    window.CentraCheckout?.suspend()
-    const response = await apiCall
+  const selectionApiCall = React.useCallback(
+    async (
+      apiCall:
+        | Promise<Centra.SelectionResponseExtended>
+        | (() => Promise<Centra.SelectionResponseExtended>),
+    ) => {
+      window.CentraCheckout?.suspend()
+      const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
 
-    if (response && response.selection) {
-      setSelection(response)
-    }
+      if (response && response.selection) {
+        setSelection(response)
+      }
 
-    window.CentraCheckout?.resume()
+      window.CentraCheckout?.resume()
 
-    return response
-  }, [])
+      return response
+    },
+    [],
+  )
 
   const init = React.useCallback<NonNullable<ContextMethods['init']>>(async (selectionData) => {
     let response
