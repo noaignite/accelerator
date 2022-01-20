@@ -14,14 +14,17 @@ function PaymentFormEmbed(props: PaymentFormEmbedProps): React.ReactElement {
     if (ref.current) {
       const node = ref.current
       const scripts = node.getElementsByTagName('script')
+
       Array.from(scripts).forEach((script) => {
         const scriptEl = document.createElement('script')
+
         if (script.src) {
           scriptEl.src = script.src
         } else if (script.type !== 'application/json') {
           const textNode = document.createTextNode(script.innerHTML)
           scriptEl.appendChild(textNode)
         }
+
         node.appendChild(scriptEl)
       })
     }
