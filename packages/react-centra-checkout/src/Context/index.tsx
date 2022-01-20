@@ -14,22 +14,53 @@ export interface ProviderProps {
 }
 
 export interface ContextMethods {
+  /**
+    @param item - The Centra item id
+  */
   addItem?(item: string, quantity?: number): Promise<Centra.SelectionResponseExtended>
   addNewsletterSubscription?(email: string): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param voucher - The id of the voucher to add
+  */
   addVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param line - The line id of the item to decrease
+  */
   decreaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param line - The line id of the item to increase
+  */
   increaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param selectionData - Initial selection data
+  */
   init?(selectionData?: Centra.SelectionResponseExtended): Promise<void>
   loginCustomer?(email: string, password: string): Promise<Centra.SelectionResponseExtended>
   logoutCustomer?(): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
+  */
   registerCustomer?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param line - The line id of the item to increase
+  */
   removeCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param voucher - The id of the voucher to add
+  */
   removeVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param i - The `i` query parameter provided by Centra when landing on the password reset page
+    @param id - The `id` query parameter provided by Centra when landing on the password reset page
+  */
   resetCustomerPassword?(
     i: string,
     id: string,
     newPassword: string,
   ): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in Centra.
+  */
   sendCustomerResetPasswordEmail?(
     email: string,
     linkUri: string,
