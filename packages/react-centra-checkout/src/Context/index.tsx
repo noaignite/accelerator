@@ -20,8 +20,20 @@ export interface ContextMethods {
   decreaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
   increaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
   init?(selectionData?: Centra.SelectionResponseExtended): Promise<void>
+  loginCustomer?(email: string, password: string): Promise<Centra.SelectionResponseExtended>
+  logoutCustomer?(): Promise<Centra.SelectionResponseExtended>
+  registerCustomer?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
   removeCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
   removeVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
+  resetCustomerPassword?(
+    i: string,
+    id: string,
+    newPassword: string,
+  ): Promise<Centra.SelectionResponseExtended>
+  sendCustomerResetPasswordEmail?(
+    email: string,
+    linkUri: string,
+  ): Promise<Centra.SelectionResponseExtended>
   submitPayment?(data: Record<string, unknown>, locale?: string): Promise<Centra.PaymentResponse>
   updateCartItemQuantity?(line: string, quantity: number): Promise<Centra.SelectionResponseExtended>
   updateCartItemSize?(
@@ -31,6 +43,12 @@ export interface ContextMethods {
   updateCountry?(
     country: string,
     data: { language: string },
+  ): Promise<Centra.SelectionResponseExtended>
+  updateCustomerAddress?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
+  updateCustomerEmail?(email: string): Promise<Centra.SelectionResponseExtended>
+  updateCustomerPassword?(
+    password: string,
+    newPassword: string,
   ): Promise<Centra.SelectionResponseExtended>
   updateLanguage?(language: string): Promise<Centra.SelectionResponseExtended>
   updatePaymentMethod?(paymentMethod: string): Promise<Centra.SelectionResponseExtended>
@@ -248,6 +266,55 @@ export function CentraProvider(props: ProviderProps) {
     [selectionApiCall],
   )
 
+  const loginCustomer = React.useCallback<NonNullable<ContextMethods['loginCustomer']>>(
+    (email, password) =>
+      selectionApiCall(apiClient.request('POST', `login/${email}`, { password })),
+    [selectionApiCall],
+  )
+
+  const logoutCustomer = React.useCallback<NonNullable<ContextMethods['logoutCustomer']>>(
+    () => selectionApiCall(apiClient.request('POST', `logout`)),
+    [selectionApiCall],
+  )
+
+  const registerCustomer = React.useCallback<NonNullable<ContextMethods['registerCustomer']>>(
+    (data) => selectionApiCall(apiClient.request('POST', `register`, data)),
+    [selectionApiCall],
+  )
+
+  const resetCustomerPassword = React.useCallback<
+    NonNullable<ContextMethods['resetCustomerPassword']>
+  >(
+    (i, id, newPassword) =>
+      selectionApiCall(apiClient.request('PUT', `POST/password-reset`, { i, id, newPassword })),
+    [selectionApiCall],
+  )
+
+  const sendCustomerResetPasswordEmail = React.useCallback<
+    NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
+  >(
+    (email, linkUri) =>
+      selectionApiCall(apiClient.request('POST', `password-reset-email/${email}`, { linkUri })),
+    [selectionApiCall],
+  )
+
+  const updateCustomerAddress = React.useCallback<
+    NonNullable<ContextMethods['updateCustomerAddress']>
+  >((data) => selectionApiCall(apiClient.request('PUT', `address`, data)), [selectionApiCall])
+
+  const updateCustomerEmail = React.useCallback<NonNullable<ContextMethods['updateCustomerEmail']>>(
+    (newEmail) => selectionApiCall(apiClient.request('PUT', `email`, { newEmail })),
+    [selectionApiCall],
+  )
+
+  const updateCustomerPassword = React.useCallback<
+    NonNullable<ContextMethods['updateCustomerPassword']>
+  >(
+    (password, newPassword) =>
+      selectionApiCall(apiClient.request('PUT', `password`, { password, newPassword })),
+    [selectionApiCall],
+  )
+
   /* EFFECTS */
 
   React.useEffect(() => {
@@ -288,12 +355,20 @@ export function CentraProvider(props: ProviderProps) {
       decreaseCartItem,
       increaseCartItem,
       init,
+      loginCustomer,
+      logoutCustomer,
+      registerCustomer,
       removeCartItem,
       removeVoucher,
+      resetCustomerPassword,
+      sendCustomerResetPasswordEmail,
       submitPayment,
       updateCartItemQuantity,
       updateCartItemSize,
       updateCountry,
+      updateCustomerAddress,
+      updateCustomerEmail,
+      updateCustomerPassword,
       updateLanguage,
       updatePaymentMethod,
       updateShippingMethod,
@@ -305,12 +380,20 @@ export function CentraProvider(props: ProviderProps) {
       decreaseCartItem,
       increaseCartItem,
       init,
+      loginCustomer,
+      logoutCustomer,
+      registerCustomer,
       removeCartItem,
       removeVoucher,
+      resetCustomerPassword,
+      sendCustomerResetPasswordEmail,
       submitPayment,
       updateCartItemQuantity,
       updateCartItemSize,
       updateCountry,
+      updateCustomerAddress,
+      updateCustomerEmail,
+      updateCustomerPassword,
       updateLanguage,
       updatePaymentMethod,
       updateShippingMethod,
