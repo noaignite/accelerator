@@ -5,5 +5,5 @@ export * from './ApiClient'
 export { default as PaymentEmbed } from './PaymentEmbed'
 export * from './PaymentEmbed'
 
-export { default as CentraContext } from './Context'
+export { default as CentraSelectionContext } from './Context'
 export * from './Context'

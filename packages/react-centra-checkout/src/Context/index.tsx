@@ -86,7 +86,7 @@ export interface ContextMethods {
   updateShippingMethod?(shippingMethod: string): Promise<Centra.SelectionResponseExtended>
 }
 
-export interface ContextProperties extends ContextMethods, Centra.SelectionResponseExtended {
+export interface ContextProperties extends Centra.SelectionResponseExtended {
   apiUrl?: string
   apiClient?: ApiClient
 }
@@ -111,7 +111,7 @@ export const SELECTION_INITIAL_VALUE = {
 }
 
 export const HandlersContext = React.createContext<ContextMethods>({})
-const Context = React.createContext<ContextProperties>({})
+const SelectionContext = React.createContext<ContextProperties>({})
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
@@ -434,40 +434,33 @@ export function CentraProvider(props: ProviderProps) {
   const centraContext = React.useMemo(
     (): ContextProperties => ({
       ...selection,
-      ...centraHandlersContext,
       apiUrl,
       apiClient,
     }),
-    [centraHandlersContext, selection, apiUrl],
+    [selection, apiUrl],
   )
 
   return (
     <HandlersContext.Provider value={centraHandlersContext}>
-      <Context.Provider value={centraContext}>{children}</Context.Provider>
+      <SelectionContext.Provider value={centraContext}>{children}</SelectionContext.Provider>
     </HandlersContext.Provider>
   )
 }
 
-/** This hook returns update handlers and centra selection */
-export function useCentra(): ContextProperties {
-  return React.useContext(Context)
+/** This hook returns the centra selection */
+export function useCentraSelection(): ContextProperties {
+  return React.useContext(SelectionContext)
 }
 
-/** This hook only returns the centra selection */
-export function useCentraSelection(): Centra.SelectionModel {
-  return React.useContext(Context).selection ?? SELECTION_INITIAL_VALUE.selection
-}
-
-/** This hook only returns update handlers and should be used when you don't need to subscribe to
-centra selection updates */
+/** This hook returns update handlers */
 export function useCentraHandlers(): ContextMethods {
   return React.useContext(HandlersContext)
 }
 
 /** Returns the latest order receipt given a selection token */
 export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | null {
-  const [receipt, setReceipt] = React.useState(null)
-  const { apiUrl } = useCentra()
+  const [result, setResult] = React.useState<Centra.OrderCompleteResponse | null>(null)
+  const { apiUrl } = useCentraSelection()
 
   if (!token) {
     console.error('@noaignite/react-centra-checkout: useReceipt requires a selection id')
@@ -479,13 +472,12 @@ export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | 
     tempApiClient.headers.set('api-token', token)
 
     tempApiClient.request('GET', 'receipt').then((response) => {
-      if (response.order) {
-        setReceipt(response.order)
-      }
+      setResult(response)
     })
   }, [apiUrl, token])
 
-  return receipt
+  return result
+}
 
 /** Returns the latest orders for the currently logged in user
   @param from - Display orders from this index. Defaults to 0.
@@ -509,4 +501,4 @@ export function useCentraOrders(from?: number, size?: number): Centra.OrdersResp
   return result
 }
 
-export default Context
+export default SelectionContext

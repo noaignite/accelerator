@@ -1,6 +1,6 @@
 import * as Centra from '@noaignite/centra-types'
 import * as React from 'react'
-import { useCentra } from '../Context'
+import { useCentraSelection, useCentraHandlers } from '../Context'
 import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
 
 export interface PaymentEmbedProps {
@@ -19,7 +19,9 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
   const [formHtml, setFormHtml] = React.useState<string | null>(null)
 
   // get selection
-  const { selection, paymentMethods, submitPayment } = useCentra()
+  const { selection, paymentMethods } = useCentraSelection()
+  const { submitPayment } = useCentraHandlers()
+
   // get payment method
   const paymentMethodId = selection?.paymentMethod
   const paymentMethod = paymentMethods?.find((p) => p.paymentMethod === paymentMethodId)
