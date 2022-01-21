@@ -14,5 +14,13 @@ npm install @noaignite/react-centra-checkout
 yarn add @noaignite/react-centra-checkout
 ```
 
+## Why
+This package exists to ease development of react frontend applications using the [Centra Checkout API](https://docs.centra.com/api-references/checkout-api/introduction).
+
+Most importantly, it exposes a `CentraProvider` that you wrap your application with (for Next.js projects, usually in _app.js), and a set of hooks to fetch api endpoints and update the user selection.
+
+It does not attempt to abstract the Centra api, but rather exposes the endpoints in a React way of calling them.
+
 ## Documentation
 https://react-centra-checkout-docs.vercel.app
+
