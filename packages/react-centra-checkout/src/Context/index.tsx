@@ -486,6 +486,27 @@ export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | 
   }, [apiUrl, token])
 
   return receipt
+
+/** Returns the latest orders for the currently logged in user
+  @param from - Display orders from this index. Defaults to 0.
+  @param size - Display this many orders. Defaults lists all orders.
+*/
+export function useCentraOrders(from?: number, size?: number): Centra.OrdersResponse | null {
+  const [result, setResult] = React.useState<Centra.OrdersResponse | null>(null)
+
+  React.useEffect(() => {
+    // fetch orders
+    apiClient
+      .request('PUT', 'orders', {
+        ...(from && { from }),
+        ...(size && { size }),
+      })
+      .then((response) => {
+        setResult(response)
+      })
+  }, [from, size])
+
+  return result
 }
 
 export default Context
