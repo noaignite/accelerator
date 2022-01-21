@@ -4,3 +4,5 @@
 /tmp
 build
 node_modules
+
+/packages/*/docs

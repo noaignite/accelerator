@@ -40,10 +40,10 @@ async function createPackageFile() {
     ...packageDataOther,
     private: false,
     ...(packageDataOther.main && {
-      main: './index.js',
+      main: './node/index.js',
     }),
     ...(packageDataOther.module && {
-      module: './esm/index.js',
+      module: './index.js',
     }),
   }
   const targetPath = path.resolve(buildPath, './package.json')

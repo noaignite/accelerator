@@ -1,4 +1,4 @@
-/* eslint-disable no-console, prefer-promise-reject-errors */
+/* eslint-disable no-console */
 const chalk = require('chalk')
 const commander = require('commander')
 const execSync = require('child_process').execSync
