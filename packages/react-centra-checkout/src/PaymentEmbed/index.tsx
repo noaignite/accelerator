@@ -1,9 +1,9 @@
 import * as Centra from '@noaignite/centra-types'
 import * as React from 'react'
 import { useCentra } from '../Context'
-import PaymentFormEmbed from './partials/PaymentFormEmbed'
+import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
 
-interface PaymentFormProps {
+export interface PaymentEmbedProps {
   paymentReturnPage: string
   paymentFailedPage: string
   onSuccess?(paymentResult: Centra.PaymentResponse): void
@@ -12,7 +12,7 @@ interface PaymentFormProps {
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
-function PaymentForm(props: PaymentFormProps): React.ReactElement | null {
+function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
   const { paymentReturnPage, paymentFailedPage, onError, onSuccess } = props
 
   const [paymentResult, setPaymentResult] = React.useState<Centra.PaymentResponse | null>(null)
@@ -78,7 +78,7 @@ function PaymentForm(props: PaymentFormProps): React.ReactElement | null {
     }
   }, [paymentResult, onSuccess, onError])
 
-  return formHtml ? <PaymentFormEmbed html={formHtml} /> : null
+  return formHtml ? <PaymentEmbedHtml html={formHtml} /> : null
 }
 
-export default PaymentForm
+export default PaymentEmbed

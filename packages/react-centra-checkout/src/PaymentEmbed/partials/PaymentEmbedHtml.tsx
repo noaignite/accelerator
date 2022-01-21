@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-interface PaymentFormEmbedProps extends React.ComponentProps<'div'> {
+interface PaymentEmbedHtmlProps extends React.ComponentProps<'div'> {
   html: string
 }
 
-function PaymentFormEmbed(props: PaymentFormEmbedProps): React.ReactElement {
+function PaymentEmbedHtml(props: PaymentEmbedHtmlProps): React.ReactElement {
   const { html, ...other } = props
 
   const ref = React.useRef<HTMLDivElement>(null)
@@ -34,4 +34,4 @@ function PaymentFormEmbed(props: PaymentFormEmbedProps): React.ReactElement {
   return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} {...other} />
 }
 
-export default PaymentFormEmbed
+export default PaymentEmbedHtml
