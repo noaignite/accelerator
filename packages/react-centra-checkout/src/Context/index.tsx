@@ -110,8 +110,8 @@ export const SELECTION_INITIAL_VALUE = {
   shippingMethods: [],
 }
 
-export const HandlersContext = React.createContext<ContextMethods>({})
-const SelectionContext = React.createContext<ContextProperties>({})
+export const CentraHandlersContext = React.createContext<ContextMethods>({})
+const CentraSelectionContext = React.createContext<ContextProperties>({})
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
@@ -441,20 +441,22 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   return (
-    <HandlersContext.Provider value={centraHandlersContext}>
-      <SelectionContext.Provider value={centraContext}>{children}</SelectionContext.Provider>
-    </HandlersContext.Provider>
+    <CentraHandlersContext.Provider value={centraHandlersContext}>
+      <CentraSelectionContext.Provider value={centraContext}>
+        {children}
+      </CentraSelectionContext.Provider>
+    </CentraHandlersContext.Provider>
   )
 }
 
 /** This hook returns the centra selection */
 export function useCentraSelection(): ContextProperties {
-  return React.useContext(SelectionContext)
+  return React.useContext(CentraSelectionContext)
 }
 
 /** This hook returns update handlers */
 export function useCentraHandlers(): ContextMethods {
-  return React.useContext(HandlersContext)
+  return React.useContext(CentraHandlersContext)
 }
 
 /** Returns the latest order receipt given a selection token */
@@ -501,4 +503,4 @@ export function useCentraOrders(from?: number, size?: number): Centra.OrdersResp
   return result
 }
 
-export default SelectionContext
+export default CentraSelectionContext
