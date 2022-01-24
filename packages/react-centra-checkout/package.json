@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/react-centra-checkout",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": false,
   "author": "NoA Ignite",
   "description": "React components and helpers for Centra checkout api",
@@ -37,7 +37,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@noaignite/centra-types": "^0.0.1"
+    "@noaignite/centra-types": "^0.1.0"
   },
   "sideEffects": false,
   "publishConfig": {

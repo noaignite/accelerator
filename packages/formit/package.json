@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/formit",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": false,
   "author": "NoA Ignite",
   "description": "Form helper components built with React and MUI in mind.",
