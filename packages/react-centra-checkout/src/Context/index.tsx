@@ -162,6 +162,12 @@ export function CentraProvider(props: ProviderProps) {
 
   const init = React.useCallback<NonNullable<ContextMethods['init']>>(async (selectionData) => {
     let response
+
+    const clientToken = window.localStorage.getItem('checkoutToken')
+    if (clientToken) {
+      apiClient.headers.set('api-token', clientToken)
+    }
+
     if (!selectionData) {
       response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponseExtended
     } else {
@@ -171,13 +177,9 @@ export function CentraProvider(props: ProviderProps) {
     if (response && response.selection) {
       setSelection(response)
 
-      const clientToken = window.localStorage.getItem('checkoutToken')
-
       if (response.token && response.token !== clientToken) {
         apiClient.headers.set('api-token', response.token)
         window.localStorage.setItem('checkoutToken', response.token)
-      } else if (clientToken) {
-        apiClient.headers.set('api-token', clientToken)
       }
     }
   }, [])
