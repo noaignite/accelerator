@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.3](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.1.2...@noaignite/react-centra-checkout@0.1.3) (2022-02-01)
+
+
+### Bug Fixes
+
+* **CentraProvider:** restore previous selection if present ([0219e3c](https://github.com/noaignite/accelerator/commit/0219e3ce5f70adebe92fde0c49fef2c648cb2619))
+
+
+
+
+
 ## [0.1.2](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.1.1...@noaignite/react-centra-checkout@0.1.2) (2022-01-26)
 
 
