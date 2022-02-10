@@ -75,6 +75,7 @@ export interface ContextMethods {
     country: string,
     data: { language: string },
   ): Promise<Centra.SelectionResponseExtended>
+  updateCustomer?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
   updateCustomerAddress?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
   updateCustomerEmail?(email: string): Promise<Centra.SelectionResponseExtended>
   updateCustomerPassword?(
@@ -331,6 +332,11 @@ export function CentraProvider(props: ProviderProps) {
     [selectionApiCall],
   )
 
+  const updateCustomer = React.useCallback<NonNullable<ContextMethods['updateCustomer']>>(
+    (data) => selectionApiCall(apiClient.request('PUT', `customer/update`, data)),
+    [selectionApiCall],
+  )
+
   const updateCustomerAddress = React.useCallback<
     NonNullable<ContextMethods['updateCustomerAddress']>
   >((data) => selectionApiCall(apiClient.request('PUT', `address`, data)), [selectionApiCall])
@@ -399,6 +405,7 @@ export function CentraProvider(props: ProviderProps) {
       updateCartItemQuantity,
       updateCartItemSize,
       updateCountry,
+      updateCustomer,
       updateCustomerAddress,
       updateCustomerEmail,
       updateCustomerPassword,
@@ -424,6 +431,7 @@ export function CentraProvider(props: ProviderProps) {
       updateCartItemQuantity,
       updateCartItemSize,
       updateCountry,
+      updateCustomer,
       updateCustomerAddress,
       updateCustomerEmail,
       updateCustomerPassword,
