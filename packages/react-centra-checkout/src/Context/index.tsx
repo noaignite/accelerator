@@ -319,7 +319,7 @@ export function CentraProvider(props: ProviderProps) {
     NonNullable<ContextMethods['resetCustomerPassword']>
   >(
     (i, id, newPassword) =>
-      selectionApiCall(apiClient.request('PUT', `POST/password-reset`, { i, id, newPassword })),
+      selectionApiCall(apiClient.request('POST', `password-reset`, { i, id, newPassword })),
     [selectionApiCall],
   )
 
