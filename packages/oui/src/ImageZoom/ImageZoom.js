@@ -5,7 +5,7 @@ import { chainPropTypes } from '@mui/utils'
 import { useForkRef } from '@mui/material/utils'
 import { styled } from '@mui/system'
 import { ClickAwayListener, Fade, useThemeProps } from '@mui/material'
-import { mapRange } from '@noaignite/utils'
+import { clamp, mapRange } from '@noaignite/utils'
 import classes from './imageZoomClasses'
 
 const ImageZoomRoot = styled('div', {
@@ -62,10 +62,24 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
 
   React.useEffect(() => {
     const isTouch = window.matchMedia('(hover: none)').matches
-    const target = rootRef.current
+    const rootEl = rootRef.current
 
-    let rect = target.getBoundingClientRect()
+    let rect = rootEl.getBoundingClientRect()
     let cancelScroll = false
+
+    const firstPosition = { x: rect.width / 2, y: rect.height / 2 }
+    const lastPosition = { x: rect.width / 2, y: rect.height / 2 }
+    const currentPosition = { x: rect.width / 2, y: rect.height / 2 }
+
+    const getMousePosition = (event) => {
+      const pageX = event.pageX ?? event.changedTouches?.[0]?.pageX
+      const pageY = event.pageY ?? event.changedTouches?.[0]?.pageY
+
+      const rectX = pageX - window.scrollX - rect.left
+      const rectY = pageY - window.scrollY - rect.top
+
+      return [rectX, rectY]
+    }
 
     const preventScroll = (event) => {
       if (cancelScroll) {
@@ -74,7 +88,7 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
     }
 
     const syncRect = () => {
-      rect = target.getBoundingClientRect()
+      rect = rootEl.getBoundingClientRect()
     }
 
     const handleMouseEnter = () => {
@@ -89,31 +103,37 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
       setOpen((prev) => !prev)
     }
 
-    const handleTouchStart = () => {
+    const handleTouchStart = (event) => {
       cancelScroll = true
+
+      const [rectX, rectY] = getMousePosition(event)
+      firstPosition.x = rectX
+      firstPosition.y = rectY
     }
 
     const handleTouchEnd = () => {
       cancelScroll = false
+
+      lastPosition.x = currentPosition.x
+      lastPosition.y = currentPosition.y
     }
 
     const handleMove = (event) => {
-      const pageX = event.pageX ?? event.touches?.[0]?.pageX
-      const pageY = event.pageY ?? event.touches?.[0]?.pageY
+      const [rectX, rectY] = getMousePosition(event)
 
-      const rectX = pageX - window.scrollX - rect.left
-      const rectY = pageY - window.scrollY - rect.top
+      const deltaX = (firstPosition.x - rectX) * -1
+      const deltaY = (firstPosition.y - rectY) * -1
 
-      const normalizedRectX = mapRange(rectX, 0, rect.width, 0, 1, true)
-      const normalizedRectY = mapRange(rectY, 0, rect.height, 0, 1, true)
+      currentPosition.x = clamp(isTouch ? lastPosition.x + deltaX : rectX, 0, rect.width)
+      currentPosition.y = clamp(isTouch ? lastPosition.y + deltaY : rectY, 0, rect.height)
 
       const direction = isTouch ? -1 : 1
-      const coordinateX = (normalizedRectX - 0.5) * 2 * direction
-      const coordinateY = (normalizedRectY - 0.5) * 2 * direction
+      const coordinateX = mapRange(currentPosition.x, 0, rect.width, -1, 1) * direction
+      const coordinateY = mapRange(currentPosition.y, 0, rect.height, -1, 1) * direction
 
-      const imageOverflow = ((1 / magnitute) * (magnitute - 1)) / 2
-      const x = (0.5 + imageOverflow * coordinateX) * -100
-      const y = (0.5 + imageOverflow * coordinateY) * -100
+      const maxMovement = ((1 / magnitute) * (magnitute - 1)) / 2
+      const x = (0.5 + coordinateX * maxMovement) * -100
+      const y = (0.5 + coordinateY * maxMovement) * -100
 
       detailsRef.current.style.transform = `translate3d(${x}%, ${y}%, 0)`
     }
@@ -122,10 +142,10 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
       const method = `${register ? 'add' : 'remove'}EventListener`
 
       if (isTouch) {
-        target[method]('click', handleClick)
+        rootEl[method]('click', handleClick)
       } else {
-        target[method]('mouseenter', handleMouseEnter)
-        target[method]('mouseleave', handleMouseLeave)
+        rootEl[method]('mouseenter', handleMouseEnter)
+        rootEl[method]('mouseleave', handleMouseLeave)
       }
 
       if (open) {
@@ -133,11 +153,11 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
         window[method]('scroll', syncRect, { passive: true })
         if (isTouch) {
           document[method]('touchmove', preventScroll, { passive: false })
-          target[method]('touchmove', handleMove)
-          target[method]('touchstart', handleTouchStart)
-          target[method]('touchend', handleTouchEnd)
+          rootEl[method]('touchmove', handleMove)
+          rootEl[method]('touchstart', handleTouchStart)
+          rootEl[method]('touchend', handleTouchEnd)
         } else {
-          target[method]('mousemove', handleMove)
+          rootEl[method]('mousemove', handleMove)
         }
       }
     }
