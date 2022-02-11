@@ -4,8 +4,8 @@ import clsx from 'clsx'
 import { chainPropTypes } from '@mui/utils'
 import { useForkRef } from '@mui/material/utils'
 import { styled } from '@mui/system'
-import { useThemeProps } from '@mui/material'
-import { normalize } from '@noaignite/utils'
+import { ClickAwayListener, Fade, useThemeProps } from '@mui/material'
+import { clamp, mapRange } from '@noaignite/utils'
 import classes from './imageZoomClasses'
 
 const ImageZoomRoot = styled('div', {
@@ -13,8 +13,8 @@ const ImageZoomRoot = styled('div', {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root,
 })({
-  display: 'block',
   position: 'relative',
+  display: 'block',
   overflow: 'hidden',
 })
 
@@ -22,93 +22,175 @@ const ImageZoomDetails = styled('div', {
   name: 'OuiImageZoom',
   slot: 'Details',
   overridesResolver: (props, styles) => styles.details,
-})(({ theme, ownerState }) => ({
+})(({ ownerState }) => ({
   position: 'absolute',
   left: '50%',
   top: '50%',
   width: `${100 * ownerState.magnitute}%`,
   height: `${100 * ownerState.magnitute}%`,
   transform: 'translate3d(-50%, -50%, 0)',
-  opacity: 0,
-  visibility: 'hidden',
-  transition: theme.transitions.create(['opacity', 'visibility'], {
-    duration: theme.transitions.duration.shortest,
-  }),
   '& > *:not(style)': {
     width: '100%',
     height: '100%',
-  },
-  [`.${classes.root}:hover &`]: {
-    opacity: 1,
-    visibility: 'visible',
   },
 }))
 
 const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiImageZoom' })
-  const { children, className, component = 'div', magnitute = 2, ...other } = props
+  const {
+    children,
+    className,
+    component = 'div',
+    magnitute = 2,
+    TransitionProps,
+    // eslint-disable-next-line react/prop-types
+    TransitionComponent = Fade,
+    ...other
+  } = props
 
   const rootRef = React.useRef(null)
   const handleRef = useForkRef(rootRef, ref)
   const detailsRef = React.useRef(null)
 
-  const [reveal, setReveal] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
 
   const [preview, details] = React.Children.toArray(children)
 
+  const handleClickAway = React.useCallback(() => {
+    setOpen(false)
+  }, [])
+
   React.useEffect(() => {
-    const target = rootRef.current
-    let rect = target.getBoundingClientRect()
+    const isTouch = window.matchMedia('(hover: none)').matches
+    const rootEl = rootRef.current
 
-    const handleMouseEnter = () => {
-      rect = target.getBoundingClientRect()
+    let rect = rootEl.getBoundingClientRect()
+    let cancelScroll = false
 
-      const isTouch = window.matchMedia('(hover: none)').matches
-      setReveal(!isTouch)
+    const firstPosition = { x: rect.width / 2, y: rect.height / 2 }
+    const lastPosition = { x: rect.width / 2, y: rect.height / 2 }
+    const currentPosition = { x: rect.width / 2, y: rect.height / 2 }
+
+    const getMousePosition = (event) => {
+      const pageX = event.pageX ?? event.changedTouches?.[0]?.pageX
+      const pageY = event.pageY ?? event.changedTouches?.[0]?.pageY
+
+      const rectX = pageX - window.scrollX - rect.left
+      const rectY = pageY - window.scrollY - rect.top
+
+      return [rectX, rectY]
     }
 
-    const handleMouseMove = (event) => {
-      const mouseX = event.clientX - rect.left
-      const mouseY = event.clientY - rect.top
+    const preventScroll = (event) => {
+      if (cancelScroll) {
+        event.preventDefault()
+      }
+    }
 
-      const coordinateX = (normalize(mouseX, 0, rect.width) - 0.5) * 2
-      const coordinateY = (normalize(mouseY, 0, rect.height) - 0.5) * 2
+    const syncRect = () => {
+      rect = rootEl.getBoundingClientRect()
+    }
 
-      const imageOverflow = ((1 / magnitute) * (magnitute - 1)) / 2
-      const x = (0.5 + imageOverflow * coordinateX) * -100
-      const y = (0.5 + imageOverflow * coordinateY) * -100
+    const handleMouseEnter = () => {
+      setOpen(true)
+    }
+
+    const handleMouseLeave = () => {
+      setOpen(false)
+    }
+
+    const handleClick = () => {
+      setOpen((prev) => !prev)
+    }
+
+    const handleTouchStart = (event) => {
+      cancelScroll = true
+
+      const [rectX, rectY] = getMousePosition(event)
+      firstPosition.x = rectX
+      firstPosition.y = rectY
+    }
+
+    const handleTouchEnd = () => {
+      cancelScroll = false
+
+      lastPosition.x = currentPosition.x
+      lastPosition.y = currentPosition.y
+    }
+
+    const handleMove = (event) => {
+      const [rectX, rectY] = getMousePosition(event)
+
+      const deltaX = (firstPosition.x - rectX) * -1
+      const deltaY = (firstPosition.y - rectY) * -1
+
+      currentPosition.x = clamp(isTouch ? lastPosition.x + deltaX : rectX, 0, rect.width)
+      currentPosition.y = clamp(isTouch ? lastPosition.y + deltaY : rectY, 0, rect.height)
+
+      const direction = isTouch ? -1 : 1
+      const coordinateX = mapRange(currentPosition.x, 0, rect.width, -1, 1) * direction
+      const coordinateY = mapRange(currentPosition.y, 0, rect.height, -1, 1) * direction
+
+      const maxMovement = ((1 / magnitute) * (magnitute - 1)) / 2
+      const x = (0.5 + coordinateX * maxMovement) * -100
+      const y = (0.5 + coordinateY * maxMovement) * -100
 
       detailsRef.current.style.transform = `translate3d(${x}%, ${y}%, 0)`
     }
 
-    target.addEventListener('mouseenter', handleMouseEnter)
-    target.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      target.removeEventListener('mouseenter', handleMouseEnter)
-      target.removeEventListener('mousemove', handleMouseMove)
+    const registerListeners = (register) => {
+      const method = `${register ? 'add' : 'remove'}EventListener`
+
+      if (isTouch) {
+        rootEl[method]('click', handleClick)
+      } else {
+        rootEl[method]('mouseenter', handleMouseEnter)
+        rootEl[method]('mouseleave', handleMouseLeave)
+      }
+
+      if (open) {
+        window[method]('resize', syncRect)
+        window[method]('scroll', syncRect, { passive: true })
+        if (isTouch) {
+          document[method]('touchmove', preventScroll, { passive: false })
+          rootEl[method]('touchmove', handleMove)
+          rootEl[method]('touchstart', handleTouchStart)
+          rootEl[method]('touchend', handleTouchEnd)
+        } else {
+          rootEl[method]('mousemove', handleMove)
+        }
+      }
     }
-  }, [magnitute])
+
+    registerListeners(true)
+    return () => {
+      registerListeners(false)
+    }
+  }, [open, magnitute])
 
   const ownerState = {
+    open,
     magnitute,
   }
 
   return (
-    <ImageZoomRoot
-      className={clsx(classes.root, className)}
-      ownerState={ownerState}
-      as={component}
-      ref={handleRef}
-      {...other}
-    >
-      {preview}
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <ImageZoomRoot
+        className={clsx(classes.root, className)}
+        ownerState={ownerState}
+        as={component}
+        ref={handleRef}
+        {...other}
+      >
+        {preview}
 
-      {reveal && (
-        <ImageZoomDetails className={classes.details} ownerState={ownerState} ref={detailsRef}>
-          {details}
-        </ImageZoomDetails>
-      )}
-    </ImageZoomRoot>
+        <TransitionComponent in={open} unmountOnExit {...TransitionProps}>
+          <ImageZoomDetails className={classes.details} ownerState={ownerState} ref={detailsRef}>
+            {details}
+          </ImageZoomDetails>
+        </TransitionComponent>
+      </ImageZoomRoot>
+    </ClickAwayListener>
   )
 })
 
@@ -124,6 +206,7 @@ ImageZoom.propTypes = {
   className: PropTypes.string,
   component: PropTypes.elementType,
   magnitute: PropTypes.number,
+  TransitionProps: PropTypes.object,
 }
 
 export default ImageZoom
