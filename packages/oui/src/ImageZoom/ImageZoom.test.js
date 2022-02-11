@@ -41,18 +41,6 @@ describe('<ImageZoom />', () => {
     ],
   }
 
-  describeConformance(<ImageZoom {...defaultProps} />, () => ({
-    ouiName: 'OuiImageZoom',
-    inheritComponent: 'div',
-    refInstanceof: window.HTMLDivElement,
-    render,
-    testComponentPropWith: 'span',
-    skip: [
-      // https://github.com/facebook/react/issues/11565
-      'reactTestRenderer',
-    ],
-  }))
-
   describe('with window.matchMedia(hover: none)', () => {
     let matchMediaInstances
 
@@ -74,6 +62,18 @@ describe('<ImageZoom />', () => {
     afterEach(() => {
       window.matchMedia.restore()
     })
+
+    describeConformance(<ImageZoom {...defaultProps} />, () => ({
+      ouiName: 'OuiImageZoom',
+      inheritComponent: 'div',
+      refInstanceof: window.HTMLDivElement,
+      render,
+      testComponentPropWith: 'span',
+      skip: [
+        // https://github.com/facebook/react/issues/11565
+        'reactTestRenderer',
+      ],
+    }))
 
     it('should only render a single preview `img` element', async () => {
       render(<ImageZoom data-testid="root" {...defaultProps} />)
