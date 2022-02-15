@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.2.0...@noaignite/react-centra-checkout@0.2.1) (2022-02-15)
+
+
+### Bug Fixes
+
+* **Context:** update addNewsletterSubscription parameters ([4deede8](https://github.com/noaignite/accelerator/commit/4deede8d052ebac7643ea1eb82e43e31e403d961))
+
+
+
+
+
 # [0.2.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.1.3...@noaignite/react-centra-checkout@0.2.0) (2022-02-15)
 
 
