@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.1.3...@noaignite/react-centra-checkout@0.2.0) (2022-02-15)
+
+
+### Bug Fixes
+
+* fix typo in 'resetCustomerPasword' ([828a4ff](https://github.com/noaignite/accelerator/commit/828a4ffa843448b9d0d54302a7a2c47d588b2409))
+
+
+### Features
+
+* **CentraProvider:** add 'updateCustomer' method ([7eb1c44](https://github.com/noaignite/accelerator/commit/7eb1c446471bd98a469f499c614264383de68ae0))
+
+
+
+
+
 ## [0.1.3](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.1.2...@noaignite/react-centra-checkout@0.1.3) (2022-02-01)
 
 

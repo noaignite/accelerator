@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.0.3...@noaignite/oui@3.1.0) (2022-02-15)
+
+
+### Features
+
+* **ImageZoom:** add touch support ([314630b](https://github.com/noaignite/accelerator/commit/314630b2833757cc0d2b34bc285dd0d8344bc402))
+* **ImageZoom:** image is now 'climbable' on touch devices" ([2bea3a3](https://github.com/noaignite/accelerator/commit/2bea3a38d8a0e04a6a046218a86fc3ec2973bc43))
+
+
+
+
+
 ## [3.0.3](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.0.2...@noaignite/oui@3.0.3) (2022-01-24)
 
 **Note:** Version bump only for package @noaignite/oui
