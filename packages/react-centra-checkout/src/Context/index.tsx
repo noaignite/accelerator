@@ -18,7 +18,9 @@ export interface ContextMethods {
     @param item - The Centra item id
   */
   addItem?(item: string, quantity?: number): Promise<Centra.SelectionResponseExtended>
-  addNewsletterSubscription?(email: string): Promise<Centra.SelectionResponseExtended>
+  addNewsletterSubscription?(
+    data: Record<string, unknown>,
+  ): Promise<Centra.SelectionResponseExtended>
   /**
     @param voucher - The id of the voucher to add
   */
@@ -296,7 +298,7 @@ export function CentraProvider(props: ProviderProps) {
   const addNewsletterSubscription = React.useCallback<
     NonNullable<ContextMethods['addNewsletterSubscription']>
   >(
-    (email) => selectionApiCall(apiClient.request('POST', 'newsletter-subscription', { email })),
+    (data) => selectionApiCall(apiClient.request('POST', 'newsletter-subscription', data)),
     [selectionApiCall],
   )
 
