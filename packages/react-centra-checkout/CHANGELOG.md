@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.2.1...@noaignite/react-centra-checkout@0.3.0) (2022-02-17)
+
+
+### Features
+
+* **Context:** add updateCampaignSite handler ([2183cea](https://github.com/noaignite/accelerator/commit/2183cea5a63330d4dc65543b4455f92388522290))
+
+
+
+
+
 ## [0.2.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.2.0...@noaignite/react-centra-checkout@0.2.1) (2022-02-15)
 
 
