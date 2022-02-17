@@ -87,6 +87,7 @@ export interface ContextMethods {
   updateLanguage?(language: string): Promise<Centra.SelectionResponseExtended>
   updatePaymentMethod?(paymentMethod: string): Promise<Centra.SelectionResponseExtended>
   updateShippingMethod?(shippingMethod: string): Promise<Centra.SelectionResponseExtended>
+  updateCampaignSite?(uri: string): Promise<Centra.SelectionResponseExtended>
 }
 
 export interface ContextProperties extends Centra.SelectionResponseExtended {
@@ -356,6 +357,11 @@ export function CentraProvider(props: ProviderProps) {
     [selectionApiCall],
   )
 
+  const updateCampaignSite = React.useCallback<NonNullable<ContextMethods['updateCampaignSite']>>(
+    (uri) => selectionApiCall(apiClient.request('PUT', `campaign-site`, { uri })),
+    [selectionApiCall],
+  )
+
   /* EFFECTS */
 
   React.useEffect(() => {
@@ -414,6 +420,7 @@ export function CentraProvider(props: ProviderProps) {
       updateLanguage,
       updatePaymentMethod,
       updateShippingMethod,
+      updateCampaignSite,
     }),
     [
       addItem,
@@ -440,6 +447,7 @@ export function CentraProvider(props: ProviderProps) {
       updateLanguage,
       updatePaymentMethod,
       updateShippingMethod,
+      updateCampaignSite,
     ],
   )
 
