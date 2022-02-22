@@ -6,6 +6,7 @@ import { useForkRef } from '@mui/material/utils'
 import { styled } from '@mui/system'
 import { ClickAwayListener, Fade, useThemeProps } from '@mui/material'
 import { clamp, mapRange } from '@noaignite/utils'
+import { useLatest } from '../utils'
 import classes from './imageZoomClasses'
 
 const ImageZoomRoot = styled('div', {
@@ -40,13 +41,18 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
   const {
     children,
     className,
-    component = 'div',
+    component,
     magnitute = 2,
+    onZoomIn,
+    onZoomOut,
     TransitionProps,
     // eslint-disable-next-line react/prop-types
     TransitionComponent = Fade,
     ...other
   } = props
+
+  const storedOnZoomIn = useLatest(onZoomIn)
+  const storedOnZoomOut = useLatest(onZoomOut)
 
   const rootRef = React.useRef(null)
   const handleRef = useForkRef(rootRef, ref)
@@ -56,9 +62,19 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
 
   const [preview, details] = React.Children.toArray(children)
 
-  const handleClickAway = React.useCallback(() => {
+  const zoomIn = React.useCallback(() => {
+    setOpen(true)
+    storedOnZoomIn.current?.()
+  }, [storedOnZoomIn])
+
+  const zoomOut = React.useCallback(() => {
     setOpen(false)
-  }, [])
+    storedOnZoomOut.current?.()
+  }, [storedOnZoomOut])
+
+  const handleClickAway = React.useCallback(() => {
+    zoomOut()
+  }, [zoomOut])
 
   React.useEffect(() => {
     const isTouch = window.matchMedia('(hover: none)').matches
@@ -92,15 +108,15 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
     }
 
     const handleMouseEnter = () => {
-      setOpen(true)
+      zoomIn()
     }
 
     const handleMouseLeave = () => {
-      setOpen(false)
+      zoomOut()
     }
 
     const handleClick = () => {
-      setOpen((prev) => !prev)
+      ;[zoomIn, zoomOut][+open]()
     }
 
     const handleTouchStart = (event) => {
@@ -166,7 +182,7 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
     return () => {
       registerListeners(false)
     }
-  }, [open, magnitute])
+  }, [magnitute, open, zoomIn, zoomOut])
 
   const ownerState = {
     open,
@@ -174,7 +190,11 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
   }
 
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
+    <ClickAwayListener
+      onClickAway={handleClickAway}
+      mouseEvent={false}
+      touchEvent={open ? 'onTouchEnd' : false}
+    >
       <ImageZoomRoot
         className={clsx(classes.root, className)}
         ownerState={ownerState}
@@ -206,6 +226,8 @@ ImageZoom.propTypes = {
   className: PropTypes.string,
   component: PropTypes.elementType,
   magnitute: PropTypes.number,
+  onZoomIn: PropTypes.func,
+  onZoomOut: PropTypes.func,
   TransitionProps: PropTypes.object,
 }
 
