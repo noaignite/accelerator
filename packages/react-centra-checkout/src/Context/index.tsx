@@ -511,7 +511,7 @@ export function useCentraOrders(from?: number, size?: number): Centra.OrdersResp
   React.useEffect(() => {
     // fetch orders
     apiClient
-      .request('PUT', 'orders', {
+      .request('POST', 'orders', {
         ...(from && { from }),
         ...(size && { size }),
       })
