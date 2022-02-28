@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.1.0...@noaignite/oui@3.2.0) (2022-02-28)
+
+
+### Features
+
+* **ImageZoom:** add onZoomIn & onZoomOut methods ([7a500e0](https://github.com/noaignite/accelerator/commit/7a500e09d6d62d399498e67e46a5c65cf9e7c846))
+* **utils:** add new useLatest hook ([57cd417](https://github.com/noaignite/accelerator/commit/57cd417a8abab1a176fd06d74efbad321569306a))
+
+
+
+
+
 # [3.1.0](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.0.3...@noaignite/oui@3.1.0) (2022-02-15)
 
 
