@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  extends: ['@noaignite/eslint-config'],
+  extends: ['@noaignite/eslint-config-typescript'],
   settings: {
     'import/resolver': {
       webpack: {
