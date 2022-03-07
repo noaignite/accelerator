@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.3.0...@noaignite/react-centra-checkout@0.4.0) (2022-03-07)
+
+
+### Bug Fixes
+
+* fix request method in 'useCentraOrders' ([f5c277c](https://github.com/noaignite/accelerator/commit/f5c277cb3a68c71516cc926d429cde8d5a7d98f2))
+
+
+### Features
+
+* **CentraContext:** add non-null default values where necessary ([119c42d](https://github.com/noaignite/accelerator/commit/119c42d88700fbc1c912b9527fe45dc57b65bee1))
+
+
+
+
+
 ## [0.3.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.3.0...@noaignite/react-centra-checkout@0.3.1) (2022-02-28)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.1.4...@noaignite/eslint-config@0.2.0) (2022-03-07)
+
+
+### Features
+
+* **eslint:** add new eslint-config-typescript package and remove ts deps from eslint-config ([30baf00](https://github.com/noaignite/accelerator/commit/30baf002a0b9fdb8a5f6cb4b6abf2d578aeab991))
+
+
+
+
+
 ## [0.1.4](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.1.3...@noaignite/eslint-config@0.1.4) (2022-01-28)
 
 

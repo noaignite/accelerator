@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/eslint-config",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "private": false,
   "author": "NoA Ignite",
   "description": "ESLint configuration used by NoA Ignite",
