@@ -55,6 +55,7 @@ module.exports = {
     // Allow default exports
     'no-restricted-exports': 'off',
     'no-underscore-dangle': 'error',
+    'no-use-before-define': ['error', { functions: false }],
     'nonblock-statement-body-position': 'error',
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
     // Destructuring harm grep potential.

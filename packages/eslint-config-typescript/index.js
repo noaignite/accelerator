@@ -47,7 +47,7 @@ module.exports = {
         'no-use-before-define': 'off',
         // allow default export
         'no-restricted-exports': 'off',
-        '@typescript-eslint/no-use-before-define': ['error'],
+        '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
         'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
         'react/jsx-props-no-spreading': 'off',
         'react/require-default-props': 'off',
