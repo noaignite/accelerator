@@ -480,8 +480,8 @@ export function useCentraHandlers(): ContextMethods {
 }
 
 /** Returns the latest order receipt given a selection token */
-export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | null {
-  const [result, setResult] = React.useState<Centra.OrderCompleteResponse | null>(null)
+export function useCentraReceipt(token: string): Centra.OrderCompleteResponse {
+  const [result, setResult] = React.useState<Centra.OrderCompleteResponse>({})
   const { apiUrl } = useCentraSelection()
 
   if (!token) {
@@ -505,8 +505,8 @@ export function useCentraReceipt(token: string): Centra.OrderCompleteResponse | 
   @param from - Display orders from this index. Defaults to 0.
   @param size - Display this many orders. Defaults lists all orders.
 */
-export function useCentraOrders(from?: number, size?: number): Centra.OrdersResponse | null {
-  const [result, setResult] = React.useState<Centra.OrdersResponse | null>(null)
+export function useCentraOrders(from?: number, size?: number): Centra.OrdersResponse {
+  const [result, setResult] = React.useState<Centra.OrdersResponse>({})
 
   React.useEffect(() => {
     // fetch orders
