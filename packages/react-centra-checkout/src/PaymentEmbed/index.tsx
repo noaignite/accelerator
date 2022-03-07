@@ -4,7 +4,7 @@ import { useCentraSelection, useCentraHandlers } from '../Context'
 import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
 
 export interface PaymentEmbedProps {
-  additionalPaymentProps?: object
+  additionalPaymentProps?: Record<string, unknown>
   onSuccess?(paymentResult: Centra.PaymentResponse): void
   onError?(error: Record<string, string>): void
 }
