@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.4.0...@noaignite/react-centra-checkout@0.5.0) (2022-03-08)
+
+
+### Features
+
+* **Context:** add updatePaymentFields method ([cbe94b8](https://github.com/noaignite/accelerator/commit/cbe94b8e0f0906ed7f615ea1bb94c1b7acc133a6))
+
+
+
+
+
 # [0.4.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.3.0...@noaignite/react-centra-checkout@0.4.0) (2022-03-07)
 
 
