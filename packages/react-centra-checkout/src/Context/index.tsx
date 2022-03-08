@@ -85,6 +85,7 @@ export interface ContextMethods {
     newPassword: string,
   ): Promise<Centra.SelectionResponseExtended>
   updateLanguage?(language: string): Promise<Centra.SelectionResponseExtended>
+  updatePaymentFields?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
   updatePaymentMethod?(paymentMethod: string): Promise<Centra.SelectionResponseExtended>
   updateShippingMethod?(shippingMethod: string): Promise<Centra.SelectionResponseExtended>
   updateCampaignSite?(uri: string): Promise<Centra.SelectionResponseExtended>
@@ -268,6 +269,11 @@ export function CentraProvider(props: ProviderProps) {
     [selectionApiCall],
   )
 
+  const updatePaymentFields = React.useCallback<NonNullable<ContextMethods['updatePaymentFields']>>(
+    (data) => selectionApiCall(apiClient.request('PUT', `payment-fields`, data)),
+    [selectionApiCall],
+  )
+
   const submitPayment = React.useCallback<NonNullable<ContextMethods['submitPayment']>>(
     async (data, locale) => {
       const param = locale ? `?lang=${locale}` : ''
@@ -418,6 +424,7 @@ export function CentraProvider(props: ProviderProps) {
       updateCustomerEmail,
       updateCustomerPassword,
       updateLanguage,
+      updatePaymentFields,
       updatePaymentMethod,
       updateShippingMethod,
       updateCampaignSite,
@@ -445,6 +452,7 @@ export function CentraProvider(props: ProviderProps) {
       updateCustomerEmail,
       updateCustomerPassword,
       updateLanguage,
+      updatePaymentFields,
       updatePaymentMethod,
       updateShippingMethod,
       updateCampaignSite,
