@@ -4,8 +4,7 @@ import { useCentraSelection, useCentraHandlers } from '../Context'
 import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
 
 export interface PaymentEmbedProps {
-  paymentReturnPage: string
-  paymentFailedPage: string
+  additionalPaymentProps?: Record<string, unknown>
   onSuccess?(paymentResult: Centra.PaymentResponse): void
   onError?(error: Record<string, string>): void
 }
@@ -13,7 +12,7 @@ export interface PaymentEmbedProps {
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
 function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
-  const { paymentReturnPage, paymentFailedPage, onError, onSuccess } = props
+  const { additionalPaymentProps = {}, onError, onSuccess } = props
 
   const [paymentResult, setPaymentResult] = React.useState<Centra.PaymentResponse | null>(null)
   const [formHtml, setFormHtml] = React.useState<string | null>(null)
@@ -40,6 +39,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
         paymentInitiateOnly: paymentMethod.supportsInitiateOnly,
         paymentMethod: paymentMethodId,
         shippingAddress,
+        ...additionalPaymentProps,
       })
         .then((result) => {
           setPaymentResult(result)
@@ -47,10 +47,9 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
         .catch(console.error)
     }
   }, [
-    paymentFailedPage,
+    additionalPaymentProps,
     paymentMethod,
     paymentMethodId,
-    paymentReturnPage,
     selection,
     submitPayment,
   ])
