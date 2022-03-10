@@ -77,7 +77,7 @@ async function createApp() {
   process.chdir(projectPath)
 
   console.log(`\nInstalling dependencies. This could take a few minutes.\n`)
-  spawn.sync('yarnpkg', ['install'])
+  spawn.sync('yarnpkg', ['install'], { stdio: 'inherit' })
 
   await updatePackageFile()
 
