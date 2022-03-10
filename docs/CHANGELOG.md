@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.7](https://github.com/noaignite/accelerator/compare/docs@2.1.6...docs@2.1.7) (2022-03-10)
+
+**Note:** Version bump only for package docs
+
+
+
+
+
 ## [2.1.6](https://github.com/noaignite/accelerator/compare/docs@2.1.4...docs@2.1.6) (2022-03-07)
 
 **Note:** Version bump only for package docs

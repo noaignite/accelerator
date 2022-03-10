@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.4.0...@noaignite/react-centra-checkout@0.6.0) (2022-03-10)
+
+
+### Bug Fixes
+
+* **PaymentEmbed:** add 'termsAndConditions' prop ([3cfe447](https://github.com/noaignite/accelerator/commit/3cfe447e3a56d534db0ee0de0d165bc70a1cef2a))
+
+
+### Features
+
+* **Context:** add updatePaymentFields method ([cbe94b8](https://github.com/noaignite/accelerator/commit/cbe94b8e0f0906ed7f615ea1bb94c1b7acc133a6))
+* **PaymentEmbed:** add optional 'additionalPaymentProps' & remove unused props ([a1272ed](https://github.com/noaignite/accelerator/commit/a1272eda376748a411fb7a2aebc262f9e1c2fb8b))
+
+
+
+
+
 # [0.5.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.4.0...@noaignite/react-centra-checkout@0.5.0) (2022-03-08)
 
 

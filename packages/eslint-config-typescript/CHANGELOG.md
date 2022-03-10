@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config-typescript@0.1.0...@noaignite/eslint-config-typescript@0.1.1) (2022-03-10)
+
+**Note:** Version bump only for package @noaignite/eslint-config-typescript
+
+
+
+
+
 # 0.1.0 (2022-03-07)
 
 

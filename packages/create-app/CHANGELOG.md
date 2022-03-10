@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/noaignite/accelerator/compare/@noaignite/create-app@0.1.4...@noaignite/create-app@0.2.0) (2022-03-10)
+
+
+### Features
+
+* output yarn installation progress to terminal ([6facfe7](https://github.com/noaignite/accelerator/commit/6facfe7ec7fefc0132d1fa1c99ddeeb59aa767ee)), closes [#33](https://github.com/noaignite/accelerator/issues/33)
+
+
+
+
+
 ## [0.1.4](https://github.com/noaignite/accelerator/compare/@noaignite/create-app@0.1.3...@noaignite/create-app@0.1.4) (2022-01-24)
 
 **Note:** Version bump only for package @noaignite/create-app
