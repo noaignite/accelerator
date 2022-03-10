@@ -26,20 +26,20 @@
     "release:yalc": "yarn build && yalc publish ./build"
   },
   "peerDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^8.10.0"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
-    "@babel/eslint-parser": "^7.16.3",
+    "@babel/eslint-parser": "^7.17.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "eslint-config-airbnb": "^19.0.2",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^25.3.0",
+    "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "eslint-plugin-testing-library": "^5.0.1"
+    "eslint-plugin-testing-library": "^5.0.6"
   },
   "sideEffects": false,
   "publishConfig": {

@@ -36,7 +36,6 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
-    "@babel/eslint-parser": "^7.16.3",
     "@babel/plugin-transform-react-constant-elements": "^7.16.0",
     "@babel/plugin-transform-runtime": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
@@ -59,7 +58,7 @@
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "css-mediaquery": "^0.1.2",
-    "eslint": "^7.32.0",
+    "eslint": "^8.10.0",
     "eslint-import-resolver-webpack": "^0.13.1",
     "husky": "^7.0.2",
     "jest": "^27.4.3",
