@@ -46,13 +46,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
         })
         .catch(console.error)
     }
-  }, [
-    additionalPaymentProps,
-    paymentMethod,
-    paymentMethodId,
-    selection,
-    submitPayment,
-  ])
+  }, [additionalPaymentProps, paymentMethod, paymentMethodId, selection, submitPayment])
 
   React.useEffect(() => {
     // payment method changed, reset payment result
