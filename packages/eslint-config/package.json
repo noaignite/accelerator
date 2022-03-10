@@ -26,7 +26,7 @@
     "release:yalc": "yarn build && yalc publish ./build"
   },
   "peerDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "^8.10.0"
   },
   "dependencies": {
     "@babel/core": "^7.16.0",
