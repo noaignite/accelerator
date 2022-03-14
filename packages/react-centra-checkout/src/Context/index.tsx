@@ -334,6 +334,7 @@ export function CentraProvider(props: ProviderProps) {
     [selectionApiCall],
   )
 
+  /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
   const resetSelection = React.useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token')
     localStorage.removeItem('checkoutToken')
