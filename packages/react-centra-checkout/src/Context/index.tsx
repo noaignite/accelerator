@@ -60,6 +60,7 @@ export interface ContextMethods {
     id: string,
     newPassword: string,
   ): Promise<Centra.SelectionResponseExtended>
+  resetSelection?(): void
   /**
     @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in Centra.
   */
@@ -333,6 +334,13 @@ export function CentraProvider(props: ProviderProps) {
     [selectionApiCall],
   )
 
+  /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
+  const resetSelection = React.useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
+    apiClient.headers.delete('api-token')
+    localStorage.removeItem('checkoutToken')
+    init()
+  }, [init])
+
   const sendCustomerResetPasswordEmail = React.useCallback<
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
   >(
@@ -414,6 +422,7 @@ export function CentraProvider(props: ProviderProps) {
       removeCartItem,
       removeVoucher,
       resetCustomerPassword,
+      resetSelection,
       sendCustomerResetPasswordEmail,
       submitPayment,
       updateCartItemQuantity,
@@ -442,6 +451,7 @@ export function CentraProvider(props: ProviderProps) {
       removeCartItem,
       removeVoucher,
       resetCustomerPassword,
+      resetSelection,
       sendCustomerResetPasswordEmail,
       submitPayment,
       updateCartItemQuantity,
