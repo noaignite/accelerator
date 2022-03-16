@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.6.0...@noaignite/react-centra-checkout@0.7.0) (2022-03-16)
+
+
+### Features
+
+* **CentraContext:** add 'resetSelection' method ([7047ec6](https://github.com/noaignite/accelerator/commit/7047ec6b2a6eba96df9d6156bcccd89b8fa80a1a))
+
+
+
+
+
 # [0.6.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.4.0...@noaignite/react-centra-checkout@0.6.0) (2022-03-10)
 
 
