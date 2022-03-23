@@ -76,17 +76,20 @@ async function createApp() {
 
   process.chdir(projectPath)
 
-  console.log(`\nInstalling dependencies. This could take a few minutes.\n`)
-  spawn.sync('yarnpkg', ['install'], { stdio: 'inherit' })
-
   await updatePackageFile()
 
   execSync(`rm -rf .git`).toString().trim()
   execSync(`git init`).toString().trim()
   execSync(`git add .`).toString().trim()
   execSync(`git commit -m "chore: initialize project using create-ignite-app"`).toString().trim()
+
+  console.log()
   console.log(`Initialized a git repository.`)
   console.log(`Created git commit.`)
+
+  console.log()
+  console.log(`Installing dependencies. This could take a few minutes.\n`)
+  spawn.sync('yarnpkg', ['install'], { stdio: 'inherit' })
 
   console.log()
   console.log(`Success! Created ${projectName} at ${chalk.green(projectPath)}.`)
