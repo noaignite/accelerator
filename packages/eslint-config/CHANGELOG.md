@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.1...@noaignite/eslint-config@0.2.2) (2022-04-06)
+
+
+### Bug Fixes
+
+* **import:** remove plugin:import/recommended extend ([097b2ce](https://github.com/noaignite/accelerator/commit/097b2cebb504c2c05a3b678d54b4ecea9938273a))
+
+
+
+
+
 ## [0.2.1](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.0...@noaignite/eslint-config@0.2.1) (2022-03-10)
 
 **Note:** Version bump only for package @noaignite/eslint-config
