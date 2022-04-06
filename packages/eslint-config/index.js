@@ -9,9 +9,9 @@ module.exports = {
     es6: true,
     node: true,
   },
-  extends: ['plugin:import/recommended', 'airbnb', 'prettier'],
   parser: '@babel/eslint-parser',
-  plugins: ['eslint-plugin-react-hooks'],
+  extends: ['airbnb', 'prettier'],
+  plugins: ['react-hooks'],
   settings: {
     react: {
       version: 'detect',

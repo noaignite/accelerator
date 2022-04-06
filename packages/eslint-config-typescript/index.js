@@ -3,15 +3,6 @@ require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: true,
-  extends: [
-    '@noaignite/eslint-config',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'airbnb-typescript',
-    'prettier',
-  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,
@@ -22,6 +13,14 @@ module.exports = {
     // typescript-eslint specific options
     warnOnUnsupportedTypeScriptVersion: true,
   },
+  extends: [
+    '@noaignite/eslint-config',
+    'plugin:import/typescript',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'airbnb-typescript',
+    'prettier',
+  ],
   plugins: ['@typescript-eslint/eslint-plugin'],
   // If adding a typescript-eslint version of an existing ESLint rule,
   // make sure to disable the ESLint rule here.
