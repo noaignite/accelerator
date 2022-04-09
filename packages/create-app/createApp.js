@@ -78,10 +78,14 @@ async function createApp() {
 
   await updatePackageFile()
 
+  execSync(`rm CHANGELOG.md`).toString().trim()
   execSync(`rm -rf .git`).toString().trim()
+
   execSync(`git init`).toString().trim()
   execSync(`git add .`).toString().trim()
-  execSync(`git commit -m "chore: initialize project using create-ignite-app"`).toString().trim()
+  execSync(`git commit -m "chore: initialize project using @noaignite/create-app"`)
+    .toString()
+    .trim()
 
   console.log()
   console.log(`Initialized a git repository.`)
