@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/create-app@0.2.1...@noaignite/create-app@0.3.0) (2022-04-09)
+
+
+### Features
+
+* remove create-ignite-app changelog file upon creation ([e4720e6](https://github.com/noaignite/accelerator/commit/e4720e65d1bee965f97c57d23bdf7eff029b5409))
+
+
+
+
+
 ## [0.2.1](https://github.com/noaignite/accelerator/compare/@noaignite/create-app@0.2.0...@noaignite/create-app@0.2.1) (2022-03-23)
 
 
