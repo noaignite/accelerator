@@ -3,7 +3,7 @@ interface Options {
 }
 
 class ApiClient {
-  baseUrl?: string
+  baseUrl?: URL
 
   static default: ApiClient
 
@@ -22,7 +22,7 @@ class ApiClient {
   }
 
   constructor(baseUrl?: string, defaultRequestOptions?: RequestInit, settings?: Options) {
-    this.baseUrl = baseUrl
+    this.baseUrl = baseUrl ? new URL(baseUrl) : undefined
     this.defaultRequestOptions = { ...this.defaultRequestOptions, ...defaultRequestOptions }
     this.settings = { ...this.settings, ...settings }
 
@@ -39,7 +39,9 @@ class ApiClient {
     data: Record<string, unknown> = {},
     options?: RequestInit,
   ) {
-    const url = new URL(endpoint, this.baseUrl)
+    if (!this.baseUrl) throw new Error('baseUrl is undefined')
+
+    const url = new URL(`${this.baseUrl.pathname.replace(/^\//, '')}${endpoint}`, this.baseUrl)
 
     // if method is GET, set data as query parameters
     if (method === 'GET' && data) {
