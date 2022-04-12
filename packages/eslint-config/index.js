@@ -71,6 +71,7 @@ module.exports = {
       'error',
       {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        pathGroups: [{ pattern: '~/**', group: 'internal' }],
         'newlines-between': 'never',
       },
     ],
