@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/eslint-config-typescript",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": false,
   "author": "NoA Ignite",
   "description": "Typescript ESLint configuration used by NoA Ignite",
@@ -26,7 +26,7 @@
     "release:yalc": "yarn build && yalc publish ./build"
   },
   "dependencies": {
-    "@noaignite/eslint-config": "^0.2.2",
+    "@noaignite/eslint-config": "^0.3.0",
     "@rushstack/eslint-patch": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",

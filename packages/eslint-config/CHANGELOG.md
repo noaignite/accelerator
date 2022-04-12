@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.2...@noaignite/eslint-config@0.3.0) (2022-04-12)
+
+
+### Features
+
+* **import/order:** add module import order rule ([805f097](https://github.com/noaignite/accelerator/commit/805f09732beca77b5a006225dea15f7621b64ce3)), closes [#57](https://github.com/noaignite/accelerator/issues/57)
+
+
+
+
+
 ## [0.2.2](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.1...@noaignite/eslint-config@0.2.2) (2022-04-06)
 
 
