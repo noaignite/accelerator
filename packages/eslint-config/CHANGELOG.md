@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.3.0...@noaignite/eslint-config@0.4.0) (2022-04-12)
+
+
+### Features
+
+* **import/order:** define ~/** import pattern as internal group ([b6813aa](https://github.com/noaignite/accelerator/commit/b6813aa48b3f8c35f8ae3bd6946f15b2ce7af546))
+
+
+
+
+
 # [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.2...@noaignite/eslint-config@0.3.0) (2022-04-12)
 
 
