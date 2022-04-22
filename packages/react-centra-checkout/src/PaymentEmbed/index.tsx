@@ -7,12 +7,13 @@ export interface PaymentEmbedProps {
   additionalPaymentProps?: Record<string, unknown>
   onSuccess?(paymentResult: Centra.PaymentResponse): void
   onError?(error: Record<string, string>): void
+  onCentraCheckoutPaymentCallback?: EventListener
 }
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
 function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
-  const { additionalPaymentProps = {}, onError, onSuccess } = props
+  const { additionalPaymentProps = {}, onError, onSuccess, onCentraCheckoutPaymentCallback } = props
 
   const [paymentResult, setPaymentResult] = React.useState<Centra.PaymentResponse | null>(null)
   const [formHtml, setFormHtml] = React.useState<string | null>(null)
@@ -72,6 +73,22 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
       setFormHtml(null)
     }
   }, [paymentResult, onSuccess, onError])
+
+  // handle `centra_checkout_payment_callback` for payment methods that don't require an address to be initialized
+  React.useEffect(() => {
+    if (!onCentraCheckoutPaymentCallback) {
+      return
+    }
+
+    document.addEventListener('centra_checkout_payment_callback', onCentraCheckoutPaymentCallback)
+
+    return () => {
+      document.removeEventListener(
+        'centra_checkout_payment_callback',
+        onCentraCheckoutPaymentCallback,
+      )
+    }
+  }, [onCentraCheckoutPaymentCallback])
 
   return formHtml ? <PaymentEmbedHtml html={formHtml} /> : null
 }
