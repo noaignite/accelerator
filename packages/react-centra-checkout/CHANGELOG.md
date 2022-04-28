@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.8.0...@noaignite/react-centra-checkout@0.9.0) (2022-04-28)
+
+
+### Features
+
+* **Context:** use cookie instead of localStorage for session token ([9d4a9a2](https://github.com/noaignite/accelerator/commit/9d4a9a28395103b0810539fab02c93be81b9050b))
+
+
+
+
+
 # [0.8.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.6.0...@noaignite/react-centra-checkout@0.8.0) (2022-03-22)
 
 
