@@ -1,16 +1,33 @@
 import * as React from 'react'
 import * as Centra from '@noaignite/centra-types'
+import cookies from 'js-cookie'
 import ApiClient from '../ApiClient'
 
 const apiClient = ApiClient.default
 
 /** The prop types that CentraProvider accepts */
 export interface ProviderProps {
+  /** Centra API URL */
   apiUrl: string
   children: React.ReactNode
-  disableInitialSelection?: boolean
+  /** Disables automatic client side fetching of the Centra selection */
+  disableInit?: boolean
+  /** Sets the initial selection */
+  initialSelection: Centra.SelectionResponseExtended
+  /** Used when submitting payment using the POST /payment Centra api call */
   paymentFailedPage: string
+  /** Used when submitting payment using the POST /payment Centra api call */
   paymentReturnPage: string
+  /**
+    When the cookie used to store the Centra checkout token will expire, days as a number or a Date
+    @defaultValue `365`
+  */
+  tokenExpires?: number | Date
+  /**
+    The name of the cookie used to store the Centra checkout token
+    @defaultValue `centra-checkout-token`
+  */
+  tokenName?: string
 }
 
 export interface ContextMethods {
@@ -124,16 +141,25 @@ export function CentraProvider(props: ProviderProps) {
   const {
     apiUrl,
     children,
-    disableInitialSelection = false,
+    disableInit = false,
+    initialSelection,
     paymentFailedPage,
     paymentReturnPage,
+    tokenExpires = 365,
+    tokenName = 'centra-checkout-token',
   } = props
 
-  const [selection, setSelection] =
-    React.useState<Centra.SelectionResponseExtended>(SELECTION_INITIAL_VALUE)
+  const [selection, setSelection] = React.useState<Centra.SelectionResponseExtended>(
+    initialSelection || SELECTION_INITIAL_VALUE,
+  )
 
   // set api client url
   apiClient.baseUrl = apiUrl
+
+  // set api token if available
+  if (initialSelection?.token) {
+    apiClient.headers.set('api-token', initialSelection.token)
+  }
 
   const centraCheckoutCallback = React.useCallback(async (event) => {
     if (event.detail) {
@@ -166,29 +192,32 @@ export function CentraProvider(props: ProviderProps) {
     [],
   )
 
-  const init = React.useCallback<NonNullable<ContextMethods['init']>>(async (selectionData) => {
-    let response
+  const init = React.useCallback<NonNullable<ContextMethods['init']>>(
+    async (selectionData) => {
+      let response
 
-    const clientToken = window.localStorage.getItem('checkoutToken')
-    if (clientToken) {
-      apiClient.headers.set('api-token', clientToken)
-    }
-
-    if (!selectionData) {
-      response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponseExtended
-    } else {
-      response = selectionData
-    }
-
-    if (response && response.selection) {
-      setSelection(response)
-
-      if (response.token && response.token !== clientToken) {
-        apiClient.headers.set('api-token', response.token)
-        window.localStorage.setItem('checkoutToken', response.token)
+      const apiToken = cookies.get(tokenName)
+      if (apiToken) {
+        apiClient.headers.set('api-token', apiToken)
       }
-    }
-  }, [])
+
+      if (!selectionData) {
+        response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponseExtended
+      } else {
+        response = selectionData
+      }
+
+      if (response && response.selection) {
+        setSelection(response)
+
+        if (response.token && response.token !== apiToken) {
+          apiClient.headers.set('api-token', response.token)
+          cookies.set(tokenName, response.token, { expires: tokenExpires })
+        }
+      }
+    },
+    [tokenExpires, tokenName],
+  )
 
   /* HANDLER METHODS */
 
@@ -337,9 +366,9 @@ export function CentraProvider(props: ProviderProps) {
   /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
   const resetSelection = React.useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token')
-    localStorage.removeItem('checkoutToken')
+    cookies.remove(tokenName)
     init()
-  }, [init])
+  }, [init, tokenName])
 
   const sendCustomerResetPasswordEmail = React.useCallback<
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
@@ -379,7 +408,7 @@ export function CentraProvider(props: ProviderProps) {
   /* EFFECTS */
 
   React.useEffect(() => {
-    if (!disableInitialSelection) {
+    if (!disableInit) {
       init()
     }
 
@@ -389,7 +418,7 @@ export function CentraProvider(props: ProviderProps) {
     return () => {
       document.removeEventListener('centra_checkout_callback', centraCheckoutCallback)
     }
-  }, [disableInitialSelection, init, centraCheckoutCallback])
+  }, [disableInit, init, centraCheckoutCallback])
 
   // run centra checkout script if it is available in the selection
   React.useEffect(() => {
