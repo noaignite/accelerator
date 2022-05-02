@@ -1,6 +1,8 @@
 class ApiClient {
   baseUrl: string
 
+  options: RequestInit
+
   static default: ApiClient
 
   headers: Headers = new Headers({
@@ -8,8 +10,9 @@ class ApiClient {
     'Content-Type': 'application/json',
   })
 
-  constructor(baseUrl = '') {
+  constructor(baseUrl = '', options: RequestInit = {}) {
     this.baseUrl = baseUrl
+    this.options = options
   }
 
   async request(method: string, endpoint: string, data: Record<string, unknown> = {}) {
@@ -18,6 +21,7 @@ class ApiClient {
       mode: 'cors',
       method,
       body: ['POST', 'PUT'].includes(method) ? JSON.stringify(data) : undefined,
+      ...this.options,
     })
 
     const json = await response.json()
