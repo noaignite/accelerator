@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.9.0...@noaignite/react-centra-checkout@0.10.0) (2022-05-02)
+
+
+### Features
+
+* **ApiClient:** add fetch options ([424313b](https://github.com/noaignite/accelerator/commit/424313b428f52431004819ce37f28358496efeb9))
+
+
+
+
+
 # [0.9.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.8.0...@noaignite/react-centra-checkout@0.9.0) (2022-04-28)
 
 
