@@ -10,7 +10,8 @@
     "centra"
   ],
   "license": "MIT",
-  "main": "./src/index.ts",
+  "main": "./src/index.d.ts",
+  "types": "./src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
@@ -20,7 +21,6 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "generate:centra-types": "swagger-typescript-api --path https://demo2.centra.com/api/checkout/swagger --output ./src --name centra.ts --no-client && prettier ./src/centra.ts --write",
     "build:docs": "typedoc",
     "build": "cp -a src/. build/ && yarn build:copy-files",
     "build:copy-files": "node ./copy-files.js"

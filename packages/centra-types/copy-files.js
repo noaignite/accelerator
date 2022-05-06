@@ -40,7 +40,10 @@ async function createPackageFile() {
     ...packageDataOther,
     private: false,
     ...(packageDataOther.main && {
-      main: './index.ts',
+      main: './index.d.ts',
+    }),
+    ...(packageDataOther.types && {
+      types: './index.d.ts',
     }),
   }
   const targetPath = path.resolve(buildPath, './package.json')
