@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as Centra from '@noaignite/centra-types'
 import cookies from 'js-cookie'
 import ApiClient from '../ApiClient'
 
@@ -13,7 +12,7 @@ export interface ProviderProps {
   /** Disables automatic client side fetching of the Centra selection */
   disableInit?: boolean
   /** Sets the initial selection */
-  initialSelection: Centra.SelectionResponseExtended
+  initialSelection: Centra.CheckoutApi.SelectionResponse
   /** Used when submitting payment using the POST /payment Centra api call */
   paymentFailedPage: string
   /** Used when submitting payment using the POST /payment Centra api call */
@@ -34,40 +33,40 @@ export interface ContextMethods {
   /**
     @param item - The Centra item id
   */
-  addItem?(item: string, quantity?: number): Promise<Centra.SelectionResponseExtended>
+  addItem?(item: string, quantity?: number): Promise<Centra.CheckoutApi.SelectionResponse>
   addNewsletterSubscription?(
     data: Record<string, unknown>,
-  ): Promise<Centra.SelectionResponseExtended>
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param voucher - The id of the voucher to add
   */
-  addVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
+  addVoucher?(voucher: string): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param line - The line id of the item to decrease
   */
-  decreaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  decreaseCartItem?(line: string): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param line - The line id of the item to increase
   */
-  increaseCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  increaseCartItem?(line: string): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param selectionData - Initial selection data
   */
-  init?(selectionData?: Centra.SelectionResponseExtended): Promise<void>
-  loginCustomer?(email: string, password: string): Promise<Centra.SelectionResponseExtended>
-  logoutCustomer?(): Promise<Centra.SelectionResponseExtended>
+  init?(selectionData?: Centra.CheckoutApi.SelectionResponse): Promise<void>
+  loginCustomer?(email: string, password: string): Promise<Centra.CheckoutApi.SelectionResponse>
+  logoutCustomer?(): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
   */
-  registerCustomer?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
+  registerCustomer?(data: Record<string, unknown>): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param line - The line id of the item to increase
   */
-  removeCartItem?(line: string): Promise<Centra.SelectionResponseExtended>
+  removeCartItem?(line: string): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param voucher - The id of the voucher to add
   */
-  removeVoucher?(voucher: string): Promise<Centra.SelectionResponseExtended>
+  removeVoucher?(voucher: string): Promise<Centra.CheckoutApi.SelectionResponse>
   /**
     @param i - The `i` query parameter provided by Centra when landing on the password reset page
     @param id - The `id` query parameter provided by Centra when landing on the password reset page
@@ -76,40 +75,48 @@ export interface ContextMethods {
     i: string,
     id: string,
     newPassword: string,
-  ): Promise<Centra.SelectionResponseExtended>
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
   resetSelection?(): void
   /**
-    @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in Centra.
+    @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in Centra.CheckoutApi.
   */
   sendCustomerResetPasswordEmail?(
     email: string,
     linkUri: string,
-  ): Promise<Centra.SelectionResponseExtended>
-  submitPayment?(data: Record<string, unknown>, locale?: string): Promise<Centra.PaymentResponse>
-  updateCartItemQuantity?(line: string, quantity: number): Promise<Centra.SelectionResponseExtended>
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
+  submitPayment?(
+    data: Record<string, unknown>,
+    locale?: string,
+  ): Promise<Centra.CheckoutApi.PaymentResponse>
+  updateCartItemQuantity?(
+    line: string,
+    quantity: number,
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
   updateCartItemSize?(
-    cartItem: Centra.SelectionItemModel,
+    cartItem: Centra.CheckoutApi.SelectionItem,
     item: string,
-  ): Promise<Centra.SelectionResponseExtended>
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
   updateCountry?(
     country: string,
     data: { language: string },
-  ): Promise<Centra.SelectionResponseExtended>
-  updateCustomer?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
-  updateCustomerAddress?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
-  updateCustomerEmail?(email: string): Promise<Centra.SelectionResponseExtended>
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
+  updateCustomer?(data: Record<string, unknown>): Promise<Centra.CheckoutApi.SelectionResponse>
+  updateCustomerAddress?(
+    data: Record<string, unknown>,
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
+  updateCustomerEmail?(email: string): Promise<Centra.CheckoutApi.SelectionResponse>
   updateCustomerPassword?(
     password: string,
     newPassword: string,
-  ): Promise<Centra.SelectionResponseExtended>
-  updateLanguage?(language: string): Promise<Centra.SelectionResponseExtended>
-  updatePaymentFields?(data: Record<string, unknown>): Promise<Centra.SelectionResponseExtended>
-  updatePaymentMethod?(paymentMethod: string): Promise<Centra.SelectionResponseExtended>
-  updateShippingMethod?(shippingMethod: string): Promise<Centra.SelectionResponseExtended>
-  updateCampaignSite?(uri: string): Promise<Centra.SelectionResponseExtended>
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
+  updateLanguage?(language: string): Promise<Centra.CheckoutApi.SelectionResponse>
+  updatePaymentFields?(data: Record<string, unknown>): Promise<Centra.CheckoutApi.SelectionResponse>
+  updatePaymentMethod?(paymentMethod: string): Promise<Centra.CheckoutApi.SelectionResponse>
+  updateShippingMethod?(shippingMethod: string): Promise<Centra.CheckoutApi.SelectionResponse>
+  updateCampaignSite?(uri: string): Promise<Centra.CheckoutApi.SelectionResponse>
 }
 
-export interface ContextProperties extends Centra.SelectionResponseExtended {
+export interface ContextProperties extends Centra.CheckoutApi.SelectionResponse {
   apiUrl?: string
   apiClient?: ApiClient
 }
@@ -149,7 +156,7 @@ export function CentraProvider(props: ProviderProps) {
     tokenName = 'centra-checkout-token',
   } = props
 
-  const [selection, setSelection] = React.useState<Centra.SelectionResponseExtended>(
+  const [selection, setSelection] = React.useState<Centra.CheckoutApi.SelectionResponse>(
     initialSelection || SELECTION_INITIAL_VALUE,
   )
 
@@ -167,7 +174,7 @@ export function CentraProvider(props: ProviderProps) {
         'PUT',
         'payment-fields',
         event.detail,
-      )) as Centra.SelectionResponseExtended
+      )) as Centra.CheckoutApi.SelectionResponse
       setSelection(response)
     }
   }, [])
@@ -175,8 +182,8 @@ export function CentraProvider(props: ProviderProps) {
   const selectionApiCall = React.useCallback(
     async (
       apiCall:
-        | Promise<Centra.SelectionResponseExtended>
-        | (() => Promise<Centra.SelectionResponseExtended>),
+        | Promise<Centra.CheckoutApi.SelectionResponse>
+        | (() => Promise<Centra.CheckoutApi.SelectionResponse>),
     ) => {
       window.CentraCheckout?.suspend()
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
@@ -202,7 +209,10 @@ export function CentraProvider(props: ProviderProps) {
       }
 
       if (!selectionData) {
-        response = (await apiClient.request('GET', 'selection')) as Centra.SelectionResponseExtended
+        response = (await apiClient.request(
+          'GET',
+          'selection',
+        )) as Centra.CheckoutApi.SelectionResponse
       } else {
         response = selectionData
       }
@@ -312,7 +322,7 @@ export function CentraProvider(props: ProviderProps) {
         paymentReturnPage: `${paymentReturnPage}/${selection.token}${param}`,
         paymentFailedPage: `${paymentFailedPage}/${selection.token}${param}`,
         ...data,
-      })) as Centra.PaymentResponse
+      })) as Centra.CheckoutApi.PaymentResponse
 
       // handle redirecting here
       switch (response.action) {
@@ -527,8 +537,8 @@ export function useCentraHandlers(): ContextMethods {
 }
 
 /** Returns the latest order receipt given a selection token */
-export function useCentraReceipt(token: string): Centra.OrderCompleteResponse {
-  const [result, setResult] = React.useState<Centra.OrderCompleteResponse>({})
+export function useCentraReceipt(token: string): Centra.CheckoutApi.OrderCompleteResponse {
+  const [result, setResult] = React.useState<Centra.CheckoutApi.OrderCompleteResponse>({})
   const { apiUrl } = useCentraSelection()
 
   if (!token) {
@@ -552,8 +562,8 @@ export function useCentraReceipt(token: string): Centra.OrderCompleteResponse {
   @param from - Display orders from this index. Defaults to 0.
   @param size - Display this many orders. Defaults lists all orders.
 */
-export function useCentraOrders(from?: number, size?: number): Centra.OrdersResponse {
-  const [result, setResult] = React.useState<Centra.OrdersResponse>({})
+export function useCentraOrders(from?: number, size?: number): Centra.CheckoutApi.OrdersResponse {
+  const [result, setResult] = React.useState<Centra.CheckoutApi.OrdersResponse>({})
 
   React.useEffect(() => {
     // fetch orders
