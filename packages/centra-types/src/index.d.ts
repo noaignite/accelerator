@@ -23,147 +23,6 @@ declare namespace Centra {
       uri?: string
     }
 
-    interface SelectionProduct {
-      /** Product Display Item ID */
-      product?: string
-
-      /** Product Display Name */
-      name?: string
-
-      /** Product URI. Unique URI for the product */
-      uri?: string
-
-      /** The specific variant SKU (Either only Product or a combination of Product+Variant) */
-      sku?: string
-
-      /** Product SKU */
-      productSku?: string
-
-      /** Brand ID */
-      brand?: string
-
-      /** Brand name */
-      brandName?: string
-
-      /** Brand URI. Unique URI for the brand */
-      brandUri?: string
-
-      /** Collection ID */
-      collection?: string
-
-      /** Collection name */
-      collectionName?: string
-
-      /** Collection URI. Unique URI for the collection */
-      collectionUri?: string
-
-      /** Variant Name */
-      variantName?: string
-
-      /** Country ISO 3166-1 alpha-2, for example SE. Product Origin */
-      countryOfOrigin?: string
-
-      /** Short description of the product */
-      excerpt?: string
-
-      /** Short description of the product, formatted as HTML */
-      excerptHtml?: string
-
-      /** Description of the product */
-      description?: string
-
-      /** Description of the product, formatted as HTML */
-      descriptionHtml?: string
-
-      /** Meta title for the product page */
-      metaTitle?: string
-
-      /** Meta description for the product page */
-      metaDescription?: string
-
-      /** Meta keywords for the product page */
-      metaKeywords?: string
-
-      /** The stock unit for this product, default empty */
-      stockUnit?: string
-
-      /** Category ID for the canonical category */
-      category?: string
-
-      /** Category name for the canonical category, each sub category name as an element. Root category first. */
-      categoryName?: string[]
-
-      /** Date of creation */
-      createdAt?: string
-
-      /** Date of modification */
-      modifiedAt?: string
-
-      /** Category URI for the canonical category */
-      categoryUri?: string
-
-      /** Product ID in Centra */
-      centraProduct?: string
-
-      /** Variant ID in Centra */
-      centraVariant?: string
-
-      /** Number. Default 1, minimum allowed quantity for purchase */
-      itemQuantityMinimum?: number
-
-      /** Number. Default 1, allowed quantity multiple for purchase */
-      itemQuantityMultipleOf?: number
-
-      /** string. Formatted price with currency prefix/suffix. Price for the product */
-      price?: string
-
-      /** number. Price value as a float, example: 14.11. Price for the product */
-      priceAsNumber?: number
-
-      /** string. Formatted price with currency prefix/suffix. Price before discount */
-      priceBeforeDiscount?: string
-
-      /** number. Price value as a float, example: 14.11. Price before discount */
-      priceBeforeDiscountAsNumber?: number
-
-      /** Number. Percent of discount on this product's price */
-      discountPercent?: number
-
-      /** If product should be marked with sale */
-      showAsOnSale?: boolean
-
-      /** If product should be marked with new */
-      showAsNew?: boolean
-
-      /** Size table to sort sizes properly, supports both X and Y axes */
-      itemTable?: { unit?: string; x?: string[]; y?: string[]; dividerSymbol?: string }
-      items?: {
-        item?: string
-        ean?: string
-        sizeId?: string
-        itemTableX?: number
-        itemTableY?: number
-        name?: string
-        sku?: string
-      }[]
-      categories?: CategoryForProduct[]
-
-      /** For each image size key, an array with URLs to the images for the product */
-      media?: { '*imageKey*'?: string[] }
-
-      /** If product is in preview mode or not */
-      preview?: boolean
-
-      /** What type of relation type this product has. Default is `variant` */
-      relation?: string | string | string
-
-      /**
-       * Optional.
-       *                 Custom attributes applied to this product and exposed in the Checkout plugin settings
-       */
-      [key: string]: Record<string, unknown> | unknown
-    }
-
     /**
      * Bundle information object
      */
@@ -1113,7 +972,7 @@ declare namespace Centra {
       location?: Location
     }
 
-    interface ProductBase {
+    interface Product {
       /** If any item for this product is available for purchase */
       available?: boolean
 
@@ -1285,7 +1144,7 @@ declare namespace Centra {
       [key: string]: Record<string, unknown> | unknown
     }
 
-    interface ProductPrices {
+    interface Product {
       /**
        * Optional. If `pricelist=all`.
        * Object with Pricelist ID as the key, for each pricelist the product is in
@@ -1304,20 +1163,14 @@ declare namespace Centra {
       >
     }
 
-    type ProductPriceKeys = keyof ProductPrices['prices']['']
-
-    interface ProductMarkets {
+    interface Product {
       /** Integer. Optional. If `market=all`. List of the Market IDs the product is available in */
       markets?: number[]
     }
 
-    type Product =
-      | ProductBase
-      | (Omit<ProductBase, ProductPriceKeys> & ProductPrices)
-      | (ProductBase & ProductMarkets)
-      | (Omit<ProductBase, ProductPriceKeys> & ProductPrices & ProductMarkets)
-
     type RelatedProduct = Omit<Product, 'relatedProducts'>
+
+    type SelectionProduct = Omit<Product, 'available' | 'prices' | 'markets'>
 
     interface OrderCreatedResponse {
       /** Token for the current session, maintained by sending it as an API-token header or inside the Accept header. Will be `null` if API-token header value is `none` */
