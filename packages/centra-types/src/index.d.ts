@@ -972,6 +972,18 @@ declare namespace Centra {
       location?: Location
     }
 
+    interface Pricelist {
+      pricelist?: string
+      name?: string
+      default?: boolean
+      currency: Currency
+    }
+
+    interface PricelistsResponse {
+      token?: string
+      pricelists?: Pricelist[]
+    }
+
     interface Product {
       /** If any item for this product is available for purchase */
       available?: boolean
