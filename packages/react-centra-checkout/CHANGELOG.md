@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.10.0...@noaignite/react-centra-checkout@0.10.1) (2022-05-09)
+
+
+### Bug Fixes
+
+* tsconfig namespace issue ([d9c1c95](https://github.com/noaignite/accelerator/commit/d9c1c95ed79f363ec01fd0af7b67941d063e404f))
+
+
+
+
+
 # [0.10.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.9.0...@noaignite/react-centra-checkout@0.10.0) (2022-05-02)
 
 
