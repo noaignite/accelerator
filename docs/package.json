@@ -5,8 +5,8 @@
   "author": "NoA Ignite",
   "license": "MIT",
   "scripts": {
-    "build": "build-storybook -s ./public -o .storybook-static",
-    "dev": "start-storybook -s ./public -p 3001 --ci",
+    "build": "build-storybook -o .storybook-static",
+    "dev": "start-storybook -h localhost -p 3001 --ci",
     "start": "yarn dev"
   },
   "dependencies": {
