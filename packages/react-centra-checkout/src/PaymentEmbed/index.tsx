@@ -4,9 +4,9 @@ import { useCentraSelection, useCentraHandlers } from '../Context'
 import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
 
 export interface PaymentEmbedProps {
+  termsAndConditions: boolean
   onPaymentSuccess?(paymentResult: Centra.PaymentResponse): void
   onPaymentError?(error: Record<string, string>): void
-  termsAndConditions?: boolean
 }
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
@@ -30,14 +30,18 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
   // Submit payment
   const handlePaymentSubmit = React.useCallback(
     (event) => {
+      const details = event.detail
+
       const payload: Record<string, unknown> = {
-        address: event.detail?.address || selection?.address,
-        shippingAddress: event.detail?.shippingAddress || selection?.shippingAddress,
+        address: details.addressIncluded ? details.address : selection?.address,
+        shippingAddress: details.addressIncluded
+          ? details.shippingAddress
+          : selection?.shippingAddress,
         termsAndConditions,
       }
 
-      if (event.detail?.paymentMethodSpecificFields) {
-        payload.paymentMethodSpecificFields = event.detail.paymentMethodSpecificFields
+      if (details?.paymentMethodSpecificFields) {
+        payload.paymentMethodSpecificFields = details.paymentMethodSpecificFields
       }
 
       submitPayment?.(payload)
@@ -49,7 +53,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
           }
         })
         .catch((err) => {
-          console.error('Could not submit payment')
+          console.error('@noaignite/react-centra-checkout: Could not submit payment')
           console.error(err)
         })
     },
@@ -67,16 +71,16 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
       return
     }
 
-    const isInitiateOnly =
+    const paymentInitiateOnly =
       paymentMethod?.supportsInitiateOnly || paymentMethod.providesCustomerAddressAfterPayment
 
     const payload = {
       address: selection.address,
       shippingAddress: selection.shippingAddress,
       paymentMethod: paymentMethod.paymentMethod,
-      paymentInitiateOnly: isInitiateOnly,
+      paymentInitiateOnly,
       // Validated in 'handlePaymentSubmit' when method is 'initate only'
-      termsAndConditions: isInitiateOnly ? true : termsAndConditions,
+      termsAndConditions: paymentInitiateOnly ? true : termsAndConditions,
     }
 
     submitPayment?.(payload)
@@ -94,7 +98,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
         console.error(err)
         setPaymentResult(null)
       })
-  }, [paymentResult, selection, paymentMethod, submitPayment, termsAndConditions])
+  }, [paymentResult, selection, paymentMethod, termsAndConditions, submitPayment])
 
   // Fires when customer submits payment
   React.useEffect(() => {
