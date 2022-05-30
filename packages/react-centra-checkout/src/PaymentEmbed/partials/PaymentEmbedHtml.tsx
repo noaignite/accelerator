@@ -7,12 +7,11 @@ interface PaymentEmbedHtmlProps extends React.ComponentProps<'div'> {
 function PaymentEmbedHtml(props: PaymentEmbedHtmlProps): React.ReactElement {
   const { html, ...other } = props
 
-  const ref = React.useRef<HTMLDivElement>(null)
+  const [node, setNode] = React.useState<HTMLDivElement | null>(null)
 
   // We need to reload scripts in the html in order for them to run
   React.useEffect(() => {
-    if (ref.current) {
-      const node = ref.current
+    if (node && html) {
       const scripts = node.getElementsByTagName('script')
 
       Array.from(scripts).forEach((script) => {
@@ -28,10 +27,10 @@ function PaymentEmbedHtml(props: PaymentEmbedHtmlProps): React.ReactElement {
         node.appendChild(scriptEl)
       })
     }
-  }, [ref])
+  }, [node, html])
 
   // eslint-disable-next-line react/no-danger
-  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} {...other} />
+  return <div ref={setNode} dangerouslySetInnerHTML={{ __html: html }} {...other} />
 }
 
 export default PaymentEmbedHtml

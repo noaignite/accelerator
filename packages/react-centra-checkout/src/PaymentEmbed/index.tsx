@@ -4,91 +4,108 @@ import { useCentraSelection, useCentraHandlers } from '../Context'
 import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
 
 export interface PaymentEmbedProps {
-  additionalPaymentProps?: Record<string, unknown>
-  onSuccess?(paymentResult: Centra.PaymentResponse): void
-  onError?(error: Record<string, string>): void
-  onCentraCheckoutPaymentCallback?: EventListener
+  onPaymentSuccess?(paymentResult: Centra.PaymentResponse): void
+  onPaymentError?(error: Record<string, string>): void
+  termsAndConditions?: boolean
 }
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
 function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
-  const { additionalPaymentProps = {}, onError, onSuccess, onCentraCheckoutPaymentCallback } = props
+  const { termsAndConditions, onPaymentError, onPaymentSuccess } = props
 
   const [paymentResult, setPaymentResult] = React.useState<Centra.PaymentResponse | null>(null)
-  const [formHtml, setFormHtml] = React.useState<string | null>(null)
 
-  // get selection
+  // Get selection
   const { selection, paymentMethods } = useCentraSelection()
   const { submitPayment } = useCentraHandlers()
 
-  // get payment method
+  // Get payment method
   const paymentMethodId = selection?.paymentMethod
-  const paymentMethod = paymentMethods?.find((p) => p.paymentMethod === paymentMethodId)
+  const paymentMethod = React.useMemo(
+    () => paymentMethods?.find((p) => p.paymentMethod === paymentMethodId),
+    [paymentMethods, paymentMethodId],
+  )
 
-  // POST to /payment if payment method is initiate only (method that doesn't need address) or if the payment method provides it's own address
-  React.useEffect(() => {
-    if (
-      selection &&
-      paymentMethod &&
-      (paymentMethod.providesCustomerAddressAfterPayment || paymentMethod.supportsInitiateOnly)
-    ) {
-      const { address, shippingAddress } = selection
-
-      submitPayment?.({
-        address,
-        paymentInitiateOnly: paymentMethod.supportsInitiateOnly,
-        paymentMethod: paymentMethodId,
-        shippingAddress,
-        ...additionalPaymentProps,
-      })
-        .then((result) => {
-          setPaymentResult(result)
-        })
-        .catch(console.error)
-    }
-  }, [additionalPaymentProps, paymentMethod, paymentMethodId, selection, submitPayment])
-
-  React.useEffect(() => {
-    // payment method changed, reset payment result
-    setPaymentResult(null)
-  }, [paymentMethodId])
-
-  // respond to paymentResult
-  React.useEffect(() => {
-    if (paymentResult) {
-      if (!paymentResult.errors) {
-        onSuccess?.(paymentResult)
-
-        // result is a html form (or widget)
-        if (paymentResult.action === 'form' && paymentResult.formHtml) {
-          setFormHtml(paymentResult.formHtml)
-        } else {
-          console.error('@noaignite/react-centra-checkout: No form html to render')
-        }
-      } else {
-        onError?.(paymentResult.errors)
+  // Submit payment
+  const handlePaymentSubmit = React.useCallback(
+    (event) => {
+      const payload: Record<string, unknown> = {
+        address: event.detail?.address || selection?.address,
+        shippingAddress: event.detail?.shippingAddress || selection?.shippingAddress,
+        termsAndConditions,
       }
-    } else {
-      setFormHtml(null)
-    }
-  }, [paymentResult, onSuccess, onError])
 
-  // handle `centra_checkout_payment_callback` for payment methods that don't require an address to be initialized
+      if (event.detail?.paymentMethodSpecificFields) {
+        payload.paymentMethodSpecificFields = event.detail.paymentMethodSpecificFields
+      }
+
+      submitPayment?.(payload)
+        .then((result) => {
+          if (result?.errors) {
+            onPaymentError?.(result.errors)
+          } else {
+            onPaymentSuccess?.(result)
+          }
+        })
+        .catch((err) => {
+          console.error('Could not submit payment')
+          console.error(err)
+        })
+    },
+    [selection, termsAndConditions, submitPayment, onPaymentSuccess, onPaymentError],
+  )
+
+  // Reset payment result when method changes
   React.useEffect(() => {
-    if (!onCentraCheckoutPaymentCallback) {
+    setPaymentResult(null)
+  }, [paymentMethod])
+
+  // Retrieve formHtml
+  React.useEffect(() => {
+    if (!paymentMethod || paymentResult || !selection) {
       return
     }
 
-    document.addEventListener('centra_checkout_payment_callback', onCentraCheckoutPaymentCallback)
+    const isInitiateOnly =
+      paymentMethod?.supportsInitiateOnly || paymentMethod.providesCustomerAddressAfterPayment
+
+    const payload = {
+      address: selection.address,
+      shippingAddress: selection.shippingAddress,
+      paymentMethod: paymentMethod.paymentMethod,
+      paymentInitiateOnly: isInitiateOnly,
+      // Validated in 'handlePaymentSubmit' when method is 'initate only'
+      termsAndConditions: isInitiateOnly ? true : termsAndConditions,
+    }
+
+    submitPayment?.(payload)
+      .then((result) => {
+        if (result?.errors) {
+          console.error(result.errors)
+          throw new Error('@noaignite/react-centra-checkout: Error while fetching widget')
+        } else if (result.action === 'form' && !result.formHtml) {
+          throw new Error('@noaignite/react-centra-checkout: No form to render')
+        }
+
+        setPaymentResult(result)
+      })
+      .catch((err) => {
+        console.error(err)
+        setPaymentResult(null)
+      })
+  }, [paymentResult, selection, paymentMethod, submitPayment, termsAndConditions])
+
+  // Fires when customer submits payment
+  React.useEffect(() => {
+    document.addEventListener('centra_checkout_payment_callback', handlePaymentSubmit)
 
     return () => {
-      document.removeEventListener(
-        'centra_checkout_payment_callback',
-        onCentraCheckoutPaymentCallback,
-      )
+      document.removeEventListener('centra_checkout_payment_callback', handlePaymentSubmit)
     }
-  }, [onCentraCheckoutPaymentCallback])
+  }, [handlePaymentSubmit])
+
+  const formHtml = paymentResult?.formHtml
 
   return formHtml ? <PaymentEmbedHtml html={formHtml} /> : null
 }
