@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useCentraSelection, useCentraHandlers } from '../Context'
-import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
+import HtmlEmbed from '../internal/HtmlEmbed'
 
 export interface PaymentEmbedProps {
   additionalPaymentProps?: Record<string, unknown>
@@ -73,7 +73,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
     }
   }, [paymentResult, onSuccess, onError])
 
-  return formHtml ? <PaymentEmbedHtml html={formHtml} /> : null
+  return formHtml ? <HtmlEmbed id="centra-payment-form" html={formHtml} /> : null
 }
 
 export default PaymentEmbed

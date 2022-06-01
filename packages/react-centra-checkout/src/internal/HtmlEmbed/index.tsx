@@ -1,16 +1,17 @@
 import * as React from 'react'
 
-interface PaymentEmbedHtmlProps extends React.ComponentProps<'div'> {
+interface HtmlEmbedProps extends React.ComponentProps<'div'> {
   html: string
 }
 
-function PaymentEmbedHtml(props: PaymentEmbedHtmlProps): React.ReactElement {
+function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
   const { html, ...other } = props
 
   const ref = React.useRef<HTMLDivElement>(null)
 
   // We need to reload scripts in the html in order for them to run
   React.useEffect(() => {
+    const createdScripts = []
     if (ref.current) {
       const node = ref.current
       const scripts = node.getElementsByTagName('script')
@@ -25,13 +26,17 @@ function PaymentEmbedHtml(props: PaymentEmbedHtmlProps): React.ReactElement {
           scriptEl.appendChild(textNode)
         }
 
+        script.remove()
+        createdScripts.push(scriptEl)
         node.appendChild(scriptEl)
       })
     }
+
+    return () => {}
   }, [ref])
 
   // eslint-disable-next-line react/no-danger
   return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} {...other} />
 }
 
-export default PaymentEmbedHtml
+export default HtmlEmbed

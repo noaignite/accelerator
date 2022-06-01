@@ -168,17 +168,6 @@ export function CentraProvider(props: ProviderProps) {
     apiClient.headers.set('api-token', initialSelection.token)
   }
 
-  const centraCheckoutCallback = React.useCallback(async (event) => {
-    if (event.detail) {
-      const response = (await apiClient.request(
-        'PUT',
-        'payment-fields',
-        event.detail,
-      )) as Centra.CheckoutApi.SelectionResponse
-      setSelection(response)
-    }
-  }, [])
-
   const selectionApiCall = React.useCallback(
     async (
       apiCall:
@@ -197,6 +186,15 @@ export function CentraProvider(props: ProviderProps) {
       return response
     },
     [],
+  )
+
+  const centraCheckoutCallback = React.useCallback(
+    (event) => {
+      if (event.detail) {
+        selectionApiCall(apiClient.request('PUT', `payment-fields`, event.detail))
+      }
+    },
+    [selectionApiCall],
   )
 
   const init = React.useCallback<NonNullable<ContextMethods['init']>>(
@@ -445,7 +443,7 @@ export function CentraProvider(props: ProviderProps) {
         document.head.removeChild(script)
       }
     }
-  }, [selection])
+  }, [selection?.selection?.centraCheckoutScript])
 
   const centraHandlersContext = React.useMemo<ContextMethods>(
     (): ContextMethods => ({
