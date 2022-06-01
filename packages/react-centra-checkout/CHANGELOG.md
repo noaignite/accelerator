@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.10.1...@noaignite/react-centra-checkout@0.11.0) (2022-06-01)
+
+
+### Features
+
+* add ShipwalletEmbed ([4769b10](https://github.com/noaignite/accelerator/commit/4769b105e297251223791e7d70462faaae9084b1))
+
+
+
+
+
 ## [0.10.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.10.0...@noaignite/react-centra-checkout@0.10.1) (2022-05-09)
 
 
