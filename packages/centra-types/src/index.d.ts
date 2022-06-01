@@ -264,7 +264,7 @@ declare namespace Centra {
        *                 <br /><br />Ex: `shipwallet`, object, optional. Used for Ingrid widget
        *                 <br /><br />Ex: `shipwallet_reload`, bool, optional. Used for Ingrid widget
        */
-      pluginFields?: Record<string, unknown>
+      pluginFields?: PluginFields
 
       /**
        * Optional. Is added as soon as any installed plugin wants to load it.
@@ -347,6 +347,25 @@ declare namespace Centra {
         phoneNumber?: string
       }
       currencyFormat?: Currency
+    }
+
+    /**
+     * Image object used in custom attributes
+     */
+    interface ImageAttribute {
+      width?: string
+      height?: string
+      mimeType?: string
+      type?: string
+      url?: string
+    }
+
+    /**
+     * Generic error response
+     */
+    interface ErrorResponse {
+      token?: string
+      errors?: Record<string, string>
     }
 
     interface Language {
@@ -438,7 +457,7 @@ declare namespace Centra {
       }
     }
 
-    export interface PaymentResponse {
+    interface PaymentResponse {
       action?: string
       code?: string
       errors?: Record<string, string>
@@ -448,6 +467,27 @@ declare namespace Centra {
       formUrl?: string
       token?: string
       url?: string
+    }
+
+    /**
+     * Optional. Contains properties added by installed plugins
+     *                 <br /><br />Ex: `paymentHTML`, string, optional.
+     *                 Current checkout script for current order. Used for KCO/Klarna Checkout
+     *                 <br /><br />Ex: `klarnaReplaceSnippet`, boolean, optional. If KCO should be reloaded or not
+     *                 <br /><br />Ex: `shipwallet`, object, optional. Used for Ingrid widget
+     *                 <br /><br />Ex: `shipwallet_reload`, bool, optional. Used for Ingrid widget
+     */
+    interface PluginFields {
+      paymentHTML?: string
+      klarnaReplaceSnippet?: string
+      shipwallet?: {
+        deliveryOptionsAvailable?: boolean
+        ingridAttributes?: Record<string, unknown>
+        session_id?: string
+        snippet?: string
+        version?: number
+      }
+      shipwallet_reload?: boolean
     }
 
     interface ShippingMethod {
@@ -643,7 +683,7 @@ declare namespace Centra {
        *                 <br /><br />Ex: `shipwallet`, object, optional. Used for Ingrid widget
        *                 <br /><br />Ex: `shipwallet_reload`, bool, optional. Used for Ingrid widget
        */
-      pluginFields?: Record<string, unknown> | unknown
+      pluginFields?: PluginFields
 
       /**
        * Optional. Is added as soon as any installed plugin wants to load it.
@@ -864,7 +904,7 @@ declare namespace Centra {
        *                 <br /><br />Ex: `shipwallet`, object, optional. Used for Ingrid widget
        *                 <br /><br />Ex: `shipwallet_reload`, bool, optional. Used for Ingrid widget
        */
-      pluginFields?: Record<string, unknown> | unknown
+      pluginFields?: PluginFields
 
       /**
        * Optional. Is added as soon as any installed plugin wants to load it.
@@ -1272,7 +1312,7 @@ declare namespace Centra {
        *                 <br /><br />Ex: `shipwallet`, object, optional. Used for Ingrid widget
        *                 <br /><br />Ex: `shipwallet_reload`, bool, optional. Used for Ingrid widget
        */
-      pluginFields?: Record<string, unknown> | unknown
+      pluginFields?: PluginFields
 
       /**
        * Optional. Is added as soon as any installed plugin wants to load it.
