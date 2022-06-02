@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.3.0...@noaignite/eslint-config@0.5.0) (2022-06-01)
+
+
+### Features
+
+* **import/order:** define ~/** import pattern as internal group ([ae854e5](https://github.com/noaignite/accelerator/commit/ae854e5df3b7b9c52df8bd6244665dc1c4e40904))
+
+
+
+
+
+# [0.4.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.3.0...@noaignite/eslint-config@0.4.0) (2022-04-12)
+
+
+### Features
+
+* **import/order:** define ~/** import pattern as internal group ([b6813aa](https://github.com/noaignite/accelerator/commit/b6813aa48b3f8c35f8ae3bd6946f15b2ce7af546))
+
+
+
+
+
+# [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.2...@noaignite/eslint-config@0.3.0) (2022-04-12)
+
+
+### Features
+
+* **import/order:** add module import order rule ([805f097](https://github.com/noaignite/accelerator/commit/805f09732beca77b5a006225dea15f7621b64ce3)), closes [#57](https://github.com/noaignite/accelerator/issues/57)
+
+
+
+
+
+## [0.2.2](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.1...@noaignite/eslint-config@0.2.2) (2022-04-06)
+
+
+### Bug Fixes
+
+* **import:** remove plugin:import/recommended extend ([097b2ce](https://github.com/noaignite/accelerator/commit/097b2cebb504c2c05a3b678d54b4ecea9938273a))
+
+
+
+
+
 ## [0.2.1](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.2.0...@noaignite/eslint-config@0.2.1) (2022-03-10)
 
 **Note:** Version bump only for package @noaignite/eslint-config

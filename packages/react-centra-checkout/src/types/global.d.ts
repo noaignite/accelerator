@@ -3,5 +3,6 @@ interface Window {
   CentraCheckout: {
     suspend(): void
     resume(): void
+    reInitiate(plugin: string): void
   }
 }

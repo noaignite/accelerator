@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
+const execSync = require('child_process').execSync
+const path = require('path')
 const chalk = require('chalk')
 const commander = require('commander')
-const execSync = require('child_process').execSync
 const fse = require('fs-extra')
-const path = require('path')
 const spawn = require('cross-spawn')
 const validateProjectName = require('validate-npm-package-name')
 const packageJson = require('./package.json')
@@ -58,7 +58,7 @@ async function updatePackageFile() {
   const newPackageData = {
     ...packageDataOther,
     name: projectName,
-    version: '0.1.0',
+    version: '1.0.0',
     private: true,
   }
 
@@ -76,17 +76,24 @@ async function createApp() {
 
   process.chdir(projectPath)
 
-  console.log(`\nInstalling dependencies. This could take a few minutes.\n`)
-  spawn.sync('yarnpkg', ['install'], { stdio: 'inherit' })
-
   await updatePackageFile()
 
+  execSync(`rm CHANGELOG.md`).toString().trim()
   execSync(`rm -rf .git`).toString().trim()
+
   execSync(`git init`).toString().trim()
   execSync(`git add .`).toString().trim()
-  execSync(`git commit -m "chore: initialize project using create-ignite-app"`).toString().trim()
+  execSync(`git commit -m "chore: initialize project using @noaignite/create-app"`)
+    .toString()
+    .trim()
+
+  console.log()
   console.log(`Initialized a git repository.`)
   console.log(`Created git commit.`)
+
+  console.log()
+  console.log(`Installing dependencies. This could take a few minutes.\n`)
+  spawn.sync('yarnpkg', ['install'], { stdio: 'inherit' })
 
   console.log()
   console.log(`Success! Created ${projectName} at ${chalk.green(projectPath)}.`)

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@0.2.0...@noaignite/centra-types@0.3.0) (2022-06-01)
+
+
+### Features
+
+* add types ([5df9633](https://github.com/noaignite/accelerator/commit/5df9633ff208f267ce10ca04aa6b3eff198f1e6f))
+
+
+
+
+
+# [0.2.0](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@0.1.1...@noaignite/centra-types@0.2.0) (2022-05-09)
+
+
+### Features
+
+* **types:** add Pricelist and PricelistsResponse types ([0ae5417](https://github.com/noaignite/accelerator/commit/0ae5417ef0fea5663fea8e5a0c709521150ebd02))
+
+
+
+
+
 ## [0.1.1](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@0.1.0...@noaignite/centra-types@0.1.1) (2022-01-24)
 
 **Note:** Version bump only for package @noaignite/centra-types

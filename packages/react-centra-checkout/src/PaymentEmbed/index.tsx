@@ -1,11 +1,10 @@
-import * as Centra from '@noaignite/centra-types'
 import * as React from 'react'
 import { useCentraSelection, useCentraHandlers } from '../Context'
-import PaymentEmbedHtml from './partials/PaymentEmbedHtml'
+import HtmlEmbed from '../internal/HtmlEmbed'
 
 export interface PaymentEmbedProps {
   termsAndConditions: boolean
-  onPaymentSuccess?(paymentResult: Centra.PaymentResponse): void
+  onPaymentSuccess?(paymentResult: Centra.CheckoutApi.PaymentResponse): void
   onPaymentError?(error: Record<string, string>): void
 }
 
@@ -14,7 +13,8 @@ you should simply call the submitPayment method of the context instead */
 function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
   const { termsAndConditions, onPaymentError, onPaymentSuccess } = props
 
-  const [paymentResult, setPaymentResult] = React.useState<Centra.PaymentResponse | null>(null)
+  const [paymentResult, setPaymentResult] =
+    React.useState<Centra.CheckoutApi.PaymentResponse | null>(null)
 
   // Get selection
   const { selection, paymentMethods } = useCentraSelection()
@@ -111,7 +111,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
 
   const formHtml = paymentResult?.formHtml
 
-  return formHtml ? <PaymentEmbedHtml html={formHtml} /> : null
+  return formHtml ? <HtmlEmbed id="centra-payment-form" html={formHtml} /> : null
 }
 
 export default PaymentEmbed

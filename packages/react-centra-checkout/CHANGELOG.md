@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.10.1...@noaignite/react-centra-checkout@0.11.0) (2022-06-01)
+
+
+### Features
+
+* add ShipwalletEmbed ([4769b10](https://github.com/noaignite/accelerator/commit/4769b105e297251223791e7d70462faaae9084b1))
+
+
+
+
+
+## [0.10.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.10.0...@noaignite/react-centra-checkout@0.10.1) (2022-05-09)
+
+
+### Bug Fixes
+
+* tsconfig namespace issue ([d9c1c95](https://github.com/noaignite/accelerator/commit/d9c1c95ed79f363ec01fd0af7b67941d063e404f))
+
+
+
+
+
+# [0.10.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.9.0...@noaignite/react-centra-checkout@0.10.0) (2022-05-02)
+
+
+### Features
+
+* **ApiClient:** add fetch options ([424313b](https://github.com/noaignite/accelerator/commit/424313b428f52431004819ce37f28358496efeb9))
+
+
+
+
+
+# [0.9.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.8.0...@noaignite/react-centra-checkout@0.9.0) (2022-04-28)
+
+
+### Features
+
+* **Context:** use cookie instead of localStorage for session token ([9d4a9a2](https://github.com/noaignite/accelerator/commit/9d4a9a28395103b0810539fab02c93be81b9050b))
+
+
+
+
+
+# [0.8.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.6.0...@noaignite/react-centra-checkout@0.8.0) (2022-03-22)
+
+
+### Features
+
+* **CentraContext:** add 'resetSelection' method ([7047ec6](https://github.com/noaignite/accelerator/commit/7047ec6b2a6eba96df9d6156bcccd89b8fa80a1a))
+
+
+
+
+
 # [0.7.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.6.0...@noaignite/react-centra-checkout@0.7.0) (2022-03-16)
 
 
