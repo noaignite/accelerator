@@ -3,15 +3,15 @@ import { useCentraSelection, useCentraHandlers } from '../Context'
 import HtmlEmbed from '../internal/HtmlEmbed'
 
 export interface PaymentEmbedProps {
-  termsAndConditions: boolean
+  values: Record<string, unknown>
   onPaymentSuccess?(paymentResult: Centra.CheckoutApi.PaymentResponse): void
   onPaymentError?(error: Record<string, string>): void
 }
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
-function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
-  const { termsAndConditions, onPaymentError, onPaymentSuccess } = props
+const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement | null => {
+  const { values, onPaymentError, onPaymentSuccess } = props
 
   const [paymentResult, setPaymentResult] =
     React.useState<Centra.CheckoutApi.PaymentResponse | null>(null)
@@ -28,26 +28,35 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
   )
 
   // Submit payment
-  const handlePaymentSubmit = React.useCallback(
+  const handlePaymentCallback = React.useCallback(
     (event) => {
-      const details = event.detail
+      const {
+        addressIncluded,
+        billingAddress: detailsAddress,
+        shippingAddress: detailsShippingAddress,
+        paymentMethod: detailsPaymentMethod,
+        paymentMethodSpecificFields,
+      } = event.detail
 
-      const payload: Record<string, unknown> = {
-        address: details.addressIncluded ? details.address : selection?.address,
-        shippingAddress: details.addressIncluded
-          ? details.shippingAddress
-          : selection?.shippingAddress,
-        termsAndConditions,
-      }
+      const payload = {
+        address: values.address,
+        shippingAddress: values.shippingAddress,
+        paymentMethod: detailsPaymentMethod,
+        paymentMethodSpecificFields,
+      } as Record<string, unknown>
 
-      if (details?.paymentMethodSpecificFields) {
-        payload.paymentMethodSpecificFields = details.paymentMethodSpecificFields
+      if (addressIncluded) {
+        // if address is included in event, send that address instead
+        payload.address = detailsAddress
+        payload.shippingAddress = detailsShippingAddress
       }
 
       submitPayment?.(payload)
         .then((result) => {
           if (result?.errors) {
             onPaymentError?.(result.errors)
+            // set paymentResult to null so that a new POST /payment request is made to refresh the widget
+            setPaymentResult(null)
           } else {
             onPaymentSuccess?.(result)
           }
@@ -57,7 +66,7 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
           console.error(err)
         })
     },
-    [selection, termsAndConditions, submitPayment, onPaymentSuccess, onPaymentError],
+    [submitPayment, onPaymentSuccess, onPaymentError, values],
   )
 
   // Reset payment result when method changes
@@ -67,23 +76,14 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
 
   // Retrieve formHtml
   React.useEffect(() => {
-    if (!paymentMethod || paymentResult || !selection) {
+    const shouldRequestPayment =
+      paymentMethod?.supportsInitiateOnly || paymentMethod?.providesCustomerAddressAfterPayment // if either of these are true, this is a paymentMethod which provides an embed
+
+    if (!paymentMethod || paymentResult || !selection || !values || !shouldRequestPayment) {
       return
     }
 
-    const paymentInitiateOnly =
-      paymentMethod?.supportsInitiateOnly || paymentMethod.providesCustomerAddressAfterPayment
-
-    const payload = {
-      address: selection.address,
-      shippingAddress: selection.shippingAddress,
-      paymentMethod: paymentMethod.paymentMethod,
-      paymentInitiateOnly,
-      // Validated in 'handlePaymentSubmit' when method is 'initate only'
-      termsAndConditions: paymentInitiateOnly ? true : termsAndConditions,
-    }
-
-    submitPayment?.(payload)
+    submitPayment?.(values)
       .then((result) => {
         if (result?.errors) {
           console.error(result.errors)
@@ -98,20 +98,44 @@ function PaymentEmbed(props: PaymentEmbedProps): React.ReactElement | null {
         console.error(err)
         setPaymentResult(null)
       })
-  }, [paymentResult, selection, paymentMethod, termsAndConditions, submitPayment])
+  }, [paymentResult, selection, paymentMethod, submitPayment, values])
 
-  // Fires when customer submits payment
   React.useEffect(() => {
-    document.addEventListener('centra_checkout_payment_callback', handlePaymentSubmit)
+    // Fires when customer submits payment
+    document.addEventListener('centra_checkout_payment_callback', handlePaymentCallback)
 
     return () => {
-      document.removeEventListener('centra_checkout_payment_callback', handlePaymentSubmit)
+      document.removeEventListener('centra_checkout_payment_callback', handlePaymentCallback)
     }
-  }, [handlePaymentSubmit])
+  }, [handlePaymentCallback])
 
   const formHtml = paymentResult?.formHtml
 
   return formHtml ? <HtmlEmbed id="centra-payment-form" html={formHtml} /> : null
+}, areEqual)
+
+// recursive equality check function to make sure passing an object literal as a `values` prop doesn't re-render PaymentEmbed on every render of the parent component
+function areEqual(prevProps: PaymentEmbedProps, nextProps: PaymentEmbedProps): boolean {
+  return compareValues(prevProps, nextProps)
+}
+
+// we do want to use `any` here, this function can take any value
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function compareValues(oldValue: any, newValue: any): boolean {
+  const equal = (
+    Object.entries(newValue) as Array<
+      [keyof PaymentEmbedProps, PaymentEmbedProps[keyof PaymentEmbedProps]]
+    >
+  ).every(([propKey, propValue]) => {
+    if (propValue && Object.getPrototypeOf(propValue) === Object.prototype) {
+      // prop is an object literal
+      return compareValues(oldValue[propKey], propValue)
+    }
+
+    return propValue === oldValue[propKey]
+  })
+
+  return equal
 }
 
 export default PaymentEmbed

@@ -17,6 +17,8 @@ export interface ProviderProps {
   paymentFailedPage: string
   /** Used when submitting payment using the POST /payment Centra api call */
   paymentReturnPage: string
+  /** Receipt page to redirect to when Centra payment succeeds directly */
+  receiptPage: string
   /**
     When the cookie used to store the Centra checkout token will expire, days as a number or a Date
     @defaultValue `365`
@@ -84,10 +86,7 @@ export interface ContextMethods {
     email: string,
     linkUri: string,
   ): Promise<Centra.CheckoutApi.SelectionResponse>
-  submitPayment?(
-    data: Record<string, unknown>,
-    locale?: string,
-  ): Promise<Centra.CheckoutApi.PaymentResponse>
+  submitPayment?(data: Record<string, unknown>): Promise<Centra.CheckoutApi.PaymentResponse>
   updateCartItemQuantity?(
     line: string,
     quantity: number,
@@ -152,6 +151,7 @@ export function CentraProvider(props: ProviderProps) {
     initialSelection,
     paymentFailedPage,
     paymentReturnPage,
+    receiptPage,
     tokenExpires = 365,
     tokenName = 'centra-checkout-token',
   } = props
@@ -313,12 +313,10 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const submitPayment = React.useCallback<NonNullable<ContextMethods['submitPayment']>>(
-    async (data, locale) => {
-      const param = locale ? `?lang=${locale}` : ''
-
+    async (data) => {
       const response = (await apiClient.request('POST', 'payment', {
-        paymentReturnPage: `${paymentReturnPage}/${selection.token}${param}`,
-        paymentFailedPage: `${paymentFailedPage}/${selection.token}${param}`,
+        paymentReturnPage,
+        paymentFailedPage,
         ...data,
       })) as Centra.CheckoutApi.PaymentResponse
 
@@ -330,14 +328,23 @@ export function CentraProvider(props: ProviderProps) {
           }
           break
         case 'success':
-          window.location.href = `${paymentReturnPage}/${selection.token}${param}`
+          // according to Centra docs – if action === 'success', user should be forwarded directly to the receipt page
+          window.location.href = `${receiptPage}/${response.token}`
+          break
+        case 'javascript':
+          if (response.code) {
+            const script = document.createElement('script')
+            const text = document.createTextNode(response.code)
+            script.appendChild(text)
+            document.body.appendChild(script)
+          }
           break
         default:
           return response
       }
       return response
     },
-    [paymentFailedPage, paymentReturnPage, selection.token],
+    [paymentFailedPage, paymentReturnPage, receiptPage],
   )
 
   const addNewsletterSubscription = React.useCallback<

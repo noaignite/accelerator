@@ -18,11 +18,15 @@ function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
       const scripts = node.getElementsByTagName('script')
 
       Array.from(scripts).forEach((script) => {
+        if (script.type === 'application/json') {
+          return
+        }
+
         const scriptEl = document.createElement('script')
 
         if (script.src) {
           scriptEl.src = script.src
-        } else if (script.type !== 'application/json') {
+        } else {
           const textNode = document.createTextNode(script.innerHTML)
           scriptEl.appendChild(textNode)
         }
