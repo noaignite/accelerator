@@ -1,4 +1,5 @@
 import * as React from 'react'
+import isEqual from 'react-fast-compare'
 import { useCentraSelection, useCentraHandlers } from '../Context'
 import HtmlEmbed from '../internal/HtmlEmbed'
 
@@ -15,6 +16,10 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
 
   const [paymentResult, setPaymentResult] =
     React.useState<Centra.CheckoutApi.PaymentResponse | null>(null)
+  const [paymentCallbackError, setPaymentCallbackError] =
+    React.useState<Centra.CheckoutApi.ErrorResponse | null>(null)
+
+  const previousPaymentMethod = React.useRef<string | null>(null)
 
   // Get selection
   const { selection, paymentMethods } = useCentraSelection()
@@ -57,12 +62,15 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
             onPaymentError?.(result.errors)
             // set paymentResult to null so that a new POST /payment request is made to refresh the widget
             setPaymentResult(null)
+            setPaymentCallbackError(result.errors)
           } else {
             onPaymentSuccess?.(result)
+            setPaymentCallbackError(null)
           }
         })
         .catch((err) => {
           console.error('@noaignite/react-centra-checkout: Could not submit payment')
+          setPaymentCallbackError(err)
           console.error(err)
         })
     },
@@ -71,17 +79,25 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
 
   // Reset payment result when method changes
   React.useEffect(() => {
-    setPaymentResult(null)
-  }, [paymentMethod])
+    if (selection?.paymentMethod !== previousPaymentMethod.current) {
+      setPaymentResult(null)
+    }
+  }, [selection?.paymentMethod])
 
   // Retrieve formHtml
   React.useEffect(() => {
     const shouldRequestPayment =
       paymentMethod?.supportsInitiateOnly || paymentMethod?.providesCustomerAddressAfterPayment // if either of these are true, this is a paymentMethod which provides an embed
 
-    if (!paymentMethod || paymentResult || !selection || !values || !shouldRequestPayment) {
+    if (
+      ((selection?.paymentMethod === previousPaymentMethod.current || !shouldRequestPayment) &&
+        !paymentCallbackError) ||
+      !selection?.paymentMethod
+    ) {
       return
     }
+
+    previousPaymentMethod.current = selection?.paymentMethod
 
     submitPayment?.(values)
       .then((result) => {
@@ -93,12 +109,20 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
         }
 
         setPaymentResult(result)
+        setPaymentCallbackError(null)
       })
       .catch((err) => {
         console.error(err)
         setPaymentResult(null)
       })
-  }, [paymentResult, selection, paymentMethod, submitPayment, values])
+  }, [
+    paymentMethod,
+    selection?.totals?.grandTotalPriceAsNumber,
+    selection?.paymentMethod,
+    paymentCallbackError,
+    submitPayment,
+    values,
+  ])
 
   React.useEffect(() => {
     // Fires when customer submits payment
@@ -112,30 +136,6 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
   const formHtml = paymentResult?.formHtml
 
   return formHtml ? <HtmlEmbed id="centra-payment-form" html={formHtml} /> : null
-}, areEqual)
-
-// recursive equality check function to make sure passing an object literal as a `values` prop doesn't re-render PaymentEmbed on every render of the parent component
-function areEqual(prevProps: PaymentEmbedProps, nextProps: PaymentEmbedProps): boolean {
-  return compareValues(prevProps, nextProps)
-}
-
-// we do want to use `any` here, this function can take any value
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function compareValues(oldValue: any, newValue: any): boolean {
-  const equal = (
-    Object.entries(newValue) as Array<
-      [keyof PaymentEmbedProps, PaymentEmbedProps[keyof PaymentEmbedProps]]
-    >
-  ).every(([propKey, propValue]) => {
-    if (propValue && Object.getPrototypeOf(propValue) === Object.prototype) {
-      // prop is an object literal
-      return compareValues(oldValue[propKey], propValue)
-    }
-
-    return propValue === oldValue[propKey]
-  })
-
-  return equal
-}
+}, isEqual)
 
 export default PaymentEmbed
