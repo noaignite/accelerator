@@ -1181,7 +1181,7 @@ declare namespace Centra {
       categories?: CategoryForProduct[]
 
       /** For each image size key, an array with URLs to the images for the product */
-      media?: { '*imageKey*'?: string[] }
+      media?: Record<string, string[]>
 
       /** If product is in preview mode or not */
       preview?: boolean
