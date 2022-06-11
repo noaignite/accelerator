@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@0.3.1...@noaignite/centra-types@0.3.2) (2022-06-11)
+
+
+### Bug Fixes
+
+* **Product:** update media type ([e271946](https://github.com/noaignite/accelerator/commit/e271946ac810be858dc39ffa1a5028a510f1414f))
+
+
+
+
+
 ## [0.3.1](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@0.3.0...@noaignite/centra-types@0.3.1) (2022-06-08)
 
 **Note:** Version bump only for package @noaignite/centra-types
