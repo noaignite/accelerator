@@ -1,8 +1,10 @@
 import * as React from 'react'
 import cookies from 'js-cookie'
 import ApiClient from '../ApiClient'
+import CentraEvents from '../internal/CentraEvents'
 
 const apiClient = ApiClient.default
+const centraEvents = CentraEvents.default
 
 /** The prop types that CentraProvider accepts */
 export interface ProviderProps {
@@ -189,9 +191,13 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const centraCheckoutCallback = React.useCallback(
-    (event) => {
+    async (event) => {
       if (event.detail) {
-        selectionApiCall(apiClient.request('PUT', `payment-fields`, event.detail))
+        const response = await selectionApiCall(
+          apiClient.request('PUT', `payment-fields`, event.detail),
+        )
+
+        centraEvents.dispatch('centra_checkout_callback', response)
       }
     },
     [selectionApiCall],
@@ -583,6 +589,10 @@ export function useCentraOrders(from?: number, size?: number): Centra.CheckoutAp
   }, [from, size])
 
   return result
+}
+
+export function useCentraEvents() {
+  return CentraEvents.default
 }
 
 export default CentraSelectionContext
