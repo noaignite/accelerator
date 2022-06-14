@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/react-centra-checkout",
-  "version": "0.12.2",
+  "version": "0.13.0",
   "private": false,
   "author": "NoA Ignite",
   "description": "React components and helpers for Centra checkout api",

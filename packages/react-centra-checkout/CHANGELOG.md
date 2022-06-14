@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.12.2...@noaignite/react-centra-checkout@0.13.0) (2022-06-14)
+
+
+### Features
+
+* add CentraEvents ([7bff48d](https://github.com/noaignite/accelerator/commit/7bff48db0a7925f07b11fe50a553d9d5957a46de))
+
+
+
+
+
 ## [0.12.2](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.12.1...@noaignite/react-centra-checkout@0.12.2) (2022-06-11)
 
 **Note:** Version bump only for package @noaignite/react-centra-checkout
