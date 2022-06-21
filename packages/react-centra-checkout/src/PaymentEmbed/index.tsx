@@ -105,6 +105,7 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
       .then((result) => {
         if (result?.errors) {
           console.error(result.errors)
+          onPaymentError?.(result.errors)
           throw new Error('@noaignite/react-centra-checkout: Error while fetching widget')
         } else if (result.action === 'form' && !result.formHtml) {
           throw new Error('@noaignite/react-centra-checkout: No form to render')
@@ -118,10 +119,11 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
         setPaymentResult(null)
       })
   }, [
-    paymentMethod,
-    selection?.totals?.grandTotalPriceAsNumber,
-    selection?.paymentMethod,
+    onPaymentError,
     paymentCallbackError,
+    paymentMethod,
+    selection?.paymentMethod,
+    selection?.totals?.grandTotalPriceAsNumber,
     submitPayment,
     values,
   ])
