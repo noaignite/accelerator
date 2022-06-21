@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.13.1...@noaignite/react-centra-checkout@0.13.2) (2022-06-21)
+
+
+### Bug Fixes
+
+* **PaymentEmbed:** run onPaymentError on first request also ([5455bfc](https://github.com/noaignite/accelerator/commit/5455bfc57e5541a4317ff968b146d215d839834a))
+
+
+
+
+
 ## [0.13.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.13.0...@noaignite/react-centra-checkout@0.13.1) (2022-06-21)
 
 
