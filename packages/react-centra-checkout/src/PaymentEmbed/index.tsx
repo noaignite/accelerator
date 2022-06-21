@@ -48,6 +48,7 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
         shippingAddress: values.shippingAddress,
         paymentMethod: detailsPaymentMethod,
         paymentMethodSpecificFields,
+        termsAndConditions: values.termsAndConditions,
       } as Record<string, unknown>
 
       if (addressIncluded) {
@@ -99,7 +100,8 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
 
     previousPaymentMethod.current = selection?.paymentMethod
 
-    submitPayment?.(values)
+    // don't send termsAndConditions when fetching embed payments, as we don't want it to fail just yet.
+    submitPayment?.({ ...values, termsAndConditions: undefined })
       .then((result) => {
         if (result?.errors) {
           console.error(result.errors)
