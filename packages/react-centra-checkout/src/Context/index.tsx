@@ -18,6 +18,10 @@ export interface ContextMethods {
     @param item - The Centra item id
   */
   addItem?(item: string, quantity?: number): Promise<Centra.SelectionResponseExtended>
+  /**
+    @param giftCertificate - The `giftCertificate` value of the gift certificate to add
+  */
+  addGiftCertificate?(giftCertificate: string): Promise<Centra.SelectionResponseExtended>
   addNewsletterSubscription?(
     data: Record<string, unknown>,
   ): Promise<Centra.SelectionResponseExtended>
@@ -195,6 +199,12 @@ export function CentraProvider(props: ProviderProps) {
   const addItem = React.useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
       selectionApiCall(apiClient.request('POST', `items/${item}/quantity/${quantity}`)),
+    [selectionApiCall],
+  )
+
+  const addGiftCertificate = React.useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
+    (giftCertificate) =>
+      selectionApiCall(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`)),
     [selectionApiCall],
   )
 
@@ -411,6 +421,7 @@ export function CentraProvider(props: ProviderProps) {
   const centraHandlersContext = React.useMemo<ContextMethods>(
     (): ContextMethods => ({
       addItem,
+      addGiftCertificate,
       addNewsletterSubscription,
       addVoucher,
       decreaseCartItem,
@@ -440,6 +451,7 @@ export function CentraProvider(props: ProviderProps) {
     }),
     [
       addItem,
+      addGiftCertificate,
       addNewsletterSubscription,
       addVoucher,
       decreaseCartItem,
