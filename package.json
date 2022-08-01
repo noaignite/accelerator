@@ -59,7 +59,7 @@
     "css-mediaquery": "^0.1.2",
     "eslint": "^8.10.0",
     "eslint-import-resolver-webpack": "^0.13.1",
-    "husky": "^7.0.2",
+    "husky": "^8.0.1",
     "jest": "^27.4.3",
     "jsdom": "^18.0.1",
     "lerna": "^4.0.0",
