@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "clsx": "^1.1.1",
     "lodash.clone": "^4.5.0",
     "lodash.topath": "^4.5.2",
     "prop-types": "^15.7.2",
