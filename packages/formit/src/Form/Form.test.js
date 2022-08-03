@@ -1,7 +1,5 @@
 import * as React from 'react'
-import { screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { createRender, describeConformance } from 'test/utils'
+import { createRender, describeConformance, screen } from 'test/utils'
 import Formit from '../Formit'
 import Field from '../Field'
 import Form from './Form'
@@ -20,7 +18,7 @@ describe('<Field />', () => {
     only: ['mergeClassName', 'propsSpread', 'refForwarding', 'reactTestRenderer'],
   }))
 
-  it('should pass formit values & methods as onSubmit arguments', () => {
+  it('should pass formit values & methods as onSubmit arguments', async () => {
     let injectedValues
     let injectedMethods
     const renderOptions = {
@@ -33,7 +31,7 @@ describe('<Field />', () => {
       },
     }
 
-    render(
+    const { user } = render(
       <Form>
         <Field name="name" />
         <input type="submit" value="Submit" />
@@ -44,12 +42,12 @@ describe('<Field />', () => {
     const input = screen.getByRole('textbox')
     const [submitButton, resetButton] = screen.getAllByRole('button')
 
-    userEvent.type(input, 'Jon Snow')
-    userEvent.click(submitButton)
+    await user.type(input, 'Jon Snow')
+    await user.click(submitButton)
     expect(injectedValues.name).toBe('Jon Snow')
 
-    userEvent.click(resetButton)
-    userEvent.click(submitButton)
+    await user.click(resetButton)
+    await user.click(submitButton)
     expect(injectedValues.name).toBe('')
 
     const testMethodKeys = [
