@@ -7,6 +7,7 @@
     "release:publish": "lerna publish from-package --dist-tag latest --contents build",
     "release:publish:dry-run": "lerna publish from-package --dist-tag latest --contents build --registry=\"http://localhost:4873/\"",
     "release:yalc": "lerna run --parallel --scope \"@noaignite/*\" release:yalc",
+    "typecheck": "lerna run --no-bail --parallel typecheck",
     "docs:build": "yarn workspace docs build",
     "docs:dev": "yarn workspace docs dev",
     "start": "yarn docs:dev",

@@ -25,7 +25,7 @@
     "build": "cp -a src/. build/ && yarn build:copy-files",
     "build:copy-files": "node ./copy-files.js",
     "release:yalc": "yarn build && yalc publish ./build",
-    "typecheck": "tsc"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
     "swagger-typescript-api": "^9.3.1"

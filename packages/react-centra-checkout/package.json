@@ -29,7 +29,7 @@
     "build:node": "cross-env NODE_ENV=production BABEL_ENV=node babel src --config-file ../../babel.config.js --out-dir build/node --extensions \".ts,.tsx\" --ignore \"**/*.d.ts,**/*.types.ts\"",
     "build:types": "tsc --emitDeclarationOnly",
     "release:yalc": "yarn build && yalc publish ./build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
