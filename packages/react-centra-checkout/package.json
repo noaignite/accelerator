@@ -38,8 +38,7 @@
   },
   "devDependencies": {
     "@noaignite/centra-types": "^0.3.2",
-    "@types/js-cookie": "^3.0.1",
-    "typescript": "^4.5.5"
+    "@types/js-cookie": "^3.0.1"
   },
   "dependencies": {
     "js-cookie": "^3.0.1"
