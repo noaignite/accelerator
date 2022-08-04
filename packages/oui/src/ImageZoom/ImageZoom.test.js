@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { screen, fireEvent } from '@testing-library/react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
-import { createRender, describeConformance } from 'test/utils'
+import { createRender, describeConformance, fireEvent, screen } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import ImageZoom, { imageZoomClasses as classes } from '.'
 
@@ -64,7 +63,7 @@ describe('<ImageZoom />', () => {
     })
 
     describeConformance(<ImageZoom {...defaultProps} />, () => ({
-      ouiName: 'OuiImageZoom',
+      uiName: 'OuiImageZoom',
       inheritComponent: 'div',
       refInstanceof: window.HTMLDivElement,
       render,
@@ -111,7 +110,7 @@ describe('<ImageZoom />', () => {
       window.matchMedia.restore()
     })
 
-    it('should render secondary `img` element after mouseenter', async () => {
+    it('should render secondary `img` element after mouseenter', () => {
       render(<ImageZoom data-testid="root" {...defaultProps} />)
       const root = screen.getByTestId('root')
       const preview = screen.getByTestId('preview')

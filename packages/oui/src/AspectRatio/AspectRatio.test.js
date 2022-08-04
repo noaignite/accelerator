@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { screen } from '@testing-library/react'
-import { createRender, describeConformance } from 'test/utils'
+import { createRender, describeConformance, screen } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import AspectRatio from '.'
 
@@ -8,7 +7,7 @@ describe('<AspectRatio />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<AspectRatio />, () => ({
-    ouiName: 'OuiAspectRatio',
+    uiName: 'OuiAspectRatio',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,

@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { screen } from '@testing-library/react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
-import { createRender, describeConformance } from 'test/utils'
+import { createRender, describeConformance, screen } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import Media from '.'
 
@@ -55,7 +54,7 @@ describe('<Media />', () => {
   })
 
   describeConformance(<Media />, () => ({
-    ouiName: 'OuiMedia',
+    uiName: 'OuiMedia',
     inheritComponent: 'img',
     refInstanceof: window.HTMLImageElement,
     render,
@@ -102,7 +101,6 @@ describe('<Media />', () => {
     it('no initial `srcset` attribute on source tag specified because lazy loaded', () => {
       render(<Media component="picture" breakpoints={{ xs: '/foo.jpg' }} data-testid="root" />)
       const picture = screen.getByTestId('root')
-      // eslint-disable-next-line testing-library/no-node-access
       const sources = picture.getElementsByTagName('source')
 
       expect(sources).toHaveLength(1)
@@ -122,7 +120,6 @@ describe('<Media />', () => {
         />,
       )
       const picture = screen.getByTestId('root')
-      // eslint-disable-next-line testing-library/no-node-access
       const sources = picture.getElementsByTagName('source')
 
       expect(sources).toHaveLength(2)
@@ -142,7 +139,6 @@ describe('<Media />', () => {
         />,
       )
       const picture = screen.getByTestId('root')
-      // eslint-disable-next-line testing-library/no-node-access
       const sources = picture.getElementsByTagName('source')
 
       expect(sources).toHaveLength(2)
@@ -164,7 +160,6 @@ describe('<Media />', () => {
         />,
       )
       const picture = screen.getByTestId('root')
-      // eslint-disable-next-line testing-library/no-node-access
       const sources = picture.getElementsByTagName('source')
 
       expect(sources).toHaveLength(2)

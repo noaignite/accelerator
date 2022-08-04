@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { screen } from '@testing-library/react'
-import { createRender, describeConformance } from 'test/utils'
+import { createRender, describeConformance, screen } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import MediaBase from '.'
 
@@ -8,7 +7,7 @@ describe('<MediaBase />', () => {
   const render = createRender({ wrapper: TestProvider })
 
   describeConformance(<MediaBase src="/foo.jpg" />, () => ({
-    ouiName: 'OuiMediaBase',
+    uiName: 'OuiMediaBase',
     inheritComponent: 'img',
     refInstanceof: window.HTMLImageElement,
     render,

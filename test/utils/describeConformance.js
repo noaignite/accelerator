@@ -1,4 +1,4 @@
-// Based on: https://github.com/mui-org/material-ui/blob/next/test/utils/describeConformance.js
+// Based on: https://github.com/mui/material-ui/blob/v4.12.4/packages/material-ui/src/test-utils/describeConformance.js
 /* eslint-disable jest/expect-expect, jest/no-conditional-expect, jest/no-export, jest/valid-title */
 
 import * as React from 'react'
@@ -11,7 +11,7 @@ function randomStringValue() {
 }
 
 /**
- * OUI components have a `className` prop. The `className` is applied to
+ * IGN components have a `className` prop. The `className` is applied to
  * the root component.
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -28,7 +28,7 @@ function testClassName(element, getOptions) {
 }
 
 /**
- * OUI components have a `component` prop that allows rendering a different
+ * IGN components have a `component` prop that allows rendering a different
  * Component from @inheritComponent
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -54,7 +54,7 @@ function testComponentProp(element, getOptions) {
 }
 
 /**
- * OUI components can spread additional props to a documented component.
+ * IGN components can spread additional props to a documented component.
  * It's set via @inheritComponent in the source.
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -116,7 +116,7 @@ function throwMissingPropError(field) {
 }
 
 /**
- * OUI theme has a components section that allows specifying default props.
+ * IGN theme has a components section that allows specifying default props.
  * Components from @inheritComponent
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -124,16 +124,16 @@ function throwMissingPropError(field) {
 function testThemeDefaultProps(element, getOptions) {
   describe('theme default components:', () => {
     it("respect theme's defaultProps", () => {
-      const testProp = 'data-oui-test'
-      const { ouiName, render } = getOptions()
+      const testProp = 'data-ui-test'
+      const { render, uiName } = getOptions()
 
-      if (!ouiName) {
-        throwMissingPropError('ouiName')
+      if (!uiName) {
+        throwMissingPropError('uiName')
       }
 
       const theme = createTheme({
         components: {
-          [ouiName]: {
+          [uiName]: {
             defaultProps: {
               [testProp]: 'testProp',
             },
@@ -149,7 +149,7 @@ function testThemeDefaultProps(element, getOptions) {
 }
 
 /**
- * OUI theme has a components section that allows specifying style overrides.
+ * IGN theme has a components section that allows specifying style overrides.
  * Components from @inheritComponent
  * @param {React.ReactElement} element
  * @param {() => ConformanceOptions} getOptions
@@ -158,7 +158,7 @@ function testThemeStyleOverrides(element, getOptions) {
   describe('theme style overrides:', () => {
     it("respect theme's styleOverrides slots", () => {
       const {
-        ouiName,
+        uiName,
         testDeepOverrides,
         testRootOverrides = { slotName: 'root' },
         render,
@@ -166,7 +166,7 @@ function testThemeStyleOverrides(element, getOptions) {
 
       const theme = createTheme({
         components: {
-          [ouiName]: {
+          [uiName]: {
             styleOverrides: {
               [testRootOverrides.slotName]: {
                 mixBlendMode: 'darken',
@@ -216,13 +216,13 @@ const fullSuite = {
 }
 
 /**
- * Tests various aspects of a component that should be equal across OUI
+ * Tests various aspects of a component that should be equal across IGN
  * components.
  * @param {React.ReactElement} minimalElement - the component with it's minimal required props
  * @param {() => ConformanceOptions} getOptions
  */
 export default function describeConformance(minimalElement, getOptions) {
-  describe('OUI component API', () => {
+  describe('IGN component API', () => {
     const {
       after: runAfterHook = () => {},
       only = Object.keys(fullSuite),

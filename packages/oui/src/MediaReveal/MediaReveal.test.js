@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { screen } from '@testing-library/react'
-import { createRender, describeConformance } from 'test/utils'
+import { createRender, describeConformance, screen } from 'test/utils'
 import TestProvider from '../../test/TestProvider'
 import MediaReveal, { mediaRevealClasses as classes } from '.'
 
@@ -12,7 +11,7 @@ describe('<MediaReveal />', () => {
   }
 
   describeConformance(<MediaReveal {...defaultProps} />, () => ({
-    ouiName: 'OuiMediaReveal',
+    uiName: 'OuiMediaReveal',
     inheritComponent: 'div',
     refInstanceof: window.HTMLDivElement,
     render,
