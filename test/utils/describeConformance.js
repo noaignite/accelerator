@@ -1,10 +1,9 @@
 // Based on: https://github.com/mui/material-ui/blob/v4.12.4/packages/material-ui/src/test-utils/describeConformance.js
 /* eslint-disable jest/expect-expect, jest/no-conditional-expect, jest/no-export, jest/valid-title */
-
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'
 import { screen } from '@testing-library/react'
-import { createTheme } from '@mui/material/styles'
+import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 
 function randomStringValue() {
   return `s${Math.random().toString(36).slice(2)}`
@@ -124,8 +123,8 @@ function throwMissingPropError(field) {
 function testThemeDefaultProps(element, getOptions) {
   describe('theme default components:', () => {
     it("respect theme's defaultProps", () => {
-      const testProp = 'data-ui-test'
-      const { render, uiName } = getOptions()
+      const testProp = 'data-id'
+      const { render, uiName, ThemeProvider = MuiThemeProvider } = getOptions()
 
       if (!uiName) {
         throwMissingPropError('uiName')
@@ -141,7 +140,11 @@ function testThemeDefaultProps(element, getOptions) {
         },
       })
 
-      render(React.cloneElement(element, { 'data-testid': 'root' }), { wrapperProps: { theme } })
+      render(
+        <ThemeProvider theme={theme}>
+          {React.cloneElement(element, { 'data-testid': 'root' })}
+        </ThemeProvider>,
+      )
 
       expect(screen.getByTestId('root')).toHaveAttribute(testProp, 'testProp')
     })
@@ -158,10 +161,11 @@ function testThemeStyleOverrides(element, getOptions) {
   describe('theme style overrides:', () => {
     it("respect theme's styleOverrides slots", () => {
       const {
-        uiName,
+        render,
         testDeepOverrides,
         testRootOverrides = { slotName: 'root' },
-        render,
+        uiName,
+        ThemeProvider = MuiThemeProvider,
       } = getOptions()
 
       const theme = createTheme({
@@ -186,7 +190,11 @@ function testThemeStyleOverrides(element, getOptions) {
         },
       })
 
-      render(React.cloneElement(element, { 'data-testid': 'root' }), { wrapperProps: { theme } })
+      render(
+        <ThemeProvider theme={theme}>
+          {React.cloneElement(element, { 'data-testid': 'root' })}
+        </ThemeProvider>,
+      )
 
       const rootElement = screen.getByTestId('root')
       const rootComputedStyles = getComputedStyle(rootElement)

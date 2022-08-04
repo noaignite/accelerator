@@ -2,7 +2,6 @@ import * as React from 'react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
 import { createRender, describeConformance, screen } from 'test/utils'
-import TestProvider from '../../test/TestProvider'
 import Media from '.'
 
 function createMatchMedia(width, ref) {
@@ -31,7 +30,7 @@ function createMatchMedia(width, ref) {
 }
 
 describe('<Media />', () => {
-  const render = createRender({ wrapper: TestProvider })
+  const render = createRender()
   let matchMediaInstances
 
   beforeEach(() => {

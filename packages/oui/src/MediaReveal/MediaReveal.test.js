@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { createRender, describeConformance, screen } from 'test/utils'
-import TestProvider from '../../test/TestProvider'
 import MediaReveal, { mediaRevealClasses as classes } from '.'
 
 describe('<MediaReveal />', () => {
-  const render = createRender({ wrapper: TestProvider })
+  const render = createRender()
 
   const defaultProps = {
     children: <img src="/foo.jpg" data-testid="img" alt="" />,

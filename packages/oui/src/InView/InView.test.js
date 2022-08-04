@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { createRender, describeConformance, screen } from 'test/utils'
-import TestProvider from '../../test/TestProvider'
 import InView from '.'
 
 describe('<InView />', () => {
-  const render = createRender({ wrapper: TestProvider })
+  const render = createRender()
 
   describeConformance(<InView />, () => ({
     uiName: 'OuiInView',

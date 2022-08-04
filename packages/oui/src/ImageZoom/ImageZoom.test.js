@@ -2,7 +2,6 @@ import * as React from 'react'
 import { stub } from 'sinon'
 import mediaQuery from 'css-mediaquery'
 import { createRender, describeConformance, fireEvent, screen } from 'test/utils'
-import TestProvider from '../../test/TestProvider'
 import ImageZoom, { imageZoomClasses as classes } from '.'
 
 function createMatchMedia(hover, ref) {
@@ -31,7 +30,7 @@ function createMatchMedia(hover, ref) {
 }
 
 describe('<ImageZoom />', () => {
-  const render = createRender({ wrapper: TestProvider })
+  const render = createRender()
 
   const defaultProps = {
     children: [
