@@ -1,5 +1,5 @@
 // Based on: https://github.com/mui/material-ui/blob/v4.12.4/packages/material-ui/src/test-utils/describeConformance.js
-/* eslint-disable jest/expect-expect, jest/no-conditional-expect, jest/no-export, jest/valid-title */
+/* eslint-disable jest/expect-expect, jest/no-conditional-expect, jest/no-export */
 import * as React from 'react'
 import ReactTestRenderer from 'react-test-renderer'
 import { screen } from '@testing-library/react'
@@ -244,8 +244,8 @@ export default function describeConformance(minimalElement, getOptions) {
     afterAll(runAfterHook)
 
     filteredTests.forEach((testKey) => {
-      const test = fullSuite[testKey]
-      test(minimalElement, getOptions)
+      const suiteTest = fullSuite[testKey]
+      suiteTest(minimalElement, getOptions)
     })
   })
 }
