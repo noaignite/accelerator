@@ -32,7 +32,7 @@
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build",
     "test": "cd ../../ && cross-env NODE_ENV=test jest packages/oui",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "__typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {
     "@mui/material": "^5.0.0",

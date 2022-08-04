@@ -32,7 +32,7 @@
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build",
     "test": "cd ../../ && cross-env NODE_ENV=test jest packages/formit",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "__typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
