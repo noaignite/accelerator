@@ -45,15 +45,6 @@ const plugins = [
 if (process.env.NODE_ENV === 'production') {
   plugins.push(...productionPlugins)
 }
-if (process.env.NODE_ENV === 'test') {
-  plugins.push([
-    'babel-plugin-module-resolver',
-    {
-      alias: defaultAlias,
-      root: ['./'],
-    },
-  ])
-}
 
 module.exports = {
   presets,
@@ -66,17 +57,6 @@ module.exports = {
     },
   ],
   env: {
-    coverage: {
-      plugins: [
-        [
-          'babel-plugin-module-resolver',
-          {
-            root: ['./'],
-            alias: defaultAlias,
-          },
-        ],
-      ],
-    },
     development: {
       plugins: [
         [
