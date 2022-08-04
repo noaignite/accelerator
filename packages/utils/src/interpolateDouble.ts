@@ -9,7 +9,16 @@ import mapRange from './mapRange'
 //   ])(value)
 // }
 
-function interpolateDouble(value, inMin, inMid, inMax, outMin, outMid, outMax, clamp = false) {
+function interpolateDouble(
+  value: number,
+  inMin: number,
+  inMid: number,
+  inMax: number,
+  outMin: number,
+  outMid: number,
+  outMax: number,
+  clamp = false,
+) {
   if (inMin < inMax) {
     return value > inMid
       ? mapRange(value, inMid, inMax, outMid, outMax, clamp)
