@@ -22,13 +22,16 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "yarn build:types && yarn build:esm && yarn build:node && yarn build:copy-files",
+    "build": "yarn build:modern && yarn build:node && yarn build:stable && yarn build:types && yarn build:copy-files",
+    "build:modern": "node ../../scripts/build modern",
+    "build:node": "node ../../scripts/build node",
+    "build:stable": "node ../../scripts/build stable",
+    "build:types": "tsc -p tsconfig.build.json",
     "build:copy-files": "node ../../scripts/copy-files.js",
     "build:docs": "typedoc",
-    "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel src --config-file ../../babel.config.js --out-dir build --extensions \".ts,.tsx\" --ignore \"**/*.d.ts,**/*.types.ts\"",
-    "build:node": "cross-env NODE_ENV=production BABEL_ENV=node babel src --config-file ../../babel.config.js --out-dir build/node --extensions \".ts,.tsx\" --ignore \"**/*.d.ts,**/*.types.ts\"",
-    "build:types": "tsc --emitDeclarationOnly",
+    "prebuild": "rimraf build",
     "release:yalc": "yarn build && yalc publish ./build",
+    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/react-centra-checkout",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {

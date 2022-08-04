@@ -1,10 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "outDir": "build",
-    "rootDir": "./src",
     "typeRoots": ["../../node_modules/@types", "./src/types"]
   },
-  "include": ["../../node_modules/@noaignite/centra-types/src/index.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*", "../centra-types/src/**/*.d.ts"]
 }
