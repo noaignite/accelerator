@@ -16,13 +16,10 @@ const presets = [
   [
     '@babel/preset-env',
     {
-      // browserslistEnv: process.env.BABEL_ENV || process.env.NODE_ENV,
+      browserslistEnv: process.env.BABEL_ENV || process.env.NODE_ENV,
       debug: process.env.IGN_BUILD_VERBOSE === 'true',
       modules: useESModules ? false : 'commonjs',
       shippedProposals: process.env.BABEL_ENV === 'modern',
-      targets: {
-        browsers: 'defaults, not dead, not IE 11, not op_mini all',
-      },
     },
   ],
   [

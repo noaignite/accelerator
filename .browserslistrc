@@ -1,0 +1,24 @@
+[modern]
+last 1 chrome version
+last 1 edge version
+last 1 firefox version
+last 1 safari version
+node 16
+
+[stable]
+defaults
+not dead
+not op_mini all
+not IE 11
+
+# `npx browserslist "maintained node versions"`
+[node]
+node 14.0
+
+# same as `node`
+[development]
+node 14.0
+
+# same as `node`
+[test]
+node 14.0
