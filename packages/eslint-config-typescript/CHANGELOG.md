@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config-typescript@0.2.5...@noaignite/eslint-config-typescript@0.3.0) (2022-08-09)
+
+
+### chore
+
+* **deps:** typescript now a peer dependency ([6a62344](https://github.com/noaignite/accelerator/commit/6a62344e7fc8134d35adc917c86a21a4f2f9b685))
+
+
+### BREAKING CHANGES
+
+* **deps:** Typescript is no longer installed as now being a peer dependency. Developers must
+now install typescript separately.
+
+
+
+
+
 ## [0.2.5](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config-typescript@0.2.4...@noaignite/eslint-config-typescript@0.2.5) (2022-06-08)
 
 **Note:** Version bump only for package @noaignite/eslint-config-typescript

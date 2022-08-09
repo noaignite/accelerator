@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.13.2...@noaignite/react-centra-checkout@0.14.0) (2022-08-09)
+
+
+### Bug Fixes
+
+* **Context:** Make addGiftCertificate optional ([d62e582](https://github.com/noaignite/accelerator/commit/d62e582981cf420de1ac7484329fe19b8bd6208e))
+* **Context:** Update addGiftCertificate response type ([ce74daa](https://github.com/noaignite/accelerator/commit/ce74daa235fc05e17f44ec461124a4f7580e68a8))
+
+
+### Features
+
+* **Context:** add method addBundleItem ([e79c1e9](https://github.com/noaignite/accelerator/commit/e79c1e99199ae75e5638a12e711da6382f4a50b1))
+* **Context:** add method addGiftCertificate ([2125eb0](https://github.com/noaignite/accelerator/commit/2125eb075c86fc72daba4ce81eb4354d719504a3))
+
+
+
+
+
 ## [0.13.2](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.13.1...@noaignite/react-centra-checkout@0.13.2) (2022-06-21)
 
 

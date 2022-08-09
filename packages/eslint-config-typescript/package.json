@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/eslint-config-typescript",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "private": false,
   "author": "NoA Ignite",
   "description": "Typescript ESLint configuration used by NoA Ignite",

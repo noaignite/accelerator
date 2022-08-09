@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/noaignite/accelerator/compare/@noaignite/create-app@0.3.3...@noaignite/create-app@0.4.0) (2022-08-09)
+
+
+### chore
+
+* require Node.js 14 or higher ([c124848](https://github.com/noaignite/accelerator/commit/c124848d76406a2f4d6054d42e9d38fef08b7e3c))
+
+
+### BREAKING CHANGES
+
+* Drop support for Node 12 which is no longer maintained
+
+
+
+
+
 ## [0.3.3](https://github.com/noaignite/accelerator/compare/@noaignite/create-app@0.3.2...@noaignite/create-app@0.3.3) (2022-06-08)
 
 **Note:** Version bump only for package @noaignite/create-app
