@@ -38,6 +38,14 @@ export interface ContextMethods {
     @param item - The Centra item id
   */
   addItem?(item: string, quantity?: number): Promise<Centra.CheckoutApi.SelectionResponse>
+  /**
+    @param item - The Centra item id
+    @param data - Bundle data
+  */
+  addBundleItem?(
+    item: string,
+    data?: Record<string, unknown>,
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
   addNewsletterSubscription?(
     data: Record<string, unknown>,
   ): Promise<Centra.CheckoutApi.SelectionResponse>
@@ -238,6 +246,11 @@ export function CentraProvider(props: ProviderProps) {
   const addItem = React.useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
       selectionApiCall(apiClient.request('POST', `items/${item}/quantity/${quantity}`)),
+    [selectionApiCall],
+  )
+
+  const addBundleItem = React.useCallback<NonNullable<ContextMethods['addBundleItem']>>(
+    (item, data) => selectionApiCall(apiClient.request('POST', `items/bundles/${item}`, data)),
     [selectionApiCall],
   )
 
@@ -461,6 +474,7 @@ export function CentraProvider(props: ProviderProps) {
   const centraHandlersContext = React.useMemo<ContextMethods>(
     (): ContextMethods => ({
       addItem,
+      addBundleItem,
       addNewsletterSubscription,
       addVoucher,
       decreaseCartItem,
@@ -490,6 +504,7 @@ export function CentraProvider(props: ProviderProps) {
     }),
     [
       addItem,
+      addBundleItem,
       addNewsletterSubscription,
       addVoucher,
       decreaseCartItem,
