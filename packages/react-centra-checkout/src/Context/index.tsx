@@ -46,10 +46,10 @@ export interface ContextMethods {
     item: string,
     data?: Record<string, unknown>,
   ): Promise<Centra.CheckoutApi.SelectionResponse>
-   /**
+  /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
   */
-  addGiftCertificate(giftCertificate: string): Promise<Centra.SelectionResponseExtended>
+  addGiftCertificate?(giftCertificate: string): Promise<Centra.SelectionResponseExtended>
   addNewsletterSubscription?(
     data: Record<string, unknown>,
   ): Promise<Centra.CheckoutApi.SelectionResponse>
@@ -255,6 +255,9 @@ export function CentraProvider(props: ProviderProps) {
 
   const addBundleItem = React.useCallback<NonNullable<ContextMethods['addBundleItem']>>(
     (item, data) => selectionApiCall(apiClient.request('POST', `items/bundles/${item}`, data)),
+    [selectionApiCall],
+  )
+  
   const addGiftCertificate = React.useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
     (giftCertificate) =>
       selectionApiCall(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`)),
