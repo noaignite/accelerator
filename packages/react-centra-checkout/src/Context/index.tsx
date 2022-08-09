@@ -49,7 +49,7 @@ export interface ContextMethods {
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
   */
-  addGiftCertificate?(giftCertificate: string): Promise<Centra.SelectionResponseExtended>
+  addGiftCertificate?(giftCertificate: string): Promise<Centra.CheckoutApi.SelectionResponse>
   addNewsletterSubscription?(
     data: Record<string, unknown>,
   ): Promise<Centra.CheckoutApi.SelectionResponse>
