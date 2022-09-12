@@ -1,13 +1,16 @@
+/* eslint-disable */
+
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import { styled } from '@mui/system'
-import { useThemeProps } from '@mui/material'
+import { OverridableComponent } from '@mui/types'
+import { styled, useThemeProps } from '@mui/material'
+import { AspectRatioProps, AspectRatioTypeMap } from './AspectRatioProps'
 
 const AspectRatioRoot = styled('div', {
   name: 'OuiAspectRatio',
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root,
-})(({ ownerState }) => ({
+})<{ ownerState: AspectRatioProps }>(({ ownerState }) => ({
   '--aspect-ratio': ownerState.ratio,
   display: 'block',
   position: 'relative',
@@ -32,7 +35,11 @@ const AspectRatioRoot = styled('div', {
 }))
 
 const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'OuiAspectRatio' })
+  const props = useThemeProps({
+    props: inProps,
+    name: 'OuiAspectRatio',
+  })
+
   const { children, component = 'div', height, ratio: ratioProp, width, ...other } = props
 
   let ratio = ratioProp
@@ -49,7 +56,7 @@ const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
       {children}
     </AspectRatioRoot>
   )
-})
+}) as OverridableComponent<AspectRatioTypeMap>
 
 AspectRatio.propTypes = {
   children: PropTypes.node,
