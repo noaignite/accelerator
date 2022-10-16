@@ -31,6 +31,12 @@ export interface ProviderProps {
     @defaultValue `centra-checkout-token`
   */
   tokenName?: string
+  tokenCookieOptions?: {
+    path?: string
+    domain?: string
+    secure?: boolean
+    sameSite?: 'Lax' | 'Strict' | 'None'
+  }
 }
 
 export interface ContextMethods {
@@ -168,6 +174,7 @@ export function CentraProvider(props: ProviderProps) {
     receiptPage,
     tokenExpires = 365,
     tokenName = 'centra-checkout-token',
+    tokenCookieOptions = {},
   } = props
 
   const [selection, setSelection] = React.useState<Centra.CheckoutApi.SelectionResponse>(
@@ -238,11 +245,11 @@ export function CentraProvider(props: ProviderProps) {
 
         if (response.token && response.token !== apiToken) {
           apiClient.headers.set('api-token', response.token)
-          cookies.set(tokenName, response.token, { expires: tokenExpires })
+          cookies.set(tokenName, response.token, { expires: tokenExpires, ...tokenCookieOptions })
         }
       }
     },
-    [tokenExpires, tokenName],
+    [tokenExpires, tokenName, tokenCookieOptions],
   )
 
   /* HANDLER METHODS */
