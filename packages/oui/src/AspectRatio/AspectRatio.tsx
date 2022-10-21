@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import { OverridableComponent } from '@mui/types'
@@ -34,7 +32,7 @@ const AspectRatioRoot = styled('div', {
   }),
 }))
 
-const AspectRatio = React.forwardRef(function AspectRatio(inProps, ref) {
+const AspectRatio = React.forwardRef(function AspectRatio(inProps: AspectRatioProps, ref) {
   const props = useThemeProps({
     props: inProps,
     name: 'OuiAspectRatio',

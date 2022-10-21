@@ -1,11 +1,8 @@
 import * as React from 'react'
-import { SxProps } from '@mui/system'
 import { OverrideProps } from '@mui/types'
+import { SxProps } from '@mui/system'
 
-export interface AspectRatioTypeMap<
-  P = Record<string, unknown>,
-  D extends React.ElementType = 'div',
-> {
+export interface AspectRatioTypeMap<P = {}, D extends React.ElementType = 'div'> {
   props: P & {
     children?: React.ReactNode
     height?: number | string

@@ -1,6 +1,6 @@
 import IntersectionObserverAdmin from 'intersection-observer-admin'
 
-let intersectionObserverAdmin = null
+let intersectionObserverAdmin: IntersectionObserverAdmin | null = null
 
 export default function getObserverInstance() {
   if (!intersectionObserverAdmin) {

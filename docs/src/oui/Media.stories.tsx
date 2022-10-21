@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { Media } from '@noaignite/oui'
 
 const sources = {
@@ -38,9 +39,9 @@ export default {
       },
     },
   },
-}
+} as ComponentMeta<typeof Media>
 
-const Template = (args) => <Media {...args} />
+const Template: ComponentStory<typeof Media> = (args) => <Media {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
@@ -55,7 +56,7 @@ export const Picture = Template.bind({})
 Picture.args = {
   component: 'picture',
   breakpoints: sources.jpg,
-  src: sources.jpg[sources.jpg.length - 1],
+  src: sources.jpg.md,
   alt: 'Image description',
   width: 960,
   height: 540,
@@ -88,20 +89,20 @@ export const Audio = Template.bind({})
 Audio.args = {
   component: 'audio',
   src: sources.mp3.xs,
-  autoPlay: true,
-  controls: true,
-  loop: true,
+  // autoPlay: true,
+  // controls: true,
+  // loop: true,
 }
 
 export const Video = Template.bind({})
 Video.args = {
   component: 'video',
   src: sources.mp4.xs,
-  autoPlay: true,
-  controls: true,
-  loop: true,
-  muted: true,
-  playsInline: true,
+  // autoPlay: true,
+  // controls: true,
+  // loop: true,
+  // muted: true,
+  // playsInline: true,
 }
 
 export const Custom = Template.bind({})
@@ -115,13 +116,13 @@ Custom.args = {
     sm: {
       component: 'video',
       src: sources.mp4.xs,
-      autoPlay: true,
-      muted: true,
+      // autoPlay: true,
+      // muted: true,
     },
   },
 }
 
-const Template2 = (args) => (
+const Template2: ComponentStory<typeof Media> = (args) => (
   <React.Fragment>
     {Array.from(new Array(1000), (_, idx) => (
       <Media key={idx} src={sources.jpg.xs} style={{ height: 500 }} {...args} />

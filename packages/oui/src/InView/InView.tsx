@@ -1,10 +1,12 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
+import { OverridableComponent } from '@mui/types'
 import { setRef } from '@mui/material/utils'
 import { useThemeProps } from '@mui/material'
 import { getObserverInstance } from '../utils'
+import { InViewProps, InViewTypeMap } from './InViewProps'
 
-const InView = React.forwardRef(function InView(inProps, ref) {
+const InView = React.forwardRef(function InView(inProps: InViewProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiInView' })
   const {
     component: Component = 'div',
@@ -19,7 +21,7 @@ const InView = React.forwardRef(function InView(inProps, ref) {
   } = props
 
   const observer = getObserverInstance()
-  const rootRef = React.useRef(null)
+  const rootRef = React.useRef<HTMLDivElement | null>(null)
 
   const observerOptions = React.useMemo(
     () => ({
@@ -31,8 +33,8 @@ const InView = React.forwardRef(function InView(inProps, ref) {
   )
 
   const handleEnter = React.useCallback(
-    (entry) => {
-      if (triggerOnce) {
+    (entry: IntersectionObserverEntry) => {
+      if (rootRef.current && triggerOnce) {
         observer.unobserve(rootRef.current, observerOptions)
       }
       if (onEnter) {
@@ -43,12 +45,14 @@ const InView = React.forwardRef(function InView(inProps, ref) {
   )
 
   const handleRef = React.useCallback(
-    (node) => {
+    (node: HTMLDivElement) => {
       if (node) {
         observer.addEnterCallback(node, handleEnter)
-        observer.addExitCallback(node, onExit)
+        if (onExit) {
+          observer.addExitCallback(node, onExit)
+        }
         observer.observe(node, observerOptions)
-      } else {
+      } else if (rootRef.current) {
         observer.unobserve(rootRef.current, observerOptions)
       }
 
@@ -63,7 +67,7 @@ const InView = React.forwardRef(function InView(inProps, ref) {
   }
 
   return <Component ref={handleRef} {...other} />
-})
+}) as OverridableComponent<InViewTypeMap>
 
 InView.propTypes = {
   component: PropTypes.elementType,

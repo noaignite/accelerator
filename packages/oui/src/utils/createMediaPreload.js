@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const SINGLE_SRC_MEDIA_TYPES = ['image', 'video', 'audio', 'iframe']
+const SINGLE_SRC_MEDIA_TYPES = ['audio', 'image', 'video']
 
 export default function createMediaPreload(Wrapper = React.Fragment) {
   return function mediaPreload(options = {}) {

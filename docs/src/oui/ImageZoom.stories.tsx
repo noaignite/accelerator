@@ -1,12 +1,13 @@
 import * as React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { ImageZoom, Media } from '@noaignite/oui'
 
 export default {
   title: 'Oui/ImageZoom',
   component: ImageZoom,
-}
+} as ComponentMeta<typeof ImageZoom>
 
-const Template1 = (args) => (
+const Template1: ComponentStory<typeof ImageZoom> = (args) => (
   <div style={{ minHeight: '150vh', padding: '10vh 10vw' }}>
     <ImageZoom {...args}>
       <img
@@ -27,7 +28,7 @@ const Template1 = (args) => (
 export const Default = Template1.bind({})
 Default.args = {}
 
-const Template2 = (args) => (
+const Template2: ComponentStory<typeof ImageZoom> = (args) => (
   <div style={{ minHeight: '150vh', padding: '10vh 10vw' }}>
     <ImageZoom {...args}>
       <Media src="//source.unsplash.com/DmD8HVOjy4c/400x500" />

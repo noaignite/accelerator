@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
 import { InView } from '@noaignite/oui'
 
 export default {
@@ -8,9 +9,9 @@ export default {
     onEnter: { action: 'onEnter' },
     onExit: { action: 'onExit' },
   },
-}
+} as ComponentMeta<typeof InView>
 
-const Template = (args) => (
+const Template: ComponentStory<typeof InView> = (args) => (
   <InView style={{ margin: '200vh 0' }} {...args}>
     <img
       src="//placekitten.com/400/400"

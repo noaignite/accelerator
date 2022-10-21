@@ -2,11 +2,25 @@
   "extends": "@tsconfig/recommended/tsconfig",
   "compilerOptions": {
     "module": "esnext",
+    "moduleResolution": "node",
     "target": "es6",
     "lib": ["es2020", "dom"],
     "jsx": "react",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "strict": true,
-    "moduleResolution": "node"
+    "strictNullChecks": true,
+    "paths": {
+      "@noaignite/formit": ["./packages/formit/src"],
+      "@noaignite/formit/*": ["./packages/formit/src/*"],
+      "@noaignite/oui": ["./packages/oui/src"],
+      "@noaignite/oui/*": ["./packages/oui/src/*"],
+      "@noaignite/react-centra-checkout": ["./packages/react-centra-checkout/src"],
+      "@noaignite/react-centra-checkout/*": ["./packages/react-centra-checkout/src/*"],
+      "@noaignite/utils": ["./packages/utils/src"],
+      "@noaignite/utils/*": ["./packages/utils/src/*"],
+      "test/*": ["./test/*"]
+    }
   },
   "exclude": ["**/.*/", "**/build", "**/node_modules"]
 }

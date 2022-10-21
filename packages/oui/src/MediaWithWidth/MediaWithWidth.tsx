@@ -1,23 +1,32 @@
-// @inheritedComponent MediaBase
-
 import * as React from 'react'
 import PropTypes from 'prop-types'
+import { OverridableComponent } from '@mui/types'
+import { Breakpoint } from '@mui/system'
 import { useMediaQuery, useTheme } from '@mui/material'
 import MediaBase from '../MediaBase'
+import {
+  MediaWithWidthBreakpoint,
+  MediaWithWidthProps,
+  MediaWithWidthTypeMap,
+} from './MediaWithWidthProps'
 
-/**
- * @ignore - internal component.
- */
-const MediaWithWidth = React.forwardRef(function MediaWithWidth(props, ref) {
+const MediaWithWidth = React.forwardRef(function MediaWithWidth(props: MediaWithWidthProps, ref) {
   const { breakpoints, ...other } = props
 
   const theme = useTheme()
+  if (!breakpoints) {
+    return null
+  }
+
   const keys = [...theme.breakpoints.keys].reverse()
-  const src = keys.reduce((output, key) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const matches = useMediaQuery(theme.breakpoints.up(key))
-    return !output && matches ? breakpoints[key] : output
-  }, null)
+  const src = keys.reduce(
+    (output: MediaWithWidthBreakpoint | null | undefined, key: Breakpoint) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const matches = useMediaQuery(theme.breakpoints.up(key))
+      return !output && matches ? breakpoints[key] : output
+    },
+    null,
+  )
 
   // When rendering the component on the server,
   // we have no idea about the client browser screen width.
@@ -33,7 +42,7 @@ const MediaWithWidth = React.forwardRef(function MediaWithWidth(props, ref) {
   const componentProps = typeof src !== 'object' ? { src } : src
 
   return <MediaBase ref={ref} {...other} {...componentProps} />
-})
+}) as OverridableComponent<MediaWithWidthTypeMap>
 
 MediaWithWidth.propTypes = {
   breakpoints: PropTypes.shape({

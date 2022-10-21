@@ -1,19 +1,20 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
+import { OverridableComponent } from '@mui/types'
 import { chainPropTypes } from '@mui/utils'
 import { useForkRef } from '@mui/material/utils'
-import { styled } from '@mui/system'
-import { ClickAwayListener, Fade, useThemeProps } from '@mui/material'
+import { ClickAwayListener, Fade, styled, useThemeProps } from '@mui/material'
 import { clamp, mapRange } from '@noaignite/utils'
 import { useLatest } from '../utils'
 import classes from './imageZoomClasses'
+import { ImageZoomProps, ImageZoomTypeMap } from './ImageZoomProps'
 
 const ImageZoomRoot = styled('div', {
   name: 'OuiImageZoom',
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root,
-})({
+})<{ ownerState: ImageZoomProps }>({
   position: 'relative',
   display: 'block',
   overflow: 'hidden',
@@ -23,20 +24,22 @@ const ImageZoomDetails = styled('div', {
   name: 'OuiImageZoom',
   slot: 'Details',
   overridesResolver: (props, styles) => styles.details,
-})(({ ownerState }) => ({
+})<{ ownerState: ImageZoomProps }>(({ ownerState }) => ({
   position: 'absolute',
   left: '50%',
   top: '50%',
-  width: `${100 * ownerState.magnitute}%`,
-  height: `${100 * ownerState.magnitute}%`,
   transform: 'translate3d(-50%, -50%, 0)',
+  ...(ownerState.magnitute && {
+    width: `${100 * ownerState.magnitute}%`,
+    height: `${100 * ownerState.magnitute}%`,
+  }),
   '& > *:not(style)': {
     width: '100%',
     height: '100%',
   },
 }))
 
-const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
+const ImageZoom = React.forwardRef(function ImageZoom(inProps: ImageZoomProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiImageZoom' })
   const {
     children,
@@ -45,18 +48,17 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
     magnitute = 2,
     onZoomIn,
     onZoomOut,
-    TransitionProps,
-    // eslint-disable-next-line react/prop-types
     TransitionComponent = Fade,
+    TransitionProps,
     ...other
   } = props
 
   const storedOnZoomIn = useLatest(onZoomIn)
   const storedOnZoomOut = useLatest(onZoomOut)
 
-  const rootRef = React.useRef(null)
+  const rootRef = React.useRef<HTMLDivElement>(null)
   const handleRef = useForkRef(rootRef, ref)
-  const detailsRef = React.useRef(null)
+  const detailsRef = React.useRef<HTMLDivElement>(null)
 
   const [open, setOpen] = React.useState(false)
 
@@ -80,6 +82,10 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
     const isTouch = window.matchMedia('(hover: none)').matches
     const rootEl = rootRef.current
 
+    if (!rootEl) {
+      return undefined
+    }
+
     let rect = rootEl.getBoundingClientRect()
     let cancelScroll = false
 
@@ -87,9 +93,12 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
     const lastPosition = { x: rect.width / 2, y: rect.height / 2 }
     const currentPosition = { x: rect.width / 2, y: rect.height / 2 }
 
-    const getMousePosition = (event) => {
-      const pageX = event.pageX ?? event.changedTouches?.[0]?.pageX
-      const pageY = event.pageY ?? event.changedTouches?.[0]?.pageY
+    const syncRect = () => {
+      rect = rootEl.getBoundingClientRect()
+    }
+
+    const getRectMousePosition = (event: MouseEvent | TouchEvent) => {
+      const { pageX, pageY } = event instanceof TouchEvent ? event.changedTouches[0] : event
 
       const rectX = pageX - window.scrollX - rect.left
       const rectY = pageY - window.scrollY - rect.top
@@ -97,14 +106,14 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
       return [rectX, rectY]
     }
 
-    const preventScroll = (event) => {
+    const handleDocumentTouchMove = (event: TouchEvent) => {
       if (cancelScroll) {
         event.preventDefault()
       }
     }
 
-    const syncRect = () => {
-      rect = rootEl.getBoundingClientRect()
+    const handleClick = () => {
+      ;[zoomIn, zoomOut][+open]()
     }
 
     const handleMouseEnter = () => {
@@ -115,27 +124,23 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
       zoomOut()
     }
 
-    const handleClick = () => {
-      ;[zoomIn, zoomOut][+open]()
-    }
-
-    const handleTouchStart = (event) => {
-      cancelScroll = true
-
-      const [rectX, rectY] = getMousePosition(event)
+    const handleTouchStart = (event: TouchEvent) => {
+      const [rectX, rectY] = getRectMousePosition(event)
       firstPosition.x = rectX
       firstPosition.y = rectY
+
+      cancelScroll = true
     }
 
     const handleTouchEnd = () => {
-      cancelScroll = false
-
       lastPosition.x = currentPosition.x
       lastPosition.y = currentPosition.y
+
+      cancelScroll = false
     }
 
-    const handleMove = (event) => {
-      const [rectX, rectY] = getMousePosition(event)
+    const handleMove = (event: MouseEvent | TouchEvent) => {
+      const [rectX, rectY] = getRectMousePosition(event)
 
       const deltaX = (firstPosition.x - rectX) * -1
       const deltaY = (firstPosition.y - rectY) * -1
@@ -151,40 +156,63 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
       const x = (0.5 + coordinateX * maxMovement) * -100
       const y = (0.5 + coordinateY * maxMovement) * -100
 
-      detailsRef.current.style.transform = `translate3d(${x}%, ${y}%, 0)`
+      if (detailsRef.current) {
+        detailsRef.current.style.transform = `translate3d(${x}%, ${y}%, 0)`
+      }
     }
 
-    const registerListeners = (register) => {
-      const method = `${register ? 'add' : 'remove'}EventListener`
-
+    const registerListeners = () => {
       if (isTouch) {
-        rootEl[method]('click', handleClick)
+        rootEl.addEventListener('click', handleClick)
       } else {
-        rootEl[method]('mouseenter', handleMouseEnter)
-        rootEl[method]('mouseleave', handleMouseLeave)
+        rootEl.addEventListener('mouseenter', handleMouseEnter)
+        rootEl.addEventListener('mouseleave', handleMouseLeave)
       }
 
       if (open) {
-        window[method]('resize', syncRect)
-        window[method]('scroll', syncRect, { passive: true })
+        window.addEventListener('resize', syncRect)
+        window.addEventListener('scroll', syncRect, { passive: true })
         if (isTouch) {
-          document[method]('touchmove', preventScroll, { passive: false })
-          rootEl[method]('touchmove', handleMove)
-          rootEl[method]('touchstart', handleTouchStart)
-          rootEl[method]('touchend', handleTouchEnd)
+          document.addEventListener('touchmove', handleDocumentTouchMove, { passive: false })
+          rootEl.addEventListener('touchmove', handleMove)
+          rootEl.addEventListener('touchstart', handleTouchStart)
+          rootEl.addEventListener('touchend', handleTouchEnd)
         } else {
-          rootEl[method]('mousemove', handleMove)
+          rootEl.addEventListener('mousemove', handleMove)
         }
       }
     }
 
-    registerListeners(true)
+    const deregisterListeners = () => {
+      if (isTouch) {
+        rootEl.removeEventListener('click', handleClick)
+      } else {
+        rootEl.removeEventListener('mouseenter', handleMouseEnter)
+        rootEl.removeEventListener('mouseleave', handleMouseLeave)
+      }
+
+      if (open) {
+        window.removeEventListener('resize', syncRect)
+        window.removeEventListener('scroll', syncRect)
+        if (isTouch) {
+          document.removeEventListener('touchmove', handleDocumentTouchMove)
+          rootEl.removeEventListener('touchmove', handleMove)
+          rootEl.removeEventListener('touchstart', handleTouchStart)
+          rootEl.removeEventListener('touchend', handleTouchEnd)
+        } else {
+          rootEl.removeEventListener('mousemove', handleMove)
+        }
+      }
+    }
+
+    registerListeners()
     return () => {
-      registerListeners(false)
+      deregisterListeners()
     }
   }, [magnitute, open, zoomIn, zoomOut])
 
   const ownerState = {
+    ...props,
     open,
     magnitute,
   }
@@ -212,7 +240,7 @@ const ImageZoom = React.forwardRef(function ImageZoom(inProps, ref) {
       </ImageZoomRoot>
     </ClickAwayListener>
   )
-})
+}) as OverridableComponent<ImageZoomTypeMap>
 
 ImageZoom.propTypes = {
   children: chainPropTypes(PropTypes.node.isRequired, (props) => {
@@ -228,6 +256,7 @@ ImageZoom.propTypes = {
   magnitute: PropTypes.number,
   onZoomIn: PropTypes.func,
   onZoomOut: PropTypes.func,
+  TransitionComponent: PropTypes.elementType,
   TransitionProps: PropTypes.object,
 }
 

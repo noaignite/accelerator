@@ -23,5 +23,8 @@ export * from './MediaLoader'
 export { default as MediaReveal } from './MediaReveal'
 export * from './MediaReveal'
 
+export { default as MediaWithWidth } from './MediaWithWidth'
+export * from './MediaWithWidth'
+
 export { default as ScrollProgress } from './ScrollProgress'
 export * from './ScrollProgress'
