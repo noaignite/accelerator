@@ -3,6 +3,7 @@ import { OverrideProps } from '@mui/types'
 import { MediaBaseProps } from '../MediaBase/MediaBaseProps'
 
 export type MediaWithWidthBreakpoint = string | MediaBaseProps
+// export type MediaWithWidthBreakpoint = string | Record<string, unknown>
 
 export type MediaWithWidthBreakpoints = {
   xs: MediaWithWidthBreakpoint
@@ -13,8 +14,8 @@ export type MediaWithWidthBreakpoints = {
 }
 
 export interface MediaWithWidthTypeMap<P = {}, D extends React.ElementType = 'img'> {
-  props: P & // MediaBaseProps &
-  {
+  props: P & {
+    // MediaBaseProps &
     breakpoints?: MediaWithWidthBreakpoints
   }
   defaultComponent: D

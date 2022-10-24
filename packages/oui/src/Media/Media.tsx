@@ -5,12 +5,12 @@ import { Breakpoint, useTheme, useThemeProps } from '@mui/material'
 import mediaBreakpointsType from '../utils/mediaBreakpointsType'
 import InView from '../InView'
 import MediaBase from '../MediaBase'
-import MediaWithWidth, { MediaWithWidthProps } from '../MediaWithWidth'
+import MediaWithWidth from '../MediaWithWidth'
 import {
-  ExtendMedia,
-  ExtendMediaTypeMap,
+  // ExtendMedia,
+  MediaPictureBreakpoints,
   MediaPreloadType,
-  MediaProps,
+  // MediaProps,
   MediaTypeMap,
 } from './MediaProps'
 
@@ -20,20 +20,6 @@ const MEDIA_PRELOAD_TYPES = {
   audio: 'audio',
   img: 'image',
   video: 'video',
-}
-
-function isPicture(props: MediaProps | MediaWithWidthProps): props is MediaProps {
-  return typeof props.component === 'string' && props.component === 'picture'
-}
-
-// Test code, remove when done
-const options: MediaProps | MediaWithWidthProps = {
-  component: 'picture',
-}
-if (isPicture(options)) {
-  console.log(options)
-} else if (typeof options === 'object') {
-  console.log(options)
 }
 
 /**
@@ -52,8 +38,8 @@ export function extractImgProps(props: Record<string, unknown>) {
   )
 }
 
-const Media = React.forwardRef(function Media(props, ref) {
-  // const props = useThemeProps({ props: inProps, name: 'OuiMedia' })
+const Media = React.forwardRef(function Media(inProps, ref) {
+  const props = useThemeProps({ props: inProps, name: 'OuiMedia' })
   const {
     breakpoints,
     component = 'img',
@@ -65,12 +51,6 @@ const Media = React.forwardRef(function Media(props, ref) {
     ...other
   } = props
 
-  if (component === 'picture') {
-    component
-    console.log(breakpoints)
-  } else {
-    console.log(breakpoints)
-  }
   const theme = useTheme()
 
   const [lazy, setLazy] = React.useState(!priority)
@@ -78,33 +58,33 @@ const Media = React.forwardRef(function Media(props, ref) {
     setLazy(false)
   }, [])
 
-  let componentProps: typeof inProps = {
+  let componentProps = {
     component,
     src: lazy ? placeholder : src,
     ref,
     ...other,
-  }
+  } as typeof inProps
   let ContainerComponent = MediaBase
   let preloadSources
 
-  if (inProps.component === 'picture') {
-    // if (isPicture(componentProps)) {
+  if (component === 'picture') {
     const [imgProps, restProps] = extractImgProps(componentProps)
     componentProps = {
       children: <img alt="" {...imgProps} />,
       ...restProps,
-    }
+    } as typeof inProps
 
     if (breakpoints) {
+      const pictureBreakpoints = breakpoints as MediaPictureBreakpoints
       preloadSources = []
 
-      const validateBreakpointKey = (key: Breakpoint) => Boolean(breakpoints[key])
+      const validateBreakpointKey = (key: Breakpoint) => Boolean(pictureBreakpoints[key])
       const filteredBreakpointKeys = theme.breakpoints.keys.filter(validateBreakpointKey)
 
       const sources: React.ReactNode[] = []
 
       filteredBreakpointKeys.forEach((key, idx, arr) => {
-        const srcOrSources = breakpoints[key]
+        const srcOrSources = pictureBreakpoints[key]
         if (!srcOrSources) {
           return
         }
@@ -118,13 +98,20 @@ const Media = React.forwardRef(function Media(props, ref) {
         if (typeof srcOrSources === 'string') {
           preloadSources.unshift({ media, src: srcOrSources })
 
-          sources.unshift(<source media={media} srcSet={lazy ? placeholder : srcOrSources} />)
+          sources.unshift(
+            <source key={srcOrSources} media={media} srcSet={lazy ? placeholder : srcOrSources} />,
+          )
         } else if ('src' in srcOrSources) {
           preloadSources.unshift({ media, ...srcOrSources })
 
           const { src: breakpointSrc, ...more } = srcOrSources
           sources.unshift(
-            <source media={media} srcSet={lazy ? placeholder : breakpointSrc} {...more} />,
+            <source
+              key={breakpointSrc}
+              media={media}
+              srcSet={lazy ? placeholder : breakpointSrc}
+              {...more}
+            />,
           )
         } else if (Array.isArray(srcOrSources)) {
           srcOrSources.forEach((source) => {
@@ -132,15 +119,20 @@ const Media = React.forwardRef(function Media(props, ref) {
 
             const { src: breakpointSrc, ...more } = source
             sources.unshift(
-              <source media={media} srcSet={lazy ? placeholder : breakpointSrc} {...more} />,
+              <source
+                key={breakpointSrc}
+                media={media}
+                srcSet={lazy ? placeholder : breakpointSrc}
+                {...more}
+              />,
             )
           })
         }
       })
 
-      componentProps.children = [...sources, componentProps.children]
-      // componentProps.children = React.Children.toArray(componentProps.children)
-      // componentProps.children.unshift(sources)
+      // componentProps.children = [...sources, componentProps.children]
+      componentProps.children = React.Children.toArray(componentProps.children)
+      componentProps.children.unshift(sources)
     }
   } else if (breakpoints) {
     componentProps.breakpoints = breakpoints
@@ -185,7 +177,7 @@ const Media = React.forwardRef(function Media(props, ref) {
       <ContainerComponent {...componentProps} />
     </React.Fragment>
   )
-}) as OverridableComponent<ExtendMediaTypeMap<MediaTypeMap>>
+}) as OverridableComponent<MediaTypeMap>
 
 Media.propTypes = {
   breakpoints: mediaBreakpointsType,

@@ -56,7 +56,6 @@ export const Picture = Template.bind({})
 Picture.args = {
   component: 'picture',
   breakpoints: sources.jpg,
-  src: sources.jpg.md,
   alt: 'Image description',
   width: 960,
   height: 540,
