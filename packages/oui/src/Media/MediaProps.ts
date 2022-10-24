@@ -1,8 +1,9 @@
 import * as React from 'react'
 import {
+  // DistributiveOmit,
   OverridableComponent,
-  OverrideProps,
   OverridableTypeMap,
+  OverrideProps,
   // ...
 } from '@mui/types'
 import { MediaBaseProps } from '../MediaBase/MediaBaseProps'
@@ -35,53 +36,22 @@ export type MediaPreloadData = {
   src?: string
 }
 
-// export interface MediaTypeMap<P = {}, D extends React.ElementType = 'img'> {
-//   props: P &
-//     MediaBaseProps & {
-//       breakpoints?: MediaPictureBreakpoints
-//       generatePreload?: (data: MediaPreloadData) => React.ReactNode
-//       placeholder?: string
-//       priority?: boolean
-//       rootMargin?: string
-//     }
-//   defaultComponent: D
-// }
-// export type MediaBreakpoints<D extends React.ElementType> = D extends 'picture'
-//   ? {
-//       component?: D
-//       breakpoints?: MediaPictureBreakpoints
-//     }
-//   : {
-//       component?: D
-//       breakpoints?: MediaWithWidthBreakpoints
-//     }
-
-// export function isPicture(props: MediaProps | MediaWithWidthProps): props is MediaProps {
-//   return typeof props.component === 'string' && props.component === 'picture'
-// }
-
-// export type MediaBreakpoints<C = 'string'> = C extends 'picture'
-//   ? {
-//       component: C
-//       breakpoints?: MediaPictureBreakpoints
-//     }
-//   : {
-//       breakpoints?: MediaWithWidthBreakpoints
-//     }
-// export type MediaBreakpoints = {
-//   breakpoints?: MediaPictureBreakpoints | MediaWithWidthBreakpoints
-// }
+export type MediaBreakpoints =
+  | {
+      component: 'picture'
+      // | 'picture'
+      // | (React.ComponentClass<any, any> & 'picture')
+      // | (React.FunctionComponent<any> & 'picture')
+      breakpoints?: MediaPictureBreakpoints
+    }
+  | {
+      breakpoints?: MediaWithWidthBreakpoints
+    }
 
 export interface MediaTypeMap<P = {}, D extends React.ElementType = 'img'> {
   props: P &
-    MediaBaseProps &
-    (
-      | { component: 'picture'; breakpoints?: MediaPictureBreakpoints }
-      | {
-          component: 'audio' | 'img' | 'video'
-          breakpoints?: MediaWithWidthBreakpoints
-        }
-    ) & {
+    MediaBreakpoints & {
+      // MediaBaseProps &
       generatePreload?: (data: MediaPreloadData) => React.ReactNode
       placeholder?: string
       priority?: boolean
@@ -89,36 +59,45 @@ export interface MediaTypeMap<P = {}, D extends React.ElementType = 'img'> {
     }
   defaultComponent: D
 }
-
-export interface ExtendMediaTypeMap<M extends OverridableTypeMap> {
-  props: M['props'] &
-    (
-      | { component: 'picture'; breakpoints?: MediaPictureBreakpoints }
-      | {
-          component: 'audio' | 'img' | 'video'
-          breakpoints?: MediaWithWidthBreakpoints
-        }
-    )
-  // (M['props'] extends { component?: React.ElementType<HTMLPictureElement | 'picture'> }
-  //   ? MediaTypeMap['props'] & { breakpoints?: MediaPictureBreakpoints }
-  //   : MediaTypeMap['props'] & { breakpoints?: MediaWithWidthBreakpoints })
-  defaultComponent: M['defaultComponent']
-}
+// export interface MediaTypeMap<P = {}, D extends React.ElementType = 'img'> {
+//   props: P &
+//     (
+//       | {
+//           breakpoints?: MediaPictureBreakpoints
+//           component: 'picture'
+//           generatePreload?: (data: MediaPreloadData) => React.ReactNode
+//           placeholder?: string
+//           priority?: boolean
+//           rootMargin?: string
+//         }
+//       | {
+//           breakpoints?: MediaWithWidthBreakpoints
+//           generatePreload?: (data: MediaPreloadData) => React.ReactNode
+//           placeholder?: string
+//           priority?: boolean
+//           rootMargin?: string
+//         }
+//     )
+//   defaultComponent: D
+// }
 
 export type MediaProps<
   D extends React.ElementType = MediaTypeMap['defaultComponent'],
   P = { component?: React.ElementType },
 > = OverrideProps<MediaTypeMap<P, D>, D>
 
-export type ExtendMedia<M extends OverridableTypeMap> = ((
-  // props: { component: 'picture' } & OverrideProps<ExtendMediaTypeMap<M>, 'picture'>,
-  props: M['props'] &
-    (
-      | { component: 'picture'; breakpoints?: MediaPictureBreakpoints }
-      | {
-          component: 'audio' | 'img' | 'video'
-          breakpoints?: MediaWithWidthBreakpoints
-        }
-    ),
-) => JSX.Element) &
-  OverridableComponent<ExtendMediaTypeMap<M>>
+// Trying out dynamic types without success
+// ------------------------------------
+
+// export interface ExtendMediaTypeMap<M extends OverridableTypeMap> {
+//   props: M['props'] &
+//     (M['props'] extends { component?: 'picture' }
+//       ? MediaTypeMap['props'] & { breakpoints?: MediaPictureBreakpoints }
+//       : MediaTypeMap['props'] & { breakpoints?: MediaWithWidthBreakpoints })
+//   defaultComponent: M['defaultComponent']
+// }
+
+// export type ExtendMedia<M extends OverridableTypeMap> = ((
+//   props: { component: 'picture' } & OverrideProps<ExtendMediaTypeMap<M>, 'picture'>,
+// ) => JSX.Element) &
+//   OverridableComponent<ExtendMediaTypeMap<M>>

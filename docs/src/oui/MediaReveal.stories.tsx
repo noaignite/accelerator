@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
 import Fade from '@mui/material/Fade'
 import Zoom from '@mui/material/Zoom'
 import { Media, MediaReveal } from '@noaignite/oui'
@@ -6,11 +7,11 @@ import { Media, MediaReveal } from '@noaignite/oui'
 export default {
   title: 'Oui/MediaReveal',
   component: MediaReveal,
-}
+} as ComponentMeta<typeof MediaReveal>
 
-const Template = ({ mediaProps, ...args }) => (
+const Template: ComponentStory<typeof MediaReveal> = (args) => (
   <MediaReveal {...args}>
-    <Media src="//source.unsplash.com/1920x1080" {...mediaProps} />
+    <Media src="//source.unsplash.com/1920x1080" />
   </MediaReveal>
 )
 
@@ -20,20 +21,6 @@ Default.args = {}
 export const WithRatio = Template.bind({})
 WithRatio.args = {
   ratio: 16 / 9,
-}
-
-export const WithVideo = Template.bind({})
-WithVideo.args = {
-  ratio: 16 / 9,
-  mediaProps: {
-    component: 'video',
-    src: '//www.w3schools.com/html/mov_bbb.mp4',
-    autoPlay: true,
-    controls: true,
-    loop: true,
-    muted: true,
-    playsInline: true,
-  },
 }
 
 export const CustomTransition = Template.bind({})
@@ -49,7 +36,27 @@ RootMargin.args = {
   style: { margin: '150vh 0' },
 }
 
-const Template2 = (args) => (
+const Template2: ComponentStory<typeof MediaReveal> = (args) => (
+  <MediaReveal {...args}>
+    <Media
+      component="video"
+      poster="//source.unsplash.com/1920x1080"
+      src="//www.w3schools.com/html/mov_bbb.mp4"
+      autoPlay
+      controls
+      loop
+      muted
+      playsInline
+    />
+  </MediaReveal>
+)
+
+export const WithVideo = Template2.bind({})
+WithVideo.args = {
+  ratio: 16 / 9,
+}
+
+const Template3: ComponentStory<typeof MediaReveal> = (args) => (
   <MediaReveal {...args}>
     {({ reveal }) => (
       <React.Fragment>
@@ -63,12 +70,12 @@ const Template2 = (args) => (
   </MediaReveal>
 )
 
-export const Placeholder = Template2.bind({})
+export const Placeholder = Template3.bind({})
 Placeholder.args = {
   ratio: 16 / 9,
 }
 
-const Template3 = (args) => (
+const Template4: ComponentStory<typeof MediaReveal> = (args) => (
   <React.Fragment>
     {Array.from(new Array(200), (_, idx) => (
       <MediaReveal key={idx} {...args}>
@@ -78,12 +85,12 @@ const Template3 = (args) => (
   </React.Fragment>
 )
 
-export const DefaultLoadTest = Template3.bind({})
+export const DefaultLoadTest = Template4.bind({})
 DefaultLoadTest.args = {
   ratio: 16 / 9,
 }
 
-export const RootMarginLoadTest = Template3.bind({})
+export const RootMarginLoadTest = Template4.bind({})
 RootMarginLoadTest.args = {
   ratio: 16 / 9,
   rootMargin: '0px',

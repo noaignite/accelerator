@@ -7,10 +7,10 @@ import InView from '../InView'
 import MediaBase from '../MediaBase'
 import MediaWithWidth from '../MediaWithWidth'
 import {
-  // ExtendMedia,
+  ExtendMedia,
   MediaPictureBreakpoints,
   MediaPreloadType,
-  // MediaProps,
+  MediaProps,
   MediaTypeMap,
 } from './MediaProps'
 
@@ -53,6 +53,18 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
   const theme = useTheme()
 
+  if (component === 'picture') {
+    console.log(inProps, component, breakpoints)
+  } else {
+    console.log(inProps, component, breakpoints)
+  }
+
+  if (inProps.component === 'picture') {
+    console.log(inProps, inProps.component, inProps.breakpoints)
+  } else {
+    console.log(inProps, inProps.component, inProps.breakpoints)
+  }
+
   const [lazy, setLazy] = React.useState(!priority)
   const handleEnter = React.useCallback(() => {
     setLazy(false)
@@ -63,7 +75,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     src: lazy ? placeholder : src,
     ref,
     ...other,
-  } as typeof inProps
+  }
   let ContainerComponent = MediaBase
   let preloadSources
 
@@ -72,7 +84,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     componentProps = {
       children: <img alt="" {...imgProps} />,
       ...restProps,
-    } as typeof inProps
+    }
 
     if (breakpoints) {
       const pictureBreakpoints = breakpoints as MediaPictureBreakpoints

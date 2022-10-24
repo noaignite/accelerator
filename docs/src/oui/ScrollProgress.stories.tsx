@@ -1,28 +1,26 @@
 import * as React from 'react'
-import { ScrollProgress } from '@noaignite/oui'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ScrollProgress, ScrollEntry } from '@noaignite/oui'
 
 export default {
   title: 'Oui/ScrollProgress',
   component: ScrollProgress,
-}
+} as ComponentMeta<typeof ScrollProgress>
 
-const Template = (args) => {
-  const [state, setState] = React.useState({})
-  const handleChange = React.useCallback(({ progress, innerProgress, bounds }) => {
-    setState({ progress, innerProgress, bounds })
-  }, [])
+const Template: ComponentStory<typeof ScrollProgress> = (args) => {
+  const [state, setState] = React.useState<ScrollEntry | null>(null)
 
   return (
     <React.Fragment>
       <div style={{ position: 'fixed', padding: 20 }}>
-        Progress: {state.progress}
+        Progress: {state?.progress}
         <br />
-        Inner Progress: {state.innerProgress}
+        Inner Progress: {state?.innerProgress}
         <br />
       </div>
 
       <div style={{ height: '110vh' }} />
-      <ScrollProgress onChange={handleChange} {...args} />
+      <ScrollProgress onChange={setState} {...args} />
       <div style={{ height: '110vh' }} />
     </React.Fragment>
   )

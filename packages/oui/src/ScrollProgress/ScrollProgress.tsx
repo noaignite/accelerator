@@ -1,10 +1,16 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
+import { OverridableComponent } from '@mui/types'
 import { setRef } from '@mui/material/utils'
 import { clamp } from '@noaignite/utils'
 import InView from '../InView'
+import { ScrollProgressTypeMap } from './ScrollProgressProps'
 
-export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = topOffset) {
+export function calculateVerticalProgress(
+  bounds: DOMRect,
+  topOffset = 0,
+  bottomOffset = topOffset,
+) {
   const vh = window.innerHeight
   const progress = (bounds.bottom - topOffset) / (vh + bounds.height - bottomOffset * 2)
 
@@ -14,10 +20,14 @@ export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = 
 const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   const { onChange, onEnter, onExit, ...other } = props
 
-  const rootRef = React.useRef(null)
+  const rootRef = React.useRef<HTMLDivElement | null>(null)
 
   const handleScroll = React.useCallback(() => {
     const target = rootRef.current
+    if (!target) {
+      return
+    }
+
     const maxOffset = Math.min(target.clientHeight, window.innerHeight)
     const bounds = target.getBoundingClientRect()
     const progress = calculateVerticalProgress(bounds)
@@ -29,7 +39,7 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   }, [onChange])
 
   const handleEnter = React.useCallback(
-    (entry) => {
+    (entry: IntersectionObserverEntry) => {
       window.addEventListener('scroll', handleScroll, { passive: true })
       window.addEventListener('resize', handleScroll)
 
@@ -41,7 +51,7 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   )
 
   const handleExit = React.useCallback(
-    (entry) => {
+    (entry: IntersectionObserverEntry) => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
 
@@ -53,7 +63,7 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   )
 
   const handleRef = React.useCallback(
-    (node) => {
+    (node: HTMLDivElement) => {
       rootRef.current = node
       setRef(ref, node)
 
@@ -68,7 +78,7 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
   )
 
   return <InView onEnter={handleEnter} onExit={handleExit} ref={handleRef} {...other} />
-})
+}) as OverridableComponent<ScrollProgressTypeMap>
 
 ScrollProgress.propTypes = {
   onChange: PropTypes.func,

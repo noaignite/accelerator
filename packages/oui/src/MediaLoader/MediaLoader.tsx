@@ -1,17 +1,19 @@
 import * as React from 'react'
 import PropTypes from 'prop-types'
-import mediaLoaded from '@maeertin/medialoaded'
+import mediaLoaded, { MLInstance } from '@maeertin/medialoaded'
+import { OverridableComponent } from '@mui/types'
 import { setRef } from '@mui/material/utils'
+import { MediaLoaderTypeMap } from './MediaLoaderProps'
 
 const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   const { children, component: Component = 'div', onLoaded, ...other } = props
 
-  const rootRef = React.useRef(null)
+  const rootRef = React.useRef<HTMLDivElement | null>(null)
   const isPlainChildren = typeof children !== 'function'
 
   const [loaded, setLoaded] = React.useState(false)
   const handleLoaded = React.useCallback(
-    (instance) => {
+    (instance: MLInstance) => {
       if (rootRef.current) {
         if (!isPlainChildren) {
           setLoaded(true)
@@ -25,7 +27,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
   )
 
   const handleRef = React.useCallback(
-    (node) => {
+    (node: HTMLDivElement) => {
       rootRef.current = node
       setRef(ref, node)
 
@@ -41,7 +43,7 @@ const MediaLoader = React.forwardRef(function MediaLoader(props, ref) {
       {isPlainChildren ? children : children({ loaded })}
     </Component>
   )
-})
+}) as OverridableComponent<MediaLoaderTypeMap>
 
 MediaLoader.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),

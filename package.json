@@ -91,5 +91,6 @@
   "workspaces": [
     "docs",
     "packages/*"
-  ]
+  ],
+  "dependencies": {}
 }
