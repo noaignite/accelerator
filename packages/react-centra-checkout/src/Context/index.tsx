@@ -1,5 +1,6 @@
 import * as React from 'react'
 import cookies from 'js-cookie'
+import type Cookies from 'js-cookie'
 import ApiClient from '../ApiClient'
 import CentraEvents from '../internal/CentraEvents'
 
@@ -31,6 +32,7 @@ export interface ProviderProps {
     @defaultValue `centra-checkout-token`
   */
   tokenName?: string
+  tokenCookieOptions?: Cookies.CookieAttributes
 }
 
 export interface ContextMethods {
@@ -181,6 +183,7 @@ export function CentraProvider(props: ProviderProps) {
     receiptPage,
     tokenExpires = 365,
     tokenName = 'centra-checkout-token',
+    tokenCookieOptions = {},
   } = props
 
   const [selection, setSelection] = React.useState<Centra.CheckoutApi.SelectionResponse>(
@@ -251,11 +254,11 @@ export function CentraProvider(props: ProviderProps) {
 
         if (response.token && response.token !== apiToken) {
           apiClient.headers.set('api-token', response.token)
-          cookies.set(tokenName, response.token, { expires: tokenExpires })
+          cookies.set(tokenName, response.token, { expires: tokenExpires, ...tokenCookieOptions })
         }
       }
     },
-    [tokenExpires, tokenName],
+    [tokenExpires, tokenName, tokenCookieOptions],
   )
 
   /* HANDLER METHODS */
