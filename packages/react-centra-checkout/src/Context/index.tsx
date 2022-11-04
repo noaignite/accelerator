@@ -636,13 +636,16 @@ export function useCentraReceipt(token: string): Centra.CheckoutApi.OrderComplet
 /** Returns the latest orders for the currently logged in user
   @param from - Display orders from this index. Defaults to 0.
   @param size - Display this many orders. Defaults lists all orders.
+  @param token.tokenName - The name of the cookie used to use/store as Centra checkout token
+  @param token.tokenExpires -  When the cookie used to store the Centra checkout token will expire, days as a number or a Date
+  @param token.tokenCookieOptions - Cookie options
 */
 export function useCentraOrders(
   from?: number,
   size?: number,
   token?: {
     tokenName?: string
-    tokenExpires?: number
+    tokenExpires?: number | Date
     tokenCookieOptions?: Cookies.CookieAttributes
   },
 ): Centra.CheckoutApi.OrdersResponse {
@@ -676,7 +679,7 @@ export function useCentraOrders(
         }
         setResult(response)
       })
-  }, [token, setResult, from, size])
+  }, [setResult, from, size, token?.tokenName, token?.tokenCookieOptions, token?.tokenExpires])
 
   React.useEffect(() => {
     fetchOrders()
