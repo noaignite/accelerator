@@ -665,17 +665,14 @@ export function useCentraOrders(
         ...(size && { size }),
       })
       .then((response) => {
-        if (
-          apiToken !== undefined &&
-          response.token &&
-          response.token !== apiToken &&
-          token?.tokenName
-        ) {
+        if (apiToken !== undefined && response.token && response.token !== apiToken) {
           apiClient.headers.set('api-token', response.token)
-          cookies.set(token.tokenName, response.token, {
-            expires: token?.tokenExpires || 365,
-            ...token?.tokenCookieOptions,
-          })
+          if (token?.tokenName) {
+            cookies.set(token.tokenName, response.token, {
+              expires: token?.tokenExpires || 365,
+              ...token?.tokenCookieOptions,
+            })
+          }
         }
         setResult(response)
       })
