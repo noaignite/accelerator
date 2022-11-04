@@ -637,10 +637,21 @@ export function useCentraReceipt(token: string): Centra.CheckoutApi.OrderComplet
   @param from - Display orders from this index. Defaults to 0.
   @param size - Display this many orders. Defaults lists all orders.
 */
-export function useCentraOrders(from?: number, size?: number): Centra.CheckoutApi.OrdersResponse {
+export function useCentraOrders(
+  from?: number,
+  size?: number,
+  tokenName?: string,
+): Centra.CheckoutApi.OrdersResponse {
   const [result, setResult] = React.useState<Centra.CheckoutApi.OrdersResponse>({})
 
   React.useEffect(() => {
+    if (tokenName) {
+      const apiToken = cookies.get(tokenName)
+      if (apiToken) {
+        apiClient.headers.set('api-token', apiToken)
+      }
+    }
+
     // fetch orders
     apiClient
       .request('POST', 'orders', {
@@ -650,7 +661,7 @@ export function useCentraOrders(from?: number, size?: number): Centra.CheckoutAp
       .then((response) => {
         setResult(response)
       })
-  }, [from, size])
+  }, [from, size, tokenName])
 
   return result
 }
