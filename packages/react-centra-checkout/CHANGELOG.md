@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.14.0...@noaignite/react-centra-checkout@0.15.0) (2022-11-04)
+
+
+### Bug Fixes
+
+* **context:** use CookieAttributes type ([cad68b8](https://github.com/noaignite/accelerator/commit/cad68b8cfb0dabed7a9539c29fcf1bb7b1f90e1a))
+
+
+### Features
+
+* **context:** add addBackInStockSubscription support ([6bf6577](https://github.com/noaignite/accelerator/commit/6bf65777768494b8666fa5ba1c546c2f569937c7))
+* **context:** add addCustomGiftCertificate support ([e0a0a7c](https://github.com/noaignite/accelerator/commit/e0a0a7c37e7f4cf211d6dd5e16fb0850d851d2be))
+* **context:** add support for customising cookie options ([8175634](https://github.com/noaignite/accelerator/commit/81756342d474c704ef7a61ba5897a95795805256))
+
+
+
+
+
 # [0.14.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.13.2...@noaignite/react-centra-checkout@0.14.0) (2022-08-09)
 
 
