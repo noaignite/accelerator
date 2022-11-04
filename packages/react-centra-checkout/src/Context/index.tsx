@@ -1,5 +1,6 @@
 import * as React from 'react'
 import cookies from 'js-cookie'
+import type Cookies from 'js-cookie'
 import ApiClient from '../ApiClient'
 import CentraEvents from '../internal/CentraEvents'
 
@@ -31,12 +32,7 @@ export interface ProviderProps {
     @defaultValue `centra-checkout-token`
   */
   tokenName?: string
-  tokenCookieOptions?: {
-    path?: string
-    domain?: string
-    secure?: boolean
-    sameSite?: 'Lax' | 'Strict' | 'None'
-  }
+  tokenCookieOptions?: Cookies.CookieAttributes
 }
 
 export interface ContextMethods {
