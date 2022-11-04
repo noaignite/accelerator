@@ -640,13 +640,19 @@ export function useCentraReceipt(token: string): Centra.CheckoutApi.OrderComplet
 export function useCentraOrders(
   from?: number,
   size?: number,
-  tokenName?: string,
+  token?: {
+    tokenName?: string
+    tokenExpires?: number
+    tokenCookieOptions?: Cookies.CookieAttributes
+  },
 ): Centra.CheckoutApi.OrdersResponse {
   const [result, setResult] = React.useState<Centra.CheckoutApi.OrdersResponse>({})
 
   React.useEffect(() => {
-    if (tokenName) {
-      const apiToken = cookies.get(tokenName)
+    let apiToken: string | undefined
+
+    if (token?.tokenName) {
+      apiToken = cookies.get(token.tokenName)
       if (apiToken) {
         apiClient.headers.set('api-token', apiToken)
       }
@@ -659,9 +665,21 @@ export function useCentraOrders(
         ...(size && { size }),
       })
       .then((response) => {
+        if (
+          apiToken !== undefined &&
+          response.token &&
+          response.token !== apiToken &&
+          token?.tokenName
+        ) {
+          apiClient.headers.set('api-token', response.token)
+          cookies.set(token.tokenName, response.token, {
+            expires: token?.tokenExpires || 365,
+            ...token?.tokenCookieOptions,
+          })
+        }
         setResult(response)
       })
-  }, [from, size, tokenName])
+  }, [from, size, token])
 
   return result
 }
