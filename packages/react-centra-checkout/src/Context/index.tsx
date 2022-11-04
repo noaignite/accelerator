@@ -54,6 +54,14 @@ export interface ContextMethods {
   addBackInStockSubscription?(
     data: Record<string, unknown>,
   ): Promise<Centra.CheckoutApi.SelectionResponse>
+  /**
+    @param giftCertificate - The `giftCertificate` value of the gift certificate to add
+    @param amount - Custom gift certificate amount
+  */
+  addCustomGiftCertificate?(
+    giftCertificate: string,
+    amount: string,
+  ): Promise<Centra.CheckoutApi.SelectionResponse>
 
   addNewsletterSubscription?(
     data: Record<string, unknown>,
@@ -262,10 +270,20 @@ export function CentraProvider(props: ProviderProps) {
     (item, data) => selectionApiCall(apiClient.request('POST', `items/bundles/${item}`, data)),
     [selectionApiCall],
   )
-  
+
   const addGiftCertificate = React.useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
     (giftCertificate) =>
       selectionApiCall(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`)),
+    [selectionApiCall],
+  )
+
+  const addCustomGiftCertificate = React.useCallback<
+    NonNullable<ContextMethods['addCustomGiftCertificate']>
+  >(
+    (giftCertificate, amount) =>
+      selectionApiCall(
+        apiClient.request('POST', `items/gift-certificates/${giftCertificate}/amount/${amount}`),
+      ),
     [selectionApiCall],
   )
 
@@ -499,6 +517,7 @@ export function CentraProvider(props: ProviderProps) {
       addBundleItem,
       addGiftCertificate,
       addBackInStockSubscription,
+      addCustomGiftCertificate,
       addNewsletterSubscription,
       addVoucher,
       decreaseCartItem,
@@ -531,6 +550,7 @@ export function CentraProvider(props: ProviderProps) {
       addBundleItem,
       addGiftCertificate,
       addBackInStockSubscription,
+      addCustomGiftCertificate,
       addNewsletterSubscription,
       addVoucher,
       decreaseCartItem,
