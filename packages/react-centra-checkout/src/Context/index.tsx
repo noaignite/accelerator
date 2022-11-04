@@ -648,7 +648,7 @@ export function useCentraOrders(
 ): Centra.CheckoutApi.OrdersResponse {
   const [result, setResult] = React.useState<Centra.CheckoutApi.OrdersResponse>({})
 
-  React.useEffect(() => {
+  const fetchOrders = React.useCallback(() => {
     let apiToken: string | undefined
 
     if (token?.tokenName) {
@@ -676,7 +676,11 @@ export function useCentraOrders(
         }
         setResult(response)
       })
-  }, [from, size, token])
+  }, [token, setResult, from, size])
+
+  React.useEffect(() => {
+    fetchOrders()
+  }, [from, size, fetchOrders])
 
   return result
 }
