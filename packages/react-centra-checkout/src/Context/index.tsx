@@ -195,7 +195,7 @@ export function CentraProvider(props: ProviderProps) {
 
   // set api token if available
   if (initialSelection?.token) {
-    apiClient.headers.set('api-token', initialSelection.token)
+    apiClient.headers.set('Accept', `application/json; api-token=${initialSelection.token}`)
   }
 
   const selectionApiCall = React.useCallback(
@@ -237,7 +237,7 @@ export function CentraProvider(props: ProviderProps) {
 
       const apiToken = cookies.get(tokenName)
       if (apiToken) {
-        apiClient.headers.set('api-token', apiToken)
+        apiClient.headers.set('Accept', `application/json; api-token=${apiToken}`)
       }
 
       if (!selectionData) {
@@ -253,7 +253,7 @@ export function CentraProvider(props: ProviderProps) {
         setSelection(response)
 
         if (response.token && response.token !== apiToken) {
-          apiClient.headers.set('api-token', response.token)
+          apiClient.headers.set('Accept', `application/json; api-token=${apiToken}`)
           cookies.set(tokenName, response.token, { expires: tokenExpires, ...tokenCookieOptions })
         }
       }
@@ -442,7 +442,7 @@ export function CentraProvider(props: ProviderProps) {
 
   /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
   const resetSelection = React.useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
-    apiClient.headers.delete('api-token')
+    apiClient.headers.set('Accept', 'application/json;')
     cookies.remove(tokenName)
     init()
   }, [init, tokenName])
@@ -623,7 +623,7 @@ export function useCentraReceipt(token: string): Centra.CheckoutApi.OrderComplet
   React.useEffect(() => {
     // create a new ApiClient in order to temporarily use a different token
     const tempApiClient = new ApiClient(apiUrl)
-    tempApiClient.headers.set('api-token', token)
+    tempApiClient.headers.set('Accept', `application/json; api-token=${tempApiClient}`)
 
     tempApiClient.request('GET', 'receipt').then((response) => {
       setResult(response)
