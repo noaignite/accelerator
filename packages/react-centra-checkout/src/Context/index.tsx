@@ -183,7 +183,7 @@ export function CentraProvider(props: ProviderProps) {
     receiptPage,
     tokenExpires = 365,
     tokenName = 'centra-checkout-token',
-    tokenCookieOptions = {},
+    tokenCookieOptions = null,
   } = props
 
   const [selection, setSelection] = React.useState<Centra.CheckoutApi.SelectionResponse>(
