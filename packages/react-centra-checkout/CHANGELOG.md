@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.15.0...@noaignite/react-centra-checkout@0.15.1) (2022-11-08)
+
+
+### Bug Fixes
+
+* **context:** set tokenCookieOptions default value to null ([2b34675](https://github.com/noaignite/accelerator/commit/2b346759d6636eaed508cd99b5920394115bb159))
+
+
+
+
+
 # [0.15.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.14.0...@noaignite/react-centra-checkout@0.15.0) (2022-11-04)
 
 
