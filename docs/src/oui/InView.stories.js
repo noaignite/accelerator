@@ -4,24 +4,60 @@ import { InView } from '@noaignite/oui'
 export default {
   title: 'Oui/InView',
   component: InView,
-  argTypes: {
-    onEnter: { action: 'onEnter' },
-    onExit: { action: 'onExit' },
-  },
 }
 
-const Template = (args) => (
+const Template1 = (args) => {
+  const [inView, setInView] = React.useState(false)
+
+  const handleEnter = () => {
+    setInView(true)
+  }
+
+  const handleExit = () => {
+    setInView(false)
+  }
+
+  return (
+    <InView onEnter={handleEnter} onExit={handleExit} style={{ margin: '200vh 0' }} {...args}>
+      <img
+        src="//placekitten.com/400/400"
+        alt="A11y description"
+        style={{ display: 'block', width: '100%' }}
+      />
+
+      <div style={{ position: 'fixed', top: 0, left: 0, padding: 16, background: '#eee' }}>
+        {inView ? 'In view' : 'Not in view'}
+      </div>
+    </InView>
+  )
+}
+
+export const PlainChildren = Template1.bind({})
+PlainChildren.args = {
+  rootMargin: '0px',
+  triggerOnce: false,
+}
+
+const Template2 = (args) => (
   <InView style={{ margin: '200vh 0' }} {...args}>
-    <img
-      src="//placekitten.com/400/400"
-      alt="A11y description"
-      style={{ display: 'block', width: '100%' }}
-    />
+    {({ inView }) => (
+      <React.Fragment>
+        <img
+          src="//placekitten.com/400/400"
+          alt="A11y description"
+          style={{ display: 'block', width: '100%' }}
+        />
+
+        <div style={{ position: 'fixed', top: 0, left: 0, padding: 16, background: '#eee' }}>
+          {inView ? 'In view' : 'Not in view'}
+        </div>
+      </React.Fragment>
+    )}
   </InView>
 )
 
-export const Default = Template.bind({})
-Default.args = {
+export const RenderPropsChildren = Template2.bind({})
+RenderPropsChildren.args = {
   rootMargin: '0px',
   triggerOnce: false,
 }
