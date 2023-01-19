@@ -12,21 +12,53 @@ export function calculateVerticalProgress(bounds, topOffset = 0, bottomOffset = 
 }
 
 const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
-  const { onChange, onEnter, onExit, ...other } = props
+  const { friction = 0, onChange, onEnter, onExit, precision = 0.001, ...other } = props
 
   const rootRef = React.useRef(null)
 
+  const stateRef = React.useRef({
+    currentInnerProgress: 0,
+    currentProgress: 0,
+    isEasing: false,
+    targetInnerProgress: 0,
+    targetProgress: 0,
+  })
+
+  const handleRaf = React.useCallback(() => {
+    const deltaIP = stateRef.current.targetInnerProgress - stateRef.current.currentInnerProgress
+    const deltaP = stateRef.current.targetProgress - stateRef.current.currentProgress
+
+    stateRef.current.currentInnerProgress += deltaIP * (1 - friction)
+    stateRef.current.currentProgress += deltaP * (1 - friction)
+
+    stateRef.current.isEasing = Math.abs(deltaIP) > precision || Math.abs(deltaP) > precision
+
+    if (stateRef.current.isEasing) {
+      requestAnimationFrame(handleRaf)
+    }
+
+    if (onChange) {
+      onChange({
+        innerProgress: stateRef.current.currentInnerProgress,
+        progress: stateRef.current.currentProgress,
+        target: rootRef.current,
+      })
+    }
+  }, [friction, onChange, precision])
+
   const handleScroll = React.useCallback(() => {
-    const target = rootRef.current
-    const maxOffset = Math.min(target.clientHeight, window.innerHeight)
-    const bounds = target.getBoundingClientRect()
+    const maxOffset = Math.min(rootRef.current.clientHeight, window.innerHeight)
+    const bounds = rootRef.current.getBoundingClientRect()
     const progress = calculateVerticalProgress(bounds)
     const innerProgress = calculateVerticalProgress(bounds, maxOffset)
 
-    if (onChange) {
-      onChange({ bounds, innerProgress, progress, target })
+    stateRef.current.targetInnerProgress = innerProgress
+    stateRef.current.targetProgress = progress
+
+    if (!stateRef.current.isEasing) {
+      requestAnimationFrame(handleRaf)
     }
-  }, [onChange])
+  }, [handleRaf])
 
   const handleEnter = React.useCallback(
     (entry) => {
@@ -71,9 +103,11 @@ const ScrollProgress = React.forwardRef(function ScrollProgress(props, ref) {
 })
 
 ScrollProgress.propTypes = {
+  friction: PropTypes.number,
   onChange: PropTypes.func,
   onEnter: PropTypes.func,
   onExit: PropTypes.func,
+  precision: PropTypes.number,
 }
 
 export default ScrollProgress
