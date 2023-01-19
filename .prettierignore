@@ -1,4 +1,5 @@
 *.md
+/.browserslistrc
 /.git
 /coverage
 /docs/.storybook-static

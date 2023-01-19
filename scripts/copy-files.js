@@ -1,3 +1,4 @@
+// Based on: https://github.com/mui/material-ui/blob/v4.9.7/scripts/copy-files.js
 /* eslint-disable no-console */
 const path = require('path')
 const fse = require('fs-extra')

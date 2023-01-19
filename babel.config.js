@@ -10,16 +10,16 @@ const productionPlugins = [
   ['babel-plugin-react-remove-properties', { properties: ['data-ign-test'] }],
 ]
 
-const useESModules = ['esm'].includes(process.env.BABEL_ENV)
+const useESModules = ['modern', 'stable'].includes(process.env.BABEL_ENV)
 
 const presets = [
   [
     '@babel/preset-env',
     {
+      browserslistEnv: process.env.BABEL_ENV || process.env.NODE_ENV,
+      debug: process.env.IGN_BUILD_VERBOSE === 'true',
       modules: useESModules ? false : 'commonjs',
-      targets: {
-        browsers: 'defaults, not dead, not IE 11, not op_mini all',
-      },
+      shippedProposals: process.env.BABEL_ENV === 'modern',
     },
   ],
   [

@@ -8,8 +8,8 @@
     "utils"
   ],
   "license": "MIT",
-  "main": "./src/index.js",
-  "module": "./src/esm/index.js",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
@@ -19,15 +19,17 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "yarn build:cjs && yarn build:esm && yarn build:es && yarn build:copy-files",
-    "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./build --ignore 'src/**/*.test.js'",
-    "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./build/esm --ignore 'src/**/*.test.js'",
-    "build:es": "cross-env NODE_ENV=production BABEL_ENV=es babel --config-file ../../babel.config.js ./src --out-dir ./build/es --ignore 'src/**/*.test.js'",
+    "build": "yarn build:modern && yarn build:node && yarn build:stable && yarn build:types && yarn build:copy-files",
+    "build:modern": "node ../../scripts/build modern",
+    "build:node": "node ../../scripts/build node",
+    "build:stable": "node ../../scripts/build stable",
+    "build:types": "tsc -p tsconfig.build.json",
     "build:copy-files": "node ../../scripts/copy-files.js",
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build",
-    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/utils"
+    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/utils",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@babel/runtime": "^7.16.0"
@@ -37,6 +39,6 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=14.0.0"
   }
 }

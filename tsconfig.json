@@ -1,12 +1,12 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
+  "extends": "@tsconfig/recommended/tsconfig",
   "compilerOptions": {
-    "strict": true,
-    "jsx": "react",
-    "lib": ["es2016", "dom"],
+    "module": "esnext",
     "target": "es6",
-    "module": "es6",
-    "declaration": true,
+    "lib": ["es2020", "dom"],
+    "jsx": "react",
+    "strict": true,
     "moduleResolution": "node"
-  }
+  },
+  "exclude": ["**/.*/", "**/build", "**/node_modules"]
 }
