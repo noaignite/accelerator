@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types'
 
-const mediaBreakpointType = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.object,
-  PropTypes.arrayOf(PropTypes.object),
-])
+const mediaBreakpointType = PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 
 export default mediaBreakpointType

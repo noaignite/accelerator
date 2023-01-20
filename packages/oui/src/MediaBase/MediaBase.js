@@ -7,52 +7,41 @@ import { useThemeProps } from '@mui/material'
 const MediaBaseRoot = styled('img', {
   name: 'OuiMediaBase',
   slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const { ownerState } = props
-
-    return [
-      styles.root,
-      ownerState.isMediaComponent && styles.media,
-      ownerState.isImageComponent && styles.image,
-      ownerState.isVideoComponent && styles.video,
-    ]
-  },
+  overridesResolver: (props, styles) => styles.root,
 })(({ ownerState }) => ({
   display: 'block',
+  width: '100%',
+  height: 'auto',
+  objectFit: 'cover',
+  ...(ownerState.width &&
+    ownerState.height && {
+      aspectRatio: `${ownerState.width}/${ownerState.height}`,
+    }),
   '& > img': {
-    display: 'inherit',
+    display: 'block',
     width: '100%',
-    height: 'inherit',
+    height: '100%',
     objectFit: 'inherit',
   },
-  ...(ownerState.isMediaComponent && {
-    width: '100%',
-    height: 'auto',
-  }),
-  ...((ownerState.isImageComponent || ownerState.isVideoComponent) && {
-    objectFit: 'cover',
-  }),
 }))
-
-const MEDIA_COMPONENTS = ['video', 'audio', 'picture', 'iframe', 'img']
-const IMAGE_COMPONENTS = ['picture', 'img']
 
 const MediaBase = React.forwardRef(function MediaBase(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'OuiMediaBase' })
-  const { children, component = 'img', lazy, placeholder, src, ...other } = props
+  const { children, component = 'img', height, src, width, ...other } = props
 
   const ownerState = {
     component,
-    isMediaComponent: MEDIA_COMPONENTS.includes(component),
-    isImageComponent: IMAGE_COMPONENTS.includes(component),
-    isVideoComponent: component === 'video',
+    height,
+    width,
   }
 
   return (
     <MediaBaseRoot
       as={component}
       ownerState={ownerState}
-      src={lazy ? placeholder : src}
+      width={width}
+      height={height}
+      src={src}
       ref={ref}
       {...other}
     >
@@ -69,9 +58,9 @@ MediaBase.propTypes = {
     return null
   }),
   component: PropTypes.elementType,
-  lazy: PropTypes.bool,
-  placeholder: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   src: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default MediaBase
