@@ -7,10 +7,6 @@ const sources = {
     sm: '//source.unsplash.com/Sl03gvNZuss',
     md: '//source.unsplash.com/m1m2EZOZVwA',
   },
-  webp: {
-    xs: '//www.gstatic.com/webp/gallery/1.sm.webp',
-    sm: '//www.gstatic.com/webp/gallery/2.sm.webp',
-  },
   mp3: {
     xs: '//www.w3schools.com/html/horse.mp3',
     sm: '//www.w3schools.com/html/horse.mp3',
@@ -42,8 +38,8 @@ export default {
 
 const Template = (args) => <Media {...args} />
 
-export const Default = Template.bind({})
-Default.args = {
+export const Img = Template.bind({})
+Img.args = {
   component: 'img',
   src: sources.jpg.xs,
   alt: 'Image description',
@@ -56,29 +52,6 @@ Picture.args = {
   component: 'picture',
   breakpoints: sources.jpg,
   src: sources.jpg[sources.jpg.length - 1],
-  alt: 'Image description',
-  width: 960,
-  height: 540,
-}
-
-export const PictureSizeAttributes = Template.bind({})
-PictureSizeAttributes.args = {
-  component: 'picture',
-  breakpoints: {
-    xs: { src: `${sources.jpg.xs}/960x540`, width: 960, height: 540 },
-    md: { src: `${sources.jpg.sm}/540x960`, width: 540, height: 960 },
-    xl: { src: `${sources.jpg.md}/960x960`, width: 960, height: 960 },
-  },
-  alt: 'Image description',
-}
-
-export const PictureMultiFormat = Template.bind({})
-PictureMultiFormat.args = {
-  component: 'picture',
-  breakpoints: {
-    xs: [{ src: sources.jpg.xs }, { src: sources.webp.xs, type: 'image/webp' }],
-    sm: [{ src: sources.jpg.sm }, { src: sources.webp.sm, type: 'image/webp' }],
-  },
   alt: 'Image description',
   width: 960,
   height: 540,
@@ -104,8 +77,8 @@ Video.args = {
   playsInline: true,
 }
 
-export const Custom = Template.bind({})
-Custom.args = {
+export const CustomBreakpoints = Template.bind({})
+CustomBreakpoints.args = {
   breakpoints: {
     xs: {
       component: 'img',
@@ -123,22 +96,25 @@ Custom.args = {
 
 const Template2 = (args) => (
   <React.Fragment>
-    {Array.from(new Array(1000), (_, idx) => (
-      <Media key={idx} src={sources.jpg.xs} style={{ height: 500 }} {...args} />
-    ))}
+    <div style={{ marginBottom: '150vh' }}>Scroll down to find image.</div>
+
+    <Media width="16" height="9" {...args} />
   </React.Fragment>
 )
 
-export const DefaultLoadTest = Template2.bind({})
-DefaultLoadTest.args = {}
-
-export const NativeLazyLoadTest = Template2.bind({})
-NativeLazyLoadTest.args = {
-  loading: 'lazy',
-  priority: true,
+export const ImgLazyLoading = Template2.bind({})
+ImgLazyLoading.args = {
+  src: sources.jpg.xs,
 }
 
-export const PriorityLoadTest = Template2.bind({})
-PriorityLoadTest.args = {
-  priority: true,
+export const PictureLazyLoading = Template2.bind({})
+PictureLazyLoading.args = {
+  component: 'picture',
+  breakpoints: { xs: sources.jpg.xs },
+}
+
+export const VideoLazyLoading = Template2.bind({})
+VideoLazyLoading.args = {
+  component: 'video',
+  src: sources.mp4.xs,
 }
