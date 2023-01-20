@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const SINGLE_SRC_MEDIA_TYPES = ['image', 'video', 'audio', 'iframe']
+const SINGLE_SRC_MEDIA_TYPES = ['audio', 'image', 'video']
 
 export default function createMediaPreload(Wrapper = React.Fragment) {
   return function mediaPreload(options = {}) {
@@ -10,11 +10,18 @@ export default function createMediaPreload(Wrapper = React.Fragment) {
 
     return (
       <Wrapper>
-        {sources?.map((source) => (
-          <link key={source.src} rel="preload" as="image" href={source.src} media={source.media} />
-        ))}
+        {component === 'picture' &&
+          sources?.map((source) => (
+            <link
+              key={source.src}
+              rel="preload"
+              as="image"
+              href={source.src}
+              media={source.media}
+            />
+          ))}
 
-        {src && SINGLE_SRC_MEDIA_TYPES.includes(mediaType) && (
+        {SINGLE_SRC_MEDIA_TYPES.includes(mediaType) && src && (
           <link key={src} rel="preload" as={mediaType} href={src} />
         )}
       </Wrapper>
