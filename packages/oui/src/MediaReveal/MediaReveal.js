@@ -6,7 +6,6 @@ import clsx from 'clsx'
 import { useForkRef } from '@mui/material/utils'
 import { styled } from '@mui/system'
 import { Fade, useThemeProps } from '@mui/material'
-import AspectRatio from '../AspectRatio'
 import InView from '../InView'
 import MediaLoader from '../MediaLoader'
 import classes from './mediaRevealClasses'
@@ -74,7 +73,6 @@ const MediaReveal = React.forwardRef(function MediaReveal(inProps, ref) {
   return (
     <MediaLoader
       className={clsx(classes.root, className)}
-      component={AspectRatio}
       onLoaded={handleLoaded}
       ref={handleRef}
       {...other}
