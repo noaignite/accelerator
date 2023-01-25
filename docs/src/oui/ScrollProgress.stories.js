@@ -8,8 +8,8 @@ export default {
 
 const Template = (args) => {
   const [state, setState] = React.useState({})
-  const handleChange = React.useCallback(({ progress, innerProgress, bounds }) => {
-    setState({ progress, innerProgress, bounds })
+  const handleChange = React.useCallback(({ progress, innerProgress }) => {
+    setState({ progress, innerProgress })
   }, [])
 
   return (
