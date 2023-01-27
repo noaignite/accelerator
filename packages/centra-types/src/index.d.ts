@@ -843,6 +843,15 @@ declare namespace Centra {
       pricelist?: string
     }
 
+    interface Market {
+      /** If market is default */
+      default?: boolean
+      /** Market ID */
+      market?: string
+      /** Name of market */
+      name?: string
+    }
+
     /**
      * Order Created object
      */
