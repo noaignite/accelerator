@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.5.1...@noaignite/eslint-config@0.6.0) (2023-01-27)
+
+
+### Features
+
+* bump node engine to 14 ([72f5942](https://github.com/noaignite/accelerator/commit/72f594247b275a60b45890efc06d43c1241c6b24))
+
+
+### BREAKING CHANGES
+
+* Node 12 is no longer supported as it's no longer maintained
+
+
+
+
+
 ## [0.5.1](https://github.com/noaignite/accelerator/compare/@noaignite/eslint-config@0.5.0...@noaignite/eslint-config@0.5.1) (2022-06-08)
 
 **Note:** Version bump only for package @noaignite/eslint-config

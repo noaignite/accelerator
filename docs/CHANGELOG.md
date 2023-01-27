@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/noaignite/accelerator/compare/docs@2.1.11...docs@2.2.0) (2023-01-27)
+
+
+### Features
+
+* **InView:** allow children to be of type function with inView as argument ([4695a02](https://github.com/noaignite/accelerator/commit/4695a02a0f07059ad11c864bd7b4af8fc0ae7f6f))
+
+
+
+
+
 ## [2.1.11](https://github.com/noaignite/accelerator/compare/docs@2.1.10...docs@2.1.11) (2022-11-04)
 
 **Note:** Version bump only for package docs

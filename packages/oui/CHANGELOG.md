@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.0.0](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.3.4...@noaignite/oui@4.0.0) (2023-01-27)
+
+
+### Features
+
+* **AspectRatio:** remove component ([2393172](https://github.com/noaignite/accelerator/commit/23931722f5e2e9c6978fa2e3a2a108aa74454dd6))
+* bump node engine to 14 ([72f5942](https://github.com/noaignite/accelerator/commit/72f594247b275a60b45890efc06d43c1241c6b24))
+* **InView:** allow children to be of type function with inView as argument ([4695a02](https://github.com/noaignite/accelerator/commit/4695a02a0f07059ad11c864bd7b4af8fc0ae7f6f))
+* **MediaBase, Media:** add native lazy loading and ability to set aspect ratio ([c6ec92f](https://github.com/noaignite/accelerator/commit/c6ec92fa03f08815b72c1ea0728468771bfaa7ae))
+* **MediaReveal:** no longer composed with AspectRatio component ([da3048b](https://github.com/noaignite/accelerator/commit/da3048b5f0d5182e86b7c9b10b4fb86930571ae7))
+* **ScrollProgress:** add requestAnimationFrame and a new friction prop ([1497a9e](https://github.com/noaignite/accelerator/commit/1497a9ef6f15e5598c9e574d7e2bbf7e6eb29077))
+* **ScrollProgress:** friction & precision can now be strings and rename internal state vars ([e95ef5f](https://github.com/noaignite/accelerator/commit/e95ef5f341b9d507f1452a3a17dd2c9bea82e092))
+* **utils:** add extra safety conditional and update util tests ([8616ac5](https://github.com/noaignite/accelerator/commit/8616ac540a72466ccc2a45712fb56ae4bae1ec36))
+
+
+### BREAKING CHANGES
+
+* **MediaBase, Media:** The Media component no longer accepts individual breakpoints as arrays and the
+placeholder prop has been removed.
+* **MediaReveal:** No longer takes width, height or ratio for styling aspect ratios
+* **AspectRatio:** AspectRatio component has been removed.
+* **ScrollProgress:** The bounds key has now been removed from the onChange callback arguments.
+* Node 12 is no longer supported as it's no longer maintained
+
+
+
+
+
 ## [3.3.4](https://github.com/noaignite/accelerator/compare/@noaignite/oui@3.3.3...@noaignite/oui@3.3.4) (2022-11-04)
 
 **Note:** Version bump only for package @noaignite/oui
