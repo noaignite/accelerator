@@ -35,19 +35,5 @@ describe('<MediaBase />', () => {
       expect(root).toContainElement(img)
       expect(img).toHaveAttribute('src', '/foo.jpg')
     })
-
-    it('no `src` attribute when `lazy` is specified', () => {
-      render(<MediaBase src="/foo.jpg" lazy data-testid="root" />)
-      const root = screen.getByTestId('root')
-
-      expect(root).not.toHaveAttribute('src')
-    })
-
-    it('the `src` attribute set by `placeholder` when `lazy` is specified', () => {
-      render(<MediaBase src="/foo.jpg" placeholder="/bar.jpg" lazy data-testid="root" />)
-      const root = screen.getByTestId('root')
-
-      expect(root).toHaveAttribute('src', '/bar.jpg')
-    })
   })
 })

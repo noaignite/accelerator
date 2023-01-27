@@ -26,8 +26,8 @@ export function extractImgProps(props) {
   )
 }
 
-export function generateSource({ lazy, media, placeholder, src, ...other }) {
-  return <source key={src} media={media} srcSet={lazy ? placeholder : src} {...other} />
+export function generateSource({ media, src, ...other }) {
+  return <source key={src} media={media} srcSet={src} {...other} />
 }
 
 const Media = React.forwardRef(function Media(inProps, ref) {
@@ -36,10 +36,11 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     breakpoints,
     component = 'img',
     generatePreload,
-    placeholder,
+    height,
     priority,
     rootMargin = '256px', // Value based on: https://web.dev/lazy-loading-best-practices/,
     src,
+    width,
     ...other
   } = props
 
@@ -50,7 +51,15 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     setLazy(false)
   }, [])
 
-  let componentProps = { component, lazy, placeholder, src, ref, ...other }
+  let componentProps = {
+    component,
+    height,
+    loading: lazy ? 'lazy' : undefined,
+    ref,
+    src,
+    width,
+    ...other,
+  }
   let ContainerComponent = MediaBase
   let preloadSources
 
@@ -58,6 +67,8 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     const [imgProps, restProps] = extractImgProps(componentProps)
     componentProps = {
       children: <img alt="" {...imgProps} />,
+      height,
+      width,
       ...restProps,
     }
 
@@ -80,15 +91,10 @@ const Media = React.forwardRef(function Media(inProps, ref) {
 
         if (typeof srcOrSources === 'string') {
           preloadSources.unshift({ media, src: srcOrSources })
-          sources.unshift(generateSource({ lazy, media, placeholder, src: srcOrSources }))
+          sources.unshift(generateSource({ media, src: srcOrSources }))
         } else if ('src' in srcOrSources) {
           preloadSources.unshift({ media, ...srcOrSources })
-          sources.unshift(generateSource({ lazy, media, placeholder, ...srcOrSources }))
-        } else if (Array.isArray(srcOrSources)) {
-          srcOrSources.forEach((source) => {
-            preloadSources.unshift({ media, ...source })
-            sources.unshift(generateSource({ lazy, media, placeholder, ...source }))
-          })
+          sources.unshift(generateSource({ media, ...srcOrSources }))
         }
       })
 
@@ -100,7 +106,7 @@ const Media = React.forwardRef(function Media(inProps, ref) {
     ContainerComponent = MediaWithWidth
   }
 
-  if (!priority) {
+  if (!priority && component === 'video') {
     return (
       <InView
         ContainerComponent={ContainerComponent}
@@ -108,13 +114,16 @@ const Media = React.forwardRef(function Media(inProps, ref) {
         rootMargin={rootMargin}
         triggerOnce
         {...componentProps}
+        loading={undefined}
+        src={lazy ? undefined : src}
       />
     )
   }
 
   // No need to add preloads on the client side. By the time the application is hydrated,
   // it's too late for preloads.
-  const shouldPreload = generatePreload && typeof window === 'undefined'
+  const shouldPreload =
+    generatePreload && (typeof window === 'undefined' || process.env.NODE_ENV === 'test')
 
   return (
     <React.Fragment>
@@ -128,10 +137,11 @@ Media.propTypes = {
   breakpoints: mediaBreakpointsType,
   component: PropTypes.elementType,
   generatePreload: PropTypes.func,
-  placeholder: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   priority: PropTypes.bool,
   rootMargin: PropTypes.string,
   src: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default Media

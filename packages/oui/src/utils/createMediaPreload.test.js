@@ -25,24 +25,58 @@ describe('createMediaPreload', () => {
     })
 
     it('should render a single link tag when `component="img"` & `src` is specified', () => {
-      render(mediaPreload({ component: 'img', src: '/foo.jpg' }))
+      const component = 'img'
+      const src = '/foo.jpg'
+
+      render(mediaPreload({ component, src }))
       const root = screen.getByTestId('root')
       const links = root.getElementsByTagName('link')
 
       expect(links).toHaveLength(1)
       expect(links[0]).toHaveAttribute('as', 'image')
       expect(links[0]).toHaveAttribute('rel', 'preload')
-      expect(links[0]).toHaveAttribute('href', '/foo.jpg')
+      expect(links[0]).toHaveAttribute('href', src)
+      expect(links[0]).not.toHaveAttribute('media')
+    })
+
+    it('should render a single link tag when `component="audio"` & `src` is specified', () => {
+      const component = 'audio'
+      const src = '/foo.mp3'
+
+      render(mediaPreload({ component, src }))
+      const root = screen.getByTestId('root')
+      const links = root.getElementsByTagName('link')
+
+      expect(links).toHaveLength(1)
+      expect(links[0]).toHaveAttribute('as', component)
+      expect(links[0]).toHaveAttribute('rel', 'preload')
+      expect(links[0]).toHaveAttribute('href', src)
+      expect(links[0]).not.toHaveAttribute('media')
+    })
+
+    it('should render a single link tag when `component="video"` & `src` is specified', () => {
+      const component = 'video'
+      const src = '/foo.mp4'
+
+      render(mediaPreload({ component, src }))
+      const root = screen.getByTestId('root')
+      const links = root.getElementsByTagName('link')
+
+      expect(links).toHaveLength(1)
+      expect(links[0]).toHaveAttribute('as', component)
+      expect(links[0]).toHaveAttribute('rel', 'preload')
+      expect(links[0]).toHaveAttribute('href', src)
       expect(links[0]).not.toHaveAttribute('media')
     })
 
     it('should render multiple link tags when `sources` is specified', () => {
+      const component = 'picture'
       const sources = [
         { src: '/foo-400w.jpg', media: '(min-width: 400px)' },
         { src: '/foo-800w.jpg', media: '(min-width: 800px)' },
       ]
 
-      render(mediaPreload({ sources }))
+      render(mediaPreload({ component, sources }))
       const root = screen.getByTestId('root')
       const links = root.getElementsByTagName('link')
 
