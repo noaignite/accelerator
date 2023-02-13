@@ -10,7 +10,6 @@
     "centra"
   ],
   "license": "MIT",
-  "main": "./src/index.d.ts",
   "types": "./src/index.d.ts",
   "repository": {
     "type": "git",
@@ -23,7 +22,7 @@
   "scripts": {
     "build:docs": "typedoc",
     "build": "cp -a src/. build/ && yarn build:copy-files",
-    "build:copy-files": "node ./copy-files.js",
+    "build:copy-files": "node ../../scripts/copy-files.js",
     "release:yalc": "yarn build && yalc publish ./build",
     "typecheck": "tsc -p tsconfig.json"
   },
