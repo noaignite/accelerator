@@ -1,3 +1,6 @@
+import BundleInfo from './BundleInfo'
+import Category from './Category'
+
 export default interface Product {
   available: boolean
   relatedProducts: RelatedProduct[]
@@ -137,14 +140,8 @@ export interface ProductWithMarkets extends Product {
   markets: number[]
 }
 
-export interface BundleInfo {
-  bundle: number
-  priceType: string
-  type: string
-  priceOfItems: number
-  priceMin: string
-  priceMinAsNumber: number
-  priceMax: string
-  priceMaxAsNumber: number
-  discount: number
+export interface ProductUriResponse<P = Product> {
+  found: string
+  product: P
+  category: Category
 }

@@ -1,10 +1,14 @@
-type Response<T> =
-  | ({
-      token: string | null
-    } & Partial<T>)
-  | {
-      token: string | null
-      errors: Record<string, string>
-    }
+export type SuccessResponse<T> = Partial<T> & {
+  token?: string | null
+}
+
+export type ErrorResponse = {
+  token?: string | null
+  errors: Errors
+}
+
+export type Errors = Record<string, string>
+
+type Response<T> = SuccessResponse<T> | ErrorResponse
 
 export default Response

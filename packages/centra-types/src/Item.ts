@@ -1,4 +1,5 @@
 import Product from './Product'
+import BundleInfo from './BundleInfo'
 
 export default interface Item {
   item: string
@@ -42,5 +43,6 @@ export default interface Item {
   priceEachReductionAsNumber: number
   totalPriceBeforeDiscount: string
   totalPriceBeforeDiscountAsNumber: number
+  bundleInfo: BundleInfo
   product: Omit<Product, 'relatedProducts'>
 }
