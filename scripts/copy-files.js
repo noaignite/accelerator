@@ -28,16 +28,16 @@ async function createModulePackages({ from, to }) {
   await Promise.all(
     directoryPackages.map(async (directoryPackage) => {
       const packageJsonPath = path.join(to, directoryPackage, 'package.json')
-      const topLevelPathImportsAreCommonJSModules = await fse.pathExists(
+      const topLevelPathImportsAreESModules = await fse.pathExists(
         path.resolve(path.dirname(packageJsonPath), '../esm'),
       )
 
       const packageJson = {
         sideEffects: false,
-        module: topLevelPathImportsAreCommonJSModules
+        module: topLevelPathImportsAreESModules
           ? path.posix.join('../esm', directoryPackage, 'index.js')
           : './index.js',
-        main: topLevelPathImportsAreCommonJSModules
+        main: topLevelPathImportsAreESModules
           ? './index.js'
           : path.posix.join('../node', directoryPackage, 'index.js'),
         types: './index.d.ts',
