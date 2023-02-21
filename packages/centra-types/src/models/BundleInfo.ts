@@ -11,9 +11,11 @@ export default interface BundleInfo {
 }
 
 export interface BundleInfoExtended extends BundleInfo {
-  sections?: {
-    section?: string
-    quantity?: number
-    products?: number[]
-  }[]
+  sections?: BundleSection[]
+}
+
+export interface BundleSection {
+  section?: string
+  quantity?: number
+  products?: number[]
 }
