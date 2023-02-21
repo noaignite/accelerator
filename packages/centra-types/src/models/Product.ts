@@ -1,5 +1,4 @@
 import BundleInfo from './BundleInfo'
-import Category from './Category'
 
 export default interface Product {
   available: boolean
@@ -138,10 +137,4 @@ export interface ProductWithPrices
 
 export interface ProductWithMarkets extends Product {
   markets: number[]
-}
-
-export interface ProductUriResponse<P = Product> {
-  found: string
-  product: P
-  category: Category
 }

@@ -9,3 +9,11 @@ export default interface BundleInfo {
   priceMaxAsNumber: number
   discount: number
 }
+
+export interface BundleInfoExtended extends BundleInfo {
+  sections: {
+    section: string
+    quantity: number
+    products: number[]
+  }[]
+}
