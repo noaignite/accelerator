@@ -1,5 +1,5 @@
 export default interface Payment {
-  action: 'success' | 'form' | 'redirect' | 'javascript'
+  action?: 'success' | 'form' | 'redirect' | 'javascript'
   code?: string
   formFields?: Record<string, string>
   formHtml?: string

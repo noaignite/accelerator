@@ -1,9 +1,9 @@
-export type SuccessResponse<T> = Partial<T> & {
-  token?: string | null
+export type SuccessResponse<T> = T & {
+  token: string | null
 }
 
 export type ErrorResponse = {
-  token?: string | null
+  token: string | null
   errors: Errors
 }
 

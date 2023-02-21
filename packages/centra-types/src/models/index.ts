@@ -5,7 +5,6 @@ export { default as BrickAndMortar } from './BrickAndMortar'
 export * from './BrickAndMortar'
 
 export { default as Bundle } from './Bundle'
-export * from './Bundle'
 
 export { default as BundleInfo } from './BundleInfo'
 export * from './BundleInfo'
@@ -37,6 +36,8 @@ export { default as Payment } from './Payment'
 export { default as PaymentMethod } from './PaymentMethod'
 
 export { default as PluginFields } from './PluginFields'
+
+export { default as Pricelist } from './Pricelist'
 
 export { default as Product } from './Product'
 export * from './Product'

@@ -10,9 +10,9 @@ import Shipment from './Shipment'
 import Totals from './Totals'
 
 export default interface Order {
-  order: string
-  status: 'untouched' | 'progress' | 'ok' | 'archived' | 'failed'
-  statusDescription:
+  order?: string
+  status?: 'untouched' | 'progress' | 'ok' | 'archived' | 'failed'
+  statusDescription?:
     | 'Pending'
     | 'Confirmed'
     | 'Processing'
@@ -20,20 +20,20 @@ export default interface Order {
     | 'Archived'
     | 'Cancelled'
     | 'Incomplete'
-  date: string
+  date?: string
   giftMessage?: string
-  shipments: Shipment[]
-  language: string
-  currency: string
-  paymentMethod: string
-  paymentMethodName: string
-  shippingMethod: string
-  shippingMethodName: string
+  shipments?: Shipment[]
+  language?: string
+  currency?: string
+  paymentMethod?: string
+  paymentMethodName?: string
+  shippingMethod?: string
+  shippingMethodName?: string
   pluginFields?: PluginFields
   centraCheckoutScript?: string
-  items: Item[]
-  discounts: Discounts
-  totals: Totals
+  items?: Item[]
+  discounts?: Discounts
+  totals?: Totals
   vatExempt?: boolean
   additionalNotes?: string
   address?: Address
@@ -42,22 +42,22 @@ export default interface Order {
 }
 
 export interface OrderCompleteResponse {
-  order: Order
-  languages: Language[]
-  countries: Country[]
-  loggedIn: LoggedIn
-  location: Location
+  order?: Order
+  languages?: Language[]
+  countries?: Country[]
+  loggedIn?: LoggedIn
+  location?: Location
 }
 
 export interface OrdersResponse {
-  orders: Order[]
-  ordersPaging: {
-    from: number
-    size: number
-    totalSize: number
+  orders?: Order[]
+  ordersPaging?: {
+    from?: number
+    size?: number
+    totalSize?: number
   }
-  languages: Language[]
-  countries: Country[]
-  loggedIn: LoggedIn
-  location: Location
+  languages?: Language[]
+  countries?: Country[]
+  loggedIn?: LoggedIn
+  location?: Location
 }
