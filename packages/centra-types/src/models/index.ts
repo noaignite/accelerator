@@ -20,6 +20,8 @@ export { default as Discounts } from './Discounts'
 
 export { default as Filter } from './Filter'
 
+export { default as ImageAttribute } from './ImageAttribute'
+
 export { default as Item } from './Item'
 
 export { default as Language } from './Language'

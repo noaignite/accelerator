@@ -15,7 +15,7 @@ export interface BundleInfoExtended extends BundleInfo {
 }
 
 export interface BundleSection {
-  section?: string
+  section?: number
   quantity?: number
   products?: number[]
 }
