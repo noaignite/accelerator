@@ -1,12 +1,13 @@
 import * as React from 'react'
 import isEqual from 'react-fast-compare'
+import * as CheckoutApi from '@noaignite/centra-types'
 import { useCentraSelection, useCentraHandlers } from '../Context'
 import HtmlEmbed from '../internal/HtmlEmbed'
 
 export interface PaymentEmbedProps {
   values: Record<string, unknown>
-  onPaymentSuccess?(paymentResult: Centra.CheckoutApi.PaymentResponse): void
-  onPaymentError?(error: Record<string, string>): void
+  onPaymentSuccess?(paymentResult: CheckoutApi.SuccessResponse<CheckoutApi.Payment>): void
+  onPaymentError?(error: CheckoutApi.Errors): void
 }
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
@@ -15,9 +16,10 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
   const { values, onPaymentError, onPaymentSuccess } = props
 
   const [paymentResult, setPaymentResult] =
-    React.useState<Centra.CheckoutApi.PaymentResponse | null>(null)
-  const [paymentCallbackError, setPaymentCallbackError] =
-    React.useState<Centra.CheckoutApi.ErrorResponse | null>(null)
+    React.useState<CheckoutApi.Response<CheckoutApi.Payment> | null>(null)
+  const [paymentCallbackError, setPaymentCallbackError] = React.useState<CheckoutApi.Errors | null>(
+    null,
+  )
 
   const previousPaymentMethod = React.useRef<string | null>(null)
 
@@ -59,7 +61,7 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
 
       submitPayment?.(payload)
         .then((result) => {
-          if (result?.errors) {
+          if ('errors' in result && result?.errors) {
             onPaymentError?.(result.errors)
             // set paymentResult to null so that a new POST /payment request is made to refresh the widget
             setPaymentResult(null)
@@ -103,11 +105,13 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
     // don't send termsAndConditions when fetching embed payments, as we don't want it to fail just yet.
     submitPayment?.({ ...values, termsAndConditions: undefined })
       .then((result) => {
-        if (result?.errors) {
+        if ('errors' in result) {
           console.error(result.errors)
           onPaymentError?.(result.errors)
           throw new Error('@noaignite/react-centra-checkout: Error while fetching widget')
-        } else if (result.action === 'form' && !result.formHtml) {
+        }
+
+        if (result.action === 'form' && !result.formHtml) {
           throw new Error('@noaignite/react-centra-checkout: No form to render')
         }
 
@@ -137,7 +141,7 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
     }
   }, [handlePaymentCallback])
 
-  const formHtml = paymentResult?.formHtml
+  const formHtml = paymentResult && 'formHtml' in paymentResult && paymentResult.formHtml
 
   return formHtml ? <HtmlEmbed id="centra-payment-form" html={formHtml} /> : null
 }, isEqual)
