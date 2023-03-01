@@ -2,7 +2,7 @@ import Address, { ShippingAddress } from './Address'
 import Country from './Country'
 import Currency from './Currency'
 import Discounts from './Discounts'
-import Item from './Item'
+import SelectionItem from './SelectionItem'
 import Language from './Language'
 import LoggedIn from './LoggedIn'
 import PluginFields from './PluginFields'
@@ -31,7 +31,7 @@ export default interface Order {
   shippingMethodName?: string
   pluginFields?: PluginFields
   centraCheckoutScript?: string
-  items?: Item[]
+  items?: SelectionItem[]
   discounts?: Discounts
   totals?: Totals
   vatExempt?: boolean

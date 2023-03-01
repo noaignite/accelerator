@@ -1,4 +1,5 @@
 import BundleInfo from './BundleInfo'
+import Item from './Item'
 
 export default interface Product {
   available?: boolean
@@ -66,18 +67,7 @@ export default interface Product {
     }
   >
   defaultLocalizedChart?: string
-  items?: [
-    {
-      item?: string
-      ean?: string
-      sizeId?: string
-      itemTableY?: number
-      itemTableX?: number
-      name?: string
-      sku?: string
-      stock?: string | number
-    },
-  ]
+  items?: Item[]
   categoryName?: string[]
   categoryUri?: string
   categories?: {

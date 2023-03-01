@@ -16,7 +16,7 @@ export interface ProviderProps {
   /** Disables automatic client side fetching of the Centra selection */
   disableInit?: boolean
   /** Sets the initial selection */
-  initialSelection: CheckoutApi.SuccessResponse<CheckoutApi.Selection>
+  initialSelection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>
   /** Used when submitting payment using the POST /payment Centra api call */
   paymentFailedPage: string
   /** Used when submitting payment using the POST /payment Centra api call */
@@ -40,7 +40,10 @@ export interface ContextMethods {
   /**
     @param item - The Centra item id
   */
-  addItem?(item: string, quantity?: number): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  addItem?(
+    item: string,
+    quantity?: number,
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param item - The Centra item id
     @param data - Bundle data
@@ -48,15 +51,17 @@ export interface ContextMethods {
   addBundleItem?(
     item: string,
     data?: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
   */
-  addGiftCertificate?(giftCertificate: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  addGiftCertificate?(
+    giftCertificate: string,
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 
   addBackInStockSubscription?(
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
     @param amount - Custom gift certificate amount
@@ -64,46 +69,46 @@ export interface ContextMethods {
   addCustomGiftCertificate?(
     giftCertificate: string,
     amount: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 
   addNewsletterSubscription?(
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param voucher - The id of the voucher to add
   */
-  addVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  addVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param line - The line id of the item to decrease
   */
-  decreaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  decreaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param line - The line id of the item to increase
   */
-  increaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  increaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param selectionData - Initial selection data
   */
-  init?(selectionData?: CheckoutApi.Response<CheckoutApi.Selection>): Promise<void>
+  init?(selectionData?: CheckoutApi.Response<CheckoutApi.SelectionResponse>): Promise<void>
   loginCustomer?(
     email: string,
     password: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
-  logoutCustomer?(): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  logoutCustomer?(): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
   */
   registerCustomer?(
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param line - The line id of the item to increase
   */
-  removeCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  removeCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param voucher - The id of the voucher to add
   */
-  removeVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  removeVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param i - The `i` query parameter provided by Centra when landing on the password reset page
     @param id - The `id` query parameter provided by Centra when landing on the password reset page
@@ -112,7 +117,7 @@ export interface ContextMethods {
     i: string,
     id: string,
     newPassword: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   resetSelection?(): void
   /**
     @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
@@ -120,43 +125,45 @@ export interface ContextMethods {
   sendCustomerResetPasswordEmail?(
     email: string,
     linkUri: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   submitPayment?(data: Record<string, unknown>): Promise<CheckoutApi.Response<CheckoutApi.Payment>>
   updateCartItemQuantity?(
     line: string,
     quantity: number,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updateCartItemSize?(
-    cartItem: CheckoutApi.Item,
+    cartItem: CheckoutApi.SelectionItem,
     item: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updateCountry?(
     country: string,
     data: { language: string },
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updateCustomer?(
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updateCustomerAddress?(
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
-  updateCustomerEmail?(email: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCustomerEmail?(email: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updateCustomerPassword?(
     password: string,
     newPassword: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
-  updateLanguage?(language: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateLanguage?(language: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updatePaymentFields?(
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
-  updatePaymentMethod?(paymentMethod: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updatePaymentMethod?(
+    paymentMethod: string,
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   updateShippingMethod?(
     shippingMethod: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
-  updateCampaignSite?(uri: string): Promise<CheckoutApi.Response<CheckoutApi.Selection>>
+  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCampaignSite?(uri: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 }
 
-export type ContextProperties = CheckoutApi.SuccessResponse<CheckoutApi.Selection> & {
+export type ContextProperties = CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse> & {
   apiUrl?: string
   apiClient?: ApiClient
 }
@@ -198,9 +205,9 @@ export function CentraProvider(props: ProviderProps) {
     tokenCookieOptions = null,
   } = props
 
-  const [selection, setSelection] = React.useState<CheckoutApi.Response<CheckoutApi.Selection>>(
-    initialSelection || SELECTION_INITIAL_VALUE,
-  )
+  const [selection, setSelection] = React.useState<
+    CheckoutApi.Response<CheckoutApi.SelectionResponse>
+  >(initialSelection || SELECTION_INITIAL_VALUE)
 
   const centraCheckoutScript = 'selection' in selection && selection.selection?.centraCheckoutScript
 
@@ -215,8 +222,8 @@ export function CentraProvider(props: ProviderProps) {
   const selectionApiCall = React.useCallback(
     async (
       apiCall:
-        | Promise<CheckoutApi.Response<CheckoutApi.Selection>>
-        | (() => Promise<CheckoutApi.Response<CheckoutApi.Selection>>),
+        | Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+        | (() => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>),
     ) => {
       window.CentraCheckout?.suspend()
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
@@ -258,7 +265,7 @@ export function CentraProvider(props: ProviderProps) {
         response = (await apiClient.request(
           'GET',
           'selection',
-        )) as CheckoutApi.Response<CheckoutApi.Selection>
+        )) as CheckoutApi.Response<CheckoutApi.SelectionResponse>
       } else {
         response = selectionData
       }
