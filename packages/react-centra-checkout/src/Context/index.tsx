@@ -5,13 +5,15 @@ import * as CheckoutApi from '@noaignite/centra-types'
 import ApiClient from '../ApiClient'
 import CentraEvents from '../internal/CentraEvents'
 
-const apiClient = ApiClient.default
+const defaultApiClient = ApiClient.default
 const centraEvents = CentraEvents.default
 
 /** The prop types that CentraProvider accepts */
 export interface ProviderProps {
   /** Centra API URL */
   apiUrl: string
+  /** The api client to use instead of the default one */
+  apiClient: ApiClient
   children: React.ReactNode
   /** Disables automatic client side fetching of the Centra selection */
   disableInit?: boolean
@@ -193,6 +195,7 @@ const CentraSelectionContext = React.createContext<ContextProperties>({})
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
   const {
+    apiClient: apiClientProp,
     apiUrl,
     children,
     disableInit = false,
@@ -204,6 +207,8 @@ export function CentraProvider(props: ProviderProps) {
     tokenName = 'centra-checkout-token',
     tokenCookieOptions = null,
   } = props
+
+  const apiClient = apiClientProp ?? defaultApiClient
 
   const [selection, setSelection] = React.useState<
     CheckoutApi.Response<CheckoutApi.SelectionResponse>
@@ -249,7 +254,7 @@ export function CentraProvider(props: ProviderProps) {
         centraEvents.dispatch('centra_checkout_callback', response)
       }
     },
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const init = React.useCallback<NonNullable<ContextMethods['init']>>(
@@ -279,7 +284,7 @@ export function CentraProvider(props: ProviderProps) {
         }
       }
     },
-    [tokenExpires, tokenName, tokenCookieOptions],
+    [tokenName, apiClient, tokenExpires, tokenCookieOptions],
   )
 
   /* HANDLER METHODS */
@@ -287,18 +292,18 @@ export function CentraProvider(props: ProviderProps) {
   const addItem = React.useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
       selectionApiCall(apiClient.request('POST', `items/${item}/quantity/${quantity}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const addBundleItem = React.useCallback<NonNullable<ContextMethods['addBundleItem']>>(
     (item, data) => selectionApiCall(apiClient.request('POST', `items/bundles/${item}`, data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const addGiftCertificate = React.useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
     (giftCertificate) =>
       selectionApiCall(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const addCustomGiftCertificate = React.useCallback<
@@ -308,22 +313,22 @@ export function CentraProvider(props: ProviderProps) {
       selectionApiCall(
         apiClient.request('POST', `items/gift-certificates/${giftCertificate}/amount/${amount}`),
       ),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const increaseCartItem = React.useCallback<NonNullable<ContextMethods['increaseCartItem']>>(
     (line) => selectionApiCall(apiClient.request('POST', `lines/${line}/quantity/1`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const decreaseCartItem = React.useCallback<NonNullable<ContextMethods['decreaseCartItem']>>(
     (line) => selectionApiCall(apiClient.request('DELETE', `lines/${line}/quantity/1`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const removeCartItem = React.useCallback<NonNullable<ContextMethods['removeCartItem']>>(
     (line) => selectionApiCall(apiClient.request('DELETE', `lines/${line}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCartItemQuantity = React.useCallback<
@@ -331,7 +336,7 @@ export function CentraProvider(props: ProviderProps) {
   >(
     (line, quantity) =>
       selectionApiCall(apiClient.request('PUT', `lines/${line}/quantity/${quantity}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCartItemSize = React.useCallback<NonNullable<ContextMethods['updateCartItemSize']>>(
@@ -346,27 +351,27 @@ export function CentraProvider(props: ProviderProps) {
 
         return response
       }),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const addVoucher = React.useCallback<NonNullable<ContextMethods['addVoucher']>>(
     (voucher) => selectionApiCall(apiClient.request('POST', 'vouchers', { voucher })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const removeVoucher = React.useCallback<NonNullable<ContextMethods['removeVoucher']>>(
     (voucher) => selectionApiCall(apiClient.request('DELETE', `vouchers/${voucher}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCountry = React.useCallback<NonNullable<ContextMethods['updateCountry']>>(
     (country, data) => selectionApiCall(apiClient.request('PUT', `countries/${country}`, data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateLanguage = React.useCallback<NonNullable<ContextMethods['updateLanguage']>>(
     (language) => selectionApiCall(apiClient.request('PUT', `languages/${language}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateShippingMethod = React.useCallback<
@@ -374,18 +379,18 @@ export function CentraProvider(props: ProviderProps) {
   >(
     (shippingMethod) =>
       selectionApiCall(apiClient.request('PUT', `shipping-methods/${shippingMethod}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updatePaymentMethod = React.useCallback<NonNullable<ContextMethods['updatePaymentMethod']>>(
     (paymentMethod) =>
       selectionApiCall(apiClient.request('PUT', `payment-methods/${paymentMethod}`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updatePaymentFields = React.useCallback<NonNullable<ContextMethods['updatePaymentFields']>>(
     (data) => selectionApiCall(apiClient.request('PUT', `payment-fields`, data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const submitPayment = React.useCallback<NonNullable<ContextMethods['submitPayment']>>(
@@ -428,37 +433,37 @@ export function CentraProvider(props: ProviderProps) {
       }
       return response
     },
-    [paymentFailedPage, paymentReturnPage, receiptPage],
+    [apiClient, paymentFailedPage, paymentReturnPage, receiptPage],
   )
 
   const addBackInStockSubscription = React.useCallback<
     NonNullable<ContextMethods['addBackInStockSubscription']>
   >(
     (data) => selectionApiCall(apiClient.request('POST', 'back-in-stock-subscription', data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const addNewsletterSubscription = React.useCallback<
     NonNullable<ContextMethods['addNewsletterSubscription']>
   >(
     (data) => selectionApiCall(apiClient.request('POST', 'newsletter-subscription', data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const loginCustomer = React.useCallback<NonNullable<ContextMethods['loginCustomer']>>(
     (email, password) =>
       selectionApiCall(apiClient.request('POST', `login/${email}`, { password })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const logoutCustomer = React.useCallback<NonNullable<ContextMethods['logoutCustomer']>>(
     () => selectionApiCall(apiClient.request('POST', `logout`)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const registerCustomer = React.useCallback<NonNullable<ContextMethods['registerCustomer']>>(
     (data) => selectionApiCall(apiClient.request('POST', `register`, data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const resetCustomerPassword = React.useCallback<
@@ -466,7 +471,7 @@ export function CentraProvider(props: ProviderProps) {
   >(
     (i, id, newPassword) =>
       selectionApiCall(apiClient.request('POST', `password-reset`, { i, id, newPassword })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
@@ -474,28 +479,31 @@ export function CentraProvider(props: ProviderProps) {
     apiClient.headers.delete('api-token')
     cookies.remove(tokenName)
     init()
-  }, [init, tokenName])
+  }, [apiClient.headers, init, tokenName])
 
   const sendCustomerResetPasswordEmail = React.useCallback<
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
   >(
     (email, linkUri) =>
       selectionApiCall(apiClient.request('POST', `password-reset-email/${email}`, { linkUri })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCustomer = React.useCallback<NonNullable<ContextMethods['updateCustomer']>>(
     (data) => selectionApiCall(apiClient.request('PUT', `customer/update`, data)),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCustomerAddress = React.useCallback<
     NonNullable<ContextMethods['updateCustomerAddress']>
-  >((data) => selectionApiCall(apiClient.request('PUT', `address`, data)), [selectionApiCall])
+  >(
+    (data) => selectionApiCall(apiClient.request('PUT', `address`, data)),
+    [apiClient, selectionApiCall],
+  )
 
   const updateCustomerEmail = React.useCallback<NonNullable<ContextMethods['updateCustomerEmail']>>(
     (newEmail) => selectionApiCall(apiClient.request('PUT', `email`, { newEmail })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCustomerPassword = React.useCallback<
@@ -503,12 +511,12 @@ export function CentraProvider(props: ProviderProps) {
   >(
     (password, newPassword) =>
       selectionApiCall(apiClient.request('PUT', `password`, { password, newPassword })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   const updateCampaignSite = React.useCallback<NonNullable<ContextMethods['updateCampaignSite']>>(
     (uri) => selectionApiCall(apiClient.request('PUT', `campaign-site`, { uri })),
-    [selectionApiCall],
+    [apiClient, selectionApiCall],
   )
 
   /* EFFECTS */
@@ -618,7 +626,7 @@ export function CentraProvider(props: ProviderProps) {
       apiUrl,
       apiClient,
     }),
-    [selection, apiUrl],
+    [selection, apiUrl, apiClient],
   )
 
   return (
@@ -673,6 +681,7 @@ export function useCentraReceipt(
 export function useCentraOrders(
   from?: number,
   size?: number,
+  apiClient = defaultApiClient,
 ): CheckoutApi.Response<CheckoutApi.OrdersResponse> {
   const [result, setResult] = React.useState<CheckoutApi.Response<CheckoutApi.OrdersResponse>>({})
 
@@ -686,7 +695,7 @@ export function useCentraOrders(
       .then((response) => {
         setResult(response)
       })
-  }, [from, size])
+  }, [apiClient, from, size])
 
   return result
 }
