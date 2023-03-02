@@ -1,8 +1,8 @@
 // Based on: https://github.com/mui/material-ui/blob/v4.9.7/scripts/copy-files.js
 /* eslint-disable no-console */
-const path = require('path')
-const fse = require('fs-extra')
-const glob = require('glob')
+import path from 'path'
+import fse from 'fs-extra'
+import glob from 'glob'
 
 const packagePath = process.cwd()
 const buildPath = path.join(packagePath, './build')
@@ -28,16 +28,16 @@ async function createModulePackages({ from, to }) {
   await Promise.all(
     directoryPackages.map(async (directoryPackage) => {
       const packageJsonPath = path.join(to, directoryPackage, 'package.json')
-      const topLevelPathImportsAreESModules = await fse.pathExists(
+      const topLevelPathImportsAreCommonJSModules = await fse.pathExists(
         path.resolve(path.dirname(packageJsonPath), '../esm'),
       )
 
       const packageJson = {
         sideEffects: false,
-        module: topLevelPathImportsAreESModules
+        module: topLevelPathImportsAreCommonJSModules
           ? path.posix.join('../esm', directoryPackage, 'index.js')
           : './index.js',
-        main: topLevelPathImportsAreESModules
+        main: topLevelPathImportsAreCommonJSModules
           ? './index.js'
           : path.posix.join('../node', directoryPackage, 'index.js'),
         types: './index.d.ts',

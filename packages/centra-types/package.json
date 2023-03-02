@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "mkdir build && cp index.ts build/ && cp -a api/ build/api/ && cp -a models/ build/models/ && yarn build:copy-files",
-    "build:copy-files": "node ../../scripts/copy-files.js",
+    "build:copy-files": "node ../../scripts/copy-files.mjs",
     "build:docs": "typedoc",
     "prebuild": "rimraf build",
     "release:yalc": "yarn build && yalc publish ./build",
