@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.0...@noaignite/react-centra-checkout@1.0.0-alpha.1) (2023-03-02)
+
+
+### Bug Fixes
+
+* **ApiClient:** make sure headers are not overwritten ([dc55792](https://github.com/noaignite/accelerator/commit/dc55792620aa061c315fc555a02df949aa584c61))
+
+
+### Features
+
+* update types ([0217ff9](https://github.com/noaignite/accelerator/commit/0217ff9263bc7c819ce86e9d663a8131640ac8b4))
+
+
+
+
+
 # [0.16.0](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@0.15.1...@noaignite/react-centra-checkout@0.16.0) (2023-01-27)
 
 

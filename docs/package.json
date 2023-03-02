@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "private": true,
   "author": "NoA Ignite",
   "license": "MIT",
@@ -13,8 +13,8 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.10.11",
-    "@noaignite/formit": "^3.0.0",
-    "@noaignite/oui": "^4.0.0",
+    "@noaignite/formit": "^3.0.1",
+    "@noaignite/oui": "^4.0.1",
     "@storybook/addon-a11y": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/react": "^6.5.10",

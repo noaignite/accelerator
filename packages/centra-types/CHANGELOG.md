@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.1](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.0...@noaignite/centra-types@1.0.0-alpha.1) (2023-03-02)
+
+
+### Features
+
+* **build:** remove local copy-files and use root script ([ec1c900](https://github.com/noaignite/accelerator/commit/ec1c900018a0138070b7f360c4d93bd27ae614bc))
+* update types ([0217ff9](https://github.com/noaignite/accelerator/commit/0217ff9263bc7c819ce86e9d663a8131640ac8b4))
+
+
+
+
+
 # [0.4.0](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@0.3.3...@noaignite/centra-types@0.4.0) (2023-01-27)
 
 
