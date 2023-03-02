@@ -20,7 +20,8 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "mkdir build && cp index.js build && node ../../scripts/copy-files.js",
+    "build": "mkdir build && cp index.js build && yarn build:copy-files",
+    "build:copy-files": "node ../../scripts/copy-files.mjs",
     "prebuild": "rimraf build",
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build"
