@@ -15,7 +15,7 @@ class ApiClient {
     this.options = options
   }
 
-  async request(method: string, endpoint: string, data: Record<string, unknown> = {}) {
+  request = async (method: string, endpoint: string, data: Record<string, unknown> = {}) => {
     const response = await fetch(`${this.baseUrl}/${endpoint}`, {
       headers: this.headers,
       mode: 'cors',

@@ -35,6 +35,8 @@ export * from './Order'
 
 export type { default as Payment } from './Payment'
 
+export type { default as PaymentField } from './PaymentField'
+
 export type { default as PaymentMethod } from './PaymentMethod'
 
 export type { default as PluginFields } from './PluginFields'
@@ -48,6 +50,9 @@ export type { default as Response } from './Response'
 export * from './Response'
 
 export type { default as Selection } from './Selection'
-export * from './Selection'
+
+export type { default as SelectionItem } from './SelectionItem'
 
 export type { default as Shipment } from './Shipment'
+
+export type { default as ShippingMethod } from './ShippingMethod'
