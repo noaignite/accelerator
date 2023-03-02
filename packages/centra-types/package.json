@@ -10,8 +10,7 @@
     "centra"
   ],
   "license": "MIT",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
+  "types": "./index.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
@@ -21,9 +20,10 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build:docs": "typedoc",
-    "build": "cp -a src/. build/ && yarn build:copy-files",
+    "build": "mkdir build && cp index.ts build/ && cp -a api/ build/api/ && cp -a models/ build/models/ && yarn build:copy-files",
     "build:copy-files": "node ../../scripts/copy-files.js",
+    "build:docs": "typedoc",
+    "prebuild": "rimraf build",
     "release:yalc": "yarn build && yalc publish ./build",
     "typecheck": "tsc -p tsconfig.json"
   },
