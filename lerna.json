@@ -5,7 +5,7 @@
       "message": "chore: publish"
     },
     "version": {
-      "allowBranch": "main",
+      "allowBranch": ["main", "beta", "alpha"],
       "message": "chore: publish"
     }
   },
