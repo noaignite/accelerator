@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.2](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.1...@noaignite/react-centra-checkout@1.0.0-alpha.2) (2023-03-03)
+
+
+### Features
+
+* **Context:** add possibility to pass a different api client ([9ab5405](https://github.com/noaignite/accelerator/commit/9ab540562b36261d600686ccf2e0a109f66da823))
+* **Context:** make apiUrl and apiClient optional ([85f5166](https://github.com/noaignite/accelerator/commit/85f51661efc24a8cbbac7edd296b1abbca674f98))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.0...@noaignite/react-centra-checkout@1.0.0-alpha.1) (2023-03-02)
 
 
