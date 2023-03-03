@@ -11,9 +11,9 @@ const centraEvents = CentraEvents.default
 /** The prop types that CentraProvider accepts */
 export interface ProviderProps {
   /** Centra API URL */
-  apiUrl: string
+  apiUrl?: string
   /** The api client to use instead of the default one */
-  apiClient: ApiClient
+  apiClient?: ApiClient
   children: React.ReactNode
   /** Disables automatic client side fetching of the Centra selection */
   disableInit?: boolean
@@ -217,7 +217,9 @@ export function CentraProvider(props: ProviderProps) {
   const centraCheckoutScript = 'selection' in selection && selection.selection?.centraCheckoutScript
 
   // set api client url
-  apiClient.baseUrl = apiUrl
+  if (apiUrl) {
+    apiClient.baseUrl = apiUrl
+  }
 
   // set api token if available
   if (initialSelection?.token) {
