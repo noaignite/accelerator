@@ -1,6 +1,7 @@
 import Address, { ShippingAddress } from '../models/Address'
 import Country from '../models/Country'
 import Language from '../models/Language'
+import Location from '../models/Location'
 import LoggedIn from '../models/LoggedIn'
 import PaymentField from '../models/PaymentField'
 import PaymentMethod from '../models/PaymentMethod'
