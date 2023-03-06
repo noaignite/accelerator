@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.2](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.1...@noaignite/centra-types@1.0.0-alpha.2) (2023-03-06)
+
+
+### Bug Fixes
+
+* **Location:** add missing pricelist ([c21892b](https://github.com/noaignite/accelerator/commit/c21892b740e5502124aaef6272db1fa553ec60df))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.0...@noaignite/centra-types@1.0.0-alpha.1) (2023-03-02)
 
 
