@@ -31,6 +31,8 @@ export type { default as Location } from './Location'
 
 export type { default as LoggedIn } from './LoggedIn'
 
+export type { default as Market } from './Market'
+
 export type { default as Order } from './Order'
 export * from './Order'
 

@@ -1,16 +1,18 @@
 export default interface Address {
-  firstName?: string
-  lastName?: string
-  email?: string
-  phoneNumber?: string
-  company?: string
   address1?: string
   address2?: string
-  zipCode?: string
   city?: string
-  state?: string
+  company?: string
   country?: string
+  email?: string
+  firstName?: string
+  identityNumber?: string
+  lastName?: string
+  newsletter?: boolean
+  phoneNumber?: string
+  state?: string
   vatNumber?: string
+  zipCode?: string
 }
 
-export type ShippingAddress = Omit<Address, 'vatNumber'>
+export type ShippingAddress = Omit<Address, 'vatNumber', 'newsletter', 'identityNumber'>
