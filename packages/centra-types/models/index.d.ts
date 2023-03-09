@@ -19,6 +19,7 @@ export type { default as Currency } from './Currency'
 export type { default as Discounts } from './Discounts'
 
 export type { default as Filter } from './Filter'
+export * from './Filter'
 
 export type { default as ImageAttribute } from './ImageAttribute'
 
