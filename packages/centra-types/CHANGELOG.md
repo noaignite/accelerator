@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.4](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.3...@noaignite/centra-types@1.0.0-alpha.4) (2023-03-09)
+
+
+### Features
+
+* add Market, update Address and Location ([cf72813](https://github.com/noaignite/accelerator/commit/cf728136f301a9ef7848eeee8a6a3f705b675a44))
+
+
+
+
+
 # [1.0.0-alpha.3](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.2...@noaignite/centra-types@1.0.0-alpha.3) (2023-03-09)
 
 
