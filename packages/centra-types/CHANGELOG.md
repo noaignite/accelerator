@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.3](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.2...@noaignite/centra-types@1.0.0-alpha.3) (2023-03-09)
+
+
+### Bug Fixes
+
+* **Filter:** add missing FilterValue type ([66972a4](https://github.com/noaignite/accelerator/commit/66972a4daed036b710b6170d5094d4cb6624e4db))
+
+
+
+
+
 # [1.0.0-alpha.2](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.1...@noaignite/centra-types@1.0.0-alpha.2) (2023-03-06)
 
 
