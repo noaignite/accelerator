@@ -1,5 +1,4 @@
 import Product from './Product'
-import BundleInfo from './BundleInfo'
 
 export default interface SelectionItem {
   item?: string
@@ -43,6 +42,35 @@ export default interface SelectionItem {
   priceEachReductionAsNumber?: number
   totalPriceBeforeDiscount?: string
   totalPriceBeforeDiscountAsNumber?: number
-  bundleInfo?: BundleInfo
+  bundle?: {
+    item?: string
+    product?: string
+    brandName?: string
+    productName?: string
+    productUrl?: string | null
+    category?: string | null
+    size?: string
+    sku?: string
+    ean?: string
+    silkProduct?: string
+    silkVariant?: string
+    quantity?: number
+    comment?: string
+    localizedSize?: string | null
+    priceEach?: string
+    priceEachAsNumber?: number
+    totalPrice?: string
+    totalPriceAsNumber?: number
+    priceEachBeforeDiscount?: string
+    priceEachBeforeDiscountAsNumber?: number
+    anyDiscount?: boolean
+    taxPercent?: number
+    priceEachWithoutTax?: string
+    priceEachWithoutTaxAsNumber?: number
+    priceEachReduction?: string
+    priceEachReductionAsNumber?: number
+    totalPriceBeforeDiscount?: string
+    totalPriceBeforeDiscountAsNumber?: number
+  }[]
   product?: Omit<Product, 'relatedProducts'>
 }
