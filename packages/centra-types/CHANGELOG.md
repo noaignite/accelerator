@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.5...@noaignite/centra-types@1.0.0-alpha.6) (2023-03-21)
+
+
+### Bug Fixes
+
+* **SelectionItem:** remove wrong bundleInfo property, add bundle ([4cb3cfe](https://github.com/noaignite/accelerator/commit/4cb3cfe300ff0a73a003994d3f1cd2e3d491435a))
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.4...@noaignite/centra-types@1.0.0-alpha.5) (2023-03-14)
 
 
