@@ -80,6 +80,62 @@ const BasicExample = () => {
 export default BasicExample
 ```
 
+#### Sourcing values from API call
+
+Sometimes, the values you want to edit via Formit originates from an API.
+
+We could do this by using the `setValues` hook and a `useEffect`.
+
+```jsx
+import * as React from 'react'
+import { TextField } from '@mui/material'
+import { useFormit } from '@noaignite/formit'
+
+const BasicExample = () => {
+  const { getFieldMeta, getFieldProps, isSubmitting, onSubmit, setValues } = useFormit({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationErrors: {
+      email: 'Please enter a valid email address',
+      password: 'Password must contain an uppercase letter, a lowercase letter, and a number',
+    },
+    onSubmit: async (values, { setSubmitting /*, and more */ }) => {
+      setSubmitting(true)
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          console.log(values)
+          resolve()
+        }, 1000),
+      )
+      setSubmitting(false)
+    },
+  })
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      // Faked API call, for demonstration.
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          const apiOriginatedInitialValues = {
+            email: 'john.doe@example.com',
+            password: '****',
+          }
+
+          setValues(apiOriginatedInitialValues)
+          resolve()
+        }, 1000),
+      )
+    }
+
+    fetch()
+  }, [setValues])
+
+  // ...
+}
+```
+
 ### Using the context components
 
 Using the context components is very similar to using the `useFormit` hook. The difference being that the formit state is saved to a React context using the `Formit` component, this is then consumed by formit's context components. The advantage to this approach is that your component, in this case `BasicExample`, won't have to re-render for each keystroke as the `values` & `errors` state updates. In the example below, `<h1>My formit form</h1>` won't re-render as you type into the the form fields.
@@ -242,3 +298,4 @@ const BasicExample = () => {
 
 export default BasicExample
 ```
+
