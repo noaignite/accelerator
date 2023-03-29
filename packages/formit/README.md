@@ -80,6 +80,7 @@ const BasicExample = () => {
 export default BasicExample
 ```
 
+
 ### Using the context components
 
 Using the context components is very similar to using the `useFormit` hook. The difference being that the formit state is saved to a React context using the `Formit` component, this is then consumed by formit's context components. The advantage to this approach is that your component, in this case `BasicExample`, won't have to re-render for each keystroke as the `values` & `errors` state updates. In the example below, `<h1>My formit form</h1>` won't re-render as you type into the the form fields.
@@ -241,4 +242,57 @@ const BasicExample = () => {
 }
 
 export default BasicExample
+```
+
+### Sourcing values from API call
+
+Sometimes, the "initial values" you want to init formit with originates from an API endpoint. This means that the desired initial values would be defined **after** formit has initialized. To solve this, one needs to pass the `enableReinitialize` prop to formit. This ensures that formit will reinitialize whenever the values of the `initialValues` change.
+
+Below, you have an example of this being done with the context components from formit:
+
+```jsx
+const BasicExample = () => {
+  const [initialValues, setInitialValues] = React.useState({
+    email: '',
+    password: '',
+  })
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      // Faked API call, for demonstration.
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          const apiOriginatedInitialValues = {
+            email: 'john.doe@example.com',
+            password: '****',
+          }
+
+          setInitialValues(apiOriginatedInitialValues)
+          resolve()
+        }, 1000),
+      )
+    }
+
+    fetch()
+  }, [setInitialValues])
+
+  return (
+    <Formit
+      initialValues={initialValues}
+      enableReinitialize
+    >
+      {/* ... */}
+    </Formit>
+  )
+}
+```
+
+Or using the hook:
+
+```jsx
+// ...
+const formit = useFormit({
+  enableReinitialize: true
+})
+// ...
 ```
