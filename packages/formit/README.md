@@ -145,78 +145,6 @@ const BasicExample = () => {
 export default BasicExample
 ```
 
-#### Sourcing values from API call
-
-Sometimes, the "initial values" you want to edit via Formit originates from an API.
-
-**Note:** jHence `Formit` always want an `initialValue` object, but our actual "initial values" are retrieved
-asynchronously, we need to add the `enableReinitialize` prop to the `Formit` component.
-
-```jsx
-const BasicExample = () => {
-  const [initialValues, setInitialValues] = React.useState({
-    email: '',
-    password: '',
-  })
-
-  React.useEffect(() => {
-    const fetch = async () => {
-      // Faked API call, for demonstration.
-      await new Promise((resolve) =>
-        setTimeout(() => {
-          const apiOriginatedInitialValues = {
-            email: 'john.doe@example.com',
-            password: '****',
-          }
-
-          setInitialValues(apiOriginatedInitialValues)
-          resolve()
-        }, 1000),
-      )
-    }
-
-    fetch()
-  }, [setInitialValues])
-
-  return (
-    <Formit
-      initialValues={initialValues}
-      enableReinitialize
-      // ...
-    >
-      <Form>
-        <h1>My formit form</h1>
-
-        <Field
-          component={TextField} // Renders Mui TextField.
-          name="email" // Sets values from `getFieldProps` & `getFieldMeta` based on `name`.
-          type="email" // Email validation.
-          required // Required validation.
-          label="Email"
-        />
-
-        <Field
-          component={TextField} // Renders Mui TextField.
-          name="password" // Sets values from `getFieldProps` & `getFieldMeta` based on `name`.
-          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" // Password validation.
-          required // Required validation.
-          type="password"
-          label="Password"
-        />
-
-        <FormitConsumer>
-          {({ isSubmitting }) => (
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          )}
-        </FormitConsumer>
-      </Form>
-    </Formit>
-  )
-}
-```
-
 #### The Field component
 
 Worth mentioning regarding the `Field` component is that it also accepts a function as it's `children` prop, exposing field specific formit state and functions. This can be handy in those cases where one might need to tweak the behaviour, for example for the [Mui Datepicker](https://mui.com/x/react-date-pickers/date-picker/) where the onChange argument does not expose the event as it's argument.
@@ -316,3 +244,55 @@ const BasicExample = () => {
 export default BasicExample
 ```
 
+### Sourcing values from API call
+
+Sometimes, the "initial values" you want to init formit with originates from an API endpoint. This means that the desired initial values would be defined **after** formit has initialized. To solve this, one needs to pass the `enableReinitialize` prop to formit. This ensures that formit will reinitialize whenever the values of the `initialValues` change.
+
+Below, you have an example of this being done with the context components from formit:
+
+```jsx
+const BasicExample = () => {
+  const [initialValues, setInitialValues] = React.useState({
+    email: '',
+    password: '',
+  })
+
+  React.useEffect(() => {
+    const fetch = async () => {
+      // Faked API call, for demonstration.
+      await new Promise((resolve) =>
+        setTimeout(() => {
+          const apiOriginatedInitialValues = {
+            email: 'john.doe@example.com',
+            password: '****',
+          }
+
+          setInitialValues(apiOriginatedInitialValues)
+          resolve()
+        }, 1000),
+      )
+    }
+
+    fetch()
+  }, [setInitialValues])
+
+  return (
+    <Formit
+      initialValues={initialValues}
+      enableReinitialize
+    >
+      {/* ... */}
+    </Formit>
+  )
+}
+```
+
+Or using the hook:
+
+```jsx
+// ...
+const formit = useFormit({
+  enableReinitialize: true
+})
+// ...
+```
