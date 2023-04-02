@@ -1,0 +1,39 @@
+{
+  "name": "@noaignite/es2015-i18n-tag-to-po",
+  "version": "1.0.0-alpha.1",
+  "private": false,
+  "author": "NoA Ignite",
+  "description": "",
+  "keywords": [],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/es2015-i18n-tag-to-po"
+  },
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "scripts": {
+    "start": "ts-node src/index.js",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.18.6",
+    "@jest/globals": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "babel-jest": "^29.5.0",
+    "ts-dedent": "^2.0.0",
+    "typescript": "^5.0.3"
+  }
+}
