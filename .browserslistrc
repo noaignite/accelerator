@@ -17,7 +17,8 @@ node 14.0
 
 # same as `node`
 [development]
-node 14.0
+#node 14.0
+defaults # TODO: Babel targets are overriden in Storybook v7 and do not work with `node 14.0`. This was not the case in Storybook v6, figure out why.
 
 # same as `node`
 [test]

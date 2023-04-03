@@ -5,8 +5,8 @@
   "author": "NoA Ignite",
   "license": "MIT",
   "scripts": {
-    "build": "build-storybook -o .storybook-static",
-    "dev": "start-storybook -h localhost -p 3001 --ci",
+    "build": "storybook build -o .storybook-static",
+    "dev": "storybook dev -h localhost -p 3001 --ci",
     "start": "yarn dev"
   },
   "dependencies": {
@@ -15,10 +15,12 @@
     "@mui/material": "^5.10.11",
     "@noaignite/formit": "^3.0.1",
     "@noaignite/oui": "^4.0.1",
-    "@storybook/addon-a11y": "^6.5.10",
-    "@storybook/addon-essentials": "^6.5.10",
-    "@storybook/react": "^6.5.10",
+    "@storybook/addon-a11y": "^7.0.0-rc.10",
+    "@storybook/addon-essentials": "^7.0.0-rc.10",
+    "@storybook/react": "^7.0.0-rc.10",
+    "@storybook/react-webpack5": "^7.0.0-rc.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "storybook": "^7.0.0-rc.10"
   }
 }
