@@ -9,6 +9,7 @@ const validateProjectName = require('validate-npm-package-name')
 const packageJson = require('./package.json')
 
 const repoUrl = 'https://github.com/noaignite/create-ignite-app.git'
+let branchName = 'main'
 let projectName
 let projectPath
 
@@ -72,7 +73,9 @@ async function createApp() {
   validateAppName()
 
   console.log(`\nCreating a new Ignite app in ${chalk.green(projectPath)}.\n`)
-  spawn.sync('git', ['clone', '--depth', '1', repoUrl, projectName], { stdio: 'inherit' })
+  spawn.sync('git', ['clone', '--depth', '1', '--branch', branchName, repoUrl, projectName], {
+    stdio: 'inherit',
+  })
 
   process.chdir(projectPath)
 
@@ -119,11 +122,25 @@ function init() {
     .version(packageJson.version)
     .arguments('<project-directory>')
     .usage(`${chalk.green('<project-directory>')} [options]`)
-    .action((name) => {
+    .action((name, options) => {
       projectName = name
       projectPath = path.join(process.cwd(), name)
+
+      if (options.branch) {
+        branchName = options.branch
+      }
     })
+    .option('--branch <branch>', 'branch name')
     .allowUnknownOption()
+    .on('--help', () => {
+      console.log(`    Only ${chalk.green('<project-directory>')} is required.`)
+      console.log()
+      console.log(`    A desired ${chalk.cyan('--branch')} can be specified.`)
+      console.log()
+      console.log(`    If you have any problems, do not hesitate to file an issue:`)
+      console.log(`      ${chalk.cyan('https://github.com/noaignite/accelerator/issues/new')}`)
+      console.log()
+    })
     .parse(process.argv)
 
   if (typeof projectName === 'undefined') {
