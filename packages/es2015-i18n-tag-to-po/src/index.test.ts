@@ -11,6 +11,11 @@ describe('es2015-i18n-tag-to-lingui-po', () => {
             "Quantity": "",
             "Remove": "Delete",
             "Size": ""
+          },
+          "components/Link/Link.js": {
+            "Quantity": "Amount",
+            "Color": "Color",
+            "Size": "Height"
           }
         }`),
     ).toMatchInlineSnapshot(`
@@ -25,6 +30,18 @@ describe('es2015-i18n-tag-to-lingui-po', () => {
       #: src/containers/CartItem/CartItem.js
       msgid \\"Size\\"
       msgstr \\"Size\\"
+
+      #: src/components/Link/Link.js
+      msgid \\"Quantity\\"
+      msgstr \\"Amount\\"
+
+      #: src/components/Link/Link.js
+      msgid \\"Color\\"
+      msgstr \\"Color\\"
+
+      #: src/components/Link/Link.js
+      msgid \\"Size\\"
+      msgstr \\"Height\\"
       "
     `)
   })

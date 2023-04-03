@@ -21,7 +21,7 @@ function toPo(json: string) {
     return String.raw({ raw: entries.join('\n') })
   })
 
-  return String.raw({ raw: result })
+  return String.raw({ raw: result.join('\n') })
 }
 
 export default toPo
