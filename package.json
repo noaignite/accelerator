@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "release:version": "lerna version --conventional-commits --no-push",
+    "release:version": "lerna version --conventional-commits",
     "release:build": "lerna run --parallel --scope \"@noaignite/*\" build",
     "release:publish": "lerna publish from-package --dist-tag latest --contents build",
     "release:publish:dry-run": "lerna publish from-package --dist-tag latest --contents build --registry=\"http://localhost:4873/\"",
