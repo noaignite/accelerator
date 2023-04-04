@@ -1,13 +1,17 @@
 export default interface BundleInfo {
   bundle?: number
-  priceType?: string
-  type?: string
-  priceOfItems?: number
-  priceMin?: string
-  priceMinAsNumber?: number
+  discount?: number
   priceMax?: string
   priceMaxAsNumber?: number
-  discount?: number
+  priceMaxBeforeDiscount?: string
+  priceMaxBeforeDiscountAsNumber?: number
+  priceMin?: string
+  priceMinAsNumber?: number
+  priceMinBeforeDiscount?: string
+  priceMinBeforeDiscountAsNumber?: number
+  priceOfItems?: number
+  priceType?: string
+  type?: string
 }
 
 export interface BundleInfoExtended extends BundleInfo {
