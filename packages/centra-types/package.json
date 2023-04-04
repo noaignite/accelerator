@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/centra-types",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.6",
   "private": false,
   "author": "NoA Ignite",
   "description": "Typescript definitions for centra apis",

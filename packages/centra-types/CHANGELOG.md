@@ -3,6 +3,61 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.5...@noaignite/centra-types@1.0.0-alpha.6) (2023-03-21)
+
+
+### Bug Fixes
+
+* **SelectionItem:** remove wrong bundleInfo property, add bundle ([4cb3cfe](https://github.com/noaignite/accelerator/commit/4cb3cfe300ff0a73a003994d3f1cd2e3d491435a))
+
+
+
+
+
+# [1.0.0-alpha.5](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.4...@noaignite/centra-types@1.0.0-alpha.5) (2023-03-14)
+
+
+### Bug Fixes
+
+* **Order:** add missing import ([8eb753e](https://github.com/noaignite/accelerator/commit/8eb753e2997a5e5de0b4bcb913f5866027e2cdb4))
+
+
+
+
+
+# [1.0.0-alpha.4](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.3...@noaignite/centra-types@1.0.0-alpha.4) (2023-03-09)
+
+
+### Features
+
+* add Market, update Address and Location ([cf72813](https://github.com/noaignite/accelerator/commit/cf728136f301a9ef7848eeee8a6a3f705b675a44))
+
+
+
+
+
+# [1.0.0-alpha.3](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.2...@noaignite/centra-types@1.0.0-alpha.3) (2023-03-09)
+
+
+### Bug Fixes
+
+* **Filter:** add missing FilterValue type ([66972a4](https://github.com/noaignite/accelerator/commit/66972a4daed036b710b6170d5094d4cb6624e4db))
+
+
+
+
+
+# [1.0.0-alpha.2](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.1...@noaignite/centra-types@1.0.0-alpha.2) (2023-03-06)
+
+
+### Bug Fixes
+
+* **Location:** add missing pricelist ([c21892b](https://github.com/noaignite/accelerator/commit/c21892b740e5502124aaef6272db1fa553ec60df))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.0...@noaignite/centra-types@1.0.0-alpha.1) (2023-03-02)
 
 

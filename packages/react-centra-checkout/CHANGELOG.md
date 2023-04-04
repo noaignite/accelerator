@@ -3,6 +3,58 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.7](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.6...@noaignite/react-centra-checkout@1.0.0-alpha.7) (2023-03-21)
+
+**Note:** Version bump only for package @noaignite/react-centra-checkout
+
+
+
+
+
+# [1.0.0-alpha.6](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.5...@noaignite/react-centra-checkout@1.0.0-alpha.6) (2023-03-14)
+
+**Note:** Version bump only for package @noaignite/react-centra-checkout
+
+
+
+
+
+# [1.0.0-alpha.5](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.4...@noaignite/react-centra-checkout@1.0.0-alpha.5) (2023-03-09)
+
+**Note:** Version bump only for package @noaignite/react-centra-checkout
+
+
+
+
+
+# [1.0.0-alpha.4](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.3...@noaignite/react-centra-checkout@1.0.0-alpha.4) (2023-03-09)
+
+**Note:** Version bump only for package @noaignite/react-centra-checkout
+
+
+
+
+
+# [1.0.0-alpha.3](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.2...@noaignite/react-centra-checkout@1.0.0-alpha.3) (2023-03-06)
+
+**Note:** Version bump only for package @noaignite/react-centra-checkout
+
+
+
+
+
+# [1.0.0-alpha.2](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.1...@noaignite/react-centra-checkout@1.0.0-alpha.2) (2023-03-03)
+
+
+### Features
+
+* **Context:** add possibility to pass a different api client ([9ab5405](https://github.com/noaignite/accelerator/commit/9ab540562b36261d600686ccf2e0a109f66da823))
+* **Context:** make apiUrl and apiClient optional ([85f5166](https://github.com/noaignite/accelerator/commit/85f51661efc24a8cbbac7edd296b1abbca674f98))
+
+
+
+
+
 # [1.0.0-alpha.1](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.0-alpha.0...@noaignite/react-centra-checkout@1.0.0-alpha.1) (2023-03-02)
 
 
