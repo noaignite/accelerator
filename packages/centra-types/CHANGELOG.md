@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0...@noaignite/centra-types@1.0.1) (2023-04-04)
+
+
+### Bug Fixes
+
+* **BundleInfo:** add missing price types ([a4a9750](https://github.com/noaignite/accelerator/commit/a4a97502d2dbc18d5629061df3842af02bafb8dd))
+
+
+
+
+
 # [1.0.0-alpha.6](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.0-alpha.5...@noaignite/centra-types@1.0.0-alpha.6) (2023-03-21)
 
 
