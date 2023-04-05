@@ -11,11 +11,11 @@ export default interface Product {
   sku?: string
   productSku?: string
   brand?: string
-  brandName?: string
-  brandUri?: string
+  brandName?: string | null
+  brandUri?: string | null
   collection?: string
-  collectionName?: string
-  collectionUri?: string
+  collectionName?: string | null
+  collectionUri?: string | null
   variantName?: string
   countryOrigin?: string
   excerpt?: string
@@ -68,8 +68,8 @@ export default interface Product {
   >
   defaultLocalizedChart?: string
   items?: Item[]
-  categoryName?: string[]
-  categoryUri?: string
+  categoryName?: string[] | null
+  categoryUri?: string | null
   categories?: {
     sortOrder?: number
     name?: string[]
