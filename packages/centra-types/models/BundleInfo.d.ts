@@ -9,7 +9,7 @@ export default interface BundleInfo {
   priceMinAsNumber?: number
   priceMinBeforeDiscount?: string
   priceMinBeforeDiscountAsNumber?: number
-  priceOfItems?: number
+  priceOfItems?: string
   priceType?: string
   type?: string
 }
