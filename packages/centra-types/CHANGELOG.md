@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.2...@noaignite/centra-types@1.0.3) (2023-04-05)
+
+
+### Bug Fixes
+
+* **Product:** add null types ([e6b5b4a](https://github.com/noaignite/accelerator/commit/e6b5b4abe0990ad45dbc0bd09caff4e6abb2aaeb))
+
+
+
+
+
 ## [1.0.2](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.1...@noaignite/centra-types@1.0.2) (2023-04-05)
 
 
