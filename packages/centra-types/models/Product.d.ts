@@ -36,22 +36,25 @@ export default interface Product {
   priceBeforeDiscount?: string
   priceBeforeDiscountAsNumber?: number
   discountPercent?: number
-  lowestPrice?: [
-    {
-      periodDays?: number
-      price?: string
-      priceAsNumber?: number
-      priceBeforeDiscount?: string
-      priceBeforeDiscountAsNumber?: number
-    },
-  ]
+  lowestPrice?: {
+    periodDays?: number
+    price?: string
+    priceAsNumber?: number
+    priceBeforeDiscount?: string
+    priceBeforeDiscountAsNumber?: number
+  }[]
   showAsOnSale?: boolean
   showAsNew?: boolean
   itemTable?: {
     unit?: string
+    original?: {
+      x?: string[]
+      y?: string[]
+    }
     x?: string[]
     dividerSymbol?: string
-    y?: []
+    desc?: string
+    y?: string[]
   }
   tableMappings?: Record<
     string,
@@ -72,6 +75,7 @@ export default interface Product {
   categoryName?: string[] | null
   categoryUri?: string | null
   categories?: {
+    pathIds?: string[]
     sortOrder?: number
     name?: string[]
     category?: string
@@ -83,7 +87,7 @@ export default interface Product {
     sources?: Record<string, { url?: string }[]>
     // TODO: type this
     attributes: unknown[]
-  }
+  }[]
   modifiedAt?: string
   // TODO: type this
   measurementChart: unknown[]
