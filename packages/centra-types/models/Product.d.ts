@@ -58,6 +58,7 @@ export default interface Product {
     {
       unit?: string
       x?: Record<string, string>
+      // TODO: type this
       /**
        * This property is not documented in the Swagger specification.
        */
@@ -77,6 +78,16 @@ export default interface Product {
     uri?: string
   }[]
   media?: Record<string, string[]>
+  mediaObjects?: {
+    media?: number
+    sources?: Record<string, { url?: string }[]>
+    // TODO: type this
+    attributes: unknown[]
+  }
+  modifiedAt?: string
+  // TODO: type this
+  measurementChart: unknown[]
+  createdAt: string
   preview?: boolean
   subscriptionPlans?: {
     name?: string
