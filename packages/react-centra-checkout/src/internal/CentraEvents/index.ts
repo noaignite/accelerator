@@ -1,3 +1,5 @@
+import * as CentraCheckoutApi from '@noaignite/centra-types'
+
 const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as [
   'centra_checkout_callback',
   'centra_checkout_payment_callback',
@@ -14,8 +16,12 @@ function isValidEvent(eventName: typeof CENTRA_EVENTS[number]) {
 
 class CentraEvents {
   eventHandlers: {
-    centra_checkout_callback?: Set<(payload: unknown) => void>
-    centra_checkout_payment_callback?: Set<(payload: unknown) => void>
+    centra_checkout_callback?: Set<
+      (payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>) => unknown
+    >
+    centra_checkout_payment_callback?: Set<
+      (payload: CentraCheckoutApi.SelectionResponse) => unknown
+    >
   }
 
   static default: CentraEvents
@@ -27,7 +33,12 @@ class CentraEvents {
     }
   }
 
-  on(eventName: typeof CENTRA_EVENTS[number], callback: () => void) {
+  on(
+    eventName: typeof CENTRA_EVENTS[number],
+    callback: (
+      response: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
+    ) => unknown,
+  ) {
     if (isValidEvent(eventName)) {
       this.eventHandlers[eventName]?.add(callback)
 
@@ -37,7 +48,12 @@ class CentraEvents {
     return false
   }
 
-  off(eventName: typeof CENTRA_EVENTS[number], callback: () => void) {
+  off(
+    eventName: typeof CENTRA_EVENTS[number],
+    callback: (
+      response: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
+    ) => unknown,
+  ) {
     if (isValidEvent(eventName)) {
       this.eventHandlers[eventName]?.delete(callback)
 
@@ -47,7 +63,10 @@ class CentraEvents {
     return false
   }
 
-  dispatch(eventName: typeof CENTRA_EVENTS[number], payload: unknown) {
+  dispatch(
+    eventName: typeof CENTRA_EVENTS[number],
+    payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
+  ) {
     if (isValidEvent(eventName)) {
       this.eventHandlers[eventName]?.forEach((handler) => handler(payload))
     }
