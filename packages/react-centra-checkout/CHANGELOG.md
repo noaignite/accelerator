@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.6](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.5...@noaignite/react-centra-checkout@1.0.6) (2023-04-22)
+
+
+### Bug Fixes
+
+* **react-centra-checkout:** update types ([1f54b3c](https://github.com/noaignite/accelerator/commit/1f54b3cbdbc9aef7cdad62086a304d5e47f7d4a1))
+
+
+
+
+
 ## [1.0.5](https://github.com/noaignite/accelerator/compare/@noaignite/react-centra-checkout@1.0.4...@noaignite/react-centra-checkout@1.0.5) (2023-04-06)
 
 **Note:** Version bump only for package @noaignite/react-centra-checkout
