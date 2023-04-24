@@ -53,7 +53,6 @@ const colorContrast = (baseColor: string, ...colors: string[]) => {
   if (!baseColor || typeof baseColor !== 'string') return {}
 
   colors = colors.filter((c) => typeof c === 'string')
-  if (!colors.length) return {}
 
   // Convert base color to RGB
   const baseRGB = hexToRGB(baseColor)
