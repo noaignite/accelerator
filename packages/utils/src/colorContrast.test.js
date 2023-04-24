@@ -3,7 +3,15 @@ import colorContrast from './colorContrast'
 describe('colorContrast', () => {
   it('is a function and returns an object', () => {
     expect(typeof colorContrast).toEqual('function')
+    expect(typeof colorContrast('#000')).toEqual('object')
     expect(typeof colorContrast('#000', '#fff')).toEqual('object')
+  })
+
+  it('handles invalid color arguments', () => {
+    expect(colorContrast()).toEqual({})
+    expect(colorContrast(0, 24, {})).toEqual({})
+    expect(colorContrast(50, [], {})).toEqual({})
+    expect(colorContrast().contrastRatio).toEqual(undefined)
   })
 
   it('accepts 3-digit hex colors, 6 digit hex colors; with or without #', () => {
@@ -23,10 +31,16 @@ describe('colorContrast', () => {
     expect(colorContrast('#000', '#fff', '#aaa', '#bbb', '#ccc').contrastRatio).toEqual(21)
   })
 
-  it('returns the correct fallback color', () => {
-    expect(colorContrast('#000', '#aaa').fallbackColor).toEqual('#FFFFFF')
-    expect(colorContrast('#FFF', '#667789').fallbackColor).toEqual('#000000')
-    expect(colorContrast('#FFF', '#74899F').fallbackColor).toEqual('#000000')
+  it('returns the correct colorAA color', () => {
+    expect(colorContrast('#000', '#aaa').colorAA).toEqual('#aaa')
+    expect(colorContrast('#FFF', '#667789').colorAA).toEqual('#667789')
+    expect(colorContrast('#FFF', '#74899F').colorAA).toEqual('#000')
+  })
+
+  it('returns the correct colorAAA color', () => {
+    expect(colorContrast('#000', '#aaa').colorAAA).toEqual('#aaa')
+    expect(colorContrast('#FFF', '#667789').colorAAA).toEqual('#000')
+    expect(colorContrast('#FFF', '#74899F').colorAAA).toEqual('#000')
   })
 
   it('returns correct contrast ratio for arbitrary colors', () => {

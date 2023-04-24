@@ -47,9 +47,14 @@ const hexToRGB = (hex: string): [number, number, number] => {
  * and returns the color with the highest contrast ratio.
  *
  * @example colorContrast('#51f', '#821522', '#dde', 'f3a')
- * // { contrast: '#dde', contrastRatio: 5.38, fallbackColor: '#fff' }
+ * // { contrast: '#dde', contrastRatio: 5.38, colorAA: '#dde', colorAAA: '#fff' }
  */
 const colorContrast = (baseColor: string, ...colors: string[]) => {
+  if (!baseColor || typeof baseColor !== 'string') return {}
+
+  colors = colors.filter((c) => typeof c === 'string')
+  if (!colors.length) return {}
+
   // Convert base color to RGB
   const baseRGB = hexToRGB(baseColor)
 
@@ -80,7 +85,8 @@ const colorContrast = (baseColor: string, ...colors: string[]) => {
   return {
     contrast: bestContrastingColor,
     contrastRatio: Math.round((highestContrastRatio + Number.EPSILON) * 100) / 100,
-    fallbackColor: absoluteContrast,
+    colorAA: highestContrastRatio >= 4.5 ? bestContrastingColor : absoluteContrast,
+    colorAAA: highestContrastRatio >= 7 ? bestContrastingColor : absoluteContrast,
   }
 }
 
