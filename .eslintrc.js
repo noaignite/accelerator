@@ -13,6 +13,7 @@ module.exports = {
     {
       files: ['docs/**/*'],
       rules: {
+        'react-hooks/rules-of-hooks': 'off',
         'react/prop-types': 'off',
       },
     },

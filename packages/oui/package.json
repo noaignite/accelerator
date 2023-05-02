@@ -31,7 +31,7 @@
     "release": "yarn build && npm publish ./build --tag latest",
     "release:yalc": "yarn build && yalc publish ./build",
     "test": "cd ../../ && cross-env NODE_ENV=test jest packages/oui",
-    "__typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "peerDependencies": {
     "@mui/material": "^5.10.11",
@@ -43,7 +43,7 @@
     "@maeertin/medialoaded": "^1.2.1",
     "@noaignite/utils": "^2.0.1",
     "clsx": "^1.1.1",
-    "intersection-observer-admin": "^0.3.2",
+    "intersection-observer-admin": "^0.3.3",
     "prop-types": "^15.7.2"
   },
   "sideEffects": false,
