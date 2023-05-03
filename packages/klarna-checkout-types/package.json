@@ -1,0 +1,40 @@
+{
+  "name": "@noaignite/klarna-checkout-types",
+  "version": "1.0.0-alpha.1",
+  "private": false,
+  "author": "NoA Ignite",
+  "description": "Typescript definitions for the Klarna Checkout API",
+  "keywords": [
+    "typescript",
+    "types",
+    "klarna"
+  ],
+  "license": "MIT",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/klarna-checkout-types"
+  },
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "scripts": {
+    "build": "mkdir build && cp index.d.ts build/ && cp -a api/ build/api/ && yarn build:copy-files",
+    "build:copy-files": "node ../../scripts/copy-files.mjs",
+    "build:docs": "typedoc",
+    "prebuild": "yarn typecheck && rimraf build",
+    "release:yalc": "yarn build && yalc publish ./build",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "iso-3166-1-ts": "^0.2.2"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
