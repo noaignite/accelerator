@@ -8,7 +8,7 @@ klarna-checkout-types is available as an [npm package](https://www.npmjs.com/pac
 
 ```sh
 // with npm
-npm install @noaigniteklarna-checkout-types/
+npm install @noaignite/klarna-checkout-types
 
 // with yarn
 yarn add @noaignite/klarna-checkout-types
