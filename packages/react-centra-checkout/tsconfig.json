@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig",
-  "compilerOptions": {
-    "typeRoots": ["../../node_modules/@types", "./src/types"]
-  },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.spec.ts*", "src/**/*.test.ts*"]
-}

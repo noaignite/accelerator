@@ -1,20 +1,10 @@
-const path = require('path')
-
+// This configuration only applies to the package manager root.
+/** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ['@noaignite/eslint-config-typescript'],
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: path.join(__dirname, './webpackBaseConfig.js'),
-      },
-    },
+  ignorePatterns: ["apps/**", "packages/**"],
+  extends: ["@repo/eslint-config/library.js"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: true,
   },
-  overrides: [
-    {
-      files: ['docs/**/*'],
-      rules: {
-        'react/prop-types': 'off',
-      },
-    },
-  ],
-}
+};

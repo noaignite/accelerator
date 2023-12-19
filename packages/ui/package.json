@@ -1,0 +1,46 @@
+{
+  "name": "@noaignite/ui",
+  "version": "0.0.2",
+  "private": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tcm src && tsup",
+    "build2": "tsup",
+    "dev": "tcm src --watch & tsup --watch",
+    "dev2": "tsup --watch",
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "generate:component": "turbo gen react-component"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@turbo/gen": "^1.10.12",
+    "@types/eslint": "^8.44.7",
+    "@types/node": "^20.5.2",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.16",
+    "esbuild-css-modules-plugin": "^3.1.0",
+    "eslint": "^8.53.0",
+    "hash-css-selector": "^1.0.0",
+    "postcss": "^8.4.32",
+    "postcss-modules": "^6.0.0",
+    "react": "^18.2.0",
+    "tsup": "^8.0.1",
+    "typed-css-modules": "^0.8.1",
+    "typescript": "^5.2.2",
+    "typescript-plugin-css-modules": "^5.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "clsx": "^2.0.0"
+  }
+}
