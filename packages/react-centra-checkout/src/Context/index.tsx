@@ -189,8 +189,8 @@ export const SELECTION_INITIAL_VALUE = {
   shippingMethods: [],
 }
 
-export const CentraHandlersContext = React.createContext<ContextMethods>({})
-const CentraSelectionContext = React.createContext<ContextProperties>({})
+export const CentraHandlersContext = React.createContext<ContextMethods | null>(null)
+const CentraSelectionContext = React.createContext<ContextProperties | null>(null)
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
@@ -641,13 +641,37 @@ export function CentraProvider(props: ProviderProps) {
 }
 
 /** This hook returns the centra selection */
-export function useCentraSelection(): ContextProperties {
-  return React.useContext(CentraSelectionContext)
+export function useCentraSelection() {
+  const context = React.useContext(CentraSelectionContext)
+
+  if (context === null) {
+    throw new Error(
+      [
+        '@noaignite/react-centra-checkout: `useCentraSelection` may only be',
+        'used inside the `CentraProvider` react tree, please declare it at a',
+        'higher level.',
+      ].join(' '),
+    )
+  }
+
+  return context
 }
 
 /** This hook returns update handlers */
-export function useCentraHandlers(): ContextMethods {
-  return React.useContext(CentraHandlersContext)
+export function useCentraHandlers() {
+  const context = React.useContext(CentraHandlersContext)
+
+  if (context === null) {
+    throw new Error(
+      [
+        '@noaignite/react-centra-checkout: `useCentraHandlers` may only be',
+        'used inside the `CentraProvider` react tree, please declare it at a',
+        'higher level.',
+      ].join(' '),
+    )
+  }
+
+  return context
 }
 
 /** Returns the latest order receipt given a selection token */
