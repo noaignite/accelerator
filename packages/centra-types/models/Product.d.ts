@@ -95,7 +95,7 @@ export default interface Product {
   }[]
   modifiedAt?: string
   // TODO: type this
-  measurementChart: OverridableObject<unknown[], ProductMeasurementChartOverrides>
+  measurementChart?: OverridableObject<unknown[], ProductMeasurementChartOverrides>
   createdAt: string
   preview?: boolean
   subscriptionPlans?: {
@@ -115,14 +115,9 @@ export default interface Product {
   relation?: string
 }
 
-export type RelatedProduct = OverridableObject<
-  Prettify<
-    Omit<Product, 'relatedProducts'> & {
-      relatedProducts?: Pick<Product, 'available' | 'media' | 'product' | 'relation'>[]
-    }
-  >,
-  ProductRelatedProductOverrides
->
+export type RelatedProduct = Omit<Product, 'relatedProducts'> & {
+  relatedProducts?: Pick<Product, 'available' | 'media' | 'product' | 'relation'>[]
+}
 
 export type ProductPriceAttribute = OverridableStringUnion<
   | 'price'
