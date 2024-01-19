@@ -8,7 +8,7 @@ export default interface SelectionItem {
   size?: string
   sku?: string
   ean?: string
-  quantity?: number
+  quantity: number
   subscriptionPlan?: {
     name?: string
     intervalValue?: number
@@ -54,7 +54,7 @@ export default interface SelectionItem {
     ean?: string
     silkProduct?: string
     silkVariant?: string
-    quantity?: number
+    quantity: number
     comment?: string
     localizedSize?: string | null
     priceEach?: string
