@@ -3,8 +3,9 @@ import BundleInfo from './BundleInfo'
 import Item from './Item'
 
 export interface ProductMeasurementChartOverrides {}
-export interface ProductRelatedProductOverrides {}
+export interface ProductMediaObjectsAttributesOverrides {}
 export interface ProductPriceAttributeOverrides {}
+export interface ProductRelatedProductOverrides {}
 
 export default interface Product {
   available?: boolean
@@ -91,7 +92,7 @@ export default interface Product {
     media?: number
     sources?: Record<string, { url?: string }[]>
     // TODO: type this
-    attributes: unknown[]
+    attributes: OverridableObject<unknown[], ProductMediaObjectsAttributesOverrides>
   }[]
   modifiedAt?: string
   // TODO: type this
