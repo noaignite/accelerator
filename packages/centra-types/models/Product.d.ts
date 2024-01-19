@@ -1,5 +1,11 @@
+import { OverridableObject, OverridableStringUnion, Prettify } from '../utils'
 import BundleInfo from './BundleInfo'
 import Item from './Item'
+
+export interface ProductMeasurementChartOverrides {}
+export interface ProductMediaObjectsAttributesOverrides {}
+export interface ProductPriceAttributeOverrides {}
+export interface ProductRelatedProductOverrides {}
 
 export default interface Product {
   available?: boolean
@@ -86,11 +92,11 @@ export default interface Product {
     media?: number
     sources?: Record<string, { url?: string }[]>
     // TODO: type this
-    attributes: unknown[]
+    attributes: OverridableObject<unknown[], ProductMediaObjectsAttributesOverrides>
   }[]
   modifiedAt?: string
   // TODO: type this
-  measurementChart: unknown[]
+  measurementChart?: OverridableObject<unknown[], ProductMeasurementChartOverrides>
   createdAt: string
   preview?: boolean
   subscriptionPlans?: {
@@ -110,36 +116,29 @@ export default interface Product {
   relation?: string
 }
 
-export interface RelatedProduct extends Omit<Product, 'relatedProducts'> {
+export type RelatedProduct = Omit<Product, 'relatedProducts'> & {
   relatedProducts?: Pick<Product, 'available' | 'media' | 'product' | 'relation'>[]
 }
 
-export interface ProductWithPrices
-  extends Omit<
-    Product,
-    | 'price'
-    | 'priceAsNumber'
-    | 'priceBeforeDiscount'
-    | 'priceBeforeDiscountAsNumber'
-    | 'discountPercent'
-    | 'showAsOnSale'
-    | 'showAsNew'
-  > {
-  prices?: Record<
-    string,
-    Pick<
-      Product,
-      | 'price'
-      | 'priceAsNumber'
-      | 'priceBeforeDiscount'
-      | 'priceBeforeDiscountAsNumber'
-      | 'discountPercent'
-      | 'showAsOnSale'
-      | 'showAsNew'
-    >
-  >
-}
+export type ProductPriceAttribute = OverridableStringUnion<
+  | 'price'
+  | 'priceAsNumber'
+  | 'priceBeforeDiscount'
+  | 'priceBeforeDiscountAsNumber'
+  | 'discountPercent'
+  | 'showAsOnSale'
+  | 'showAsNew',
+  ProductPriceAttributeOverrides
+>
 
-export interface ProductWithMarkets extends Product {
-  markets?: number[]
-}
+export type ProductWithPrices = Prettify<
+  Omit<Product, ProductPriceAttribute> & {
+    prices?: Record<string, Pick<Product, ProductPriceAttribute>>
+  }
+>
+
+export type ProductWithMarkets = Prettify<
+  Product & {
+    markets?: number[]
+  }
+>

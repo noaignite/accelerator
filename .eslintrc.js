@@ -16,5 +16,18 @@ module.exports = {
         'react/prop-types': 'off',
       },
     },
+    {
+      files: ['packages/centra-types/**/*'],
+      rules: {
+        '@typescript-eslint/ban-types': [
+          'error',
+          {
+            types: { '{}': false },
+            extendDefaults: true,
+          },
+        ],
+        '@typescript-eslint/no-empty-interface': 'off',
+      },
+    },
   ],
 }
