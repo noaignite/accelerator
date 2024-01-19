@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/oui",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "private": false,
   "author": "NoA Ignite",
   "description": "OUI components built with React and MUI.",
@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.16.0",
     "@maeertin/medialoaded": "^1.2.1",
-    "@noaignite/utils": "^2.0.1",
+    "@noaignite/utils": "^2.1.0",
     "clsx": "^1.1.1",
     "intersection-observer-admin": "^0.3.2",
     "prop-types": "^15.7.2"

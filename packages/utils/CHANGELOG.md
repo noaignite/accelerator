@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/noaignite/accelerator/compare/@noaignite/utils@2.0.1...@noaignite/utils@2.1.0) (2024-01-19)
+
+
+### Bug Fixes
+
+* **util:** color-contrast now works without colors arguments ([346dcf5](https://github.com/noaignite/accelerator/commit/346dcf5183b79f5a8ba2705d1bf03eba93467936))
+* **util:** replace fallbackColor with colorAA and colorAAA properties ([5513fa4](https://github.com/noaignite/accelerator/commit/5513fa4085cf4845697e4ee9ac37b92a12915c07))
+
+
+### Features
+
+* **util:** add color-contrast utility function to utils package ([e9ee5eb](https://github.com/noaignite/accelerator/commit/e9ee5eb8e19a1796a312c9e207107aa210c6e061))
+
+
+
+
+
 ## [2.0.1](https://github.com/noaignite/accelerator/compare/@noaignite/utils@2.0.0...@noaignite/utils@2.0.1) (2023-03-02)
 
 **Note:** Version bump only for package @noaignite/utils

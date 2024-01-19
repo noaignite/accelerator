@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.5...@noaignite/centra-types@1.1.0) (2024-01-19)
+
+
+### Features
+
+* add overridable types and context type narrowing ([#110](https://github.com/noaignite/accelerator/issues/110)) ([09c2422](https://github.com/noaignite/accelerator/commit/09c24225bcd8aef7e9e607bb97675caa1e963ad8))
+
+
+
+
+
 ## [1.0.5](https://github.com/noaignite/accelerator/compare/@noaignite/centra-types@1.0.4...@noaignite/centra-types@1.0.5) (2023-04-06)
 
 
