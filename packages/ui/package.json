@@ -9,7 +9,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tcm src && tsup",
+    "build": "tsup",
     "build2": "tsup",
     "dev": "tcm src --watch & tsup --watch",
     "dev2": "tsup --watch",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@stylexjs/esbuild-plugin": "^0.5.1",
     "@turbo/gen": "^1.10.12",
     "@types/eslint": "^8.44.7",
     "@types/node": "^20.5.2",
@@ -41,6 +42,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@stylexjs/stylex": "^0.5.1",
     "clsx": "^2.0.0"
   }
 }
