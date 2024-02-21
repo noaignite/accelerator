@@ -103,6 +103,31 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
+  packages/react-centra-checkout:
+    dependencies:
+      js-cookie:
+        specifier: ^3.0.1
+        version: 3.0.5
+      react:
+        specifier: ^17.0.0 || ^18.0.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^17.0.0 || ^18.0.0
+        version: 18.2.0(react@18.2.0)
+      react-fast-compare:
+        specifier: ^3.2.0
+        version: 3.2.2
+    devDependencies:
+      '@noaignite/centra-types':
+        specifier: ^1.1.0
+        version: 1.1.0
+      '@types/js-cookie':
+        specifier: ^3.0.1
+        version: 3.0.6
+      tsup:
+        specifier: ^8.0.1
+        version: 8.0.2(postcss@8.4.38)(typescript@5.3.3)
+
   packages/typescript-config: {}
 
   packages/ui:
@@ -1253,6 +1278,11 @@ packages:
       eslint-scope: 5.1.1
     dev: true
 
+  /@noaignite/centra-types@1.1.0:
+    resolution: {integrity: sha512-igkAKx79LVpTiT2x+1p2KbxcE0ECH5KhiLEDYAq7oFEQMDFq4Sh1HUWXG8FBE4t+hdtuLnsPyxGrivQz1BkqPQ==}
+    engines: {node: '>=14.0.0'}
+    dev: true
+
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1504,6 +1534,10 @@ packages:
     dependencies:
       '@types/through': 0.0.33
       rxjs: 6.6.7
+    dev: true
+
+  /@types/js-cookie@3.0.6:
+    resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
     dev: true
 
   /@types/json-schema@7.0.15:
@@ -4413,6 +4447,11 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -5756,6 +5795,10 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-fast-compare@3.2.2:
+    resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
     dev: false
 
   /react-is@16.13.1:
