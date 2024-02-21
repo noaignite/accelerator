@@ -27,9 +27,10 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "tsup && cp LICENSE dist/",
+    "build": "tsup && pnpm build:copy-files",
+    "build:copy-files": "cp LICENSE package.json dist/",
     "build:docs": "typedoc",
-    "release:yalc": "pnpm build && yalc publish ./build",
+    "release:yalc": "pnpm build && yalc publish ./dist",
     "test": "cd ../../ && cross-env NODE_ENV=test jest packages/react-centra-checkout",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
