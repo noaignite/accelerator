@@ -70,6 +70,12 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2
 
+  packages/centra-types:
+    devDependencies:
+      tsup:
+        specifier: ^8.0.1
+        version: 8.0.1(postcss@8.4.32)(typescript@5.2.2)
+
   packages/eslint-config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
