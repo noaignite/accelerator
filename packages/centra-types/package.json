@@ -20,11 +20,10 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "pnpm prebuild && mkdir dist && cp LICENSE dist/ && cp index.d.ts dist/ && cp -a api/ dist/api/ && cp -a models/ dist/models/ && cp -a utils/ dist/utils/",
-    "build:copy-files": "node ../../scripts/copy-files.mjs",
+    "build": "pnpm prebuild && mkdir dist && cp index.d.ts dist/ && cp -a api models utils LICENSE package.json dist/",
     "build:docs": "typedoc",
     "prebuild": "pnpm typecheck && rimraf dist",
-    "release:yalc": "yarn build && yalc publish ./build",
+    "release:yalc": "yarn build && yalc publish ./dist",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "sideEffects": false,
