@@ -1,12 +1,12 @@
 type CardProps = {
-  className?: string;
-  title: string;
-  children: React.ReactNode;
-  href: string;
-};
+  className?: string
+  title: string
+  children: React.ReactNode
+  href: string
+}
 
 export function Card(props: CardProps): JSX.Element {
-  const { className, title, children, href } = props;
+  const { className, title, children, href } = props
 
   return (
     <a
@@ -20,5 +20,5 @@ export function Card(props: CardProps): JSX.Element {
       </h2>
       <p>{children}</p>
     </a>
-  );
+  )
 }
