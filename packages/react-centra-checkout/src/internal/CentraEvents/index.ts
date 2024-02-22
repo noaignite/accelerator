@@ -5,7 +5,7 @@ const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_call
   'centra_checkout_payment_callback',
 ]
 
-function isValidEvent(eventName: typeof CENTRA_EVENTS[number]) {
+function isValidEvent(eventName: (typeof CENTRA_EVENTS)[number]) {
   if (CENTRA_EVENTS.includes(eventName)) {
     return true
   }
@@ -34,7 +34,7 @@ class CentraEvents {
   }
 
   on(
-    eventName: typeof CENTRA_EVENTS[number],
+    eventName: (typeof CENTRA_EVENTS)[number],
     callback: (
       response: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
     ) => unknown,
@@ -49,7 +49,7 @@ class CentraEvents {
   }
 
   off(
-    eventName: typeof CENTRA_EVENTS[number],
+    eventName: (typeof CENTRA_EVENTS)[number],
     callback: (
       response: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
     ) => unknown,
@@ -64,7 +64,7 @@ class CentraEvents {
   }
 
   dispatch(
-    eventName: typeof CENTRA_EVENTS[number],
+    eventName: (typeof CENTRA_EVENTS)[number],
     payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
   ) {
     if (isValidEvent(eventName)) {

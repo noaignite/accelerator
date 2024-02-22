@@ -1,6 +1,5 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ["index.d.ts"],
-});
-
+  entry: ['index.d.ts'],
+})
