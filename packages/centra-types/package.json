@@ -1,0 +1,39 @@
+{
+  "name": "@adamsoderstrom/centra-types",
+  "version": "1.1.0",
+  "private": false,
+  "author": "Adam Söderström",
+  "description": "Typescript definitions for centra apis",
+  "keywords": [
+    "typescript",
+    "types",
+    "centra"
+  ],
+  "license": "MIT",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/centra-types"
+  },
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "scripts": {
+    "build": "pnpm prebuild && mkdir dist && cp index.d.ts dist/ && cp -a api models utils LICENSE package.json dist/",
+    "build:docs": "typedoc",
+    "prebuild": "pnpm typecheck && rimraf dist",
+    "release:yalc": "pnpm build && yalc publish",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  }
+}
