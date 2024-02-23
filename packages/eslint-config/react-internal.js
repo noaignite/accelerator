@@ -15,7 +15,7 @@ const project = resolve(process.cwd(), 'tsconfig.json')
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
   extends: ['eslint:recommended', 'prettier', 'eslint-config-turbo'],
-  plugins: [],
+  plugins: ['@typescript-eslint'],
   globals: {
     React: true,
     JSX: true,
@@ -38,6 +38,16 @@ module.exports = {
   ],
   overrides: [
     // Force ESLint to detect .tsx files
-    { files: ['*.js?(x)', '*.ts?(x)'] },
+    {
+      files: ['*.js?(x)', '*.ts?(x)'],
+    },
+    {
+      files: ['*.ts?(x)'],
+      rules: {
+        // Disable `no-unused-vars`, in favor of `@typescript-eslint/no-unused-vars`, since `no-unused-vars` doesn't support type declarations.
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'error',
+      },
+    },
   ],
 }
