@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useRef } from 'react'
 
 interface HtmlEmbedProps extends React.ComponentProps<'div'> {
   html: string
@@ -7,10 +7,10 @@ interface HtmlEmbedProps extends React.ComponentProps<'div'> {
 function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
   const { html, ...other } = props
 
-  const ref = React.useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   // We need to reload scripts in the html in order for them to run
-  React.useEffect(() => {
+  useEffect(() => {
     const createdScripts: HTMLScriptElement[] = []
     const node = ref.current
 
@@ -42,7 +42,6 @@ function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
     }
   }, [html])
 
-  // eslint-disable-next-line react/no-danger
   return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} {...other} />
 }
 

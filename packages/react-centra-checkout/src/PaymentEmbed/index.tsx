@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import * as CheckoutApi from '@noaignite/centra-types'
 import { useCentraSelection, useCentraHandlers } from '../Context'
@@ -12,16 +12,14 @@ export interface PaymentEmbedProps {
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
-const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement | null => {
+const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null => {
   const { values, onPaymentError, onPaymentSuccess } = props
 
   const [paymentResult, setPaymentResult] =
-    React.useState<CheckoutApi.Response<CheckoutApi.Payment> | null>(null)
-  const [paymentCallbackError, setPaymentCallbackError] = React.useState<CheckoutApi.Errors | null>(
-    null,
-  )
+    useState<CheckoutApi.Response<CheckoutApi.Payment> | null>(null)
+  const [paymentCallbackError, setPaymentCallbackError] = useState<CheckoutApi.Errors | null>(null)
 
-  const previousPaymentMethod = React.useRef<string | null>(null)
+  const previousPaymentMethod = useRef<string | null>(null)
 
   // Get selection
   const { selection, paymentMethods } = useCentraSelection()
@@ -29,13 +27,13 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
 
   // Get payment method
   const paymentMethodId = selection?.paymentMethod
-  const paymentMethod = React.useMemo(
+  const paymentMethod = useMemo(
     () => paymentMethods?.find((p) => p.paymentMethod === paymentMethodId),
     [paymentMethods, paymentMethodId],
   )
 
   // Submit payment
-  const handlePaymentCallback = React.useCallback(
+  const handlePaymentCallback = useCallback(
     (event) => {
       const {
         addressIncluded,
@@ -81,14 +79,14 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
   )
 
   // Reset payment result when method changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (selection?.paymentMethod !== previousPaymentMethod.current) {
       setPaymentResult(null)
     }
   }, [selection?.paymentMethod])
 
   // Retrieve formHtml
-  React.useEffect(() => {
+  useEffect(() => {
     const shouldRequestPayment =
       paymentMethod?.supportsInitiateOnly || paymentMethod?.providesCustomerAddressAfterPayment // if either of these are true, this is a paymentMethod which provides an embed
 
@@ -132,7 +130,7 @@ const PaymentEmbed = React.memo((props: PaymentEmbedProps): React.ReactElement |
     values,
   ])
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Fires when customer submits payment
     document.addEventListener('centra_checkout_payment_callback', handlePaymentCallback)
 
