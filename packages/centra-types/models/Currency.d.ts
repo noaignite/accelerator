@@ -5,5 +5,6 @@ export default interface Currency {
   suffix?: string
   decimalPoint?: string
   decimalDigits?: string
+  thousandsSeparator?: string
   uri?: string
 }
