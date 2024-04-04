@@ -111,6 +111,7 @@ export interface ContextMethods {
     @param voucher - The id of the voucher to add
   */
   removeVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  removeVouchers?(): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param i - The `i` query parameter provided by Centra when landing on the password reset page
     @param id - The `id` query parameter provided by Centra when landing on the password reset page
@@ -366,6 +367,11 @@ export function CentraProvider(props: ProviderProps) {
     [apiClient, selectionApiCall],
   )
 
+  const removeVouchers = React.useCallback<NonNullable<ContextMethods['removeVouchers']>>(
+    () => selectionApiCall(apiClient.request('DELETE', 'vouchers')),
+    [apiClient, selectionApiCall],
+  )
+
   const updateCountry = React.useCallback<NonNullable<ContextMethods['updateCountry']>>(
     (country, data) => selectionApiCall(apiClient.request('PUT', `countries/${country}`, data)),
     [apiClient, selectionApiCall],
@@ -570,6 +576,7 @@ export function CentraProvider(props: ProviderProps) {
       registerCustomer,
       removeCartItem,
       removeVoucher,
+      removeVouchers,
       resetCustomerPassword,
       resetSelection,
       sendCustomerResetPasswordEmail,
@@ -603,6 +610,7 @@ export function CentraProvider(props: ProviderProps) {
       registerCustomer,
       removeCartItem,
       removeVoucher,
+      removeVouchers,
       resetCustomerPassword,
       resetSelection,
       sendCustomerResetPasswordEmail,
