@@ -1,4 +1,4 @@
-# @noaignite/ui
+# @repo/ui
 
 ## 0.0.2
 

@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  transpilePackages: ['@noaignite/ui'],
+  transpilePackages: ['@repo/ui'],
 }

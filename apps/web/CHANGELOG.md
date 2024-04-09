@@ -5,7 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [170e00a]
-  - @noaignite/ui@0.0.2
+  - @repo/ui@0.0.2
 
 ## 1.0.1
 
@@ -13,4 +13,4 @@
 
 - Updated dependencies [bc028b9]
 - Updated dependencies [d291e22]
-  - @noaignite/ui@0.0.1
+  - @repo/ui@0.0.1

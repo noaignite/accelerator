@@ -1,4 +1,4 @@
-import { Button, Card, Code } from '@noaignite/ui'
+import { Button, Card, Code } from '@repo/ui'
 import Image from 'next/image'
 import styles from './page.module.css'
 
