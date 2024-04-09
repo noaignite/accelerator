@@ -1,0 +1,10 @@
+# Build artifacts
+.next/
+.turbo/
+dist/
+node_modules/
+target/
+compiled/
+
+pnpm-lock.yaml
+.env.*

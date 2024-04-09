@@ -1,10 +1,10 @@
 import { defineConfig, type Options } from 'tsup'
 // import CssModulesPlugin from "esbuild-css-modules-plugin";
-import path from 'path'
 import fsPromises from 'fs/promises'
+import { generateScopedName } from 'hash-css-selector'
+import path from 'path'
 import postcss from 'postcss'
 import postcssModules from 'postcss-modules'
-import { generateScopedName } from 'hash-css-selector'
 
 export default defineConfig((options: Options) => ({
   // Build react package for use in nextjs 13
@@ -63,13 +63,13 @@ export default defineConfig((options: Options) => ({
           let cssModule: any = {}
           const result = await postcss([
             postcssModules({
-              generateScopedName: function(name, filename) {
+              generateScopedName: function (name, filename) {
                 const newSelector = generateScopedName(name, filename)
                 cssModule[name] = newSelector
 
                 return newSelector
               },
-              getJSON: () => { },
+              getJSON: () => {},
               scopeBehaviour: 'local',
             }),
           ]).process(source, { from: pluginData.pathDir })

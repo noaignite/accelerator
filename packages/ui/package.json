@@ -10,11 +10,9 @@
   ],
   "scripts": {
     "build": "tcm src && tsup",
-    "build2": "tsup",
     "dev": "tcm src --watch & tsup --watch",
-    "dev2": "tsup --watch",
     "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {
