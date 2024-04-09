@@ -18,27 +18,27 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@turbo/gen": "^1.10.12",
-    "@types/eslint": "^8.44.7",
-    "@types/node": "^20.5.2",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "autoprefixer": "^10.4.16",
+    "@turbo/gen": "^1.13.2",
+    "@types/eslint": "^8.56.7",
+    "@types/node": "^20.12.6",
+    "@types/react": "^18.2.75",
+    "@types/react-dom": "^18.2.24",
+    "autoprefixer": "^10.4.19",
     "esbuild-css-modules-plugin": "^3.1.0",
-    "eslint": "^8.53.0",
-    "hash-css-selector": "^1.0.0",
-    "postcss": "^8.4.32",
+    "eslint": "^8.57.0",
+    "hash-css-selector": "^1.1.0",
+    "postcss": "^8.4.38",
     "postcss-modules": "^6.0.0",
     "react": "^18.2.0",
-    "tsup": "^8.0.1",
-    "typed-css-modules": "^0.8.1",
-    "typescript": "^5.2.2",
-    "typescript-plugin-css-modules": "^5.0.2"
+    "tsup": "^8.0.2",
+    "typed-css-modules": "^0.9.1",
+    "typescript": "5.3.3",
+    "typescript-plugin-css-modules": "^5.1.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "clsx": "^2.0.0"
   }
 }

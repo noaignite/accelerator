@@ -1,6 +1,7 @@
 import { defineConfig, type Options } from 'tsup'
 // import CssModulesPlugin from "esbuild-css-modules-plugin";
 import fsPromises from 'fs/promises'
+// @ts-expect-error -- Is there a better way to import below as a `module`?
 import { generateScopedName } from 'hash-css-selector'
 import path from 'path'
 import postcss from 'postcss'
@@ -63,13 +64,13 @@ export default defineConfig((options: Options) => ({
           let cssModule: any = {}
           const result = await postcss([
             postcssModules({
-              generateScopedName: function (name, filename) {
+              generateScopedName: function(name, filename) {
                 const newSelector = generateScopedName(name, filename)
                 cssModule[name] = newSelector
 
                 return newSelector
               },
-              getJSON: () => {},
+              getJSON: () => { },
               scopeBehaviour: 'local',
             }),
           ]).process(source, { from: pluginData.pathDir })
