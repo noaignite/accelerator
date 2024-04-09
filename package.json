@@ -4,9 +4,11 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "lint": "turbo lint",
-    "test": "vitest run",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "pnpm run lint && pnpm run type-check",
+    "type-check": "turbo type-check",
     "ci": "pnpm run lint && pnpm run test && pnpm run build",
     "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
   },
@@ -15,6 +17,8 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "prettier": "^3.1.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-style-order": "^0.2.2",
     "turbo": "latest",
     "vitest": "^1.0.4"
   },
