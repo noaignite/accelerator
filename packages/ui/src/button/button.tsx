@@ -1,22 +1,18 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import { forwardPolymorph } from '../utils'
 import classes from './button.module.css'
 
-interface ButtonProps {
+type ButtonProps = {
   children: ReactNode
-  className?: string
-  appName: string
 }
 
-export const Button = (props: ButtonProps) => {
-  const { children, className, appName } = props
+export const Button = forwardPolymorph<'button', ButtonProps>((props, ref) => {
+  const { as: Tag = 'button', children, className, ...rest } = props
 
   return (
-    <button
-      className={clsx(classes.root, className)}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
-    >
+    <Tag className={clsx(classes.root, className)} ref={ref} {...rest}>
       {children}
-    </button>
+    </Tag>
   )
-}
+})

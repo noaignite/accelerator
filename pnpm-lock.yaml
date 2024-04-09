@@ -103,6 +103,21 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
+  packages/types:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^18.2.65
+        version: 18.2.75
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      typescript:
+        specifier: 5.3.3
+        version: 5.3.3
+
   packages/typescript-config: {}
 
   packages/ui:
@@ -110,7 +125,13 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
     devDependencies:
+      '@noaignite/types':
+        specifier: workspace:^
+        version: link:../types
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
@@ -150,9 +171,6 @@ importers:
       postcss-modules:
         specifier: ^6.0.0
         version: 6.0.0(postcss@8.4.38)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(typescript@5.3.3)

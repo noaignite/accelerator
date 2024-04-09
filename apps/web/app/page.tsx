@@ -1,5 +1,6 @@
 import { Button, Card, Code } from '@repo/ui'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from './page.module.css'
 
 function Gradient({
@@ -75,7 +76,7 @@ export default function Page(): JSX.Element {
         </div>
       </div>
 
-      <Button appName="web" className={styles.button}>
+      <Button as={Link} href="/" className={styles.button}>
         Click me!
       </Button>
 

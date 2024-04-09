@@ -1,0 +1,22 @@
+{
+  "name": "@noaignite/types",
+  "version": "0.0.0",
+  "private": false,
+  "types": "./index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/react": "^18.2.65",
+    "react": "^18.2.0",
+    "typescript": "5.3.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
