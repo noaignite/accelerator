@@ -29,6 +29,33 @@ export type PropsFrom<TComponent> =
   : never
 
 /**
+ * Like `T & U`, but using the value types from `U` where their properties overlap.
+ *
+ * @see https://github.com/mui/material-ui/blob/master/packages/mui-types/index.d.ts
+ */
+export type Overwrite<T, U> = DistributiveOmit<T, keyof U> & U
+
+/**
+ * Generate a set of string literal types with the given default record `T` and
+ * override record `U`.
+ *
+ * If the property value was `true`, the property key will be added to the
+ * string union.
+ *
+ * @see https://github.com/mui/material-ui/blob/master/packages/mui-types/index.d.ts
+ */
+export type OverridableStringUnion<T extends string | number, U = {}> = GenerateStringUnion<
+  Overwrite<Record<T, true>, U>
+>
+
+type GenerateStringUnion<T> = Extract<
+  {
+    [Key in keyof T]: true extends T[Key] ? Key : never
+  }[keyof T],
+  string
+>
+
+/**
  * Use `T` if it's not empty, otherwise use `K`.
  */
 export type IfNotEmpty<T, K = never> = keyof T extends never ? K : T
@@ -50,44 +77,27 @@ export type RefOf<T extends ElementType> = ComponentPropsWithRef<T>['ref']
 export type DistributiveOmit<T, K extends keyof any> = T extends any ? Omit<T, K> : never
 
 /**
- * Like `T & U`, but using the value types from `U` where their properties overlap.
- */
-export type Overwrite<T, U> = DistributiveOmit<T, keyof U> & U
-
-/**
- * Generate a set of string literal types with the given default record `T` and
- * override record `U`.
- *
- * If the property value was `true`, the property key will be added to the
- * string union.
- */
-export type OverridableStringUnion<T extends string | number, U = {}> = GenerateStringUnion<
-  Overwrite<Record<T, true>, U>
->
-
-type GenerateStringUnion<T> = Extract<
-  {
-    [Key in keyof T]: true extends T[Key] ? Key : never
-  }[keyof T],
-  string
->
-
-/**
  * TODO: Add description
+ *
+ * @internal
  */
 type FragmentRef<T extends ElementType> = T extends typeof Fragment ? { ref?: never } : {}
 
 /**
  * TODO: Add description
+ *
+ * @internal
  */
-type Tag<T extends ElementType, TT> = TT extends ElementType ? TT : T
+type Tag<TComponent, TDefaultComponent extends ElementType> = TComponent extends ElementType
+  ? TComponent
+  : TDefaultComponent
 
 /**
  * A polymorphic component's JSX-equivalent return type.
  * Functionally similar to `ReactElement`.
  */
-export type PolymorphicElement<T extends ElementType, P extends object> =
-  | ReactElement<P, T>
+export type PolymorphicElement<TComponent extends ElementType, TProps extends object> =
+  | ReactElement<TProps, TComponent>
   | ReactPortal
   | null
   | undefined
@@ -119,9 +129,16 @@ export type PolymorphicElement<T extends ElementType, P extends object> =
  * };
  * ```
  */
-export type PolymorphicComponent<T extends ElementType, P extends object> = <TT = T>(
-  props: Overwrite<ComponentPropsWithoutRef<Tag<T, TT>> & { as?: Tag<T, TT> }, P>,
-) => PolymorphicElement<Tag<T, TT>, P>
+export type PolymorphicComponent<TDefaultComponent extends ElementType, TProps extends object> = <
+  TComponent = TDefaultComponent,
+>(
+  props: Overwrite<
+    ComponentPropsWithoutRef<Tag<TComponent, TDefaultComponent>> & {
+      as?: Tag<TComponent, TDefaultComponent>
+    },
+    TProps
+  >,
+) => PolymorphicElement<Tag<TComponent, TDefaultComponent>, TProps>
 
 // ----- Forward Polymorph -----
 
@@ -157,9 +174,12 @@ export type PolymorphicComponent<T extends ElementType, P extends object> = <TT 
  * };
  * ```
  */
-export type ForwardPolymorphicComponentProps<T extends ElementType, P extends object> = Overwrite<
-  ComponentPropsWithoutRef<T> & { as?: T; ref?: RefOf<T> },
-  P
+export type ForwardPolymorphicComponentProps<
+  TComponent extends ElementType,
+  TProps extends object,
+> = Overwrite<
+  ComponentPropsWithoutRef<TComponent> & { as?: TComponent; ref?: RefOf<TComponent> },
+  TProps
 >
 
 /**
@@ -168,10 +188,16 @@ export type ForwardPolymorphicComponentProps<T extends ElementType, P extends ob
  *
  * Implementors will need to adhere to this type when developing a component..
  */
-export type ForwardPolymorphicRenderFunction<T extends ElementType, P extends object> = (
-  props: Overwrite<ComponentPropsWithoutRef<T> & FragmentRef<T> & { as: Maybe<T> }, P>,
-  ref: RefOf<T>,
-) => PolymorphicElement<T, P>
+export type ForwardPolymorphicRenderFunction<
+  TComponent extends ElementType,
+  TProps extends object,
+> = (
+  props: Overwrite<
+    ComponentPropsWithoutRef<TComponent> & FragmentRef<TComponent> & { as: Maybe<TComponent> },
+    TProps
+  >,
+  ref: RefOf<TComponent>,
+) => PolymorphicElement<TComponent, TProps>
 
 /**
  * A castable type definition for `React.ForwardRefExoticComponent`, which
@@ -179,15 +205,18 @@ export type ForwardPolymorphicRenderFunction<T extends ElementType, P extends ob
  *
  * Consumers will need to adhere to this type when rendering a component.
  */
-export type ForwardPolymorphicExoticComponent<T extends ElementType, P extends object> = <TT = T>(
+export type ForwardPolymorphicExoticComponent<
+  TDefaultComponent extends ElementType,
+  TProps extends object,
+> = <TComponent = TDefaultComponent>(
   props: Overwrite<
-    ComponentPropsWithoutRef<Tag<T, TT>> & {
-      as?: Tag<T, TT>
-      ref?: RefOf<Tag<T, TT>>
+    ComponentPropsWithoutRef<Tag<TComponent, TDefaultComponent>> & {
+      as?: Tag<TComponent, TDefaultComponent>
+      ref?: RefOf<Tag<TComponent, TDefaultComponent>>
     },
-    P
+    TProps
   >,
-) => PolymorphicElement<Tag<T, TT>, P>
+) => PolymorphicElement<Tag<TComponent, TDefaultComponent>, TProps>
 
 /**
  * A castable type definition for `React.forwardRef`, which injects the `as` and
@@ -198,6 +227,6 @@ export type ForwardPolymorphicExoticComponent<T extends ElementType, P extends o
  * export const forwardPolymorphic = forwardRef as ForwardPolymorphicComponent;
  * ```
  */
-export type ForwardPolymorphicComponent = <T extends ElementType, P extends object>(
-  render: ForwardPolymorphicRenderFunction<T, P>,
-) => ForwardPolymorphicExoticComponent<T, P>
+export type ForwardPolymorphicComponent = <TComponent extends ElementType, TProps extends object>(
+  render: ForwardPolymorphicRenderFunction<TComponent, TProps>,
+) => ForwardPolymorphicExoticComponent<TComponent, TProps>
