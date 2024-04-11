@@ -25,7 +25,7 @@
   },
   "scripts": {
     "build": "pnpm prebuild && mkdir dist && cp -a package.json LICENSE CHANGELOG.md README.md createApp.js index.js dist/",
-    "prebuild": "rimraf dist",
+    "prebuild": "rm -rf dist",
     "release": "pnpm build && npm publish ./dist --tag latest",
     "release:yalc": "pnpm build && yalc publish ./dist"
   },
