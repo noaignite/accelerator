@@ -1,0 +1,39 @@
+{
+  "name": "@noaignite/utils",
+  "version": "2.1.0",
+  "private": false,
+  "author": "NoA Ignite",
+  "description": "Utility functions used by NoA Ignite",
+  "keywords": [
+    "utils"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.ts",
+  "files": [
+    "dist/**"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/utils"
+  },
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/utils",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^4.7.4"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
