@@ -42,6 +42,7 @@
   "devDependencies": {
     "@noaignite/centra-types": "^1.1.0",
     "@types/js-cookie": "^3.0.1",
+    "@types/react": "^17.0.35",
     "tsup": "^8.0.1"
   },
   "dependencies": {
