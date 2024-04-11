@@ -20,11 +20,8 @@
     "url": "https://github.com/noaignite/accelerator/issues"
   },
   "scripts": {
-    "build": "pnpm prebuild && mkdir dist && cp index.d.ts dist/ && cp -a api models utils LICENSE package.json dist/",
     "build:docs": "typedoc",
-    "prebuild": "pnpm typecheck && rimraf dist",
-    "release:yalc": "pnpm build && yalc publish",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "sideEffects": false,
   "publishConfig": {
