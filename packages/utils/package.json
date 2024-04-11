@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/utils",
+    "test": "vitest",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
