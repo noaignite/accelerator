@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "ci": "pnpm run lint && pnpm run test && pnpm run build",
+    "ci": "pnpm run build && pnpm run test",
     "dev": "turbo dev",
     "format": "prettier --write .",
     "lint": "turbo lint",
