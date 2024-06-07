@@ -1,4 +1,4 @@
-import type { Overwrite } from '.'
+import type { Overwrite } from './Overwrite'
 
 /**
  * Generates a string union type from a given object type of all keys whose values are `boolean`.

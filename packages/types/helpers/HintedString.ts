@@ -4,9 +4,11 @@
  * value is also accepted.
  *
  * @example
+ * ```tsx
  * type Union = 'foo' | 'bar'
  *
  * type Unhinted = Union | string // string
  * type Hinted = HintedString<Union> // 'foo' | 'bar' | string
+ * ```
  */
 export type HintedString<Union extends string> = Union | (string & {})

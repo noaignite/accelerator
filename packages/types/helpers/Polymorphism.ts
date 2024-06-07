@@ -5,7 +5,9 @@ import type {
   ReactElement,
   ReactPortal,
 } from 'react'
-import type { Maybe, Overwrite, RefOf } from '.'
+import type { Maybe } from './Maybe'
+import type { Overwrite } from './Overwrite'
+import type { RefOf } from './RefOf'
 
 // ----- Internal Utilities -----
 
@@ -145,11 +147,14 @@ export type ForwardPolymorphicExoticComponent<
   TProps extends object,
 > = <TActualElement = TInternalElement>(
   props: Overwrite<
-    ComponentPropsWithoutRef<Tag<TActualElement, TInternalElement>> & {
-      as?: Tag<TActualElement, TInternalElement>
-      ref?: RefOf<Tag<TActualElement, TInternalElement>>
-    },
-    TProps
+    ComponentPropsWithoutRef<Tag<TActualElement, TInternalElement>>,
+    Overwrite<
+      {
+        as?: Tag<TActualElement, TInternalElement>
+        ref?: RefOf<Tag<TActualElement, TInternalElement>>
+      },
+      TProps
+    >
   >,
 ) => PolymorphicElement<Tag<TActualElement, TInternalElement>, TProps>
 
@@ -158,8 +163,13 @@ export type ForwardPolymorphicExoticComponent<
  * `ref` properties into the component's props.
  *
  * @example
+ * ```tsx
  * export const forwardPolymorphic = forwardRef as ForwardPolymorphicComponent;
+ * ```
  */
-export type ForwardPolymorphicComponent = <TElement extends ElementType, TProps extends object>(
+export type ForwardPolymorphicComponent = <
+  TElement extends ElementType,
+  TProps extends object = {},
+>(
   render: ForwardPolymorphicRenderFunction<TElement, TProps>,
 ) => ForwardPolymorphicExoticComponent<TElement, TProps>

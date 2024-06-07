@@ -1,4 +1,4 @@
-import type { DistributiveOmit } from '.'
+import type { DistributiveOmit } from './DistributiveOmit'
 
 /**
  * Equivalent to using expression `T & U`, but done without merging the types.
@@ -6,6 +6,7 @@ import type { DistributiveOmit } from '.'
  * @see https://github.com/mui/material-ui/blob/master/packages/mui-types/index.d.ts
  *
  * @example
+ * ```tsx
  * type A = { a: string, b: boolean }
  * type B = { a: number, b: boolean }
  *
@@ -14,5 +15,6 @@ import type { DistributiveOmit } from '.'
  *
  * // Using Overwrite
  * type Overwritten = Overwrite<A, B> // { a: number, b: boolean }
+ * ```
  */
 export type Overwrite<T, U> = DistributiveOmit<T, keyof U> & U
