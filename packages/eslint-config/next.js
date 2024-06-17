@@ -37,6 +37,7 @@ module.exports = {
     },
   },
   ignorePatterns: ['node_modules/', 'dist/'],
+  // add rules configurations here
   rules: {
     '@typescript-eslint/consistent-type-definitions': 'off', // Prefer types over interfaces.
     '@typescript-eslint/explicit-function-return-type': 'off', // Allow typescript to infer.
