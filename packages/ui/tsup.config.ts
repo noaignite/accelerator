@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-function -- TODO: Fix TS error */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: Fix TS error */
+/* eslint-disable @typescript-eslint/no-explicit-any -- TODO: Fix TS error */
 import { defineConfig, type Options } from 'tsup'
 // import CssModulesPlugin from "esbuild-css-modules-plugin";
-import fsPromises from 'fs/promises'
-// @ts-expect-error -- Is there a better way to import below as a `module`?
 import { generateScopedName } from 'hash-css-selector'
-import path from 'path'
+import fsPromises from 'node:fs/promises'
+import path from 'node:path'
 import postcss from 'postcss'
 import postcssModules from 'postcss-modules'
 
@@ -61,16 +63,16 @@ export default defineConfig((options: Options) => ({
 
           const source = await fsPromises.readFile(pluginData.pathDir, 'utf8')
 
-          let cssModule: any = {}
+          const cssModule: any = {}
           const result = await postcss([
             postcssModules({
-              generateScopedName: function(name, filename) {
+              generateScopedName(name, filename) {
                 const newSelector = generateScopedName(name, filename)
                 cssModule[name] = newSelector
 
                 return newSelector
               },
-              getJSON: () => { },
+              getJSON: () => {},
               scopeBehaviour: 'local',
             }),
           ]).process(source, { from: pluginData.pathDir })

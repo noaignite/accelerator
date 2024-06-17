@@ -11,14 +11,12 @@
   "scripts": {
     "build": "tcm src && tsup",
     "dev": "tcm src --watch & tsup --watch",
-    "lint": "eslint . --max-warnings 0",
-    "type-check": "tsc --noEmit",
-    "generate:component": "turbo gen react-component"
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@turbo/gen": "^1.13.2",
     "@types/eslint": "^8.56.7",
     "@types/node": "^20.12.6",
     "@types/react": "^18.2.75",

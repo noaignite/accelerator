@@ -3,6 +3,10 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
+    "target": "es6",
+    "jsx": "react-jsx",
+    "noEmit": true
   }
 }

@@ -19,15 +19,9 @@
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-style-order": "^0.2.2",
-    "turbo": "^2.0.4",
-    "vitest": "^1.4.0"
+    "turbo": "^2.0.4"
   },
   "packageManager": "pnpm@9.3.0",
-  "pnpm": {
-    "overrides": {
-      "typescript": "5.3.3"
-    }
-  },
   "engines": {
     "node": ">=18"
   }
