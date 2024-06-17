@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import clsx from "clsx";
-import classes from "./button.module.css";
+import { clsx } from 'clsx';
+import type { ReactNode } from 'react';
+import classes from './button.module.css';
 
 interface ButtonProps {
   children: ReactNode;
@@ -8,15 +8,19 @@ interface ButtonProps {
   appName: string;
 }
 
-export const Button = (props: ButtonProps) => {
+export function Button(props: ButtonProps) {
   const { children, className, appName } = props;
 
   return (
     <button
       className={clsx(classes.root, className)}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
+      onClick={() => {
+        // eslint-disable-next-line no-alert -- Test code
+        alert(`Hello from your ${appName} app!`);
+      }}
+      type="button"
     >
       {children}
     </button>
   );
-};
+}

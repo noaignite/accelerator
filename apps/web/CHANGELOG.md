@@ -5,7 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [170e00a]
-  - @maeertin/ui@0.0.2
+  - @repo/ui@0.0.2
 
 ## 1.0.1
 

@@ -3,22 +3,22 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "vitest run",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "ci": "pnpm run lint && pnpm run test && pnpm run build",
-    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
+    "dev": "turbo dev",
+    "format": "prettier --write .",
+    "lint": "turbo lint",
+    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish",
+    "test": "pnpm run lint && pnpm run type-check",
+    "type-check": "turbo type-check"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.27.5",
     "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "prettier": "^3.1.0",
-    "turbo": "latest",
-    "vitest": "^1.0.4"
+    "turbo": "^2.0.4"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@9.3.0",
   "engines": {
     "node": ">=18"
   }

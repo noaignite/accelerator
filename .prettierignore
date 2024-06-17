@@ -1,0 +1,15 @@
+.next/
+.turbo/
+dist/
+node_modules/
+target/
+compiled/
+public/
+storybook-static/
+
+.env*
+.env.provision.production
+.env.provision.stage
+package-lock.json
+pnpm-lock.yaml
+next-env.d.ts
