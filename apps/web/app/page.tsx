@@ -1,16 +1,16 @@
-import { Button, Card, Code } from '@repo/ui'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from './page.module.css'
+import { Button, Card, Code } from '@repo/ui';
+import Image from 'next/image';
+import Link from 'next/link';
+import styles from './page.module.css';
 
 function Gradient({
   conic,
   className,
   small,
 }: {
-  small?: boolean
-  conic?: boolean
-  className?: string
+  small?: boolean;
+  conic?: boolean;
+  className?: string;
 }): JSX.Element {
   return (
     <span
@@ -23,7 +23,7 @@ function Gradient({
         .filter(Boolean)
         .join(' ')}
     />
-  )
+  );
 }
 
 const LINKS = [
@@ -47,7 +47,7 @@ const LINKS = [
     href: 'https://vercel.com/new',
     description: ' Instantly deploy your Turborepo to a shareable URL with Vercel.',
   },
-]
+];
 
 export default function Page(): JSX.Element {
   return (
@@ -76,7 +76,12 @@ export default function Page(): JSX.Element {
         </div>
       </div>
 
-      <Button as={Link} href="/" className={styles.button}>
+      <Button
+        // @ts-expect-error -- temp temp
+        as={Link as 'a'}
+        className={styles.button}
+        href="/"
+      >
         Click me!
       </Button>
 
@@ -88,8 +93,8 @@ export default function Page(): JSX.Element {
                 alt=""
                 height={614}
                 src="circles.svg"
-                width={614}
                 style={{ pointerEvents: 'none' }}
+                width={614}
               />
             </div>
             <div className={styles.logoGradientContainer}>
@@ -102,8 +107,8 @@ export default function Page(): JSX.Element {
                 height={120}
                 priority
                 src="turborepo.svg"
-                width={120}
                 style={{ pointerEvents: 'none' }}
+                width={120}
               />
             </div>
           </div>
@@ -138,5 +143,5 @@ export default function Page(): JSX.Element {
         ))}
       </div>
     </main>
-  )
+  );
 }
