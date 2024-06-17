@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function -- TODO: Fix TS error */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access -- TODO: Fix TS error */
 /* eslint-disable @typescript-eslint/no-explicit-any -- TODO: Fix TS error */
-import { defineConfig, type Options } from 'tsup'
+import { defineConfig, type Options } from 'tsup';
 // import CssModulesPlugin from "esbuild-css-modules-plugin";
-import { generateScopedName } from 'hash-css-selector'
-import fsPromises from 'node:fs/promises'
-import path from 'node:path'
-import postcss from 'postcss'
-import postcssModules from 'postcss-modules'
+import { generateScopedName } from 'hash-css-selector';
+import fsPromises from 'node:fs/promises';
+import path from 'node:path';
+import postcss from 'postcss';
+import postcssModules from 'postcss-modules';
 
 export default defineConfig((options: Options) => ({
   // Build react package for use in nextjs 13
@@ -15,7 +15,7 @@ export default defineConfig((options: Options) => ({
   esbuildOptions(internalOptions) {
     internalOptions.banner = {
       js: '"use client"',
-    }
+    };
   },
   treeshake: false, // Enabling this removes client directives.
   splitting: false,
@@ -54,45 +54,45 @@ export default defineConfig((options: Options) => ({
             pluginData: {
               pathDir: path.join(args.resolveDir, args.path),
             },
-          }
-        })
+          };
+        });
         build.onLoad({ filter: /#css-module$/, namespace: 'css-module' }, async (args) => {
           const { pluginData } = args as {
-            pluginData: { pathDir: string }
-          }
+            pluginData: { pathDir: string };
+          };
 
-          const source = await fsPromises.readFile(pluginData.pathDir, 'utf8')
+          const source = await fsPromises.readFile(pluginData.pathDir, 'utf8');
 
-          const cssModule: any = {}
+          const cssModule: any = {};
           const result = await postcss([
             postcssModules({
               generateScopedName(name, filename) {
-                const newSelector = generateScopedName(name, filename)
-                cssModule[name] = newSelector
+                const newSelector = generateScopedName(name, filename);
+                cssModule[name] = newSelector;
 
-                return newSelector
+                return newSelector;
               },
               getJSON: () => {},
               scopeBehaviour: 'local',
             }),
-          ]).process(source, { from: pluginData.pathDir })
+          ]).process(source, { from: pluginData.pathDir });
 
           return {
             pluginData: { css: result.css },
             contents: `import "${pluginData.pathDir}"; export default ${JSON.stringify(cssModule)}`,
-          }
-        })
+          };
+        });
         build.onResolve({ filter: /\.module\.css$/, namespace: 'css-module' }, (args) => ({
           path: path.join(args.resolveDir, args.path, '#css-module-data'),
           namespace: 'css-module',
           pluginData: args.pluginData as { css: string },
-        }))
+        }));
         build.onLoad({ filter: /#css-module-data$/, namespace: 'css-module' }, (args) => ({
           contents: (args.pluginData as { css: string }).css,
           loader: 'css',
-        }))
+        }));
       },
     },
   ],
   ...options,
-}))
+}));
