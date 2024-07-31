@@ -2,4 +2,4 @@
 '@noaignite/utils': major
 ---
 
-migrate @noaignite/utils to new turborepo setup
+Migrate @noaignite/utils to new turborepo setup
