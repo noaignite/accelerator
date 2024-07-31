@@ -31,7 +31,7 @@
     "@repo/typescript-config": "workspace:*",
     "@types/react": "^18.2.65",
     "react": "^18.2.0",
-    "typescript": "5.3.3"
+    "typescript": "5.4.5"
   },
   "publishConfig": {
     "access": "public"
