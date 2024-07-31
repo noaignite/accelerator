@@ -25,6 +25,7 @@
   ],
   "scripts": {
     "build": "tsup",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
     "test-coverage": "vitest run",
     "test-types": "tsc --noEmit"
   },
