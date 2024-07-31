@@ -1,0 +1,45 @@
+{
+  "name": "@noaignite/utils",
+  "version": "2.1.0",
+  "private": false,
+  "description": "Utility functions used by NoA Ignite",
+  "keywords": [
+    "utils"
+  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/utils"
+  },
+  "license": "MIT",
+  "author": "NoA Ignite",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
+    "test-coverage": "vitest run",
+    "test-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "tsup": "^8.0.1",
+    "typescript": "^4.7.4",
+    "vitest": "^2.0.4"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
