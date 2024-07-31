@@ -8,8 +8,9 @@
     "format": "prettier --write .",
     "lint": "turbo lint",
     "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish",
-    "test": "pnpm run lint && pnpm run type-check",
-    "type-check": "turbo type-check"
+    "test": "pnpm run lint && pnpm run test-types && pnpm run test-coverage",
+    "test-coverage": "turbo test-coverage",
+    "test-types": "turbo test-types"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.5",
