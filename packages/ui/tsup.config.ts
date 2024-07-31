@@ -73,7 +73,7 @@ export default defineConfig((options: Options) => ({
 
                 return newSelector;
               },
-              getJSON: () => { },
+              getJSON: () => {},
               scopeBehaviour: 'local',
             }),
           ]).process(source, { from: pluginData.pathDir });
