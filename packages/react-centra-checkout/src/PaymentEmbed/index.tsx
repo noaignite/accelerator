@@ -1,4 +1,4 @@
-import * as CheckoutApi from '@noaignite/centra-types';
+import type * as CheckoutApi from '@noaignite/centra-types';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import isEqual from 'react-fast-compare';
 import { useCentraHandlers, useCentraSelection } from '../Context';
@@ -6,13 +6,15 @@ import HtmlEmbed from '../internal/HtmlEmbed';
 
 export interface PaymentEmbedProps {
   values: Record<string, unknown>;
-  onPaymentSuccess?(paymentResult: CheckoutApi.SuccessResponse<CheckoutApi.Payment>): void;
-  onPaymentError?(error: CheckoutApi.Errors): void;
+  onPaymentSuccess?: (paymentResult: CheckoutApi.SuccessResponse<CheckoutApi.Payment>) => void;
+  onPaymentError?: (error: CheckoutApi.Errors) => void;
 }
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
-const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null => {
+const PaymentEmbed = memo(function PaymentEmbed(
+  props: PaymentEmbedProps,
+): React.ReactElement | null {
   const { values, onPaymentError, onPaymentSuccess } = props;
 
   const [paymentResult, setPaymentResult] =
@@ -35,12 +37,14 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
   // Submit payment
   const handlePaymentCallback = useCallback(
     (event) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
       const {
         addressIncluded,
         billingAddress: detailsAddress,
         shippingAddress: detailsShippingAddress,
         paymentMethod: detailsPaymentMethod,
         paymentMethodSpecificFields,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- TODO: Fix this
       } = event.detail;
 
       const payload = {
@@ -59,7 +63,7 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
 
       submitPayment?.(payload)
         .then((result) => {
-          if ('errors' in result && result?.errors) {
+          if ('errors' in result && Boolean(result.errors)) {
             onPaymentError?.(result.errors);
             // set paymentResult to null so that a new POST /payment request is made to refresh the widget
             setPaymentResult(null);
@@ -69,8 +73,9 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
             setPaymentCallbackError(null);
           }
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           console.error('@noaignite/react-centra-checkout: Could not submit payment');
+          // @ts-expect-error -- TODO: Fix this
           setPaymentCallbackError(err);
           console.error(err);
         });
@@ -88,7 +93,7 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
   // Retrieve formHtml
   useEffect(() => {
     const shouldRequestPayment =
-      paymentMethod?.supportsInitiateOnly || paymentMethod?.providesCustomerAddressAfterPayment; // if either of these are true, this is a paymentMethod which provides an embed
+      paymentMethod?.supportsInitiateOnly ?? paymentMethod?.providesCustomerAddressAfterPayment; // if either of these are true, this is a paymentMethod which provides an embed
 
     if (
       ((selection?.paymentMethod === previousPaymentMethod.current || !shouldRequestPayment) &&
@@ -98,7 +103,7 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
       return;
     }
 
-    previousPaymentMethod.current = selection?.paymentMethod;
+    previousPaymentMethod.current = selection.paymentMethod;
 
     // don't send termsAndConditions when fetching embed payments, as we don't want it to fail just yet.
     submitPayment?.({ ...values, termsAndConditions: undefined })
@@ -116,7 +121,7 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
         setPaymentResult(result);
         setPaymentCallbackError(null);
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error(err);
         setPaymentResult(null);
       });
@@ -141,7 +146,7 @@ const PaymentEmbed = memo((props: PaymentEmbedProps): React.ReactElement | null 
 
   const formHtml = paymentResult && 'formHtml' in paymentResult && paymentResult.formHtml;
 
-  return formHtml ? <HtmlEmbed id="centra-payment-form" html={formHtml} /> : null;
+  return formHtml ? <HtmlEmbed html={formHtml} id="centra-payment-form" /> : null;
 }, isEqual);
 
 export default PaymentEmbed;

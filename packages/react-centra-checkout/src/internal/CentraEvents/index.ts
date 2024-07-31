@@ -1,9 +1,8 @@
-import * as CentraCheckoutApi from '@noaignite/centra-types';
+/* eslint-disable camelcase -- Allow */
 
-const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as [
-  'centra_checkout_callback',
-  'centra_checkout_payment_callback',
-];
+import type * as CentraCheckoutApi from '@noaignite/centra-types';
+
+const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as const;
 
 function isValidEvent(eventName: (typeof CENTRA_EVENTS)[number]) {
   if (CENTRA_EVENTS.includes(eventName)) {
@@ -74,7 +73,7 @@ class CentraEvents {
 }
 
 // create default singleton instance
-if (!CentraEvents.default) {
+if (!('default' in CentraEvents)) {
   CentraEvents.default = new CentraEvents();
 }
 

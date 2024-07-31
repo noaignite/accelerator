@@ -28,12 +28,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsup && pnpm build:copy-files",
-    "build:copy-files": "cp LICENSE package.json dist/",
+    "build": "tsup",
     "build:docs": "typedoc",
-    "release:yalc": "pnpm build && yalc publish",
-    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/react-centra-checkout",
-    "type-check": "tsc --noEmit"
+    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
+    "test-types": "tsc --noEmit"
   },
   "dependencies": {
     "js-cookie": "^3.0.1"
@@ -43,6 +41,7 @@
     "@types/js-cookie": "^3.0.1",
     "@types/react": "^17.0.35",
     "tsup": "^8.0.1",
+    "typedoc": "^0.22.9",
     "typescript": "5.3.3"
   },
   "peerDependencies": {

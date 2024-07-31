@@ -26,14 +26,16 @@ class ApiClient {
       body: ['POST', 'PUT'].includes(method) ? JSON.stringify(data) : undefined,
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: fix this
     const json = await response.json();
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: fix this
     return json;
   };
 }
 
 // create default singleton instance
-if (!ApiClient.default) {
+if (!('default' in ApiClient)) {
   ApiClient.default = new ApiClient();
 }
 

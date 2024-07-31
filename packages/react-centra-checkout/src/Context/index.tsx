@@ -1,4 +1,4 @@
-import * as CheckoutApi from '@noaignite/centra-types';
+import type * as CheckoutApi from '@noaignite/centra-types';
 import type Cookies from 'js-cookie';
 import cookies from 'js-cookie';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -18,7 +18,7 @@ export interface ProviderProps {
   /** Disables automatic client side fetching of the Centra selection */
   disableInit?: boolean;
   /** Sets the initial selection */
-  initialSelection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>;
+  initialSelection?: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>;
   /** Used when submitting payment using the POST /payment Centra api call */
   paymentFailedPage: string;
   /** Used when submitting payment using the POST /payment Centra api call */
@@ -42,127 +42,135 @@ export interface ContextMethods {
   /**
     @param item - The Centra item id
   */
-  addItem?(
+  addItem?: (
     item: string,
     quantity?: number,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param item - The Centra item id
     @param data - Bundle data
   */
-  addBundleItem?(
+  addBundleItem?: (
     item: string,
     data?: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
   */
-  addGiftCertificate?(
+  addGiftCertificate?: (
     giftCertificate: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
 
-  addBackInStockSubscription?(
+  addBackInStockSubscription?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
     @param amount - Custom gift certificate amount
   */
-  addCustomGiftCertificate?(
+  addCustomGiftCertificate?: (
     giftCertificate: string,
     amount: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
 
-  addNewsletterSubscription?(
+  addNewsletterSubscription?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param voucher - The id of the voucher to add
   */
-  addVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  addVoucher?: (voucher: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param line - The line id of the item to decrease
   */
-  decreaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  decreaseCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param line - The line id of the item to increase
   */
-  increaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  increaseCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param selectionData - Initial selection data
   */
-  init?(selectionData?: CheckoutApi.Response<CheckoutApi.SelectionResponse>): Promise<void>;
-  loginCustomer?(
+  init?: (selectionData?: CheckoutApi.Response<CheckoutApi.SelectionResponse>) => Promise<void>;
+  loginCustomer?: (
     email: string,
     password: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  logoutCustomer?(): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  logoutCustomer?: () => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
   */
-  registerCustomer?(
+  registerCustomer?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param line - The line id of the item to increase
   */
-  removeCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  removeCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param voucher - The id of the voucher to add
   */
-  removeVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  removeVoucher?: (voucher: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
   /**
     @param i - The `i` query parameter provided by Centra when landing on the password reset page
     @param id - The `id` query parameter provided by Centra when landing on the password reset page
   */
-  resetCustomerPassword?(
+  resetCustomerPassword?: (
     i: string,
     id: string,
     newPassword: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  resetSelection?(): void;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  resetSelection?: () => void;
   /**
     @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
   */
-  sendCustomerResetPasswordEmail?(
+  sendCustomerResetPasswordEmail?: (
     email: string,
     linkUri: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  submitPayment?(data: Record<string, unknown>): Promise<CheckoutApi.Response<CheckoutApi.Payment>>;
-  updateCartItemQuantity?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  submitPayment?: (
+    data: Record<string, unknown>,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.Payment>>;
+  updateCartItemQuantity?: (
     line: string,
     quantity: number,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCartItemSize?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCartItemSize?: (
     cartItem: CheckoutApi.SelectionItem,
     item: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCountry?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCountry?: (
     country: string,
     data: { language: string },
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCustomer?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCustomer?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCustomerAddress?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCustomerAddress?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCustomerEmail?(email: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCustomerPassword?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCustomerEmail?: (
+    email: string,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCustomerPassword?: (
     password: string,
     newPassword: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateLanguage?(language: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updatePaymentFields?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateLanguage?: (
+    language: string,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updatePaymentFields?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updatePaymentMethod?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updatePaymentMethod?: (
     paymentMethod: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateShippingMethod?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateShippingMethod?: (
     shippingMethod: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
-  updateCampaignSite?(uri: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
+  updateCampaignSite?: (
+    uri: string,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>;
 }
 
 export type ContextProperties = CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse> & {
@@ -170,11 +178,12 @@ export type ContextProperties = CheckoutApi.SuccessResponse<CheckoutApi.Selectio
   apiClient?: ApiClient;
 };
 
-export const SELECTION_INITIAL_VALUE = {
+export const SELECTION_INITIAL_VALUE: CheckoutApi.SelectionResponse = {
   countries: [],
   languages: [],
   location: {},
   paymentFields: {
+    // @ts-expect-error -- TODO: Fix this
     address: {},
     shippingAddress: {},
     termsAndConditions: {},
@@ -210,9 +219,7 @@ export function CentraProvider(props: ProviderProps) {
 
   const apiClient = apiClientProp ?? defaultApiClient;
 
-  const [selection, setSelection] = useState<CheckoutApi.Response<CheckoutApi.SelectionResponse>>(
-    initialSelection || SELECTION_INITIAL_VALUE,
-  );
+  const [selection, setSelection] = useState(initialSelection ?? SELECTION_INITIAL_VALUE);
 
   const centraCheckoutScript =
     'selection' in selection && selection.selection?.centraCheckoutScript;
@@ -233,14 +240,14 @@ export function CentraProvider(props: ProviderProps) {
         | Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
         | (() => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>),
     ) => {
-      window.CentraCheckout?.suspend();
+      window.CentraCheckout.suspend();
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall;
 
       if ('selection' in response && response.selection) {
         setSelection(response);
       }
 
-      window.CentraCheckout?.resume();
+      window.CentraCheckout.resume();
 
       return response;
     },
@@ -248,9 +255,10 @@ export function CentraProvider(props: ProviderProps) {
   );
 
   const centraCheckoutCallback = useCallback(
-    async (event) => {
+    async (event: CustomEvent) => {
       if (event.detail) {
         const response = await selectionApiCall(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
           apiClient.request('PUT', `payment-fields`, event.detail),
         );
 
@@ -345,11 +353,13 @@ export function CentraProvider(props: ProviderProps) {
       selectionApiCall(async () => {
         await apiClient.request('DELETE', `lines/${cartItem.line}`);
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
         const response = await apiClient.request(
           'POST',
           `items/${item}/quantity/${cartItem.quantity}`,
         );
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: Fix this
         return response;
       }),
     [apiClient, selectionApiCall],
@@ -475,6 +485,7 @@ export function CentraProvider(props: ProviderProps) {
   const resetSelection = useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token');
     cookies.remove(tokenName);
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
     init();
   }, [apiClient.headers, init, tokenName]);
 
@@ -516,13 +527,18 @@ export function CentraProvider(props: ProviderProps) {
 
   useEffect(() => {
     if (!disableInit) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
       init();
     }
 
     // always add event listener for centra_checkout_callback in case it is used
+    // @ts-expect-error -- TODO: Fix this
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
     document.addEventListener('centra_checkout_callback', centraCheckoutCallback);
 
     return () => {
+      // @ts-expect-error -- TODO: Fix this
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
       document.removeEventListener('centra_checkout_callback', centraCheckoutCallback);
     };
   }, [disableInit, init, centraCheckoutCallback]);
@@ -681,7 +697,9 @@ export function useCentraReceipt(
     const tempApiClient = new ApiClient(apiUrl);
     tempApiClient.headers.set('api-token', token);
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
     tempApiClient.request('GET', 'receipt').then((response) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
       setResult(response);
     });
   }, [apiUrl, token]);
@@ -702,12 +720,14 @@ export function useCentraOrders(
 
   useEffect(() => {
     // fetch orders
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
     apiClient
       .request('POST', 'orders', {
         ...(from && { from }),
         ...(size && { size }),
       })
       .then((response) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
         setResult(response);
       });
   }, [apiClient, from, size]);

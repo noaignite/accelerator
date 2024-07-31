@@ -38,11 +38,11 @@ function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
     }
 
     return () => {
-      createdScripts.forEach((script) => script.remove());
+      createdScripts.forEach((script) => { script.remove(); });
     };
   }, [html]);
 
-  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} {...other} />;
+  return <div dangerouslySetInnerHTML={{ __html: html }} ref={ref} {...other} />;
 }
 
 export default HtmlEmbed;
