@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- TODO: Fix TS error */
 import { defineConfig, type Options } from 'tsup';
 // import CssModulesPlugin from "esbuild-css-modules-plugin";
+// @ts-expect-error -- TODO: Fix TS error
 import { generateScopedName } from 'hash-css-selector';
 import fsPromises from 'node:fs/promises';
 import path from 'node:path';
@@ -72,7 +73,7 @@ export default defineConfig((options: Options) => ({
 
                 return newSelector;
               },
-              getJSON: () => {},
+              getJSON: () => { },
               scopeBehaviour: 'local',
             }),
           ]).process(source, { from: pluginData.pathDir });

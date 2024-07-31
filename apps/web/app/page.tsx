@@ -1,3 +1,4 @@
+import { normalize } from '@noaignite/utils';
 import { Button, Card, Code } from '@repo/ui';
 import Image from 'next/image';
 import styles from './page.module.css';
@@ -78,6 +79,8 @@ export default function Page(): JSX.Element {
       <Button appName="web" className={styles.button}>
         Click me!
       </Button>
+
+      <p>normalize test: {normalize(30, 0, 100)}</p>
 
       <div className={styles.hero}>
         <div className={styles.heroContent}>
