@@ -1,6 +1,6 @@
-import Product from '../models/Product'
 import Category from '../models/Category'
 import Filter from '../models/Filter'
+import Product from '../models/Product'
 
 export default interface ProductResponse<P = Product> {
   product?: P
