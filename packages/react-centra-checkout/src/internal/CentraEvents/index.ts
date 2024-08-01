@@ -73,7 +73,8 @@ class CentraEvents {
 }
 
 // create default singleton instance
-if (!('default' in CentraEvents)) {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Fix this
+if (!CentraEvents.default) {
   CentraEvents.default = new CentraEvents();
 }
 

@@ -35,7 +35,8 @@ class ApiClient {
 }
 
 // create default singleton instance
-if (!('default' in ApiClient)) {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Fix this
+if (!ApiClient.default) {
   ApiClient.default = new ApiClient();
 }
 
