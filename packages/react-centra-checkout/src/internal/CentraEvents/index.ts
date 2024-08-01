@@ -1,35 +1,35 @@
 /* eslint-disable camelcase -- Allow */
 
-import type * as CentraCheckoutApi from '@noaignite/centra-types';
+import type * as CentraCheckoutApi from '@noaignite/centra-types'
 
-const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as const;
+const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as const
 
 function isValidEvent(eventName: (typeof CENTRA_EVENTS)[number]) {
   if (CENTRA_EVENTS.includes(eventName)) {
-    return true;
+    return true
   }
 
-  console.error(`@noaignite/react-centra-checkout: There's no event with the name ${eventName}`);
-  return false;
+  console.error(`@noaignite/react-centra-checkout: There's no event with the name ${eventName}`)
+  return false
 }
 
 class CentraEvents {
   eventHandlers: {
     centra_checkout_callback?: Set<
       (payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>) => unknown
-    >;
+    >
     centra_checkout_payment_callback?: Set<
       (payload: CentraCheckoutApi.SelectionResponse) => unknown
-    >;
-  };
+    >
+  }
 
-  static default: CentraEvents;
+  static default: CentraEvents
 
   constructor() {
     this.eventHandlers = {
       centra_checkout_callback: new Set(),
       centra_checkout_payment_callback: new Set(),
-    };
+    }
   }
 
   on(
@@ -39,12 +39,12 @@ class CentraEvents {
     ) => unknown,
   ) {
     if (isValidEvent(eventName)) {
-      this.eventHandlers[eventName]?.add(callback);
+      this.eventHandlers[eventName]?.add(callback)
 
-      return true;
+      return true
     }
 
-    return false;
+    return false
   }
 
   off(
@@ -54,12 +54,12 @@ class CentraEvents {
     ) => unknown,
   ) {
     if (isValidEvent(eventName)) {
-      this.eventHandlers[eventName]?.delete(callback);
+      this.eventHandlers[eventName]?.delete(callback)
 
-      return true;
+      return true
     }
 
-    return false;
+    return false
   }
 
   dispatch(
@@ -67,7 +67,7 @@ class CentraEvents {
     payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
   ) {
     if (isValidEvent(eventName)) {
-      this.eventHandlers[eventName]?.forEach((handler) => handler(payload));
+      this.eventHandlers[eventName]?.forEach((handler) => handler(payload))
     }
   }
 }
@@ -75,7 +75,7 @@ class CentraEvents {
 // create default singleton instance
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Fix this
 if (!CentraEvents.default) {
-  CentraEvents.default = new CentraEvents();
+  CentraEvents.default = new CentraEvents()
 }
 
-export default CentraEvents;
+export default CentraEvents
