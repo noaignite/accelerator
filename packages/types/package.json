@@ -2,30 +2,26 @@
   "name": "@noaignite/types",
   "version": "0.0.0",
   "private": false,
-  "author": "NoA Ignite",
   "description": "Type helpers by NoA Ignite",
   "keywords": [
     "helpers",
     "typescript"
   ],
-  "types": "./index.ts",
-  "files": [
-    "index.ts"
-  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/types"
   },
-  "bugs": {
-    "url": "https://github.com/noaignite/accelerator/issues"
-  },
+  "author": "NoA Ignite",
+  "types": "./index.ts",
+  "files": [
+    "index.ts"
+  ],
   "scripts": {
     "type-check": "tsc --noEmit"
-  },
-  "peerDependencies": {
-    "@types/react": "^18.0.0",
-    "react": "^18.0.0"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
@@ -33,10 +29,14 @@
     "react": "^18.2.0",
     "typescript": "5.4.5"
   },
-  "publishConfig": {
-    "access": "public"
+  "peerDependencies": {
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
