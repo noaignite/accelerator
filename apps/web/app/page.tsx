@@ -79,8 +79,9 @@ export default function Page(): JSX.Element {
 
       <Button
         // @ts-expect-error -- TODO: How to fix this?
-        as={Link}
+        as={Link as 'a'}
         className={styles.button}
+        href="/"
       >
         Click me!
       </Button>
