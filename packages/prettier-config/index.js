@@ -1,4 +1,4 @@
-const vercelPrettierConfig = require('@vercel/style-guide/prettier');
+const vercelPrettierConfig = require('@vercel/style-guide/prettier')
 
 /** @type {import("prettier").Config} */
 module.exports = {
@@ -11,4 +11,5 @@ module.exports = {
   ],
   // add rules configurations here
   printWidth: 100,
-};
+  semi: false,
+}

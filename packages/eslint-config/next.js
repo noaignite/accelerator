@@ -1,6 +1,6 @@
-const { resolve } = require('node:path');
+const { resolve } = require('node:path')
 
-const project = resolve(process.cwd(), 'tsconfig.json');
+const project = resolve(process.cwd(), 'tsconfig.json')
 
 /*
  * This is a custom ESLint configuration for use with
@@ -56,4 +56,4 @@ module.exports = {
     'no-console': ['error', { allow: ['warn', 'error'] }], // Allow warn and error logs.
     camelcase: ['error', { allow: ['i18n_'] }],
   },
-};
+}

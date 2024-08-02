@@ -1,16 +1,17 @@
-import { Button, Card, Code } from '@repo/ui';
-import Image from 'next/image';
-import Link from 'next/link';
-import styles from './page.module.css';
+import { normalize } from '@noaignite/utils'
+import { Button, Card, Code } from '@repo/ui'
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from './page.module.css'
 
 function Gradient({
   conic,
   className,
   small,
 }: {
-  small?: boolean;
-  conic?: boolean;
-  className?: string;
+  small?: boolean
+  conic?: boolean
+  className?: string
 }): JSX.Element {
   return (
     <span
@@ -23,7 +24,7 @@ function Gradient({
         .filter(Boolean)
         .join(' ')}
     />
-  );
+  )
 }
 
 const LINKS = [
@@ -47,7 +48,7 @@ const LINKS = [
     href: 'https://vercel.com/new',
     description: ' Instantly deploy your Turborepo to a shareable URL with Vercel.',
   },
-];
+]
 
 export default function Page(): JSX.Element {
   return (
@@ -83,6 +84,8 @@ export default function Page(): JSX.Element {
       >
         Click me!
       </Button>
+
+      <p>normalize test: {normalize(30, 0, 100)}</p>
 
       <div className={styles.hero}>
         <div className={styles.heroContent}>
@@ -142,5 +145,5 @@ export default function Page(): JSX.Element {
         ))}
       </div>
     </main>
-  );
+  )
 }
