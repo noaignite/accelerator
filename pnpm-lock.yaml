@@ -133,6 +133,34 @@ importers:
         specifier: ^4.7.4
         version: 4.9.5
 
+  packages/react-utils:
+    dependencies:
+      react:
+        specifier: ^17.0.0 || ^18.0.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^17.0.0 || ^18.0.0
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^20.14.2
+        version: 20.14.2
+      '@types/react':
+        specifier: ^17.0.35
+        version: 17.0.80
+      tsup:
+        specifier: ^8.0.1
+        version: 8.1.0(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.2)(typescript@4.9.5))(typescript@4.9.5)
+      typescript:
+        specifier: ^4.7.4
+        version: 4.9.5
+
   packages/types:
     devDependencies:
       '@repo/typescript-config':
