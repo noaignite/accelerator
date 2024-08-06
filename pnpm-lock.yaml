@@ -151,9 +151,18 @@ importers:
       '@noaignite/centra-types':
         specifier: ^1.1.0
         version: 1.1.0
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       '@types/js-cookie':
         specifier: ^3.0.1
         version: 3.0.6
+      '@types/node':
+        specifier: ^20.14.2
+        version: 20.14.2
       '@types/react':
         specifier: ^17.0.35
         version: 17.0.80
