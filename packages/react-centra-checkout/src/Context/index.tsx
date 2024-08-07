@@ -237,14 +237,14 @@ export function CentraProvider(props: ProviderProps) {
         | Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
         | (() => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>),
     ) => {
-      window.CentraCheckout.suspend()
+      window.CentraCheckout?.suspend()
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
 
       if ('selection' in response && response.selection) {
         setSelection(response)
       }
 
-      window.CentraCheckout.resume()
+      window.CentraCheckout?.resume()
 
       return response
     },
