@@ -8,7 +8,7 @@
     "format": "prettier --write .",
     "lint": "turbo lint",
     "release": "pnpm run build && pnpm run test && changeset publish",
-    "release:verdaccio": "pnpm run build && pnpm run test && pnpm publish --recursive --registry=\"http://localhost:4873/\"",
+    "release:verdaccio": "pnpm run build && pnpm run test && pnpm publish --no-git-checks --recursive --registry=\"http://localhost:4873/\"",
     "test": "pnpm run lint && pnpm run test-types && pnpm run test-coverage",
     "test-coverage": "turbo test-coverage",
     "test-types": "turbo test-types"
