@@ -1,7 +1,7 @@
-import * as React from 'react'
-import cookies from 'js-cookie'
+import type * as CheckoutApi from '@noaignite/centra-types'
 import type Cookies from 'js-cookie'
-import * as CheckoutApi from '@noaignite/centra-types'
+import cookies from 'js-cookie'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import ApiClient from '../ApiClient'
 import CentraEvents from '../internal/CentraEvents'
 
@@ -18,7 +18,7 @@ export interface ProviderProps {
   /** Disables automatic client side fetching of the Centra selection */
   disableInit?: boolean
   /** Sets the initial selection */
-  initialSelection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>
+  initialSelection?: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>
   /** Used when submitting payment using the POST /payment Centra api call */
   paymentFailedPage: string
   /** Used when submitting payment using the POST /payment Centra api call */
@@ -42,127 +42,133 @@ export interface ContextMethods {
   /**
     @param item - The Centra item id
   */
-  addItem?(
+  addItem?: (
     item: string,
     quantity?: number,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param item - The Centra item id
     @param data - Bundle data
   */
-  addBundleItem?(
+  addBundleItem?: (
     item: string,
     data?: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
   */
-  addGiftCertificate?(
+  addGiftCertificate?: (
     giftCertificate: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 
-  addBackInStockSubscription?(
+  addBackInStockSubscription?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param giftCertificate - The `giftCertificate` value of the gift certificate to add
     @param amount - Custom gift certificate amount
   */
-  addCustomGiftCertificate?(
+  addCustomGiftCertificate?: (
     giftCertificate: string,
     amount: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 
-  addNewsletterSubscription?(
+  addNewsletterSubscription?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param voucher - The id of the voucher to add
   */
-  addVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  addVoucher?: (voucher: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param line - The line id of the item to decrease
   */
-  decreaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  decreaseCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param line - The line id of the item to increase
   */
-  increaseCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  increaseCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param selectionData - Initial selection data
   */
-  init?(selectionData?: CheckoutApi.Response<CheckoutApi.SelectionResponse>): Promise<void>
-  loginCustomer?(
+  init?: (selectionData?: CheckoutApi.Response<CheckoutApi.SelectionResponse>) => Promise<void>
+  loginCustomer?: (
     email: string,
     password: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  logoutCustomer?(): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  logoutCustomer?: () => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
   */
-  registerCustomer?(
+  registerCustomer?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param line - The line id of the item to increase
   */
-  removeCartItem?(line: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  removeCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param voucher - The id of the voucher to add
   */
-  removeVoucher?(voucher: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  removeVoucher?: (voucher: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
     @param i - The `i` query parameter provided by Centra when landing on the password reset page
     @param id - The `id` query parameter provided by Centra when landing on the password reset page
   */
-  resetCustomerPassword?(
+  resetCustomerPassword?: (
     i: string,
     id: string,
     newPassword: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  resetSelection?(): void
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  resetSelection?: () => void
   /**
     @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
   */
-  sendCustomerResetPasswordEmail?(
+  sendCustomerResetPasswordEmail?: (
     email: string,
     linkUri: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  submitPayment?(data: Record<string, unknown>): Promise<CheckoutApi.Response<CheckoutApi.Payment>>
-  updateCartItemQuantity?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  submitPayment?: (
+    data: Record<string, unknown>,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.Payment>>
+  updateCartItemQuantity?: (
     line: string,
     quantity: number,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCartItemSize?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCartItemSize?: (
     cartItem: CheckoutApi.SelectionItem,
     item: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCountry?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCountry?: (
     country: string,
     data: { language: string },
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCustomer?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCustomer?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCustomerAddress?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCustomerAddress?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCustomerEmail?(email: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCustomerPassword?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCustomerEmail?: (
+    email: string,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCustomerPassword?: (
     password: string,
     newPassword: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateLanguage?(language: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updatePaymentFields?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateLanguage?: (
+    language: string,
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updatePaymentFields?: (
     data: Record<string, unknown>,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updatePaymentMethod?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updatePaymentMethod?: (
     paymentMethod: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateShippingMethod?(
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateShippingMethod?: (
     shippingMethod: string,
-  ): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  updateCampaignSite?(uri: string): Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
+  updateCampaignSite?: (uri: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 }
 
 export type ContextProperties = CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse> & {
@@ -170,11 +176,12 @@ export type ContextProperties = CheckoutApi.SuccessResponse<CheckoutApi.Selectio
   apiClient?: ApiClient
 }
 
-export const SELECTION_INITIAL_VALUE = {
+export const SELECTION_INITIAL_VALUE: CheckoutApi.SelectionResponse = {
   countries: [],
   languages: [],
   location: {},
   paymentFields: {
+    // @ts-expect-error -- TODO: Fix this
     address: {},
     shippingAddress: {},
     termsAndConditions: {},
@@ -189,8 +196,8 @@ export const SELECTION_INITIAL_VALUE = {
   shippingMethods: [],
 }
 
-export const CentraHandlersContext = React.createContext<ContextMethods | null>(null)
-const CentraSelectionContext = React.createContext<ContextProperties | null>(null)
+export const CentraHandlersContext = createContext<ContextMethods | null>(null)
+const CentraSelectionContext = createContext<ContextProperties | null>(null)
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
@@ -210,9 +217,7 @@ export function CentraProvider(props: ProviderProps) {
 
   const apiClient = apiClientProp ?? defaultApiClient
 
-  const [selection, setSelection] = React.useState<
-    CheckoutApi.Response<CheckoutApi.SelectionResponse>
-  >(initialSelection || SELECTION_INITIAL_VALUE)
+  const [selection, setSelection] = useState(initialSelection ?? SELECTION_INITIAL_VALUE)
 
   const centraCheckoutScript = 'selection' in selection && selection.selection?.centraCheckoutScript
 
@@ -226,7 +231,7 @@ export function CentraProvider(props: ProviderProps) {
     apiClient.headers.set('api-token', initialSelection.token)
   }
 
-  const selectionApiCall = React.useCallback(
+  const selectionApiCall = useCallback(
     async (
       apiCall:
         | Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
@@ -246,10 +251,11 @@ export function CentraProvider(props: ProviderProps) {
     [],
   )
 
-  const centraCheckoutCallback = React.useCallback(
-    async (event) => {
+  const centraCheckoutCallback = useCallback(
+    async (event: CustomEvent) => {
       if (event.detail) {
         const response = await selectionApiCall(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
           apiClient.request('PUT', `payment-fields`, event.detail),
         )
 
@@ -259,7 +265,7 @@ export function CentraProvider(props: ProviderProps) {
     [apiClient, selectionApiCall],
   )
 
-  const init = React.useCallback<NonNullable<ContextMethods['init']>>(
+  const init = useCallback<NonNullable<ContextMethods['init']>>(
     async (selectionData) => {
       let response
 
@@ -291,24 +297,24 @@ export function CentraProvider(props: ProviderProps) {
 
   /* HANDLER METHODS */
 
-  const addItem = React.useCallback<NonNullable<ContextMethods['addItem']>>(
+  const addItem = useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
       selectionApiCall(apiClient.request('POST', `items/${item}/quantity/${quantity}`)),
     [apiClient, selectionApiCall],
   )
 
-  const addBundleItem = React.useCallback<NonNullable<ContextMethods['addBundleItem']>>(
+  const addBundleItem = useCallback<NonNullable<ContextMethods['addBundleItem']>>(
     (item, data) => selectionApiCall(apiClient.request('POST', `items/bundles/${item}`, data)),
     [apiClient, selectionApiCall],
   )
 
-  const addGiftCertificate = React.useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
+  const addGiftCertificate = useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
     (giftCertificate) =>
       selectionApiCall(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`)),
     [apiClient, selectionApiCall],
   )
 
-  const addCustomGiftCertificate = React.useCallback<
+  const addCustomGiftCertificate = useCallback<
     NonNullable<ContextMethods['addCustomGiftCertificate']>
   >(
     (giftCertificate, amount) =>
@@ -318,84 +324,82 @@ export function CentraProvider(props: ProviderProps) {
     [apiClient, selectionApiCall],
   )
 
-  const increaseCartItem = React.useCallback<NonNullable<ContextMethods['increaseCartItem']>>(
+  const increaseCartItem = useCallback<NonNullable<ContextMethods['increaseCartItem']>>(
     (line) => selectionApiCall(apiClient.request('POST', `lines/${line}/quantity/1`)),
     [apiClient, selectionApiCall],
   )
 
-  const decreaseCartItem = React.useCallback<NonNullable<ContextMethods['decreaseCartItem']>>(
+  const decreaseCartItem = useCallback<NonNullable<ContextMethods['decreaseCartItem']>>(
     (line) => selectionApiCall(apiClient.request('DELETE', `lines/${line}/quantity/1`)),
     [apiClient, selectionApiCall],
   )
 
-  const removeCartItem = React.useCallback<NonNullable<ContextMethods['removeCartItem']>>(
+  const removeCartItem = useCallback<NonNullable<ContextMethods['removeCartItem']>>(
     (line) => selectionApiCall(apiClient.request('DELETE', `lines/${line}`)),
     [apiClient, selectionApiCall],
   )
 
-  const updateCartItemQuantity = React.useCallback<
-    NonNullable<ContextMethods['updateCartItemQuantity']>
-  >(
+  const updateCartItemQuantity = useCallback<NonNullable<ContextMethods['updateCartItemQuantity']>>(
     (line, quantity) =>
       selectionApiCall(apiClient.request('PUT', `lines/${line}/quantity/${quantity}`)),
     [apiClient, selectionApiCall],
   )
 
-  const updateCartItemSize = React.useCallback<NonNullable<ContextMethods['updateCartItemSize']>>(
+  const updateCartItemSize = useCallback<NonNullable<ContextMethods['updateCartItemSize']>>(
     (cartItem, item) =>
       selectionApiCall(async () => {
         await apiClient.request('DELETE', `lines/${cartItem.line}`)
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
         const response = await apiClient.request(
           'POST',
           `items/${item}/quantity/${cartItem.quantity}`,
         )
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: Fix this
         return response
       }),
     [apiClient, selectionApiCall],
   )
 
-  const addVoucher = React.useCallback<NonNullable<ContextMethods['addVoucher']>>(
+  const addVoucher = useCallback<NonNullable<ContextMethods['addVoucher']>>(
     (voucher) => selectionApiCall(apiClient.request('POST', 'vouchers', { voucher })),
     [apiClient, selectionApiCall],
   )
 
-  const removeVoucher = React.useCallback<NonNullable<ContextMethods['removeVoucher']>>(
+  const removeVoucher = useCallback<NonNullable<ContextMethods['removeVoucher']>>(
     (voucher) => selectionApiCall(apiClient.request('DELETE', `vouchers/${voucher}`)),
     [apiClient, selectionApiCall],
   )
 
-  const updateCountry = React.useCallback<NonNullable<ContextMethods['updateCountry']>>(
+  const updateCountry = useCallback<NonNullable<ContextMethods['updateCountry']>>(
     (country, data) => selectionApiCall(apiClient.request('PUT', `countries/${country}`, data)),
     [apiClient, selectionApiCall],
   )
 
-  const updateLanguage = React.useCallback<NonNullable<ContextMethods['updateLanguage']>>(
+  const updateLanguage = useCallback<NonNullable<ContextMethods['updateLanguage']>>(
     (language) => selectionApiCall(apiClient.request('PUT', `languages/${language}`)),
     [apiClient, selectionApiCall],
   )
 
-  const updateShippingMethod = React.useCallback<
-    NonNullable<ContextMethods['updateShippingMethod']>
-  >(
+  const updateShippingMethod = useCallback<NonNullable<ContextMethods['updateShippingMethod']>>(
     (shippingMethod) =>
       selectionApiCall(apiClient.request('PUT', `shipping-methods/${shippingMethod}`)),
     [apiClient, selectionApiCall],
   )
 
-  const updatePaymentMethod = React.useCallback<NonNullable<ContextMethods['updatePaymentMethod']>>(
+  const updatePaymentMethod = useCallback<NonNullable<ContextMethods['updatePaymentMethod']>>(
     (paymentMethod) =>
       selectionApiCall(apiClient.request('PUT', `payment-methods/${paymentMethod}`)),
     [apiClient, selectionApiCall],
   )
 
-  const updatePaymentFields = React.useCallback<NonNullable<ContextMethods['updatePaymentFields']>>(
+  const updatePaymentFields = useCallback<NonNullable<ContextMethods['updatePaymentFields']>>(
     (data) => selectionApiCall(apiClient.request('PUT', `payment-fields`, data)),
     [apiClient, selectionApiCall],
   )
 
-  const submitPayment = React.useCallback<NonNullable<ContextMethods['submitPayment']>>(
+  const submitPayment = useCallback<NonNullable<ContextMethods['submitPayment']>>(
     async (data) => {
       const response = (await apiClient.request('POST', 'payment', {
         paymentReturnPage,
@@ -438,52 +442,51 @@ export function CentraProvider(props: ProviderProps) {
     [apiClient, paymentFailedPage, paymentReturnPage, receiptPage],
   )
 
-  const addBackInStockSubscription = React.useCallback<
+  const addBackInStockSubscription = useCallback<
     NonNullable<ContextMethods['addBackInStockSubscription']>
   >(
     (data) => selectionApiCall(apiClient.request('POST', 'back-in-stock-subscription', data)),
     [apiClient, selectionApiCall],
   )
 
-  const addNewsletterSubscription = React.useCallback<
+  const addNewsletterSubscription = useCallback<
     NonNullable<ContextMethods['addNewsletterSubscription']>
   >(
     (data) => selectionApiCall(apiClient.request('POST', 'newsletter-subscription', data)),
     [apiClient, selectionApiCall],
   )
 
-  const loginCustomer = React.useCallback<NonNullable<ContextMethods['loginCustomer']>>(
+  const loginCustomer = useCallback<NonNullable<ContextMethods['loginCustomer']>>(
     (email, password) =>
       selectionApiCall(apiClient.request('POST', `login/${email}`, { password })),
     [apiClient, selectionApiCall],
   )
 
-  const logoutCustomer = React.useCallback<NonNullable<ContextMethods['logoutCustomer']>>(
+  const logoutCustomer = useCallback<NonNullable<ContextMethods['logoutCustomer']>>(
     () => selectionApiCall(apiClient.request('POST', `logout`)),
     [apiClient, selectionApiCall],
   )
 
-  const registerCustomer = React.useCallback<NonNullable<ContextMethods['registerCustomer']>>(
+  const registerCustomer = useCallback<NonNullable<ContextMethods['registerCustomer']>>(
     (data) => selectionApiCall(apiClient.request('POST', `register`, data)),
     [apiClient, selectionApiCall],
   )
 
-  const resetCustomerPassword = React.useCallback<
-    NonNullable<ContextMethods['resetCustomerPassword']>
-  >(
+  const resetCustomerPassword = useCallback<NonNullable<ContextMethods['resetCustomerPassword']>>(
     (i, id, newPassword) =>
       selectionApiCall(apiClient.request('POST', `password-reset`, { i, id, newPassword })),
     [apiClient, selectionApiCall],
   )
 
   /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
-  const resetSelection = React.useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
+  const resetSelection = useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token')
     cookies.remove(tokenName)
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
     init()
   }, [apiClient.headers, init, tokenName])
 
-  const sendCustomerResetPasswordEmail = React.useCallback<
+  const sendCustomerResetPasswordEmail = useCallback<
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
   >(
     (email, linkUri) =>
@@ -491,53 +494,54 @@ export function CentraProvider(props: ProviderProps) {
     [apiClient, selectionApiCall],
   )
 
-  const updateCustomer = React.useCallback<NonNullable<ContextMethods['updateCustomer']>>(
+  const updateCustomer = useCallback<NonNullable<ContextMethods['updateCustomer']>>(
     (data) => selectionApiCall(apiClient.request('PUT', `customer/update`, data)),
     [apiClient, selectionApiCall],
   )
 
-  const updateCustomerAddress = React.useCallback<
-    NonNullable<ContextMethods['updateCustomerAddress']>
-  >(
+  const updateCustomerAddress = useCallback<NonNullable<ContextMethods['updateCustomerAddress']>>(
     (data) => selectionApiCall(apiClient.request('PUT', `address`, data)),
     [apiClient, selectionApiCall],
   )
 
-  const updateCustomerEmail = React.useCallback<NonNullable<ContextMethods['updateCustomerEmail']>>(
+  const updateCustomerEmail = useCallback<NonNullable<ContextMethods['updateCustomerEmail']>>(
     (newEmail) => selectionApiCall(apiClient.request('PUT', `email`, { newEmail })),
     [apiClient, selectionApiCall],
   )
 
-  const updateCustomerPassword = React.useCallback<
-    NonNullable<ContextMethods['updateCustomerPassword']>
-  >(
+  const updateCustomerPassword = useCallback<NonNullable<ContextMethods['updateCustomerPassword']>>(
     (password, newPassword) =>
       selectionApiCall(apiClient.request('PUT', `password`, { password, newPassword })),
     [apiClient, selectionApiCall],
   )
 
-  const updateCampaignSite = React.useCallback<NonNullable<ContextMethods['updateCampaignSite']>>(
+  const updateCampaignSite = useCallback<NonNullable<ContextMethods['updateCampaignSite']>>(
     (uri) => selectionApiCall(apiClient.request('PUT', `campaign-site`, { uri })),
     [apiClient, selectionApiCall],
   )
 
   /* EFFECTS */
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!disableInit) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
       init()
     }
 
     // always add event listener for centra_checkout_callback in case it is used
+    // @ts-expect-error -- TODO: Fix this
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
     document.addEventListener('centra_checkout_callback', centraCheckoutCallback)
 
     return () => {
+      // @ts-expect-error -- TODO: Fix this
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
       document.removeEventListener('centra_checkout_callback', centraCheckoutCallback)
     }
   }, [disableInit, init, centraCheckoutCallback])
 
   // run centra checkout script if it is available in the selection
-  React.useEffect(() => {
+  useEffect(() => {
     let script: HTMLScriptElement | null = null
     if (centraCheckoutScript) {
       script = document.createElement('script')
@@ -553,7 +557,7 @@ export function CentraProvider(props: ProviderProps) {
     }
   }, [centraCheckoutScript])
 
-  const centraHandlersContext = React.useMemo<ContextMethods>(
+  const centraHandlersContext = useMemo<ContextMethods>(
     (): ContextMethods => ({
       addItem,
       addBundleItem,
@@ -622,7 +626,7 @@ export function CentraProvider(props: ProviderProps) {
     ],
   )
 
-  const centraContext = React.useMemo(
+  const centraContext = useMemo(
     (): ContextProperties => ({
       ...selection,
       apiUrl,
@@ -642,7 +646,7 @@ export function CentraProvider(props: ProviderProps) {
 
 /** This hook returns the centra selection */
 export function useCentraSelection() {
-  const context = React.useContext(CentraSelectionContext)
+  const context = useContext(CentraSelectionContext)
 
   if (context === null) {
     throw new Error(
@@ -659,7 +663,7 @@ export function useCentraSelection() {
 
 /** This hook returns update handlers */
 export function useCentraHandlers() {
-  const context = React.useContext(CentraHandlersContext)
+  const context = useContext(CentraHandlersContext)
 
   if (context === null) {
     throw new Error(
@@ -678,21 +682,21 @@ export function useCentraHandlers() {
 export function useCentraReceipt(
   token: string,
 ): CheckoutApi.Response<CheckoutApi.OrderCompleteResponse> {
-  const [result, setResult] = React.useState<
-    CheckoutApi.Response<CheckoutApi.OrderCompleteResponse>
-  >({})
+  const [result, setResult] = useState<CheckoutApi.Response<CheckoutApi.OrderCompleteResponse>>({})
   const { apiUrl } = useCentraSelection()
 
   if (!token) {
     console.error('@noaignite/react-centra-checkout: useReceipt requires a selection id')
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     // create a new ApiClient in order to temporarily use a different token
     const tempApiClient = new ApiClient(apiUrl)
     tempApiClient.headers.set('api-token', token)
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
     tempApiClient.request('GET', 'receipt').then((response) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
       setResult(response)
     })
   }, [apiUrl, token])
@@ -709,16 +713,18 @@ export function useCentraOrders(
   size?: number,
   apiClient = defaultApiClient,
 ): CheckoutApi.Response<CheckoutApi.OrdersResponse> {
-  const [result, setResult] = React.useState<CheckoutApi.Response<CheckoutApi.OrdersResponse>>({})
+  const [result, setResult] = useState<CheckoutApi.Response<CheckoutApi.OrdersResponse>>({})
 
-  React.useEffect(() => {
+  useEffect(() => {
     // fetch orders
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
     apiClient
       .request('POST', 'orders', {
         ...(from && { from }),
         ...(size && { size }),
       })
       .then((response) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
         setResult(response)
       })
   }, [apiClient, from, size])

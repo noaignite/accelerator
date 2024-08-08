@@ -1,12 +1,3 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig",
-  "compilerOptions": {
-    "module": "esnext",
-    "target": "es6",
-    "lib": ["es2020", "dom"],
-    "jsx": "react",
-    "strict": true,
-    "moduleResolution": "node"
-  },
-  "exclude": ["**/.*/", "**/build", "**/node_modules"]
+  "extends": "@repo/typescript-config/base.json"
 }

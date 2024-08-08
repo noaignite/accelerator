@@ -1,11 +1,10 @@
-import * as CentraCheckoutApi from '@noaignite/centra-types'
+/* eslint-disable camelcase -- Allow */
 
-const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as [
-  'centra_checkout_callback',
-  'centra_checkout_payment_callback',
-]
+import type * as CentraCheckoutApi from '@noaignite/centra-types'
 
-function isValidEvent(eventName: typeof CENTRA_EVENTS[number]) {
+const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as const
+
+function isValidEvent(eventName: (typeof CENTRA_EVENTS)[number]) {
   if (CENTRA_EVENTS.includes(eventName)) {
     return true
   }
@@ -34,7 +33,7 @@ class CentraEvents {
   }
 
   on(
-    eventName: typeof CENTRA_EVENTS[number],
+    eventName: (typeof CENTRA_EVENTS)[number],
     callback: (
       response: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
     ) => unknown,
@@ -49,7 +48,7 @@ class CentraEvents {
   }
 
   off(
-    eventName: typeof CENTRA_EVENTS[number],
+    eventName: (typeof CENTRA_EVENTS)[number],
     callback: (
       response: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
     ) => unknown,
@@ -64,7 +63,7 @@ class CentraEvents {
   }
 
   dispatch(
-    eventName: typeof CENTRA_EVENTS[number],
+    eventName: (typeof CENTRA_EVENTS)[number],
     payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>,
   ) {
     if (isValidEvent(eventName)) {
@@ -74,6 +73,7 @@ class CentraEvents {
 }
 
 // create default singleton instance
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Fix this
 if (!CentraEvents.default) {
   CentraEvents.default = new CentraEvents()
 }

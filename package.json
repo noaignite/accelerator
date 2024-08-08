@@ -1,94 +1,28 @@
 {
-  "name": "@noaignite/monorepo",
-  "version": "0.0.0",
+  "name": "accelerator",
   "private": true,
   "scripts": {
-    "prepare": "husky install",
-    "release:version": "lerna version --conventional-commits",
-    "release:build": "lerna run --parallel --scope \"@noaignite/*\" build",
-    "release:publish": "lerna publish from-package --dist-tag latest --contents build",
-    "release:publish:dry-run": "lerna publish from-package --dist-tag latest --contents build --registry=\"http://localhost:4873/\"",
-    "release:yalc": "lerna run --parallel --scope \"@noaignite/*\" release:yalc",
-    "docs:build": "yarn workspace docs build",
-    "docs:deploy": "yarn workspace docs build",
-    "docs:dev": "yarn workspace docs dev",
-    "start": "yarn && yarn docs:dev",
-    "lint:ci": "eslint . --report-unused-disable-directives",
-    "lint:fix": "eslint . --cache --fix",
-    "lint:staged": "lint-staged",
-    "lint": "eslint . --cache --report-unused-disable-directives",
-    "prettier:fix": "prettier . --write",
-    "prettier": "prettier . --check",
-    "test": "yarn lint && yarn typecheck && yarn test:coverage",
-    "test:coverage": "cross-env NODE_ENV=test jest --coverage",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "typecheck": "lerna run --no-bail --parallel typecheck"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "yarn prettier:fix",
-      "yarn lint:fix"
-    ],
-    "*.{json,md,css,html}": [
-      "yarn prettier:fix"
-    ]
+    "build": "turbo build",
+    "ci:release": "pnpm run build && pnpm run test && changeset publish",
+    "ci:test": "pnpm run build && pnpm run test",
+    "dev": "turbo dev",
+    "format": "prettier --write .",
+    "lint": "turbo lint",
+    "release:verdaccio": "pnpm run build && pnpm run test && pnpm publish --no-git-checks --recursive --registry=\"http://localhost:4873/\"",
+    "test": "pnpm run lint && pnpm run test-types && pnpm run test-coverage",
+    "test-coverage": "turbo test-coverage",
+    "test-types": "turbo test-types",
+    "version": "changeset version && pnpm install"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.18.10",
-    "@babel/plugin-transform-react-constant-elements": "^7.18.9",
-    "@babel/plugin-transform-runtime": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "@commitlint/cli": "^17.0.3",
-    "@commitlint/config-conventional": "^17.0.3",
-    "@commitlint/cz-commitlint": "^17.0.3",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.4.1",
-    "@tsconfig/recommended": "^1.0.1",
-    "@types/react": "^17.0.35",
-    "babel-loader": "^8.2.2",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "babel-plugin-optimize-clsx": "^2.6.2",
-    "babel-plugin-react-remove-properties": "^0.3.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "commitizen": "^4.2.5",
-    "coveralls": "^3.1.1",
-    "cross-env": "^7.0.3",
-    "css-mediaquery": "^0.1.2",
-    "eslint": "^8.10.0",
-    "eslint-import-resolver-webpack": "^0.13.1",
-    "husky": "^8.0.1",
-    "jest": "^28.1.3",
-    "jsdom": "^20.0.0",
-    "lerna": "^5.3.0",
-    "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-fast-compare": "^3.2.0",
-    "react-test-renderer": "^18.2.0",
-    "rimraf": "^3.0.2",
-    "sinon": "^14.0.0",
-    "typedoc": "^0.22.9",
-    "typescript": "^4.7.4",
-    "webpack-merge": "^5.8.0",
-    "yalc": "^1.0.0-pre.53"
+    "@changesets/cli": "^2.27.5",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "turbo": "^2.0.4"
   },
-  "dependencies": {},
-  "resolutions": {
-    "**/@babel/core": "^7.18.10",
-    "**/@babel/plugin-transform-react-constant-elements": "^7.18.9",
-    "**/@babel/plugin-transform-runtime": "^7.18.10",
-    "**/@babel/preset-env": "^7.18.10",
-    "**/@babel/preset-react": "^7.18.6",
-    "**/@babel/preset-typescript": "^7.18.6",
-    "**/@babel/runtime": "^7.18.9"
-  },
-  "workspaces": [
-    "docs",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@9.3.0",
+  "engines": {
+    "node": ">=18"
+  }
 }

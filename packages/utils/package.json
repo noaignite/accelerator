@@ -1,43 +1,45 @@
 {
   "name": "@noaignite/utils",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": false,
-  "author": "NoA Ignite",
   "description": "Utility functions used by NoA Ignite",
   "keywords": [
     "utils"
   ],
-  "license": "MIT",
-  "main": "./src/index.ts",
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/utils"
   },
-  "bugs": {
-    "url": "https://github.com/noaignite/accelerator/issues"
-  },
-  "scripts": {
-    "build": "yarn build:modern && yarn build:node && yarn build:stable && yarn build:types && yarn build:copy-files",
-    "build:modern": "node ../../scripts/build.mjs modern",
-    "build:node": "node ../../scripts/build.mjs node",
-    "build:stable": "node ../../scripts/build.mjs stable",
-    "build:types": "tsc -p tsconfig.build.json",
-    "build:copy-files": "node ../../scripts/copy-files.mjs",
-    "prebuild": "rimraf build",
-    "release": "yarn build && npm publish ./build --tag latest",
-    "release:yalc": "yarn build && yalc publish ./build",
-    "test": "cd ../../ && cross-env NODE_ENV=test jest packages/utils",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.16.0"
-  },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "sideEffects": false,
-  "publishConfig": {
-    "access": "public"
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
+    "test-coverage": "vitest run",
+    "test-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "tsup": "^8.0.1",
+    "typescript": "^4.7.4",
+    "vitest": "^2.0.4"
   },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

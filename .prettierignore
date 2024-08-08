@@ -1,11 +1,15 @@
-*.md
-/.browserslistrc
-/.git
-/coverage
-/docs/.storybook-static
-/tmp
-build
-node_modules
-yarn.lock
+.next/
+.turbo/
+dist/
+node_modules/
+target/
+compiled/
+public/
+storybook-static/
 
-/packages/*/docs
+.env*
+.env.provision.production
+.env.provision.stage
+package-lock.json
+pnpm-lock.yaml
+next-env.d.ts

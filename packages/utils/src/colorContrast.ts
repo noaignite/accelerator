@@ -5,7 +5,7 @@ const calculateLuminance = (rgb: [number, number, number]): number => {
   const [r, g, b] = rgb.map((c) => {
     const sRGB = c / 255
     return sRGB <= 0.03928 ? sRGB / 12.92 : ((sRGB + 0.055) / 1.055) ** 2.4
-  })
+  }) as [number, number, number]
 
   const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b
   return luminance
@@ -46,13 +46,16 @@ const hexToRGB = (hex: string): [number, number, number] => {
  * Accepts a HEX `baseColor` and any number of HEX `colors`
  * and returns the color with the highest contrast ratio.
  *
- * @example colorContrast('#51f', '#821522', '#dde', 'f3a')
+ * @example
+ * ```ts
+ * colorContrast('#51f', '#821522', '#dde', 'f3a')
  * // { contrast: '#dde', contrastRatio: 5.38, colorAA: '#dde', colorAAA: '#fff' }
+ * ```
  */
-const colorContrast = (baseColor: string, ...colors: string[]) => {
+const colorContrast = (baseColor: string, ...restColors: string[]) => {
   if (!baseColor || typeof baseColor !== 'string') return {}
 
-  colors = colors.filter((c) => typeof c === 'string')
+  const colors = restColors.filter((c) => typeof c === 'string')
 
   // Convert base color to RGB
   const baseRGB = hexToRGB(baseColor)
@@ -63,9 +66,9 @@ const colorContrast = (baseColor: string, ...colors: string[]) => {
   let bestContrastingColor = ''
   let absoluteContrast = ''
 
-  for (let i = 0; i < colors.length; i += 1) {
+  for (const color of colors) {
     // Convert color to RGB
-    const rgb = hexToRGB(colors[i])
+    const rgb = hexToRGB(color)
 
     // Calculate contrast ratio
     const contrast = calculateContrast(baseRGB, rgb)
@@ -73,7 +76,7 @@ const colorContrast = (baseColor: string, ...colors: string[]) => {
     // Update highest contrast color
     if (contrast > highestContrastRatio) {
       highestContrastRatio = contrast
-      bestContrastingColor = colors[i]
+      bestContrastingColor = color
     }
   }
 

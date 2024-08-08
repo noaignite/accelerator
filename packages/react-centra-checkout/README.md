@@ -15,14 +15,17 @@ yarn add @noaignite/react-centra-checkout
 ```
 
 ## Why
+
 This package exists to ease development of react frontend applications using the [Centra Checkout API](https://docs.centra.com/api-references/checkout-api/introduction).
 
-Most importantly, it exposes a `CentraProvider` that you wrap your application with (for Next.js projects, usually in _app.js), and a set of hooks to fetch api endpoints and update the user selection.
+Most importantly, it exposes a `CentraProvider` that you wrap your application with (for Next.js projects, usually in \_app.js), and a set of hooks to fetch api endpoints and update the user selection.
 
 It does not attempt to abstract the Centra api, but rather exposes the endpoints in a React way of calling them.
 
 ## Getting started
+
 Start by wrapping your applications root component with `CentraProvider` and supply it with `apiUrl` (the api url to your Centra checkout api), `paymentReturnPage` (url to the api route in your app which handles successful payments) and `paymentFailedPage` (url to the api route for failed payments) like so:
+
 ```JSX
 import { CentraProvider } from '@noaignite/react-centra-checkout'
 
@@ -42,6 +45,7 @@ import { CentraProvider } from '@noaignite/react-centra-checkout'
 By default, the CentraProvider will handle fetching the initial selection for the user, so by wrapping your apps root component, you get access to the `useCentraSelection` and `useCentraHandlers` hooks.
 
 ### Getting things from the selection
+
 To get data from the current selection, simply destruct whatever you want from the `useCentraSelection` hook, like so:
 
 ```JSX
@@ -52,7 +56,9 @@ const { items, currency, totals } = selection
 ```
 
 ### Updating the selection
+
 To update the selection, call one of the update handlers from the `useCentraHandlers` hook:
+
 ```JSX
 import { useCentraHandlers } from '@noaignite/react-centra-checkout'
 
@@ -62,14 +68,15 @@ addItem(size, quantity)
 ```
 
 ### Calling endpoints server-side
+
 The Centra selection and handlers will only be available client-side. To make api calls against Centra server-side (e.g when fetching products), you need to call the api directly using the Api client:
+
 ```JSX
 import { ApiClient } from '@noaignite/react-centra-checkout'
 
 const response = await ApiClient.default.request('POST', 'products', { categories: ['15'] })
 ```
 
-
 ## Documentation
-https://react-centra-checkout-docs.vercel.app
 
+https://react-centra-checkout-docs.vercel.app
