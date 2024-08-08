@@ -1,9 +1,0 @@
-{
-  "extends": "@repo/typescript-config/react-library.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
-  },
-  "include": ["."],
-  "exclude": ["node_modules", "dist"]
-}

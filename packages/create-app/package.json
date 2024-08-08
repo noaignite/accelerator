@@ -1,0 +1,40 @@
+{
+  "name": "@noaignite/create-app",
+  "version": "0.6.0",
+  "private": false,
+  "description": "Create NoA Ignite react apps with one command",
+  "keywords": [
+    "react"
+  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/create-app"
+  },
+  "license": "MIT",
+  "author": "NoA Ignite",
+  "sideEffects": false,
+  "bin": {
+    "create-app": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "createApp.js"
+  ],
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0",
+    "cross-spawn": "^7.0.3",
+    "fs-extra": "^10.1.0",
+    "validate-npm-package-name": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

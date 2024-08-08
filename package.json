@@ -3,22 +3,25 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "ci:release": "pnpm run build && pnpm run test && changeset publish",
+    "ci:test": "pnpm run build && pnpm run test",
     "dev": "turbo dev",
+    "format": "prettier --write .",
     "lint": "turbo lint",
-    "test": "vitest run",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "ci": "pnpm run lint && pnpm run test && pnpm run build",
-    "release": "pnpm run lint && pnpm run test && pnpm run build && changeset publish"
+    "release:verdaccio": "pnpm run build && pnpm run test && pnpm publish --no-git-checks --recursive --registry=\"http://localhost:4873/\"",
+    "test": "pnpm run lint && pnpm run test-types && pnpm run test-coverage",
+    "test-coverage": "turbo test-coverage",
+    "test-types": "turbo test-types",
+    "version": "changeset version && pnpm install"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.27.5",
     "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "prettier": "^3.1.0",
-    "turbo": "latest",
-    "vitest": "^1.0.4"
+    "turbo": "^2.0.4"
   },
-  "packageManager": "pnpm@8.9.0",
+  "packageManager": "pnpm@9.3.0",
   "engines": {
     "node": ">=18"
   }
