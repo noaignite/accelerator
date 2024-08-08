@@ -1,5 +1,5 @@
 ---
-'@noaignite/utils': major
+'@noaignite/utils': minor
 ---
 
 Tests now executed by vitest
