@@ -7,6 +7,9 @@ This package contains Typescript definitions for centra apis.
 centra-types is available as an [npm package](https://www.npmjs.com/package/@noaignite/centra-types).
 
 ```sh
+// with pnpm
+pnpm install @noaignite/centra-types
+
 // with npm
 npm install @noaignite/centra-types
 

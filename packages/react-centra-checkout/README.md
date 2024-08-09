@@ -7,6 +7,9 @@
 react-centra-checkout is available as an [npm package](https://www.npmjs.com/package/@noaignite/react-centra-checkout).
 
 ```sh
+// with pnpm
+pnpm install @noaignite/react-centra-checkout
+
 // with npm
 npm install @noaignite/react-centra-checkout
 
