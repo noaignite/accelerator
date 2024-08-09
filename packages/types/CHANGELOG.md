@@ -4,7 +4,9 @@
 
 ### Major Changes
 
-- 3d4a243: - Add AnyFunction helper
+- aceaf42: add new type helpers
+
+  - Add AnyFunction helper
   - Add Concatenate helper
   - Add DistributiveOmit helper
   - Add HintedNumber helper
