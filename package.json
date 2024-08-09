@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "ci:release": "changeset version && pnpm install && pnpm run build && pnpm run test && changeset publish",
+    "ci:release": "pnpm run build && pnpm run test && changeset publish",
     "ci:test": "pnpm run build && pnpm run test",
     "dev": "turbo dev",
     "format": "prettier --write .",
