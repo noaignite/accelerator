@@ -23,8 +23,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist/**",
-    "README.md"
+    "dist/**"
   ],
   "scripts": {
     "build": "tsup",
