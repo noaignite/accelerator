@@ -8,7 +8,7 @@ export default function ShipwalletEmbed() {
   useEffect(() => {
     if ('CentraCheckout' in window) {
       // we need to re init the shipwallet if the centra checkout script was loaded before the ingrid embed
-      window.CentraCheckout.reInitiate('shipwallet')
+      window.CentraCheckout?.reInitiate('shipwallet')
     }
   }, [])
 
