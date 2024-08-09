@@ -15,7 +15,6 @@
   - Add Overwrite helper
   - Add Prettify helper
   - Add PropsFrom helper
-  - Add RefOf helper
   - Add Repeat helper
   - Add WithFallback helper
   - Add Writeable helper
