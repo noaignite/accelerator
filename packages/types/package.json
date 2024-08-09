@@ -15,10 +15,11 @@
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/types"
   },
+  "license": "MIT",
   "author": "NoA Ignite",
-  "types": "./index.ts",
+  "types": "./src/index.ts",
   "files": [
-    "index.ts"
+    "src/**"
   ],
   "scripts": {
     "type-check": "tsc --noEmit"

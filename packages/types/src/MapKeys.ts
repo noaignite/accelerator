@@ -3,7 +3,13 @@
  *
  * @example
  * ```tsx
- * MapKeys<{ oldFoo: string; oldBar: number }, { bar: 'oldBar'; foo: 'oldFoo' }> // { foo: string; bar: number }
+ * MapKeys<{
+ *   oldFoo: string;
+ *   oldBar: number;
+ * }, {
+ *   bar: 'oldBar';
+ *   foo: 'oldFoo';
+ * }> // { foo: string; bar: number }
  * ```
  */
 export type MapKeys<T extends Record<string, any>, U extends Record<string, PropertyKey>> = {
