@@ -1,0 +1,47 @@
+{
+  "name": "@noaignite/tailwind-typography",
+  "version": "0.0.0",
+  "private": false,
+  "description": "TailwindCSS plugin to create responsive typography",
+  "keywords": [
+    "tailwindcss",
+    "typography"
+  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/tailwind-typography"
+  },
+  "author": "NoA Ignite",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
+    "test-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "tailwindcss": "^3.4.1",
+    "tsup": "^8.0.2",
+    "typescript": "5.4.5"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engine": {
+    "node": ">=20.0.0"
+  }
+}
