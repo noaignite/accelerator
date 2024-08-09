@@ -1,19 +1,9 @@
 /* eslint-disable tsdoc/syntax -- Allow dot-notated @param's, seems to work. */
 /* eslint-disable @typescript-eslint/no-explicit-any -- To any or not to any, that is the question. */
 
-import { Suspense, type Component, type ComponentType, type FC } from 'react'
+import type { PropsFrom } from '@noaignite/types'
+import { Suspense, type ComponentType } from 'react'
 import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
-
-/**
- * Takes a component and extracts its props.
- * @see https://www.totaltypescript.com/tips/write-your-own-propsfrom-helper-to-extract-props-from-any-react-component
- */
-export type PropsFrom<TComponent> =
-  TComponent extends FC<infer Props>
-    ? Props
-    : TComponent extends Component<infer Props>
-      ? Props
-      : never
 
 /**
  * `createRenderBlock` is a utility function for registering the to-be rendered
@@ -78,18 +68,18 @@ export const createRenderBlock = _createRenderBlock()
  * @see https://github.com/microsoft/TypeScript/pull/26349
  */
 export function _createRenderBlock<
-  TAdditionalData extends number | { index: number; [key: string]: unknown },
+  TAdditionalData extends number | { index: number;[key: string]: unknown },
 >() {
   return function __createRenderBlock<
     TBlocks extends Record<string, ComponentType<any>>,
     TAdapters extends
-      | {
-          [K in keyof TBlocks]?: (
-            props: any,
-            additionalData: TAdditionalData,
-          ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
-        }
-      | undefined,
+    | {
+      [K in keyof TBlocks]?: (
+        props: any,
+        additionalData: TAdditionalData,
+      ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
+    }
+    | undefined,
   >(
     blocks: TBlocks,
     options: {

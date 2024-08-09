@@ -31,6 +31,7 @@
     "test-types": "tsc --noEmit"
   },
   "devDependencies": {
+    "@noaignite/types": "workspace:^",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^20.14.2",
