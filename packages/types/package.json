@@ -22,7 +22,7 @@
     "src/**"
   ],
   "scripts": {
-    "type-check": "tsc --noEmit"
+    "test-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
