@@ -1,0 +1,53 @@
+{
+  "name": "@noaignite/react-utils",
+  "version": "0.0.0",
+  "private": false,
+  "description": "React utils",
+  "keywords": [
+    "react",
+    "react-utils",
+    "typescript"
+  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/react-utils"
+  },
+  "license": "MIT",
+  "author": "NoA Ignite",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
+    "test-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@noaignite/types": "workspace:^",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.14.2",
+    "@types/react": "^18.2.65",
+    "react": "^18.2.0",
+    "tsup": "^8.0.1",
+    "typescript": "5.4.5"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
