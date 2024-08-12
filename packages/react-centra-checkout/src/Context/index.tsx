@@ -350,13 +350,11 @@ export function CentraProvider(props: ProviderProps) {
       selectionApiCall(async () => {
         await apiClient.request('DELETE', `lines/${cartItem.line}`)
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
-        const response = await apiClient.request(
+        const response = (await apiClient.request(
           'POST',
           `items/${item}/quantity/${cartItem.quantity}`,
-        )
+        )) as Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: Fix this
         return response
       }),
     [apiClient, selectionApiCall],
