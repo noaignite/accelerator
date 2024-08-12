@@ -528,8 +528,7 @@ export function CentraProvider(props: ProviderProps) {
 
   useEffect(() => {
     if (!disableInit) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
-      init()
+      void init()
     }
 
     // always add event listener for centra_checkout_callback in case it is used
