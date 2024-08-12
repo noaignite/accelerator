@@ -36,15 +36,13 @@ const PaymentEmbed = memo(function PaymentEmbed(
 
   // Submit payment
   const handlePaymentCallback = useCallback(
-    (event) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
+    (event: GlobalEventHandlersEventMap['centra_checkout_payment_callback']) => {
       const {
         addressIncluded,
         billingAddress: detailsAddress,
         shippingAddress: detailsShippingAddress,
         paymentMethod: detailsPaymentMethod,
         paymentMethodSpecificFields,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- TODO: Fix this
       } = event.detail
 
       const payload = {
