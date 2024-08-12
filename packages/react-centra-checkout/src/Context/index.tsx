@@ -252,13 +252,13 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const centraCheckoutCallback = useCallback(
-    async (event: CustomEvent) => {
+    (event: GlobalEventHandlersEventMap['centra_checkout_callback']) => {
       if (event.detail) {
-        const response = await selectionApiCall(
-          apiClient.request('PUT', `payment-fields`, event.detail as Record<string, unknown>),
+        void selectionApiCall(apiClient.request('PUT', `payment-fields`, event.detail)).then(
+          (response) => {
+            centraEvents.dispatch('centra_checkout_callback', response)
+          },
         )
-
-        centraEvents.dispatch('centra_checkout_callback', response)
       }
     },
     [apiClient, selectionApiCall],
@@ -525,13 +525,9 @@ export function CentraProvider(props: ProviderProps) {
     }
 
     // always add event listener for centra_checkout_callback in case it is used
-    // @ts-expect-error -- TODO: Fix this
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
     document.addEventListener('centra_checkout_callback', centraCheckoutCallback)
 
     return () => {
-      // @ts-expect-error -- TODO: Fix this
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
       document.removeEventListener('centra_checkout_callback', centraCheckoutCallback)
     }
   }, [disableInit, init, centraCheckoutCallback])
