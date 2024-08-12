@@ -6,3 +6,7 @@ interface Window {
     reInitiate: (plugin: string) => void
   }
 }
+
+interface GlobalEventHandlersEventMap {
+  centra_checkout_callback: CustomEvent<Record<string, unknown> | undefined>
+}
