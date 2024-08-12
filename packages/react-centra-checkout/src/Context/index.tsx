@@ -120,7 +120,7 @@ export interface ContextMethods {
     id: string,
     newPassword: string,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  resetSelection?: () => void
+  resetSelection?: () => Promise<void>
   /**
     @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
   */
@@ -487,8 +487,8 @@ export function CentraProvider(props: ProviderProps) {
   const resetSelection = useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token')
     cookies.remove(tokenName)
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
-    init()
+
+    return init()
   }, [apiClient.headers, init, tokenName])
 
   const sendCustomerResetPasswordEmail = useCallback<
