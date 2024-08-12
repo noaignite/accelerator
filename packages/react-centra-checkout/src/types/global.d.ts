@@ -55,7 +55,3 @@ declare global {
     centra_checkout_payment_callback: AdyenDropInEvent
   }
 }
-
-interface GlobalEventHandlersEventMap {
-  centra_checkout_callback: CustomEvent<Record<string, unknown> | undefined>
-}
