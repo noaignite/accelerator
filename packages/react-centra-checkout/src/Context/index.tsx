@@ -709,14 +709,12 @@ export function useCentraOrders(
 
   useEffect(() => {
     // fetch orders
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
-    apiClient
+    void apiClient
       .request('POST', 'orders', {
         ...(from && { from }),
         ...(size && { size }),
       })
-      .then((response) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
+      .then((response: CheckoutApi.Response<CheckoutApi.OrdersResponse>) => {
         setResult(response)
       })
   }, [apiClient, from, size])
