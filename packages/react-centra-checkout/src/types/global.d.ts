@@ -7,10 +7,12 @@ interface Window {
   }
 }
 
-interface CentraCheckoutEventDetails {
-  additionalFields?: {
-    event: string
-    suspendIgnore: Record<string, boolean>
-  }
-  [key: string]: unknown
+interface GlobalEventHandlersEventMap {
+  centra_checkout_callback: CustomEvent<{
+    additionalFields?: {
+      event: string
+      suspendIgnore: Record<string, boolean>
+    }
+    [key: string]: unknown
+  }>
 }
