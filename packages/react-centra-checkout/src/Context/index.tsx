@@ -686,11 +686,11 @@ export function useCentraReceipt(
     const tempApiClient = new ApiClient(apiUrl)
     tempApiClient.headers.set('api-token', token)
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
-    tempApiClient.request('GET', 'receipt').then((response) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
-      setResult(response)
-    })
+    void tempApiClient
+      .request('GET', 'receipt')
+      .then((response: CheckoutApi.Response<CheckoutApi.OrderCompleteResponse>) => {
+        setResult(response)
+      })
   }, [apiUrl, token])
 
   return result
