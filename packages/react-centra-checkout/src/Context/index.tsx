@@ -180,13 +180,7 @@ export const SELECTION_INITIAL_VALUE: CheckoutApi.SelectionResponse = {
   countries: [],
   languages: [],
   location: {},
-  paymentFields: {
-    // @ts-expect-error -- TODO: Fix this
-    address: {},
-    // @ts-expect-error -- TODO: Fix this
-    shippingAddress: {},
-    termsAndConditions: {},
-  },
+  paymentFields: {},
   paymentMethods: [],
   selection: {
     address: {},
