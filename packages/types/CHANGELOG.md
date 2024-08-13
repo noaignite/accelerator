@@ -1,5 +1,11 @@
 # @noaignite/types
 
+## 1.1.0
+
+### Minor Changes
+
+- f23a5fe: Add utility type `KeyOfAny`
+
 ## 1.0.0
 
 ### Major Changes
