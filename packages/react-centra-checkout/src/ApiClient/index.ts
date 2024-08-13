@@ -5,7 +5,7 @@ class ApiClient {
 
   options: RequestInit
 
-  static default: ApiClient
+  private static _default?: ApiClient
 
   constructor(baseUrl = '', options: RequestInit = {}) {
     this.baseUrl = baseUrl
@@ -30,12 +30,18 @@ class ApiClient {
 
     return json
   }
-}
 
-// create default singleton instance
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Fix this
-if (!ApiClient.default) {
-  ApiClient.default = new ApiClient()
+  public static get default(): ApiClient {
+    if (!ApiClient._default) {
+      ApiClient._default = new ApiClient()
+    }
+
+    return ApiClient._default
+  }
+
+  public get default(): ApiClient {
+    return ApiClient.default
+  }
 }
 
 export default ApiClient
