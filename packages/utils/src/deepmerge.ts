@@ -19,6 +19,19 @@ function deepClone<T>(source: T): T | Record<KeyOfAny, unknown> {
   return output
 }
 
+/**
+ * Deep merge two objects.
+ *
+ * @param target - The target object
+ * @param source - The source object
+ * @param options - The merge options
+ * @returns The merged object
+ *
+ * @example
+ * ```tsx
+ * deepmerge({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
+ * ```
+ */
 export default function deepmerge<T>(
   target: T,
   source: unknown,
