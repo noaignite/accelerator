@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 2.3.1
+
+### Patch Changes
+
+- c601654: add deepmerge to barrel file
+
 ## 2.3.0
 
 ### Minor Changes
