@@ -28,7 +28,7 @@ function deepClone<T>(source: T): T | Record<KeyOfAny, unknown> {
  * @returns The merged object
  *
  * @example
- * ```tsx
+ * ```ts
  * deepmerge({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
  * ```
  */
