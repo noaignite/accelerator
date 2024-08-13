@@ -1,6 +1,7 @@
 export { default as capitalize } from './capitalize'
 export { default as clamp } from './clamp'
 export { default as colorContrast } from './colorContrast'
+export { default as deepmerge } from './deepmerge'
 export { default as isPlainObject } from './isPlainObject'
 export { default as lerp } from './lerp'
 export { default as mapRange } from './mapRange'
