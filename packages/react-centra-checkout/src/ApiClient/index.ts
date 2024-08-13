@@ -26,10 +26,8 @@ class ApiClient {
       body: ['POST', 'PUT'].includes(method) ? JSON.stringify(data) : undefined,
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: fix this
-    const json = await response.json()
+    const json = (await response.json()) as unknown
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: fix this
     return json
   }
 }
