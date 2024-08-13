@@ -26,7 +26,7 @@ class ApiClient {
       body: ['POST', 'PUT'].includes(method) ? JSON.stringify(data) : undefined,
     })
 
-    const json = (await response.json()) as unknown
+    const json = await response.json()
 
     return json
   }
