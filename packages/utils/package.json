@@ -29,6 +29,9 @@
     "test-coverage": "vitest run",
     "test-types": "tsc --noEmit"
   },
+  "dependencies": {
+    "@noaignite/types": "workspace:*"
+  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
