@@ -92,6 +92,9 @@ importers:
 
   packages/react-centra-checkout:
     dependencies:
+      '@noaignite/utils':
+        specifier: workspace:*
+        version: link:../utils
       js-cookie:
         specifier: ^3.0.1
         version: 3.0.5
@@ -108,6 +111,9 @@ importers:
       '@noaignite/centra-types':
         specifier: workspace:*
         version: link:../centra-types
+      '@noaignite/types':
+        specifier: workspace:*
+        version: link:../types
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
