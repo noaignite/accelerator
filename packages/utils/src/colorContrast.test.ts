@@ -9,9 +9,13 @@ describe('colorContrast', () => {
   })
 
   it('handles invalid color arguments', () => {
+    // @ts-expect-error -- This test case is for invalid arguments
     expect(colorContrast()).toEqual({})
+    // @ts-expect-error -- This test case is for invalid arguments
     expect(colorContrast(0, 24, {})).toEqual({})
+    // @ts-expect-error -- This test case is for invalid arguments
     expect(colorContrast(50, [], {})).toEqual({})
+    // @ts-expect-error -- This test case is for invalid arguments
     expect(colorContrast().contrastRatio).toEqual(undefined)
   })
 
