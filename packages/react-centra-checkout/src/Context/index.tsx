@@ -232,21 +232,23 @@ export function CentraProvider(props: ProviderProps) {
   }
 
   const selectionApiCall = useCallback(
-    async (
-      apiCall:
-        | Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-        | (() => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>),
-    ) => {
+    async (apiCall: Promise<unknown> | (() => Promise<unknown>)) => {
       window.CentraCheckout?.suspend()
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
 
-      if ('selection' in response && response.selection) {
-        setSelection(response)
+      if (
+        Boolean(response) &&
+        response !== null &&
+        typeof response === 'object' &&
+        'selection' in response &&
+        response.selection
+      ) {
+        setSelection(response as CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>)
       }
 
       window.CentraCheckout?.resume()
 
-      return response
+      return response as CheckoutApi.Response<CheckoutApi.SelectionResponse>
     },
     [],
   )
@@ -692,11 +694,13 @@ export function useCentraReceipt(
     const tempApiClient = new ApiClient(apiUrl)
     tempApiClient.headers.set('api-token', token)
 
-    void tempApiClient
-      .request('GET', 'receipt')
-      .then((response: CheckoutApi.Response<CheckoutApi.OrderCompleteResponse>) => {
-        setResult(response)
-      })
+    void (
+      tempApiClient.request('GET', 'receipt') as Promise<
+        CheckoutApi.Response<CheckoutApi.OrderCompleteResponse>
+      >
+    ).then((response) => {
+      setResult(response)
+    })
   }, [apiUrl, token])
 
   return result
@@ -715,14 +719,14 @@ export function useCentraOrders(
 
   useEffect(() => {
     // fetch orders
-    void apiClient
-      .request('POST', 'orders', {
+    void (
+      apiClient.request('POST', 'orders', {
         ...(from && { from }),
         ...(size && { size }),
-      })
-      .then((response: CheckoutApi.Response<CheckoutApi.OrdersResponse>) => {
-        setResult(response)
-      })
+      }) as Promise<CheckoutApi.Response<CheckoutApi.OrdersResponse>>
+    ).then((response) => {
+      setResult(response)
+    })
   }, [apiClient, from, size])
 
   return result
