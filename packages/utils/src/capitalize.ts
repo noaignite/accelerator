@@ -5,7 +5,7 @@
  * @returns The capitalized string
  *
  * @example
- * ```tsx
+ * ```ts
  * capitalize('hello') // 'Hello'
  * ```
  */
