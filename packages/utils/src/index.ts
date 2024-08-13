@@ -1,3 +1,4 @@
+export { default as capitalize } from './capitalize'
 export { default as clamp } from './clamp'
 export { default as colorContrast } from './colorContrast'
 export { default as lerp } from './lerp'
