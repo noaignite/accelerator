@@ -42,6 +42,7 @@
     "@noaignite/types": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@total-typescript/ts-reset": "^0.5.1",
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^20.14.15",
     "@types/react": "^17.0.35",
