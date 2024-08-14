@@ -259,6 +259,10 @@ export function CentraProvider(props: ProviderProps) {
         event.detail,
       )) as CheckoutApi.Response<CheckoutApi.SelectionResponse>
 
+      if ('selection' in response && response.selection) {
+        setSelection(response)
+      }
+
       window.CentraCheckout?.resume(event.detail.additionalFields?.suspendIgnore)
 
       centraEvents.dispatch('centra_checkout_callback', response)
