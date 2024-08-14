@@ -7,6 +7,6 @@ export type ErrorResponse = {
   errors: Errors
 }
 
-export type Errors = Record<string, string>
+export type Errors = Record<PropertyKey, unknown>
 
 export type Response<T> = SuccessResponse<T> | ErrorResponse
