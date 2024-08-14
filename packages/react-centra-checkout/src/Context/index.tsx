@@ -252,17 +252,18 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const centraCheckoutCallback = useCallback(
-    async (event: CustomEvent) => {
-      if (event.detail) {
-        const response = await selectionApiCall(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
-          apiClient.request('PUT', `payment-fields`, event.detail),
-        )
+    async (event: CustomEvent<CentraCheckoutEventDetails>) => {
+      const response = (await apiClient.request(
+        'PUT',
+        `payment-fields`,
+        event.detail,
+      )) as CheckoutApi.Response<CheckoutApi.SelectionResponse>
 
-        centraEvents.dispatch('centra_checkout_callback', response)
-      }
+      window.CentraCheckout?.resume(event.detail.additionalFields?.suspendIgnore)
+
+      centraEvents.dispatch('centra_checkout_callback', response)
     },
-    [apiClient, selectionApiCall],
+    [apiClient],
   )
 
   const init = useCallback<NonNullable<ContextMethods['init']>>(
