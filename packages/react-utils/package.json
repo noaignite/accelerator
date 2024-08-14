@@ -19,9 +19,16 @@
   "license": "MIT",
   "author": "NoA Ignite",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    },
+    "./*": {
+      "import": "./dist/*.mjs",
+      "types": "./dist/*.d.mts"
+    }
+  },
   "files": [
     "dist/**"
   ],
