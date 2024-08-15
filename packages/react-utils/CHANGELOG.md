@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.3.0
+
+### Minor Changes
+
+- a0ad5df: drop support for commonJS
+
 ## 0.2.0
 
 ### Minor Changes
