@@ -93,7 +93,8 @@ const PaymentEmbed = memo(function PaymentEmbed(
   // Retrieve formHtml
   useEffect(() => {
     const shouldRequestPayment =
-      paymentMethod?.supportsInitiateOnly ?? paymentMethod?.providesCustomerAddressAfterPayment // if either of these are true, this is a paymentMethod which provides an embed
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- we actually want || here because we are checking for undefined, null and false
+      paymentMethod?.supportsInitiateOnly || paymentMethod?.providesCustomerAddressAfterPayment // if either of these are true, this is a paymentMethod which provides an embed
 
     if (
       ((selection?.paymentMethod === previousPaymentMethod.current || !shouldRequestPayment) &&
