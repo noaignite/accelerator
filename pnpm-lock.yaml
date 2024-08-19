@@ -152,6 +152,30 @@ importers:
         specifier: 5.4.5
         version: 5.4.5
 
+  packages/react-hooks:
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^20.14.2
+        version: 20.14.2
+      '@types/react':
+        specifier: ^18.2.65
+        version: 18.2.75
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      tsup:
+        specifier: ^8.0.1
+        version: 8.1.0(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))(typescript@5.4.5)
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
+
   packages/react-utils:
     dependencies:
       react-dom:
