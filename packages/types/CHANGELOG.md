@@ -1,5 +1,11 @@
 # @noaignite/types
 
+## 1.2.0
+
+### Minor Changes
+
+- 3e4a521: add new Split type helper
+
 ## 1.1.0
 
 ### Minor Changes
