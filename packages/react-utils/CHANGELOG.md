@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.4.0
+
+### Minor Changes
+
+- 6136389: add new createSvgIcon helper
+
 ## 0.3.0
 
 ### Minor Changes
