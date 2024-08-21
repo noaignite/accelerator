@@ -33,7 +33,7 @@
     "@noaignite/types": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "tsup": "^8.0.1",
+    "tsup": "^8.1.2",
     "typescript": "^4.7.4",
     "vitest": "^2.0.4"
   },
