@@ -68,18 +68,18 @@ export const createRenderBlock = _createRenderBlock()
  * @see https://github.com/microsoft/TypeScript/pull/26349
  */
 export function _createRenderBlock<
-  TAdditionalData extends number | { index: number;[key: string]: unknown },
+  TAdditionalData extends number | { index: number; [key: string]: unknown },
 >() {
   return function __createRenderBlock<
     TBlocks extends Record<string, ComponentType<any>>,
     TAdapters extends
-    | {
-      [K in keyof TBlocks]?: (
-        props: any,
-        additionalData: TAdditionalData,
-      ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
-    }
-    | undefined,
+      | {
+          [K in keyof TBlocks]?: (
+            props: any,
+            additionalData: TAdditionalData,
+          ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
+        }
+      | undefined,
   >(
     blocks: TBlocks,
     options: {
