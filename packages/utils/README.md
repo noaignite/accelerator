@@ -7,7 +7,7 @@ Utils - Utility functions.
 Utils is available as an [npm package](https://www.npmjs.com/package/@noaignite/utils).
 
 ```sh
-// with pnpm 
+// with pnpm
 pnpm install @noaignite/utils
 
 // with npm

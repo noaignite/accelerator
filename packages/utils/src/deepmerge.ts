@@ -48,13 +48,13 @@ export default function deepmerge<T>(
         isPlainObject(target[key])
       ) {
         // Since `output` is a clone of `target` and we have narrowed `target` in this block we can cast to the same type.
-        ; (output as Record<KeyOfAny, unknown>)[key] = deepmerge(target[key], source[key], options)
+        ;(output as Record<KeyOfAny, unknown>)[key] = deepmerge(target[key], source[key], options)
       } else if (options.clone) {
-        ; (output as Record<KeyOfAny, unknown>)[key] = isPlainObject(source[key])
+        ;(output as Record<KeyOfAny, unknown>)[key] = isPlainObject(source[key])
           ? deepClone(source[key])
           : source[key]
       } else {
-        ; (output as Record<KeyOfAny, unknown>)[key] = source[key]
+        ;(output as Record<KeyOfAny, unknown>)[key] = source[key]
       }
     })
   }
