@@ -72,7 +72,7 @@ async function createApp() {
   validateAppPath()
   validateAppName()
 
-  console.log(`\nCreating a new Ignite app in ${chalk.green(projectPath)}.\n`)
+  console.log(`\nCreating NoA Ignite docs in ${chalk.green(projectPath)}.\n`)
   spawn.sync('git', ['clone', '--depth', '1', '--branch', branchName, repoUrl, projectName], {
     stdio: 'inherit',
   })
@@ -84,35 +84,27 @@ async function createApp() {
   execSync(`rm CHANGELOG.md`).toString().trim()
   execSync(`rm -rf .git`).toString().trim()
 
-  execSync(`git init`).toString().trim()
   execSync(`git add .`).toString().trim()
-  execSync(`git commit -m "chore: initialize project using @noaignite/create-app"`)
-    .toString()
-    .trim()
+  execSync(`git commit -m "docs: create docs app using @noaignite/create-app"`).toString().trim()
 
   console.log()
-  console.log(`Initialized a git repository.`)
   console.log(`Created git commit.`)
 
   console.log()
-  console.log(`Installing dependencies. This could take a few minutes.\n`)
-  spawn.sync('yarnpkg', ['install'], { stdio: 'inherit' })
+  console.log(`Installing dependencies. This could take a while.\n`)
+  spawn.sync('pnpm', ['install'], { stdio: 'inherit' })
 
   console.log()
   console.log(`Success! Created ${projectName} at ${chalk.green(projectPath)}.`)
   console.log(`Inside your project you can run several commands, here are some to get you started:`)
 
   console.log()
-  console.log(`  ${chalk.cyan('yarn storybook')}`)
+  console.log(`  ${chalk.cyan('pnpm dev')}`)
   console.log(`    Starts the Storybook server.`)
 
   console.log()
-  console.log(`  ${chalk.cyan('yarn dev')}`)
-  console.log(`    Starts the Next.js development server.`)
-
-  console.log(`\nWe suggest that you begin by typing:\n`)
-  console.log(`  ${chalk.cyan('cd')} ${projectName}`)
-  console.log(`  ${chalk.cyan('yarn storybook')}`)
+  console.log(`  ${chalk.cyan('pnpm build')}`)
+  console.log(`    Builds the Storybook app.`)
 
   console.log(`\nHappy coding!`)
 }
