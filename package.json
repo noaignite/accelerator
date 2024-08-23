@@ -8,16 +8,23 @@
     "dev": "turbo dev",
     "format": "prettier --write .",
     "lint": "turbo lint",
+    "pre-commit": "lint-staged",
+    "prepare": "node .husky/install.mjs",
     "release:verdaccio": "pnpm run build && pnpm run test && pnpm publish --no-git-checks --recursive --registry=\"http://localhost:4873/\"",
     "test": "pnpm run lint && pnpm run test-types && pnpm run test-coverage",
     "test-coverage": "turbo test-coverage",
     "test-types": "turbo test-types"
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.9",
     "turbo": "^2.0.14"
   },
   "packageManager": "pnpm@9.3.0",
