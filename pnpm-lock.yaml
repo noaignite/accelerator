@@ -106,7 +106,7 @@ importers:
         version: 3.2.2
     devDependencies:
       '@noaignite/centra-types':
-        specifier: ^1.2.0
+        specifier: workspace:*
         version: link:../centra-types
       '@repo/eslint-config':
         specifier: workspace:*

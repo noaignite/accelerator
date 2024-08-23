@@ -37,7 +37,7 @@
     "js-cookie": "^3.0.1"
   },
   "devDependencies": {
-    "@noaignite/centra-types": "^1.2.0",
+    "@noaignite/centra-types": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/js-cookie": "^3.0.1",
