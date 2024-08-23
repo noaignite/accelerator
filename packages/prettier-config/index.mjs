@@ -1,7 +1,10 @@
-const vercelPrettierConfig = require('@vercel/style-guide/prettier')
+import vercelPrettierConfig from '@vercel/style-guide/prettier'
 
-/** @type {import("prettier").Config} */
-module.exports = {
+/**
+ * @see https://prettier.io/docs/en/configuration.html
+ * @type {import("prettier").Config}
+ */
+export default {
   ...vercelPrettierConfig,
   // Include Prettier plugins. Include order matters.
   plugins: [
