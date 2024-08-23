@@ -1,5 +1,12 @@
 # @noaignite/utils
 
+## 2.4.0
+
+### Minor Changes
+
+- 33d0ff5: add new pick helper
+- a582768: add new omit helper
+
 ## 2.3.1
 
 ### Patch Changes
