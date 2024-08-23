@@ -1,4 +1,4 @@
-import isPlainObject from './isPlainObject'
+import { isPlainObject } from './isPlainObject'
 
 export interface DeepmergeOptions {
   clone?: boolean
@@ -31,7 +31,7 @@ function deepClone<T>(source: T): T | Record<PropertyKey, unknown> {
  * deepmerge({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
  * ```
  */
-export default function deepmerge<T>(
+export function deepmerge<T>(
   target: T,
   source: unknown,
   options: DeepmergeOptions = { clone: true },

@@ -1,5 +1,5 @@
 import { describe, expect, it, test } from 'vitest'
-import isPlainObject from './isPlainObject'
+import { isPlainObject } from './isPlainObject'
 
 describe('isPlainObject', () => {
   it('is a function', () => {

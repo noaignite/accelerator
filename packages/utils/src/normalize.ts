@@ -12,6 +12,6 @@
  * normalize(5, 0, 5) // 1
  * ```
  */
-export default function normalize(value: number, min: number, max: number) {
+export function normalize(value: number, min: number, max: number) {
   return (value - min) / (max - min)
 }

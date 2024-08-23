@@ -13,7 +13,7 @@
  *
  * @see https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
  */
-export default function isPlainObject(item: unknown): item is Record<PropertyKey, unknown> {
+export function isPlainObject(item: unknown): item is Record<PropertyKey, unknown> {
   if (typeof item !== 'object' || item === null) {
     return false
   }

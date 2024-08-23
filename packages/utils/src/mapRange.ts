@@ -1,4 +1,4 @@
-import clampFunc from './clamp'
+import { clamp as clampFunc } from './clamp'
 
 /**
  * Map a value from one range to another
@@ -18,7 +18,7 @@ import clampFunc from './clamp'
  * mapRange(5, 0, 10, 0, 4) // 2
  * ```
  */
-export default function mapRange(
+export function mapRange(
   value: number,
   inMin: number,
   inMax: number,

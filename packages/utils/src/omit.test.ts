@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import omit from './omit'
+import { omit } from './omit'
 
 describe('omit', () => {
   it('returns the correct result', () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import mapRange from './mapRange'
+import { mapRange } from './mapRange'
 
 describe('mapRange', () => {
   it('is a function and returns a number', () => {
