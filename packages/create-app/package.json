@@ -4,7 +4,8 @@
   "private": false,
   "description": "Create NoA Ignite react apps with one command",
   "keywords": [
-    "react"
+    "react",
+    "turborepo"
   ],
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
@@ -17,22 +18,36 @@
   "license": "MIT",
   "author": "NoA Ignite",
   "sideEffects": false,
+  "type": "module",
   "bin": {
     "create-app": "./index.js"
   },
   "files": [
     "index.js",
-    "createApp.js"
+    "template-*",
+    "dist"
   ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "test-types": "tsc --noEmit"
+  },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "commander": "^9.4.0",
     "cross-spawn": "^7.0.3",
-    "fs-extra": "^10.1.0",
-    "validate-npm-package-name": "^4.0.0"
+    "kolorist": "^1.8.0",
+    "minimist": "^1.2.8",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/cross-spawn": "^6.0.6",
+    "@types/minimist": "^1.2.5",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.1.2",
+    "typescript": "5.4.5"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20"
   },
   "publishConfig": {
     "access": "public"
