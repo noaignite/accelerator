@@ -10,6 +10,9 @@ storybook-static/
 .env*
 .env.provision.production
 .env.provision.stage
+
 package-lock.json
 pnpm-lock.yaml
+yarn.lock
+
 next-env.d.ts
