@@ -41,7 +41,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/js-cookie": "^3.0.1",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.15",
     "@types/react": "^17.0.35",
     "tsup": "^8.1.2",
     "typedoc": "^0.22.9",
