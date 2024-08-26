@@ -1,16 +1,7 @@
+import { isPlainObject } from '@noaignite/utils'
 import plugin from 'tailwindcss/plugin'
 
-// NOTE: Should this helper perhaps be moved to `@noaignite/utils`?
-function isPlainObject(x: unknown): x is Record<string, unknown> {
-  return (
-    typeof x === 'object' &&
-    x?.constructor === Object &&
-    Object.getPrototypeOf(x) === Object.prototype
-  )
-}
-
-// NOTE: Should this helper perhaps be moved to `@noaignite/utils`?
-export function fluidValue(
+function fluidValue(
   minValue: number,
   maxValue: number,
   minViewport: number,
@@ -48,11 +39,11 @@ export type TypographyOptionsVariantMap<TKeys extends readonly [string, ...strin
   clampMin?: boolean
   fluid?: boolean
 } & {
-  // All breakpoints are optional except the first one (`TKeys[0]]`).
-  [key in TKeys[number]]?: TypographyOptionsVariant
-} & {
-  [key in TKeys[0]]-?: TypographyOptionsVariant
-}
+    // All breakpoints are optional except the first one (`TKeys[0]]`).
+    [key in TKeys[number]]?: TypographyOptionsVariant
+  } & {
+    [key in TKeys[0]]-?: TypographyOptionsVariant
+  }
 
 export type TypographyOptionsVariants<TKeys extends readonly [string, ...string[]]> = Record<
   string,

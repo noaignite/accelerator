@@ -28,6 +28,9 @@
     "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
     "test-types": "tsc --noEmit"
   },
+  "dependencies": {
+    "@noaignite/utils": "workspace:*"
+  },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",

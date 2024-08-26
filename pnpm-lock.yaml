@@ -168,6 +168,10 @@ importers:
         version: 5.4.5
 
   packages/tailwind-typography:
+    dependencies:
+      '@noaignite/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
