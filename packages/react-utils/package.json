@@ -39,6 +39,7 @@
     "test-types": "tsc --noEmit"
   },
   "devDependencies": {
+    "@adamsoderstrom/esbuild-plugin-preserve-directives": "0.0.10",
     "@noaignite/types": "workspace:^",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
