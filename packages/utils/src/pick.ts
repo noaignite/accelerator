@@ -1,5 +1,3 @@
-import { type KeyOfAny } from '@noaignite/types'
-
 /**
  * Pick keys from object.
  *
@@ -11,7 +9,7 @@ import { type KeyOfAny } from '@noaignite/types'
  * pick({ a: 1, b: 2, c: 3 }, ['a', 'c']) // { a: 1, c: 3 }
  * ```
  */
-export default function pick<T extends Record<KeyOfAny, unknown>, K extends keyof T>(
+export default function pick<T extends Record<PropertyKey, unknown>, K extends keyof T>(
   obj: T,
   keys: K[],
 ) {
