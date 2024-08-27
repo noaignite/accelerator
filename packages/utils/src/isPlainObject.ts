@@ -1,5 +1,3 @@
-import { type KeyOfAny } from '@noaignite/types'
-
 /**
  * Check if the given item is a plain object.
  *
@@ -15,7 +13,7 @@ import { type KeyOfAny } from '@noaignite/types'
  *
  * @see https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
  */
-export default function isPlainObject(item: unknown): item is Record<KeyOfAny, unknown> {
+export default function isPlainObject(item: unknown): item is Record<PropertyKey, unknown> {
   if (typeof item !== 'object' || item === null) {
     return false
   }

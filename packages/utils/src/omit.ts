@@ -1,5 +1,3 @@
-import { type KeyOfAny } from '@noaignite/types'
-
 /**
  * Omit keys from object.
  *
@@ -12,7 +10,7 @@ import { type KeyOfAny } from '@noaignite/types'
  * omit({ a: 1, b: 2, c: 3 }, ['a', 'c']) // { b: 2 }
  * ```
  */
-export default function omit<T extends Record<KeyOfAny, unknown>, K extends keyof T>(
+export default function omit<T extends Record<PropertyKey, unknown>, K extends keyof T>(
   obj: T,
   keys: K[],
 ) {

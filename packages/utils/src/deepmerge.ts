@@ -1,16 +1,15 @@
-import type { KeyOfAny } from '@noaignite/types'
 import isPlainObject from './isPlainObject'
 
 export interface DeepmergeOptions {
   clone?: boolean
 }
 
-function deepClone<T>(source: T): T | Record<KeyOfAny, unknown> {
+function deepClone<T>(source: T): T | Record<PropertyKey, unknown> {
   if (!isPlainObject(source)) {
     return source
   }
 
-  const output: Record<KeyOfAny, unknown> = {}
+  const output: Record<PropertyKey, unknown> = {}
 
   Object.keys(source).forEach((key) => {
     output[key] = deepClone(source[key])
@@ -48,13 +47,17 @@ export default function deepmerge<T>(
         isPlainObject(target[key])
       ) {
         // Since `output` is a clone of `target` and we have narrowed `target` in this block we can cast to the same type.
-        ;(output as Record<KeyOfAny, unknown>)[key] = deepmerge(target[key], source[key], options)
+        ; (output as Record<PropertyKey, unknown>)[key] = deepmerge(
+          target[key],
+          source[key],
+          options,
+        )
       } else if (options.clone) {
-        ;(output as Record<KeyOfAny, unknown>)[key] = isPlainObject(source[key])
+        ; (output as Record<PropertyKey, unknown>)[key] = isPlainObject(source[key])
           ? deepClone(source[key])
           : source[key]
       } else {
-        ;(output as Record<KeyOfAny, unknown>)[key] = source[key]
+        ; (output as Record<PropertyKey, unknown>)[key] = source[key]
       }
     })
   }
