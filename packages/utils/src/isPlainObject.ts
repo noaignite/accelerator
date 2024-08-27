@@ -1,11 +1,13 @@
 /**
  * Check if the given item is a plain object.
+ *
  * @example
  * ```ts
  * isPlainObject({}) // true
  * isPlainObject({ foo: 'bar' }) // true
  * isPlainObject([]) // false
  * ```
+ *
  * @see https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
  */
 export default function isPlainObject(item: unknown): item is Record<PropertyKey, unknown> {
