@@ -12,6 +12,7 @@ describe('deepmerge', () => {
       },
     )
 
+    // @ts-expect-error -- Allow `__proto__` for testing
     // eslint-disable-next-line no-proto -- Allow `__proto__` for testing
     expect(result.__proto__).to.have.property('isAdmin')
     expect({}).not.to.have.property('isAdmin')
@@ -41,6 +42,7 @@ describe('deepmerge', () => {
       },
     )
 
+    // @ts-expect-error -- Allow `__proto__` for testing
     expect(result.prototype).to.have.property('isAdmin')
     expect({}).not.to.have.property('isAdmin')
   })
@@ -51,6 +53,7 @@ describe('deepmerge', () => {
       JSON.parse('{ "myProperty": "a", "__proto__" : { "isAdmin" : true } }'),
     )
 
+    // @ts-expect-error -- Allow `__proto__` for testing
     // eslint-disable-next-line no-proto -- Allow `__proto__` for testing
     expect(result.__proto__).to.have.property('isAdmin')
     expect({}).not.to.have.property('isAdmin')
@@ -72,6 +75,8 @@ describe('deepmerge', () => {
 
     expect(result).to.deep.equal({ foo: { baz: 'test' } })
 
+    // @ts-expect-error -- Allow for easy testing
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Allow for easy testing
     result.foo.baz = 'new test'
 
     expect(result).to.deep.equal({ foo: { baz: 'new test' } })
