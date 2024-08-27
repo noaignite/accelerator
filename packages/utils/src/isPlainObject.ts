@@ -1,6 +1,9 @@
 /**
  * Check if the given item is a plain object.
  *
+ * @param item - The item to check.
+ * @returns `true` if the item is a plain object, `false` otherwise.
+ *
  * @example
  * ```ts
  * isPlainObject({}) // true
