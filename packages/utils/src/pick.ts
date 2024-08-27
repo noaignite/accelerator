@@ -5,6 +5,7 @@ import { type KeyOfAny } from '@noaignite/types'
  *
  * @param object - Object to pick keys from.
  * @param keys - Array of keys to pick from object.
+ * @returns Object with picked keys.
  *
  * @example
  * ```ts
