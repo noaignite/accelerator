@@ -5,6 +5,7 @@ import { type KeyOfAny } from '@noaignite/types'
  *
  * @param object - Object to omit keys from.
  * @param keys - Array of keys to omit from object.
+ * @returns Object with omitted keys.
  *
  * @example
  * ```ts
