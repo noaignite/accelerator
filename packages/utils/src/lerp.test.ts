@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import lerp from './lerp'
+import { lerp } from './lerp'
 
 describe('lerp', () => {
   it('is a function and returns a number', () => {

@@ -52,7 +52,7 @@ const hexToRGB = (hex: string): [number, number, number] => {
  * // { contrast: '#dde', contrastRatio: 5.38, colorAA: '#dde', colorAAA: '#fff' }
  * ```
  */
-const colorContrast = (baseColor: string, ...restColors: string[]) => {
+export const colorContrast = (baseColor: string, ...restColors: string[]) => {
   if (!baseColor || typeof baseColor !== 'string') return {}
 
   const colors = restColors.filter((c) => typeof c === 'string')
@@ -91,5 +91,3 @@ const colorContrast = (baseColor: string, ...restColors: string[]) => {
     colorAAA: highestContrastRatio >= 7 ? bestContrastingColor : absoluteContrast,
   }
 }
-
-export default colorContrast

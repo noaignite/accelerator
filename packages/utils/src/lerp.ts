@@ -12,6 +12,6 @@
  * lerp(0, 100, 0.75) // 75
  * ```
  */
-export default function lerp(start: number, end: number, amount: number) {
+export function lerp(start: number, end: number, amount: number) {
   return (1 - amount) * start + amount * end
 }

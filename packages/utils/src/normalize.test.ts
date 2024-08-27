@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import normalize from './normalize'
+import { normalize } from './normalize'
 
 describe('normalize', () => {
   it('is a function and returns a number', () => {
