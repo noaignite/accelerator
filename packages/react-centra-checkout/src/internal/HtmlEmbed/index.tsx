@@ -4,7 +4,7 @@ interface HtmlEmbedProps extends React.ComponentProps<'div'> {
   html: string
 }
 
-function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
+export function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
   const { html, ...other } = props
 
   const ref = useRef<HTMLDivElement>(null)
@@ -46,5 +46,3 @@ function HtmlEmbed(props: HtmlEmbedProps): React.ReactElement {
 
   return <div dangerouslySetInnerHTML={{ __html: html }} ref={ref} {...other} />
 }
-
-export default HtmlEmbed
