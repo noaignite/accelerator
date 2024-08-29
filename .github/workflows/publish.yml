@@ -1,8 +1,12 @@
 name: Publish
+
 on:
   push:
     branches:
       - 'main'
+
+env:
+  HUSKY: 0
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
