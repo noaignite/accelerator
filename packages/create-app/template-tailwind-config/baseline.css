@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  body {
+    @apply type-body1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--palette-brand1-primary);
+    background-color: var(--palette-background-primary);
+  }
+
+  /**
+   * NOTE:
+   * UI Grid Helper
+   * 
+   * This grid is a visual aid that should match the grid in the design file.
+   * It is used to verify alignment of elements on the page. Activate via the
+   * browser's developer tools to toggle the CSS grid on and off.
+   */
+  body::before {
+    position: fixed;
+    display: grid;
+    grid-template-columns: repeat(var(--spacing-grid-col-count), 1fr);
+    gap: var(--spacing-grid-gap);
+    content: '';
+    pointer-events: none;
+    margin-inline: var(--spacing-grid-margin);
+    inset: 0;
+  }
+
+  svg:not([fill]) {
+    fill: currentColor;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :not(:is(input, select, textarea)):focus-visible,
+  .outline-focus {
+    outline: 1px solid Highlight;
+
+    /* https://ghinda.net/article/mimic-native-focus-css/ */
+    @media (-webkit-min-device-pixel-ratio: 0) {
+      outline-style: auto;
+      outline-color: -webkit-focus-ring-color;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :has(:target) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  [id] {
+    scroll-margin-top: calc(var(--spacing-header-height) + 2.5rem);
+  }
+
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    display: none;
+  }
+}

@@ -2,14 +2,56 @@
 
 A collection of NoA Ignite packages.
 
-## What's inside?
+## Starting a new project?
+
+Starting a new project is done through a combination of the `create-turbo` and the `@noaignite/create-app` executables.
+
+### Installing Turborepo
+
+Create a new project with [Turborepo](https://turbo.build/) from [Vercel](https://vercel.com/).
+
+```bash
+// with pnpm (recommended)
+pnpm dlx create-turbo@latest -e with-tailwind -m pnpm
+
+// with yarn
+yarn dlx create-turbo@latest -e with-tailwind -m yarn
+
+// with npm
+npx create-turbo@latest -e with-tailwind -m npm
+```
+
+### Installing NoA Ignite templates
+
+Now that the initial scaffolding of the project is out of the way we can start installing templates that we might need.
+
+1. First change the directory to the newly created turborepo. For example:
+
+```bash
+cd my-turborepo
+```
+
+2. Run the NoA Ignite executable with the same package manager you used in the previous step.
+
+```bash
+// with pnpm (recommended)
+pnpm dlx @noaignite/create-app
+
+// with yarn
+yarn dlx @noaignite/create-app
+
+// with npm
+npx @noaignite/create-app
+```
+
+## What's inside this monorepo?
 
 This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
 - `@noaignite/centra-types`: Typescript definitions for centra APIs
-- `@noaignite/create-app`: A CLI tool to scaffold out a new project
+- `@noaignite/create-app`: A CLI tool to scaffold out templates within a Turborepo project
 - `@noaignite/react-centra-checkout`: React helper functions for centra APIs
 - `@noaignite/types`: Type helpers by NoA Ignite
 - `@noaignite/utils`: Basic helper functions

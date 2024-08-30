@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+Example font file import:
+
+@font-face {
+  font-weight: 400;
+  font-family: 'Aften Screen';
+  font-style: normal;
+  src: url('../fonts/Aften_Screen.woff2') format('woff2');
+  font-display: swap;
+}
+*/
+
+@layer base {
+  [data-theme='default'] {
+    --font-primary: 'Aften Screen', sans-serif;
+    --font-secondary: 'Aften Screen', sans-serif;
+
+    --spacing-grid-col-count: 6;
+    --spacing-grid-gap: 16px;
+    --spacing-grid-margin: 16px;
+    --spacing-toolbar-height: 64px;
+    --spacing-statusbar-height: 0px;
+    --spacing-navbar-height: 72px;
+    --spacing-header-height: calc(var(--spacing-statusbar-height) + var(--spacing-navbar-height));
+    --spacing-block-margin: 48px;
+
+    --transition-duration-default: 300ms;
+
+    @screen md {
+      --spacing-grid-col-count: 12;
+      --spacing-grid-gap: 24px;
+      --spacing-grid-margin: 24px;
+    }
+
+    /**
+     * COLORS
+     *
+     * These colors are used to configure the palette and therefore not
+     * part of the tailwind config.
+     */
+    --color-common-black: #000000;
+    --color-common-blackChannel: 0 0 0;
+    --color-common-white: #ffffff;
+    --color-common-whiteChannel: 255 255 255;
+  }
+
+  /**
+   * PALETTE - LIGHT (Default)
+   * 
+   * Palette colors are reactive to the color scheme. The color scheme can be
+   * set by either the className or data attribute defined in the selector below.
+   */
+  [data-theme='default'],
+  [data-theme='default'] :is(.light, [data-color-scheme='light']) {
+    /* The colors used to represent primary interface elements for a user. */
+    --palette-brand1-primary: var(--color-common-black);
+    --palette-brand1-secondary: rgba(var(--color-common-blackChannel) / 0.64);
+    --palette-brand1-contrast: var(--color-common-white);
+    --palette-brand1-contrast2: var(--color-common-white);
+
+    /* The colors used to indicate the successful completion of an action that user triggered. */
+    --palette-success-primary: #4caf50;
+    --palette-success-secondary: #4caf50;
+    --palette-success-contrast: var(--color-common-black);
+    --palette-success-contrast2: var(--color-common-black);
+
+    /* The colors used to represent potentially dangerous actions or important messages. */
+    --palette-warning-primary: #ff9800;
+    --palette-warning-secondary: #ff9800;
+    --palette-warning-contrast: var(--color-common-black);
+    --palette-warning-contrast2: var(--color-common-black);
+
+    /* The colors used to represent interface elements that the user should be made aware of. */
+    --palette-error-primary: #f44336;
+    --palette-error-secondary: #f44336;
+    --palette-error-contrast: var(--color-common-white);
+
+    /* The colors used to present information to the user that is neutral and not necessarily important. */
+    --palette-info-primary: #00bcd4;
+    --palette-info-secondary: #00bcd4;
+    --palette-info-contrast: var(--color-common-black);
+
+    /* The colors used to style texts. */
+    --palette-text-primary: var(--color-common-black);
+    --palette-text-secondary: rgba(var(--color-common-blackChannel) / 0.64);
+    --palette-text-disabled: rgba(var(--color-common-blackChannel) / 0.32);
+    --palette-text-contrast: var(--color-common-white);
+
+    /* The colors used to style backgrounds. */
+    --palette-background-primary: var(--color-common-white);
+    --palette-background-secondary: var(--color-common-white);
+
+    /* The color used to divide different elements. */
+    --palette-divider-primary: rgba(var(--color-common-blackChannel) / 0.12);
+
+    /* The colors used to style the action elements. */
+    --palette-action-disabled: rgba(var(--color-common-blackChannel) / 0.28);
+    --palette-action-disabledBg: rgba(var(--color-common-blackChannel) / 0.08);
+  }
+
+  /**
+   * PALETTE - DARK
+   */
+  [data-theme='default'] :is(.dark, [data-color-scheme='dark']) {
+    /* The colors used to represent primary interface elements for a user. */
+    --palette-brand1-primary: var(--color-common-white);
+    --palette-brand1-secondary: rgba(var(--color-common-whiteChannel) / 0.64);
+    --palette-brand1-contrast: var(--color-common-black);
+
+    /* The colors used to style texts. */
+    --palette-text-primary: var(--color-common-white);
+    --palette-text-secondary: rgba(var(--color-common-whiteChannel) / 0.64);
+    --palette-text-disabled: rgba(var(--color-common-whiteChannel) / 0.32);
+    --palette-text-contrast: var(--color-common-black);
+
+    /* The colors used to style backgrounds. */
+    --palette-background-primary: var(--color-common-black);
+    --palette-background-secondary: var(--color-common-black);
+
+    /* The color used to divide different elements. */
+    --palette-divider-primary: rgba(var(--color-common-whiteChannel) / 0.2);
+
+    /* The colors used to style the action elements. */
+    --palette-action-disabled: rgba(var(--color-common-whiteChannel) / 0.28);
+    --palette-action-disabledBg: rgba(var(--color-common-whiteChannel) / 0.08);
+  }
+}
