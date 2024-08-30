@@ -203,7 +203,7 @@ async function init() {
 
   const rootPath = path.join(cwd, rootDir)
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent)
-  const pkgManager = pkgInfo ? pkgInfo.name : 'npm'
+  const pkgManager = pkgInfo?.name ?? 'npm'
 
   // Step 2. Copy the templates
 
@@ -277,9 +277,7 @@ async function init() {
 
   console.log(`\nDone. Now installing dependencies.\n`)
 
-  if (pkgManager) {
-    spawnSync(pkgManager, ['install'], { stdio: 'inherit' })
-  }
+  spawnSync(pkgManager, ['install'], { stdio: 'inherit' })
 
   // Step 5. Print goodbye message
 
@@ -298,7 +296,7 @@ function formatTargetDir(targetDir: string | undefined) {
 
 function formatCommand(command: string) {
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent)
-  const pkgManager = pkgInfo ? pkgInfo.name : 'npm'
+  const pkgManager = pkgInfo?.name ?? 'npm'
   const isYarn1 = pkgManager === 'yarn' && pkgInfo?.version?.startsWith('1.')
 
   const formattedCommand = command
