@@ -12,13 +12,13 @@ Create a new project with [Turborepo](https://turbo.build/) from [Vercel](https:
 
 ```bash
 // with pnpm (recommended)
-pnpm dlx create-turbo@latest -m pnpm
+pnpm dlx create-turbo@latest -e with-tailwind -m pnpm
 
 // with yarn
-yarn dlx create-turbo@latest -m yarn
+yarn dlx create-turbo@latest -e with-tailwind -m yarn
 
 // with npm
-npx create-turbo@latest -m npm
+npx create-turbo@latest -e with-tailwind -m npm
 ```
 
 ### Installing NoA Ignite templates

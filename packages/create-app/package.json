@@ -2,7 +2,7 @@
   "name": "@noaignite/create-app",
   "version": "0.7.0",
   "private": false,
-  "description": "Create NoA Ignite react apps with one command",
+  "description": "Scaffold NoA Ignite templates within a turborepo project",
   "keywords": [
     "react",
     "turborepo"

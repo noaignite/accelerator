@@ -1,7 +1,14 @@
 # @noaignite/create-app
 
-This CLI tool enables you to quickly start building a NoA Ignite react application. To get started, use the following command:
+Scaffold NoA Ignite templates within a turborepo project.
 
 ```sh
-npx @noaignite/create-app my-app
+// with pnpm (recommended)
+pnpm dlx @noaignite/create-app
+
+// with yarn
+yarn dlx @noaignite/create-app
+
+// with npm
+npx @noaignite/create-app
 ```
