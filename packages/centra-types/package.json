@@ -19,7 +19,10 @@
   "license": "MIT",
   "author": "NoA Ignite",
   "sideEffects": false,
-  "types": "./index.d.ts",
+  "types": "./src/index.ts",
+  "files": [
+    "src/**"
+  ],
   "scripts": {
     "build:docs": "typedoc",
     "test-types": "tsc --noEmit"
