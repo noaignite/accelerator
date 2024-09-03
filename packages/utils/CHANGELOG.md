@@ -1,5 +1,16 @@
 # @noaignite/utils
 
+## 3.0.0
+
+### Major Changes
+
+- 91be7d8: bump minimum engine node version from 14 to 20
+- 73960ea: convert all default exports to named exports
+
+### Minor Changes
+
+- 9c531c5: add new assert util
+
 ## 2.4.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @noaignite/react-utils
 
+## 0.5.1
+
+### Patch Changes
+
+- 50c8eea: wrap provider & consumer to register them as client components
+- 3d2c339: re-enable tsup bundle setting thanks to esbuild-plugin-preserve-directives plugin
+
 ## 0.5.0
 
 ### Minor Changes

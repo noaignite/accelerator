@@ -1,5 +1,11 @@
 # @noaignite/create-app
 
+## 0.8.0
+
+### Minor Changes
+
+- 228c45f: refactor to a new template installer
+
 ## 0.7.0
 
 ### Minor Changes
