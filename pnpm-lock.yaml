@@ -30,6 +30,24 @@ importers:
         specifier: ^2.0.14
         version: 2.0.14
 
+  packages/centra-mocks:
+    devDependencies:
+      '@noaignite/centra-types':
+        specifier: workspace:*
+        version: link:../centra-types
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      tsup:
+        specifier: ^8.1.2
+        version: 8.1.2(jiti@1.21.6)(postcss@8.4.38)(typescript@5.4.5)(yaml@2.5.0)
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
+
   packages/centra-types:
     devDependencies:
       '@repo/typescript-config':

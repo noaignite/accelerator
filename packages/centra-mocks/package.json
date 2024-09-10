@@ -1,0 +1,51 @@
+{
+  "name": "@noaignite/centra-mocks",
+  "version": "0.0.0",
+  "private": false,
+  "description": "A collection of mocks to the Centra API",
+  "keywords": [
+    "centra",
+    "mocks"
+  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/centra-mocks"
+  },
+  "license": "MIT",
+  "author": "NoA Ignite",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./*": {
+      "require": "./dist/*.js",
+      "import": "./dist/*.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
+    "test-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@noaignite/centra-types": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "tsup": "^8.1.2",
+    "typescript": "5.4.5"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
