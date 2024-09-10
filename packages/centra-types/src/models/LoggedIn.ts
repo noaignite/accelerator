@@ -1,4 +1,5 @@
 export interface LoggedIn {
+  customer?: string
   email?: string
   firstName?: string
   lastName?: string

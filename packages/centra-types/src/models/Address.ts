@@ -6,6 +6,8 @@ export interface Address {
   country?: string
   email?: string
   firstName?: string
+  houseNumber?: string
+  houseExtension?: string
   identityNumber?: string
   lastName?: string
   newsletter?: boolean

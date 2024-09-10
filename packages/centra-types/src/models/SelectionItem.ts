@@ -2,12 +2,13 @@ import { Product } from './Product'
 
 export interface SelectionItem {
   item?: string
-  productUrl?: string
-  category?: string
+  productUrl?: string | null
+  category?: string | null
   comment?: string
   size?: string
   sku?: string
   ean?: string
+  upc?: string
   quantity: number
   subscriptionPlan?: {
     name?: string
