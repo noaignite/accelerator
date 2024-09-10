@@ -14,19 +14,6 @@ nock(CENTRA_API_URL)
   .get('/selection')
   .reply(200, selectionEmptyResponse)
 
-  .post(`/items/${TEST_ITEM}/quantity/1`)
-  .reply(200, selectionResponse)
-
-  .post(`/items/${TEST_ITEM}/quantity/2`)
-  .reply(200, () => ({
-    ...selectionResponse,
-    selection: {
-      ...selectionResponse.selection,
-      // @ts-expect-error -- We could expect the test to fail during runtime if the mock data doesn't comply with the logic. The TypeScript error originates from the type and not the actual mock.
-      items: Array(2).fill(selectionResponse.selection.items[0]),
-    },
-  }))
-
 function CentraProviderWrapper({ children }: { children: React.ReactNode }) {
   return (
     <CentraProvider
@@ -74,7 +61,9 @@ describe('CentraProvider', () => {
   })
 
   it('Adds one item', async () => {
-    nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/1`).reply(200, selectionResponse)
+    nock(CENTRA_API_URL)
+      .post(`/items/${TEST_ITEM}/quantity/1`)
+      .reply(200, selectionResponse)
 
     let resultingSelection: CheckoutApi.Selection | undefined
 
@@ -89,7 +78,7 @@ describe('CentraProvider', () => {
         setTimeout(() => {
           void addItem?.(TEST_ITEM)
         }, 100)
-      }, [addItem, selection?.items?.length])
+      }, [addItem])
 
       return null
     }
@@ -102,6 +91,16 @@ describe('CentraProvider', () => {
   })
 
   it('Adds two items', async () => {
+    nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/2`)
+      .reply(200, () => ({
+        ...selectionResponse,
+        selection: {
+          ...selectionResponse.selection,
+          // @ts-expect-error -- We could expect the test to fail during runtime if the mock data doesn't comply with the logic. The TypeScript error originates from the type and not the actual mock.
+          items: Array(2).fill(selectionResponse.selection.items[0]),
+        },
+      }))
+
     let resultingSelection: CheckoutApi.Selection | undefined
 
     function TestComponent() {
@@ -115,7 +114,7 @@ describe('CentraProvider', () => {
         setTimeout(() => {
           void addItem?.(TEST_ITEM, 2)
         }, 100)
-      }, [addItem, selection?.items?.length])
+      }, [addItem])
 
       return null
     }
