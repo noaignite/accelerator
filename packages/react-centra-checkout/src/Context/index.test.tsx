@@ -125,4 +125,38 @@ describe('CentraProvider', () => {
       expect(resultingSelection?.items?.length).toBe(2)
     })
   })
+
+  it('Doesn\'t remove the selection state when product item not found', async () => {
+    nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/2`)
+      .reply(404, () => ({
+        "token": "e37b0c13e1gv4bdkceigir9go5",
+        "errors": {
+          "item": "product item not found"
+        }
+      }))
+
+    let resultingSelection: CheckoutApi.Selection | undefined
+
+    function TestComponent() {
+      const { selection } = useCentraSelection()
+      const { addItem } = useCentraHandlers()
+
+      // set resultingSelection to be able to test the selection
+      resultingSelection = selection
+
+      useEffect(() => {
+        setTimeout(() => {
+          void addItem?.(TEST_ITEM, 2)
+        }, 100)
+      }, [addItem])
+
+      return null
+    }
+
+    render(<TestComponent />, { wrapper: CentraProviderWrapper })
+
+    await waitFor(() => {
+      expect(resultingSelection?.items?.length).toBe(0)
+    })
+  })
 })
