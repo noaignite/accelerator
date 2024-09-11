@@ -14,6 +14,9 @@
     },
     "test:types": {
       "dependsOn": ["^test:types"]
+      },
+    "test:unit:coverage": {
+      "dependsOn": ["^test:unit:coverage"]
     },
     "dev": {
       "cache": false,
