@@ -25,7 +25,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint src/ --ignore-pattern '**/*.test.js'",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
     "test-types": "tsc --noEmit"
   },
   "dependencies": {
