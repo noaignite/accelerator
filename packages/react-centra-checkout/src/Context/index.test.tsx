@@ -4,7 +4,7 @@ import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 import { useEffect } from 'react'
 import { describe, expect, it } from 'vitest'
-import { CentraProvider, useCentraHandlers, useCentraSelection } from '.'
+import { CentraProvider, SELECTION_INITIAL_VALUE, useCentraHandlers, useCentraSelection } from '.'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 const TEST_ITEM = '370-261'
@@ -54,6 +54,26 @@ describe('CentraProvider', () => {
 
     await waitFor(() => {
       expect(result.current.selection).toEqual(selectionEmptyResponse.selection)
+    })
+  })
+
+  it.concurrent("doesn't initialize selection when passing `disableInit`", async () => {
+    const { result } = renderHook(useCentraSelection, {
+      wrapper: ({ children }) => (
+        <CentraProvider
+          apiUrl={CENTRA_API_URL}
+          disableInit
+          paymentFailedPage=""
+          paymentReturnPage=""
+          receiptPage=""
+        >
+          {children}
+        </CentraProvider>
+      ),
+    })
+
+    await waitFor(() => {
+      expect(result.current.selection).toEqual(SELECTION_INITIAL_VALUE.selection)
     })
   })
 
