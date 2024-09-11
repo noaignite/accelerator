@@ -1,4 +1,5 @@
 import type * as CheckoutApi from '@noaignite/centra-types'
+import { isPlainObject } from '@noaignite/utils'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCentraHandlers, useCentraSelection } from '../Context'
@@ -36,15 +37,13 @@ const PaymentEmbed = memo(function PaymentEmbed(
 
   // Submit payment
   const handlePaymentCallback = useCallback(
-    (event) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
+    (event: GlobalEventHandlersEventMap['centra_checkout_payment_callback']) => {
       const {
         addressIncluded,
         billingAddress: detailsAddress,
         shippingAddress: detailsShippingAddress,
         paymentMethod: detailsPaymentMethod,
         paymentMethodSpecificFields,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- TODO: Fix this
       } = event.detail
 
       const payload = {
@@ -75,8 +74,11 @@ const PaymentEmbed = memo(function PaymentEmbed(
         })
         .catch((err: unknown) => {
           console.error('@noaignite/react-centra-checkout: Could not submit payment')
-          // @ts-expect-error -- TODO: Fix this
-          setPaymentCallbackError(err)
+
+          if (isPlainObject(err)) {
+            setPaymentCallbackError(err)
+          }
+
           console.error(err)
         })
     },

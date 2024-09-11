@@ -1,4 +1,5 @@
 import type * as CheckoutApi from '@noaignite/centra-types'
+import { isPlainObject } from '@noaignite/utils'
 import type Cookies from 'js-cookie'
 import cookies from 'js-cookie'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
@@ -120,7 +121,7 @@ export interface ContextMethods {
     id: string,
     newPassword: string,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-  resetSelection?: () => void
+  resetSelection?: () => Promise<void>
   /**
     @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
   */
@@ -180,13 +181,7 @@ export const SELECTION_INITIAL_VALUE: CheckoutApi.SelectionResponse = {
   countries: [],
   languages: [],
   location: {},
-  paymentFields: {
-    // @ts-expect-error -- TODO: Fix this
-    address: {},
-    // @ts-expect-error -- TODO: Fix this
-    shippingAddress: {},
-    termsAndConditions: {},
-  },
+  paymentFields: {},
   paymentMethods: [],
   selection: {
     address: {},
@@ -199,6 +194,31 @@ export const SELECTION_INITIAL_VALUE: CheckoutApi.SelectionResponse = {
 
 export const CentraHandlersContext = createContext<ContextMethods | null>(null)
 const CentraSelectionContext = createContext<ContextProperties | null>(null)
+
+/**
+ * Perform `callback` when `Promise` contains a `CheckoutApi.SelectionResponse`
+ * 
+ * @param promise -  Promise that may contain `selection` response
+ * @param callback -  Callback that should be called with the `promise` if the results of the `promise` contains a `CheckoutApi.SelectionResponse`
+ */
+const onSelectionResponse = async <TPromise extends Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>, TCallback extends (promise: TPromise) => TPromise>(promise: Promise<unknown>, callback: TCallback): Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>> => {
+  const results = await promise
+
+  if (
+    isPlainObject(results) &&
+    'selection' in results &&
+    Boolean(results.selection)
+  ) {
+    return callback(
+      // We have to cast it to `TPromise`, because there's not a way to create async type predicates without already passing the `Promise` as argument to a function. 
+      promise as TPromise
+    )
+  }
+
+  // casting here, to conform for the already exposed interface.
+  // Update this to something more pessimistic?
+  return results as TPromise
+}
 
 /** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
 export function CentraProvider(props: ProviderProps) {
@@ -233,17 +253,12 @@ export function CentraProvider(props: ProviderProps) {
   }
 
   const selectionApiCall = useCallback(
-    async (
-      apiCall:
-        | Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
-        | (() => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>),
-    ) => {
+    async (apiCall: Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>> | (() => Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>)) => {
       window.CentraCheckout?.suspend()
+
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
 
-      if ('selection' in response && response.selection) {
-        setSelection(response)
-      }
+      setSelection(response)
 
       window.CentraCheckout?.resume()
 
@@ -253,7 +268,7 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const centraCheckoutCallback = useCallback(
-    async (event: CustomEvent<CentraCheckoutEventDetails>) => {
+    async (event: GlobalEventHandlersEventMap['centra_checkout_callback']) => {
       const response = (await apiClient.request(
         'PUT',
         `payment-fields`,
@@ -305,18 +320,18 @@ export function CentraProvider(props: ProviderProps) {
 
   const addItem = useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
-      selectionApiCall(apiClient.request('POST', `items/${item}/quantity/${quantity}`)),
+      onSelectionResponse(apiClient.request('POST', `items/${item}/quantity/${quantity}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const addBundleItem = useCallback<NonNullable<ContextMethods['addBundleItem']>>(
-    (item, data) => selectionApiCall(apiClient.request('POST', `items/bundles/${item}`, data)),
+    (item, data) => onSelectionResponse(apiClient.request('POST', `items/bundles/${item}`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const addGiftCertificate = useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
     (giftCertificate) =>
-      selectionApiCall(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`)),
+      onSelectionResponse(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -324,30 +339,29 @@ export function CentraProvider(props: ProviderProps) {
     NonNullable<ContextMethods['addCustomGiftCertificate']>
   >(
     (giftCertificate, amount) =>
-      selectionApiCall(
-        apiClient.request('POST', `items/gift-certificates/${giftCertificate}/amount/${amount}`),
+      onSelectionResponse(apiClient.request('POST', `items/gift-certificates/${giftCertificate}/amount/${amount}`), selectionApiCall
       ),
     [apiClient, selectionApiCall],
   )
 
   const increaseCartItem = useCallback<NonNullable<ContextMethods['increaseCartItem']>>(
-    (line) => selectionApiCall(apiClient.request('POST', `lines/${line}/quantity/1`)),
+    (line) => onSelectionResponse(apiClient.request('POST', `lines/${line}/quantity/1`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const decreaseCartItem = useCallback<NonNullable<ContextMethods['decreaseCartItem']>>(
-    (line) => selectionApiCall(apiClient.request('DELETE', `lines/${line}/quantity/1`)),
+    (line) => onSelectionResponse(apiClient.request('DELETE', `lines/${line}/quantity/1`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const removeCartItem = useCallback<NonNullable<ContextMethods['removeCartItem']>>(
-    (line) => selectionApiCall(apiClient.request('DELETE', `lines/${line}`)),
+    (line) => onSelectionResponse(apiClient.request('DELETE', `lines/${line}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCartItemQuantity = useCallback<NonNullable<ContextMethods['updateCartItemQuantity']>>(
     (line, quantity) =>
-      selectionApiCall(apiClient.request('PUT', `lines/${line}/quantity/${quantity}`)),
+      onSelectionResponse(apiClient.request('PUT', `lines/${line}/quantity/${quantity}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -356,52 +370,53 @@ export function CentraProvider(props: ProviderProps) {
       selectionApiCall(async () => {
         await apiClient.request('DELETE', `lines/${cartItem.line}`)
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- TODO: Fix this
-        const response = await apiClient.request(
+        const response = (await apiClient.request(
           'POST',
           `items/${item}/quantity/${cartItem.quantity}`,
-        )
+        )) as Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- TODO: Fix this
         return response
       }),
     [apiClient, selectionApiCall],
   )
 
   const addVoucher = useCallback<NonNullable<ContextMethods['addVoucher']>>(
-    (voucher) => selectionApiCall(apiClient.request('POST', 'vouchers', { voucher })),
+    (voucher) => onSelectionResponse(apiClient.request('POST', 'vouchers', { voucher }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const removeVoucher = useCallback<NonNullable<ContextMethods['removeVoucher']>>(
-    (voucher) => selectionApiCall(apiClient.request('DELETE', `vouchers/${voucher}`)),
+    (voucher) => onSelectionResponse(apiClient.request('DELETE', `vouchers/${voucher}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCountry = useCallback<NonNullable<ContextMethods['updateCountry']>>(
-    (country, data) => selectionApiCall(apiClient.request('PUT', `countries/${country}`, data)),
+    (country, data) => onSelectionResponse(apiClient.request('PUT', `countries/${country}`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateLanguage = useCallback<NonNullable<ContextMethods['updateLanguage']>>(
-    (language) => selectionApiCall(apiClient.request('PUT', `languages/${language}`)),
+    (language) => onSelectionResponse(apiClient.request('PUT', `languages/${language}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateShippingMethod = useCallback<NonNullable<ContextMethods['updateShippingMethod']>>(
     (shippingMethod) =>
-      selectionApiCall(apiClient.request('PUT', `shipping-methods/${shippingMethod}`)),
+      onSelectionResponse(apiClient.request('PUT', `shipping-methods/${shippingMethod}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updatePaymentMethod = useCallback<NonNullable<ContextMethods['updatePaymentMethod']>>(
     (paymentMethod) =>
-      selectionApiCall(apiClient.request('PUT', `payment-methods/${paymentMethod}`)),
+      onSelectionResponse(apiClient.request('PUT', `payment-methods/${paymentMethod}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updatePaymentFields = useCallback<NonNullable<ContextMethods['updatePaymentFields']>>(
-    (data) => selectionApiCall(apiClient.request('PUT', `payment-fields`, data)),
+    async (data) =>
+      onSelectionResponse(
+        apiClient.request('PUT', `payment-fields`, data),
+        selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -451,36 +466,36 @@ export function CentraProvider(props: ProviderProps) {
   const addBackInStockSubscription = useCallback<
     NonNullable<ContextMethods['addBackInStockSubscription']>
   >(
-    (data) => selectionApiCall(apiClient.request('POST', 'back-in-stock-subscription', data)),
+    (data) => onSelectionResponse(apiClient.request('POST', 'back-in-stock-subscription', data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const addNewsletterSubscription = useCallback<
     NonNullable<ContextMethods['addNewsletterSubscription']>
   >(
-    (data) => selectionApiCall(apiClient.request('POST', 'newsletter-subscription', data)),
+    (data) => onSelectionResponse(apiClient.request('POST', 'newsletter-subscription', data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const loginCustomer = useCallback<NonNullable<ContextMethods['loginCustomer']>>(
     (email, password) =>
-      selectionApiCall(apiClient.request('POST', `login/${email}`, { password })),
+      onSelectionResponse(apiClient.request('POST', `login/${email}`, { password }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const logoutCustomer = useCallback<NonNullable<ContextMethods['logoutCustomer']>>(
-    () => selectionApiCall(apiClient.request('POST', `logout`)),
+    () => onSelectionResponse(apiClient.request('POST', `logout`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const registerCustomer = useCallback<NonNullable<ContextMethods['registerCustomer']>>(
-    (data) => selectionApiCall(apiClient.request('POST', `register`, data)),
+    (data) => onSelectionResponse(apiClient.request('POST', `register`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const resetCustomerPassword = useCallback<NonNullable<ContextMethods['resetCustomerPassword']>>(
     (i, id, newPassword) =>
-      selectionApiCall(apiClient.request('POST', `password-reset`, { i, id, newPassword })),
+      onSelectionResponse(apiClient.request('POST', `password-reset`, { i, id, newPassword }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -488,41 +503,41 @@ export function CentraProvider(props: ProviderProps) {
   const resetSelection = useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token')
     cookies.remove(tokenName)
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
-    init()
+
+    return init()
   }, [apiClient.headers, init, tokenName])
 
   const sendCustomerResetPasswordEmail = useCallback<
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
   >(
     (email, linkUri) =>
-      selectionApiCall(apiClient.request('POST', `password-reset-email/${email}`, { linkUri })),
+      onSelectionResponse(apiClient.request('POST', `password-reset-email/${email}`, { linkUri }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCustomer = useCallback<NonNullable<ContextMethods['updateCustomer']>>(
-    (data) => selectionApiCall(apiClient.request('PUT', `customer/update`, data)),
+    (data) => onSelectionResponse(apiClient.request('PUT', `customer/update`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCustomerAddress = useCallback<NonNullable<ContextMethods['updateCustomerAddress']>>(
-    (data) => selectionApiCall(apiClient.request('PUT', `address`, data)),
+    (data) => onSelectionResponse(apiClient.request('PUT', `address`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCustomerEmail = useCallback<NonNullable<ContextMethods['updateCustomerEmail']>>(
-    (newEmail) => selectionApiCall(apiClient.request('PUT', `email`, { newEmail })),
+    (newEmail) => onSelectionResponse(apiClient.request('PUT', `email`, { newEmail }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCustomerPassword = useCallback<NonNullable<ContextMethods['updateCustomerPassword']>>(
     (password, newPassword) =>
-      selectionApiCall(apiClient.request('PUT', `password`, { password, newPassword })),
+      onSelectionResponse(apiClient.request('PUT', `password`, { password, newPassword }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCampaignSite = useCallback<NonNullable<ContextMethods['updateCampaignSite']>>(
-    (uri) => selectionApiCall(apiClient.request('PUT', `campaign-site`, { uri })),
+    (uri) => onSelectionResponse(apiClient.request('PUT', `campaign-site`, { uri }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -530,18 +545,13 @@ export function CentraProvider(props: ProviderProps) {
 
   useEffect(() => {
     if (!disableInit) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: FIx this
-      init()
+      void init()
     }
 
     // always add event listener for centra_checkout_callback in case it is used
-    // @ts-expect-error -- TODO: Fix this
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
     document.addEventListener('centra_checkout_callback', centraCheckoutCallback)
 
     return () => {
-      // @ts-expect-error -- TODO: Fix this
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- TODO: Fix this
       document.removeEventListener('centra_checkout_callback', centraCheckoutCallback)
     }
   }, [disableInit, init, centraCheckoutCallback])
@@ -700,9 +710,11 @@ export function useCentraReceipt(
     const tempApiClient = new ApiClient(apiUrl)
     tempApiClient.headers.set('api-token', token)
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
-    tempApiClient.request('GET', 'receipt').then((response) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
+    void (
+      tempApiClient.request('GET', 'receipt') as Promise<
+        CheckoutApi.Response<CheckoutApi.OrderCompleteResponse>
+      >
+    ).then((response) => {
       setResult(response)
     })
   }, [apiUrl, token])
@@ -723,16 +735,14 @@ export function useCentraOrders(
 
   useEffect(() => {
     // fetch orders
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- TODO: Fix this
-    apiClient
-      .request('POST', 'orders', {
+    void (
+      apiClient.request('POST', 'orders', {
         ...(from && { from }),
         ...(size && { size }),
-      })
-      .then((response) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- TODO: Fix this
-        setResult(response)
-      })
+      }) as Promise<CheckoutApi.Response<CheckoutApi.OrdersResponse>>
+    ).then((response) => {
+      setResult(response)
+    })
   }, [apiClient, from, size])
 
   return result

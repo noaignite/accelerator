@@ -23,7 +23,7 @@ class CentraEvents {
     >
   }
 
-  static default: CentraEvents
+  private static _default?: CentraEvents
 
   constructor() {
     this.eventHandlers = {
@@ -70,12 +70,18 @@ class CentraEvents {
       this.eventHandlers[eventName]?.forEach((handler) => handler(payload))
     }
   }
-}
 
-// create default singleton instance
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- TODO: Fix this
-if (!CentraEvents.default) {
-  CentraEvents.default = new CentraEvents()
+  public static get default(): CentraEvents {
+    if (!CentraEvents._default) {
+      CentraEvents._default = new CentraEvents()
+    }
+
+    return CentraEvents._default
+  }
+
+  public get default(): CentraEvents {
+    return CentraEvents.default
+  }
 }
 
 export default CentraEvents

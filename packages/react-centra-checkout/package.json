@@ -35,11 +35,13 @@
     "test-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@noaignite/utils": "workspace:*",
     "js-cookie": "^3.0.1"
   },
   "devDependencies": {
     "@noaignite/centra-mocks": "workspace:*",
     "@noaignite/centra-types": "workspace:*",
+    "@noaignite/types": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@testing-library/react": "^16.0.0",
