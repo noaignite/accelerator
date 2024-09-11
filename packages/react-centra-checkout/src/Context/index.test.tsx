@@ -79,7 +79,7 @@ describe('CentraProvider', () => {
 
   describe('addItem', () => {
     it('Adds one item', async () => {
-      nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/1`).reply(200, selectionResponse)
+      nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/1`).reply(201, selectionResponse)
 
       let resultingSelection: CheckoutApi.Selection | undefined
 
@@ -109,7 +109,7 @@ describe('CentraProvider', () => {
     it('Adds two items', async () => {
       nock(CENTRA_API_URL)
         .post(`/items/${TEST_ITEM}/quantity/2`)
-        .reply(200, () => ({
+        .reply(201, () => ({
           ...selectionResponse,
           selection: {
             ...selectionResponse.selection,
