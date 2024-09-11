@@ -1,4 +1,4 @@
-class ApiClient {
+export class ApiClient {
   baseUrl: string
 
   headers: Headers
@@ -44,5 +44,3 @@ class ApiClient {
     return ApiClient.default
   }
 }
-
-export default ApiClient

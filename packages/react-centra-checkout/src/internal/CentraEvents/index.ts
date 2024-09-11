@@ -13,7 +13,7 @@ function isValidEvent(eventName: (typeof CENTRA_EVENTS)[number]) {
   return false
 }
 
-class CentraEvents {
+export class CentraEvents {
   eventHandlers: {
     centra_checkout_callback?: Set<
       (payload: CentraCheckoutApi.Response<CentraCheckoutApi.SelectionResponse>) => unknown
@@ -83,5 +83,3 @@ class CentraEvents {
     return CentraEvents.default
   }
 }
-
-export default CentraEvents

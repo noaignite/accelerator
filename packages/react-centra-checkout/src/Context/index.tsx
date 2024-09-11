@@ -3,8 +3,8 @@ import { isPlainObject } from '@noaignite/utils'
 import type Cookies from 'js-cookie'
 import cookies from 'js-cookie'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import ApiClient from '../ApiClient'
-import CentraEvents from '../internal/CentraEvents'
+import { ApiClient } from '../ApiClient'
+import { CentraEvents } from '../internal/CentraEvents'
 
 const defaultApiClient = ApiClient.default
 const centraEvents = CentraEvents.default
@@ -193,7 +193,7 @@ export const SELECTION_INITIAL_VALUE: CheckoutApi.SelectionResponse = {
 }
 
 export const CentraHandlersContext = createContext<ContextMethods | null>(null)
-const CentraSelectionContext = createContext<ContextProperties | null>(null)
+export const CentraSelectionContext = createContext<ContextProperties | null>(null)
 
 /**
  * Perform `callback` when `Promise` contains a `CheckoutApi.SelectionResponse`
@@ -751,5 +751,3 @@ export function useCentraOrders(
 export function useCentraEvents() {
   return CentraEvents.default
 }
-
-export default CentraSelectionContext

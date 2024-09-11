@@ -3,7 +3,7 @@ import { isPlainObject } from '@noaignite/utils'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import { useCentraHandlers, useCentraSelection } from '../Context'
-import HtmlEmbed from '../internal/HtmlEmbed'
+import { HtmlEmbed } from '../internal/HtmlEmbed'
 
 export interface PaymentEmbedProps {
   values: Record<string, unknown>
@@ -13,7 +13,7 @@ export interface PaymentEmbedProps {
 
 /** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
 you should simply call the submitPayment method of the context instead */
-const PaymentEmbed = memo(function PaymentEmbed(
+export const PaymentEmbed = memo(function PaymentEmbed(
   props: PaymentEmbedProps,
 ): React.ReactElement | null {
   const { values, onPaymentError, onPaymentSuccess } = props
@@ -151,5 +151,3 @@ const PaymentEmbed = memo(function PaymentEmbed(
 
   return formHtml ? <HtmlEmbed html={formHtml} id="centra-payment-form" /> : null
 }, isEqual)
-
-export default PaymentEmbed
