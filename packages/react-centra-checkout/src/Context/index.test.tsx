@@ -9,10 +9,7 @@ import { CentraProvider, useCentraHandlers, useCentraSelection } from '.'
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 const TEST_ITEM = '370-261'
 
-nock(CENTRA_API_URL)
-  .persist()
-  .get('/selection')
-  .reply(200, selectionEmptyResponse)
+nock(CENTRA_API_URL).persist().get('/selection').reply(200, selectionEmptyResponse)
 
 function CentraProviderWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -60,103 +57,105 @@ describe('CentraProvider', () => {
     })
   })
 
-  it('Adds one item', async () => {
-    nock(CENTRA_API_URL)
-      .post(`/items/${TEST_ITEM}/quantity/1`)
-      .reply(200, selectionResponse)
+  describe('addItem', () => {
+    it('Adds one item', async () => {
+      nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/1`).reply(200, selectionResponse)
 
-    let resultingSelection: CheckoutApi.Selection | undefined
+      let resultingSelection: CheckoutApi.Selection | undefined
 
-    function TestComponent() {
-      const { selection } = useCentraSelection()
-      const { addItem } = useCentraHandlers()
+      function TestComponent() {
+        const { selection } = useCentraSelection()
+        const { addItem } = useCentraHandlers()
 
-      // set resultingSelection to be able to test the selection
-      resultingSelection = selection
+        // set resultingSelection to be able to test the selection
+        resultingSelection = selection
 
-      useEffect(() => {
-        setTimeout(() => {
-          void addItem?.(TEST_ITEM)
-        }, 100)
-      }, [addItem])
+        useEffect(() => {
+          setTimeout(() => {
+            void addItem?.(TEST_ITEM)
+          }, 100)
+        }, [addItem])
 
-      return null
-    }
+        return null
+      }
 
-    render(<TestComponent />, { wrapper: CentraProviderWrapper })
+      render(<TestComponent />, { wrapper: CentraProviderWrapper })
 
-    await waitFor(() => {
-      expect(resultingSelection?.items?.length).toBe(1)
+      await waitFor(() => {
+        expect(resultingSelection?.items?.length).toBe(1)
+      })
     })
-  })
 
-  it('Adds two items', async () => {
-    nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/2`)
-      .reply(200, () => ({
-        ...selectionResponse,
-        selection: {
-          ...selectionResponse.selection,
-          // @ts-expect-error -- We could expect the test to fail during runtime if the mock data doesn't comply with the logic. The TypeScript error originates from the type and not the actual mock.
-          items: Array(2).fill(selectionResponse.selection.items[0]),
-        },
-      }))
+    it('Adds two items', async () => {
+      nock(CENTRA_API_URL)
+        .post(`/items/${TEST_ITEM}/quantity/2`)
+        .reply(200, () => ({
+          ...selectionResponse,
+          selection: {
+            ...selectionResponse.selection,
+            // @ts-expect-error -- We could expect the test to fail during runtime if the mock data doesn't comply with the logic. The TypeScript error originates from the type and not the actual mock.
+            items: Array(2).fill(selectionResponse.selection.items[0]),
+          },
+        }))
 
-    let resultingSelection: CheckoutApi.Selection | undefined
+      let resultingSelection: CheckoutApi.Selection | undefined
 
-    function TestComponent() {
-      const { selection } = useCentraSelection()
-      const { addItem } = useCentraHandlers()
+      function TestComponent() {
+        const { selection } = useCentraSelection()
+        const { addItem } = useCentraHandlers()
 
-      // set resultingSelection to be able to test the selection
-      resultingSelection = selection
+        // set resultingSelection to be able to test the selection
+        resultingSelection = selection
 
-      useEffect(() => {
-        setTimeout(() => {
-          void addItem?.(TEST_ITEM, 2)
-        }, 100)
-      }, [addItem])
+        useEffect(() => {
+          setTimeout(() => {
+            void addItem?.(TEST_ITEM, 2)
+          }, 100)
+        }, [addItem])
 
-      return null
-    }
+        return null
+      }
 
-    render(<TestComponent />, { wrapper: CentraProviderWrapper })
+      render(<TestComponent />, { wrapper: CentraProviderWrapper })
 
-    await waitFor(() => {
-      expect(resultingSelection?.items?.length).toBe(2)
+      await waitFor(() => {
+        expect(resultingSelection?.items?.length).toBe(2)
+      })
     })
-  })
 
-  it('Doesn\'t remove the selection state when product item not found', async () => {
-    nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/2`)
-      .reply(404, () => ({
-        "token": "e37b0c13e1gv4bdkceigir9go5",
-        "errors": {
-          "item": "product item not found"
-        }
-      }))
+    it("Doesn't remove the selection state when product item not found", async () => {
+      nock(CENTRA_API_URL)
+        .post(`/items/${TEST_ITEM}/quantity/2`)
+        .reply(404, () => ({
+          token: 'e37b0c13e1gv4bdkceigir9go5',
+          errors: {
+            item: 'product item not found',
+          },
+        }))
 
-    let resultingSelection: CheckoutApi.Selection | undefined
+      let resultingSelection: CheckoutApi.Selection | undefined
 
-    function TestComponent() {
-      const { selection } = useCentraSelection()
-      const { addItem } = useCentraHandlers()
+      function TestComponent() {
+        const { selection } = useCentraSelection()
+        const { addItem } = useCentraHandlers()
 
-      // set resultingSelection to be able to test the selection
-      resultingSelection = selection
+        // set resultingSelection to be able to test the selection
+        resultingSelection = selection
 
-      useEffect(() => {
-        setTimeout(() => {
-          void addItem?.(TEST_ITEM, 2)
-        }, 100)
-      }, [addItem])
+        useEffect(() => {
+          setTimeout(() => {
+            void addItem?.(TEST_ITEM, 2)
+          }, 100)
+        }, [addItem])
 
-      return null
-    }
+        return null
+      }
 
-    render(<TestComponent />, { wrapper: CentraProviderWrapper })
+      render(<TestComponent />, { wrapper: CentraProviderWrapper })
 
-    await waitFor(() => {
-      expect(resultingSelection?.items?.length).toBe(0)
+      await waitFor(() => {
+        expect(resultingSelection?.items?.length).toBe(0)
+      })
     })
   })
 })
