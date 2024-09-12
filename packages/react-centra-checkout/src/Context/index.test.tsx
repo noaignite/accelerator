@@ -77,6 +77,34 @@ describe('CentraProvider', () => {
     })
   })
 
+  it.concurrent('applies `initialSelection` as `selection` when passed as argument', async () => {
+    const initialSelection = {
+      ...selectionEmptyResponse,
+      additionalNotes: Math.random(),
+    }
+
+    const { result } = renderHook(useCentraSelection, {
+      wrapper: ({ children }) => (
+        <CentraProvider
+          apiUrl={CENTRA_API_URL}
+          disableInit
+          paymentFailedPage=""
+          paymentReturnPage=""
+          receiptPage=""
+          initialSelection={initialSelection}
+        >
+          {children}
+        </CentraProvider>
+      ),
+    })
+
+    await waitFor(() => {
+      expect(result.current.selection?.additionalNotes).toEqual(
+        initialSelection.selection?.additionalNotes,
+      )
+    })
+  })
+
   describe('addItem', () => {
     it('Adds one item', async () => {
       nock(CENTRA_API_URL).post(`/items/${TEST_ITEM}/quantity/1`).reply(201, selectionResponse)
