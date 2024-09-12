@@ -11,9 +11,9 @@
     "pre-commit": "lint-staged",
     "prepare": "node .husky/install.mjs",
     "release:verdaccio": "pnpm run build && pnpm run test && pnpm publish --no-git-checks --recursive --registry=\"http://localhost:4873/\"",
-    "test": "pnpm run lint && pnpm run test-types && pnpm run test-coverage",
-    "test-coverage": "turbo test-coverage",
-    "test-types": "turbo test-types"
+    "test": "pnpm run lint && pnpm run test:types && pnpm run test:unit",
+    "test:types": "turbo test:types",
+    "test:unit": "turbo test:unit"
   },
   "lint-staged": {
     "*": "prettier --ignore-unknown --write"

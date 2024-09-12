@@ -33,7 +33,7 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
-    "test-types": "tsc --noEmit"
+    "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@noaignite/centra-types": "workspace:*",

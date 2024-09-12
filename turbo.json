@@ -9,11 +9,11 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "test-coverage": {
-      "dependsOn": ["^test-coverage"]
+    "test:unit": {
+      "dependsOn": ["^test:unit"]
     },
-    "test-types": {
-      "dependsOn": ["^test-types"]
+    "test:types": {
+      "dependsOn": ["^test:types"]
     },
     "dev": {
       "cache": false,

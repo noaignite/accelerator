@@ -31,8 +31,9 @@
     "build": "tsup",
     "build:docs": "typedoc",
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
-    "test-coverage": "vitest run",
-    "test-types": "tsc --noEmit"
+    "test:types": "tsc --noEmit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "dependencies": {
     "@noaignite/utils": "workspace:*",
