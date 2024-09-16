@@ -2,7 +2,7 @@
 /* eslint-disable no-console -- Allow as it is a CLI tool */
 
 import { sync as spawnSync } from 'cross-spawn'
-import { blue, bold, cyan, green, magenta, red } from 'kolorist'
+import { blue, bold, cyan, gray, lightBlue, lightGray, magenta, red } from 'kolorist'
 import minimist from 'minimist'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -46,15 +46,39 @@ type Template = {
 const TEMPLATES: Template[] = [
   {
     name: 'docs',
-    display: 'Storybook Docs',
+    display: 'Storybook Docs (Requires Tailwind Config)',
     targetDir: 'apps/docs',
-    color: blue,
+    color: lightBlue,
   },
   {
     name: 'root-config',
-    display: 'Root Config',
+    display: 'Root Config (.npmrc & .nvmrc)',
     customCommands: ['rm -rf packages/root-config'],
     color: red,
+  },
+  {
+    name: 'eslint-config',
+    display: 'Eslint Config',
+    color: magenta,
+  },
+  {
+    name: 'prettier-config',
+    display: 'Prettier Config',
+    customCommands: [
+      'npm pkg delete devDependencies.prettier',
+      'npm pkg set devDependencies.@repo/prettier-config=workspace:*',
+    ],
+    color: lightGray,
+  },
+  {
+    name: 'typescript-config',
+    display: 'Typescript Config',
+    color: blue,
+  },
+  {
+    name: 'tailwind-config',
+    display: 'Tailwind Config',
+    color: cyan,
   },
   {
     name: 'prettier-commit-hook',
@@ -66,21 +90,7 @@ const TEMPLATES: Template[] = [
       'npm pkg set "lint-staged.*=prettier --ignore-unknown --write"',
       ['writeFileSync', '.husky/pre-commit', 'npm run pre-commit'],
     ],
-    color: magenta,
-  },
-  {
-    name: 'prettier-config',
-    display: 'Prettier Config',
-    customCommands: [
-      'npm pkg delete devDependencies.prettier',
-      'npm pkg set devDependencies.@repo/prettier-config=workspace:*',
-    ],
-    color: cyan,
-  },
-  {
-    name: 'tailwind-config',
-    display: 'Tailwind Config',
-    color: green,
+    color: gray,
   },
 ]
 
