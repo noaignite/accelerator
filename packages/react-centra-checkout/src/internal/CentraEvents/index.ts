@@ -1,5 +1,3 @@
-/* eslint-disable camelcase -- Allow */
-
 import type * as CentraCheckoutApi from '@noaignite/centra-types'
 
 const CENTRA_EVENTS = ['centra_checkout_callback', 'centra_checkout_payment_callback'] as const
