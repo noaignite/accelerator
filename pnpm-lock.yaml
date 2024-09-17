@@ -173,8 +173,8 @@ importers:
         specifier: ^17.0.35
         version: 17.0.80
       jsdom:
-        specifier: ^24.1.1
-        version: 24.1.1
+        specifier: ^24.1.3
+        version: 24.1.3
       nock:
         specifier: 14.0.0-beta.9
         version: 14.0.0-beta.9
@@ -189,7 +189,7 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ^2.0.4
-        version: 2.0.5(@types/node@20.14.15)(jsdom@24.1.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
+        version: 2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
 
   packages/react-utils:
     dependencies:
@@ -280,7 +280,7 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@20.14.15)(jsdom@24.1.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
+        version: 2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
 
 packages:
 
@@ -2429,8 +2429,8 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
-  jsdom@24.1.1:
-    resolution: {integrity: sha512-5O1wWV99Jhq4DV7rCLIoZ/UIhyQeDR7wHVyZAHAshbrvZsLs+Xzz7gtwnlJTJDjleiTKh54F4dXrX70vJQTyJQ==}
+  jsdom@24.1.3:
+    resolution: {integrity: sha512-MyL55p3Ut3cXbeBEG7Hcv0mVM8pp8PBNWxRqchZnSfAiES1v1mRnMeFfaHWIPULpwsYfvO+ZmMZz5tGCnjzDUQ==}
     engines: {node: '>=18'}
     peerDependencies:
       canvas: ^2.11.2
@@ -5965,7 +5965,7 @@ snapshots:
       eslint: 8.57.1
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 7.8.0(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)
-      vitest: 2.0.5(@types/node@20.14.15)(jsdom@24.1.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
+      vitest: 2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -5976,7 +5976,7 @@ snapshots:
       eslint: 9.5.0
     optionalDependencies:
       '@typescript-eslint/eslint-plugin': 7.8.0(@typescript-eslint/parser@7.7.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5)
-      vitest: 2.0.5(@types/node@20.14.15)(jsdom@24.1.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
+      vitest: 2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -6621,7 +6621,7 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
-  jsdom@24.1.1:
+  jsdom@24.1.3:
     dependencies:
       cssstyle: 4.0.1
       data-urls: 5.0.0
@@ -7931,7 +7931,7 @@ snapshots:
       sass: 1.77.6
       stylus: 0.62.0
 
-  vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0):
+  vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -7954,7 +7954,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 20.14.15
-      jsdom: 24.1.1
+      jsdom: 24.1.3
     transitivePeerDependencies:
       - less
       - lightningcss
