@@ -1,0 +1,30 @@
+{
+  "name": "example-docs",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "next build",
+    "postbuild": "pagefind --site .next/server/app --output-path .next/static/chunks/pagefind",
+    "clean": "rimraf .next .turbo",
+    "dev": "next",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^14.2.5",
+    "nextra": "4.0.0-app-router.1",
+    "nextra-theme-docs": "4.0.0-app-router.1",
+    "react": "^19.0.0-rc.0",
+    "react-dom": "^19.0.0-rc.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.1.1"
+  },
+  "dependenciesMeta": {
+    "nextra": {
+      "injected": true
+    },
+    "nextra-theme-docs": {
+      "injected": true
+    }
+  }
+}
