@@ -32,18 +32,31 @@ module.exports = {
     },
   },
   ignorePatterns: ['node_modules/', 'dist/'],
-  // add rules configurations here
+  // Add rules configurations here
   rules: {
     '@typescript-eslint/consistent-type-definitions': 'off', // Prefer types over interfaces.
     '@typescript-eslint/explicit-function-return-type': 'off', // Allow typescript to infer.
     '@typescript-eslint/restrict-template-expressions': 'off', // Allow template expressions.
 
     'import/no-default-export': 'off', // Allow default exports.
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        // Allow imports of `devDependencies` inside test files.
+        devDependencies: [
+          'test.{ts,tsx}', // repos with a single test file
+          'test-*.{ts,tsx}', // repos with multiple top-level test files
+          '**/*{.,_}{test,spec}.{ts,tsx}', // tests where the extension or filename suffix denotes that it is a test
+          '**/vitest.config.mts', // vitest config
+        ],
+        optionalDependencies: false,
+      },
+    ],
     'import/order': 'off', // Disable and let prettier sort imports.
 
-    'unicorn/filename-case': 'off', // Do no enforce kebab-case filenames.
+    'unicorn/filename-case': 'off', // Do not enforce kebab-case filenames.
 
-    'lines-around-directive': ['error', 'always'],
-    'no-console': ['error', { allow: ['warn', 'error'] }], // Allow warn and error logs.
+    'lines-around-directive': ['error', 'always'], // Enable & let prettier format.
+    'no-console': ['error', { allow: ['info', 'warn', 'error'] }], // Allow warn and error logs.
   },
 }
