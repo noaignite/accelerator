@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "build:docs": "typedoc",
-    "test-types": "tsc --noEmit"
+    "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",

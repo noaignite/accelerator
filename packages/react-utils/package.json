@@ -36,7 +36,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
-    "test-types": "tsc --noEmit"
+    "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@noaignite/types": "workspace:^",
