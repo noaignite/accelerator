@@ -1,4 +1,3 @@
-// @ts-expect-error - TODO: Create PR & remove `type: "module"` at https://github.com/Seojunhwan/esbuild-plugin-preserve-directives
 import { preserveDirectivesPlugin } from 'esbuild-plugin-preserve-directives'
 import { defineConfig } from 'tsup'
 
