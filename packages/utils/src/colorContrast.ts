@@ -43,8 +43,12 @@ const hexToRGB = (hex: string): [number, number, number] => {
 }
 
 /**
- * Accepts a HEX `baseColor` and any number of HEX `colors`
- * and returns the color with the highest contrast ratio.
+ * Accepts a HEX `baseColor` and any number of HEX `colors` and returns the
+ * color with the highest contrast ratio.
+ *
+ * @param baseColor - The base color to compare against.
+ * @param restColors - Any number of colors to compare against the base color.
+ * @returns An object containing the color with the highest contrast ratio.
  *
  * @example
  * ```ts
