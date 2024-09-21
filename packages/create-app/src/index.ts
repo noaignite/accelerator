@@ -354,7 +354,6 @@ function formatCommand(command: string) {
 }
 
 function splitCommand(command: string) {
-  // eslint-disable-next-line prefer-named-capture-group -- No need for named group
   const regex = /"([^"]+)"|\S+/g
   // Split by whitespaces ignoring those within double quotes
   return command.match(regex)?.map((token) => token.replaceAll('"', ''))

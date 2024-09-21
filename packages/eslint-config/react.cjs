@@ -50,6 +50,7 @@ module.exports = {
           'test-*.{ts,tsx}', // repos with multiple top-level test files
           '**/*{.,_}{test,spec}.{ts,tsx}', // tests where the extension or filename suffix denotes that it is a test
           '**/vitest.config.mts', // vitest config
+          '**/scripts/**/*.{ts,tsx}', // build script files
         ],
         optionalDependencies: false,
       },
@@ -64,6 +65,7 @@ module.exports = {
 
     'lines-around-directive': ['error', 'always'], // Enable & let prettier format.
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }], // Allow warn and error logs.
+    'prefer-named-capture-group': 'off', // Too strict.
   },
   overrides: [
     {
