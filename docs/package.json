@@ -15,7 +15,7 @@
   "scripts": {
     "build": "pnpm generate:markdown && next build",
     "dev": "next dev",
-    "generate:markdown": "node --experimental-strip-types ./scripts/generateMarkdown.ts",
+    "generate:markdown": "node ./scripts/generateMarkdown.js",
     "lint": "next lint",
     "start": "next start",
     "test:types": "tsc --noEmit"

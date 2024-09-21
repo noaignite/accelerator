@@ -1,6 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { type JSDoc, Project } from 'ts-morph'
+import { Project } from 'ts-morph'
 
 const sourceDir = '../packages'
 const outputDir = './src/pages/@noaignite'
@@ -16,7 +16,7 @@ project.addSourceFilesAtPaths([
 ])
 
 // Function to convert JSDoc comment into Markdown format
-function convertJsDocToMarkdown(doc: JSDoc, functionName: string): string {
+function convertJsDocToMarkdown(doc, functionName) {
   let markdown = `### \`${functionName}\`\n\n`
 
   const comment = doc.getComment()
@@ -43,7 +43,7 @@ function convertJsDocToMarkdown(doc: JSDoc, functionName: string): string {
 }
 
 // Helper function to ensure a directory exists
-function ensureDirectoryExists(dir: string) {
+function ensureDirectoryExists(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
