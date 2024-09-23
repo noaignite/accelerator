@@ -104,7 +104,7 @@ importers:
         version: 7.8.0(typescript@5.4.5)
       '@vercel/style-guide':
         specifier: 6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@8.57.1)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0))
+        version: 6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@8.57.1)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -116,7 +116,7 @@ importers:
     devDependencies:
       '@vercel/style-guide':
         specifier: 6.0.0
-        version: 6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@9.5.0)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0))
+        version: 6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@9.5.0)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5)
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -179,8 +179,8 @@ importers:
         specifier: ^24.1.3
         version: 24.1.3
       nock:
-        specifier: 14.0.0-beta.9
-        version: 14.0.0-beta.9
+        specifier: 14.0.0-beta.14
+        version: 14.0.0-beta.14
       tsup:
         specifier: ^8.1.2
         version: 8.1.2(jiti@1.21.6)(postcss@8.4.38)(typescript@5.4.5)(yaml@2.5.0)
@@ -242,7 +242,7 @@ importers:
         version: link:../typescript-config
       tailwindcss:
         specifier: ^3.4.11
-        version: 3.4.11(ts-node@10.9.2(@types/node@20.14.15)(typescript@5.4.5))
+        version: 3.4.11(ts-node@10.9.2(typescript@5.4.5))
       tsup:
         specifier: ^8.1.2
         version: 8.1.2(jiti@1.21.6)(postcss@8.4.38)(typescript@5.4.5)(yaml@2.5.0)
@@ -849,8 +849,8 @@ packages:
   '@microsoft/tsdoc@0.14.2':
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
 
-  '@mswjs/interceptors@0.33.3':
-    resolution: {integrity: sha512-LxO0FUKm+8jH+oDn1Dot1sbzzYz1ioMFpZqZ6rXPOfLeF1DvZbHx+qL5ZUG7DYRT/EKCdQtiVOpBfRY7wDrEyg==}
+  '@mswjs/interceptors@0.35.8':
+    resolution: {integrity: sha512-PFfqpHplKa7KMdoQdj5td03uG05VK2Ng1dG0sP4pT9h0dGSX2v9txYt/AnrzPb/vAmfyBBC0NQV7VaBEX+efgQ==}
     engines: {node: '>=18'}
 
   '@next/eslint-plugin-next@14.2.4':
@@ -2799,8 +2799,8 @@ packages:
     engines: {node: '>= 4.4.x'}
     hasBin: true
 
-  nock@14.0.0-beta.9:
-    resolution: {integrity: sha512-ndEFjtOLDluzu/1srE2raRWlEyQHq4CWZ/eN6fc7AcbaXiXmprIkfvq3MvkFYR3rQW7Pylb+IHLkx7RITMUwTg==}
+  nock@14.0.0-beta.14:
+    resolution: {integrity: sha512-nbUIuqYkixyazl4hWBQ+EJzb5F0/NJabIQFEEIQwBHPaG+RxvVSs4uSCasHMnCrNuCmOndxgUBqS860g6/OwJw==}
     engines: {node: '>= 18'}
 
   node-releases@2.0.14:
@@ -4519,7 +4519,7 @@ snapshots:
 
   '@microsoft/tsdoc@0.14.2': {}
 
-  '@mswjs/interceptors@0.33.3':
+  '@mswjs/interceptors@0.35.8':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
       '@open-draft/logger': 0.3.0
@@ -4976,7 +4976,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@8.57.1)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0))':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@8.57.1)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/eslint-parser': 7.24.7(@babel/core@7.24.7)(eslint@8.57.1)
@@ -4984,7 +4984,7 @@ snapshots:
       '@typescript-eslint/eslint-plugin': 7.8.0(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.7.1(eslint@8.57.1)(typescript@5.4.5)
       eslint-config-prettier: 9.1.0(eslint@8.57.1)
-      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1))
+      eslint-import-resolver-alias: 1.1.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1))
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint-plugin-import@2.29.1)(eslint@8.57.1)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.57.1)
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
@@ -4996,7 +4996,7 @@ snapshots:
       eslint-plugin-testing-library: 6.2.2(eslint@8.57.1)(typescript@5.4.5)
       eslint-plugin-tsdoc: 0.2.17
       eslint-plugin-unicorn: 51.0.1(eslint@8.57.1)
-      eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0))
+      eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)(vitest@2.0.5)
       prettier-plugin-packagejson: 2.5.0(prettier@3.3.3)
     optionalDependencies:
       '@next/eslint-plugin-next': 14.2.4
@@ -5010,7 +5010,7 @@ snapshots:
       - supports-color
       - vitest
 
-  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@9.5.0)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0))':
+  '@vercel/style-guide@6.0.0(@next/eslint-plugin-next@14.2.4)(eslint@9.5.0)(prettier@3.3.3)(typescript@5.4.5)(vitest@2.0.5)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/eslint-parser': 7.24.7(@babel/core@7.24.7)(eslint@9.5.0)
@@ -5030,7 +5030,7 @@ snapshots:
       eslint-plugin-testing-library: 6.2.2(eslint@9.5.0)(typescript@5.4.5)
       eslint-plugin-tsdoc: 0.2.17
       eslint-plugin-unicorn: 51.0.1(eslint@9.5.0)
-      eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0))
+      eslint-plugin-vitest: 0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5)(vitest@2.0.5)
       prettier-plugin-packagejson: 2.5.0(prettier@3.3.3)
     optionalDependencies:
       '@next/eslint-plugin-next': 14.2.4
@@ -5710,7 +5710,7 @@ snapshots:
       eslint: 8.57.1
       eslint-plugin-turbo: 2.0.14(eslint@8.57.1)
 
-  eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)):
+  eslint-import-resolver-alias@1.1.2(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)):
     dependencies:
       eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.1)
 
@@ -6044,7 +6044,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-vitest@0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)):
+  eslint-plugin-vitest@0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)(vitest@2.0.5):
     dependencies:
       '@typescript-eslint/utils': 7.13.0(eslint@8.57.1)(typescript@5.4.5)
       eslint: 8.57.1
@@ -6055,7 +6055,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-vitest@0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5)(vitest@2.0.5(@types/node@20.14.15)(jsdom@24.1.3)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.6)(stylus@0.62.0)):
+  eslint-plugin-vitest@0.3.26(@typescript-eslint/eslint-plugin@7.8.0(@typescript-eslint/parser@7.7.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5)(vitest@2.0.5):
     dependencies:
       '@typescript-eslint/utils': 7.13.0(eslint@9.5.0)(typescript@5.4.5)
       eslint: 9.5.0
@@ -7040,9 +7040,9 @@ snapshots:
       sax: 1.4.1
     optional: true
 
-  nock@14.0.0-beta.9:
+  nock@14.0.0-beta.14:
     dependencies:
-      '@mswjs/interceptors': 0.33.3
+      '@mswjs/interceptors': 0.35.8
       json-stringify-safe: 5.0.1
       propagate: 2.0.1
 
@@ -7239,13 +7239,13 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.38
 
-  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.15)(typescript@5.4.5)):
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.5.0
     optionalDependencies:
       postcss: 8.4.38
-      ts-node: 10.9.2(@types/node@20.14.15)(typescript@5.4.5)
+      ts-node: 10.9.2(typescript@5.4.5)
 
   postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(yaml@2.5.0):
     dependencies:
@@ -7752,7 +7752,7 @@ snapshots:
       '@pkgr/core': 0.1.1
       tslib: 2.6.3
 
-  tailwindcss@3.4.11(ts-node@10.9.2(@types/node@20.14.15)(typescript@5.4.5)):
+  tailwindcss@3.4.11(ts-node@10.9.2(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -7771,7 +7771,7 @@ snapshots:
       postcss: 8.4.38
       postcss-import: 15.1.0(postcss@8.4.38)
       postcss-js: 4.0.1(postcss@8.4.38)
-      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.15)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(typescript@5.4.5))
       postcss-nested: 6.2.0(postcss@8.4.38)
       postcss-selector-parser: 6.1.1
       resolve: 1.22.8
@@ -7840,14 +7840,13 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-node@10.9.2(@types/node@20.14.15)(typescript@5.4.5):
+  ts-node@10.9.2(typescript@5.4.5):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.14.15
       acorn: 8.12.1
       acorn-walk: 8.3.3
       arg: 4.1.3
