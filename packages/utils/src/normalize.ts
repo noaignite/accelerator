@@ -5,7 +5,7 @@
  * to the range. This is useful for standardizing data, making it easier to
  * work with values across different scales.
  *
- * @param value - The number to be normalized within the range.
+ * @param value - The value to be normalized within the range.
  * @param minimum - The minimum value of the range.
  * @param maximum - The maximum value of the range.
  * @returns The normalized value between `0` and `1`.
