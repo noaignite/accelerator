@@ -1,5 +1,4 @@
 import { calculateContrast } from './calculateContrast'
-import { calculateLuminance } from './calculateLuminance'
 import { hexToRGB } from './hexToRGB'
 
 /**
@@ -44,9 +43,12 @@ export const colorContrast = (baseColor: string, ...restColors: string[]) => {
     }
   }
 
-  // Determine the best fallbackColor, being black or white
-  const luminance = calculateLuminance(baseRGB)
-  absoluteContrast = luminance > 0.5 ? '#000' : '#fff'
+  // Calculate contrast ratios with black and white text
+  const blackContrast = calculateContrast(baseRGB, [0, 0, 0])
+  const whiteContrast = calculateContrast(baseRGB, [255, 255, 255])
+
+  // Determine the best absolute contrast color
+  absoluteContrast = blackContrast > whiteContrast ? '#000' : '#fff'
 
   return {
     contrast: bestContrastingColor,
