@@ -1,1 +1,1 @@
-export * from './pxToRem';
+export * from './pxToRem'

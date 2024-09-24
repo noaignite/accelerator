@@ -1,0 +1,14 @@
+### `isPlainObject`
+
+The `isPlainObject` function checks if a given value is a plain object.
+
+- @param `value` - The value to check.
+- @returns `true` if the item is a plain object, `false` otherwise.
+
+#### Example
+
+```ts
+isPlainObject({}) // true
+isPlainObject(new Date()) // false
+isPlainObject([]) // false
+```

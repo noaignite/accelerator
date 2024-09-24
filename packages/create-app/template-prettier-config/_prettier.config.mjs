@@ -1,1 +1,1 @@
-export default "@repo/prettier-config";
+export default '@repo/prettier-config'

@@ -1,0 +1,15 @@
+### `createSvgIcon`
+
+Create a new SVG icon component.
+
+- @param `path` - The SVG path to render.
+- @param `displayName` - The display name of the icon.
+- @param `viewBox` - The viewBox of the SVG.
+- @param `rest` - Additional props to pass to the SVG element.
+- @returns A new SVG icon component.
+
+#### Example
+
+```tsx
+export const AddIcon = createSvgIcon(<path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z" />, 'Add')
+```

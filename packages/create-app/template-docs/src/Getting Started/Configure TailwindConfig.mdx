@@ -11,7 +11,7 @@ An additional note here is that we are using a `pxToRem` function to convert the
 1. Create a `breakpoints.ts` file in the `tailwind-config` package.
 
 ```ts
-export const pxToRem = (px: number, baseFontSize = 16) => px / baseFontSize;
+export const pxToRem = (px: number, baseFontSize = 16) => px / baseFontSize
 
 export const breakpoints = {
   keys: ['xs', 'sm', 'md', 'lg', 'xl'],
@@ -22,13 +22,13 @@ export const breakpoints = {
     lg: pxToRem(1280),
     xl: pxToRem(1536),
   },
-} as const;
+} as const
 ```
 
 2. Import the `breakpoints` object into the `tailwind.config.ts` file and add it to the `screens` object.
 
 ```ts
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
 import { breakpoints } from './breakpoints'
 
 const config: Config = {
@@ -71,7 +71,7 @@ export const palette = {
 2. Import the `palette` object into the `tailwind.config.ts` file and add it to the `colors` object.
 
 ```ts
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
 import { palette } from './palette'
 
 const config: Config = {
@@ -100,12 +100,12 @@ const config: Config = {
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
   }
-    
+
   /* ... */
-  
+
   --font-primary: 'Aften Screen', sans-serif;
   --font-secondary: 'Aften Screen 2', sans-serif;
-    
+
   --palette-brand1-primary: white;
   --palette-brand1-secondary: black;
   --palette-brand1-contrast: white;
@@ -127,13 +127,13 @@ pnpm add -D @noaignite/tailwind-typography
 2. Configure your typographic variants in your `tailwind.config.ts`.
 
 ```ts
-import type { Config } from 'tailwindcss';
+import type { Config } from 'tailwindcss'
 import { typography } from '@noaignite/tailwind-typography'
 import { breakpoints, pxToRem } from './breakpoints'
 
 const fontPrimary = 'var(--font-primary)'
 const fontSecondary = 'var(--font-secondary)'
-  
+
 const config: Config = {
   theme: {
     fontFamily: {
@@ -181,7 +181,7 @@ import type { Config } from 'tailwindcss';
 import { breakpoints, pxToRem } from './breakpoints'
 import { palette } from './palette'}
 import { typography } from '@noaignite/tailwind-typography'
-  
+
 const config: Config = {
   content: [
     // App content
@@ -211,4 +211,4 @@ const config: Config = {
     }),
   ],
 }
-````
+```

@@ -1,0 +1,12 @@
+### `createRequiredContext`
+
+Create a `useContext` hook where its returned value will always be its
+intended type. Using the hook outside of its provider tree will result in
+an error being thrown.
+
+#### Example
+
+```typescript
+const [useFoo, FooProvider] = createRequiredContext<FooContextValue>('Foo')
+const [useBaz, BazProvider, BazConsumer] = createRequiredContext<BazContextValue>('Baz')
+```

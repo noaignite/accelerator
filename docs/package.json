@@ -1,0 +1,45 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "description": "Accelerator docs",
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "docs"
+  },
+  "author": "NoA Ignite",
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "build:markdown": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ./scripts/buildMarkdown.ts",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start",
+    "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.2.12",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.14.15",
+    "@types/react": "^18.2.65",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "tailwindcss": "3.4.11",
+    "ts-morph": "^23.0.0",
+    "typescript": "5.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

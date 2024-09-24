@@ -6,6 +6,8 @@
     "ci:release": "pnpm run build && pnpm run test && changeset publish",
     "ci:test": "pnpm run build && pnpm run test",
     "dev": "turbo dev",
+    "docs:build": "pnpm --filter docs run build",
+    "docs:build:markdown": "pnpm --filter docs run build:markdown",
     "format": "prettier --write .",
     "lint": "turbo lint",
     "pre-commit": "lint-staged",

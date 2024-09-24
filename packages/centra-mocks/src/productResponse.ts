@@ -4,8 +4,8 @@ export const productResponse: SuccessResponse<ProductResponse> = {
   token: 'e37b0c13e1gv4bdkceigir9go5',
   product: {
     available: true,
-    modifiedAt: "2024-02-16 10:29:55",
-    createdAt: "2024-02-16 10:15:22",
+    modifiedAt: '2024-02-16 10:29:55',
+    createdAt: '2024-02-16 10:15:22',
     relatedProducts: [
       {
         available: true,
@@ -44,8 +44,8 @@ export const productResponse: SuccessResponse<ProductResponse> = {
         collection: '1',
         collectionName: 'Collection',
         collectionUri: 'collection',
-        modifiedAt: "2024-02-16 10:29:55",
-        createdAt: "2024-02-16 10:15:22",
+        modifiedAt: '2024-02-16 10:29:55',
+        createdAt: '2024-02-16 10:15:22',
         variantName: 'Nice',
         countryOrigin: '',
         excerpt: 'AAA',
