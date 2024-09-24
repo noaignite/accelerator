@@ -197,21 +197,23 @@ export const CentraSelectionContext = createContext<ContextProperties | null>(nu
 
 /**
  * Perform `callback` when `Promise` contains a `CheckoutApi.SelectionResponse`
- * 
+ *
  * @param promise -  Promise that may contain `selection` response
  * @param callback -  Callback that should be called with the `promise` if the results of the `promise` contains a `CheckoutApi.SelectionResponse`
  */
-const onSelectionResponse = async <TPromise extends Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>, TCallback extends (promise: TPromise) => TPromise>(promise: Promise<unknown>, callback: TCallback): Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>> => {
+const onSelectionResponse = async <
+  TPromise extends Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>,
+  TCallback extends (promise: TPromise) => TPromise,
+>(
+  promise: Promise<unknown>,
+  callback: TCallback,
+): Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>> => {
   const results = await promise
 
-  if (
-    isPlainObject(results) &&
-    'selection' in results &&
-    Boolean(results.selection)
-  ) {
+  if (isPlainObject(results) && 'selection' in results && Boolean(results.selection)) {
     return callback(
-      // We have to cast it to `TPromise`, because there's not a way to create async type predicates without already passing the `Promise` as argument to a function. 
-      promise as TPromise
+      // We have to cast it to `TPromise`, because there's not a way to create async type predicates without already passing the `Promise` as argument to a function.
+      promise as TPromise,
     )
   }
 
@@ -253,7 +255,11 @@ export function CentraProvider(props: ProviderProps) {
   }
 
   const selectionApiCall = useCallback(
-    async (apiCall: Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>> | (() => Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>)) => {
+    async (
+      apiCall:
+        | Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>
+        | (() => Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>),
+    ) => {
       window.CentraCheckout?.suspend()
 
       const response = typeof apiCall === 'function' ? await apiCall() : await apiCall
@@ -320,18 +326,28 @@ export function CentraProvider(props: ProviderProps) {
 
   const addItem = useCallback<NonNullable<ContextMethods['addItem']>>(
     (item, quantity = 1) =>
-      onSelectionResponse(apiClient.request('POST', `items/${item}/quantity/${quantity}`), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('POST', `items/${item}/quantity/${quantity}`),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const addBundleItem = useCallback<NonNullable<ContextMethods['addBundleItem']>>(
-    (item, data) => onSelectionResponse(apiClient.request('POST', `items/bundles/${item}`, data), selectionApiCall),
+    (item, data) =>
+      onSelectionResponse(
+        apiClient.request('POST', `items/bundles/${item}`, data),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const addGiftCertificate = useCallback<NonNullable<ContextMethods['addGiftCertificate']>>(
     (giftCertificate) =>
-      onSelectionResponse(apiClient.request('POST', `items/gift-certificates/${giftCertificate}`), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('POST', `items/gift-certificates/${giftCertificate}`),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
@@ -339,18 +355,25 @@ export function CentraProvider(props: ProviderProps) {
     NonNullable<ContextMethods['addCustomGiftCertificate']>
   >(
     (giftCertificate, amount) =>
-      onSelectionResponse(apiClient.request('POST', `items/gift-certificates/${giftCertificate}/amount/${amount}`), selectionApiCall
+      onSelectionResponse(
+        apiClient.request('POST', `items/gift-certificates/${giftCertificate}/amount/${amount}`),
+        selectionApiCall,
       ),
     [apiClient, selectionApiCall],
   )
 
   const increaseCartItem = useCallback<NonNullable<ContextMethods['increaseCartItem']>>(
-    (line) => onSelectionResponse(apiClient.request('POST', `lines/${line}/quantity/1`), selectionApiCall),
+    (line) =>
+      onSelectionResponse(apiClient.request('POST', `lines/${line}/quantity/1`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const decreaseCartItem = useCallback<NonNullable<ContextMethods['decreaseCartItem']>>(
-    (line) => onSelectionResponse(apiClient.request('DELETE', `lines/${line}/quantity/1`), selectionApiCall),
+    (line) =>
+      onSelectionResponse(
+        apiClient.request('DELETE', `lines/${line}/quantity/1`),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
@@ -361,7 +384,10 @@ export function CentraProvider(props: ProviderProps) {
 
   const updateCartItemQuantity = useCallback<NonNullable<ContextMethods['updateCartItemQuantity']>>(
     (line, quantity) =>
-      onSelectionResponse(apiClient.request('PUT', `lines/${line}/quantity/${quantity}`), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('PUT', `lines/${line}/quantity/${quantity}`),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
@@ -381,42 +407,50 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const addVoucher = useCallback<NonNullable<ContextMethods['addVoucher']>>(
-    (voucher) => onSelectionResponse(apiClient.request('POST', 'vouchers', { voucher }), selectionApiCall),
+    (voucher) =>
+      onSelectionResponse(apiClient.request('POST', 'vouchers', { voucher }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const removeVoucher = useCallback<NonNullable<ContextMethods['removeVoucher']>>(
-    (voucher) => onSelectionResponse(apiClient.request('DELETE', `vouchers/${voucher}`), selectionApiCall),
+    (voucher) =>
+      onSelectionResponse(apiClient.request('DELETE', `vouchers/${voucher}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCountry = useCallback<NonNullable<ContextMethods['updateCountry']>>(
-    (country, data) => onSelectionResponse(apiClient.request('PUT', `countries/${country}`, data), selectionApiCall),
+    (country, data) =>
+      onSelectionResponse(apiClient.request('PUT', `countries/${country}`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateLanguage = useCallback<NonNullable<ContextMethods['updateLanguage']>>(
-    (language) => onSelectionResponse(apiClient.request('PUT', `languages/${language}`), selectionApiCall),
+    (language) =>
+      onSelectionResponse(apiClient.request('PUT', `languages/${language}`), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateShippingMethod = useCallback<NonNullable<ContextMethods['updateShippingMethod']>>(
     (shippingMethod) =>
-      onSelectionResponse(apiClient.request('PUT', `shipping-methods/${shippingMethod}`), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('PUT', `shipping-methods/${shippingMethod}`),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const updatePaymentMethod = useCallback<NonNullable<ContextMethods['updatePaymentMethod']>>(
     (paymentMethod) =>
-      onSelectionResponse(apiClient.request('PUT', `payment-methods/${paymentMethod}`), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('PUT', `payment-methods/${paymentMethod}`),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const updatePaymentFields = useCallback<NonNullable<ContextMethods['updatePaymentFields']>>(
     async (data) =>
-      onSelectionResponse(
-        apiClient.request('PUT', `payment-fields`, data),
-        selectionApiCall),
+      onSelectionResponse(apiClient.request('PUT', `payment-fields`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -466,20 +500,31 @@ export function CentraProvider(props: ProviderProps) {
   const addBackInStockSubscription = useCallback<
     NonNullable<ContextMethods['addBackInStockSubscription']>
   >(
-    (data) => onSelectionResponse(apiClient.request('POST', 'back-in-stock-subscription', data), selectionApiCall),
+    (data) =>
+      onSelectionResponse(
+        apiClient.request('POST', 'back-in-stock-subscription', data),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const addNewsletterSubscription = useCallback<
     NonNullable<ContextMethods['addNewsletterSubscription']>
   >(
-    (data) => onSelectionResponse(apiClient.request('POST', 'newsletter-subscription', data), selectionApiCall),
+    (data) =>
+      onSelectionResponse(
+        apiClient.request('POST', 'newsletter-subscription', data),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const loginCustomer = useCallback<NonNullable<ContextMethods['loginCustomer']>>(
     (email, password) =>
-      onSelectionResponse(apiClient.request('POST', `login/${email}`, { password }), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('POST', `login/${email}`, { password }),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
@@ -495,7 +540,10 @@ export function CentraProvider(props: ProviderProps) {
 
   const resetCustomerPassword = useCallback<NonNullable<ContextMethods['resetCustomerPassword']>>(
     (i, id, newPassword) =>
-      onSelectionResponse(apiClient.request('POST', `password-reset`, { i, id, newPassword }), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('POST', `password-reset`, { i, id, newPassword }),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
@@ -511,12 +559,16 @@ export function CentraProvider(props: ProviderProps) {
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
   >(
     (email, linkUri) =>
-      onSelectionResponse(apiClient.request('POST', `password-reset-email/${email}`, { linkUri }), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('POST', `password-reset-email/${email}`, { linkUri }),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const updateCustomer = useCallback<NonNullable<ContextMethods['updateCustomer']>>(
-    (data) => onSelectionResponse(apiClient.request('PUT', `customer/update`, data), selectionApiCall),
+    (data) =>
+      onSelectionResponse(apiClient.request('PUT', `customer/update`, data), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
@@ -526,18 +578,23 @@ export function CentraProvider(props: ProviderProps) {
   )
 
   const updateCustomerEmail = useCallback<NonNullable<ContextMethods['updateCustomerEmail']>>(
-    (newEmail) => onSelectionResponse(apiClient.request('PUT', `email`, { newEmail }), selectionApiCall),
+    (newEmail) =>
+      onSelectionResponse(apiClient.request('PUT', `email`, { newEmail }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 
   const updateCustomerPassword = useCallback<NonNullable<ContextMethods['updateCustomerPassword']>>(
     (password, newPassword) =>
-      onSelectionResponse(apiClient.request('PUT', `password`, { password, newPassword }), selectionApiCall),
+      onSelectionResponse(
+        apiClient.request('PUT', `password`, { password, newPassword }),
+        selectionApiCall,
+      ),
     [apiClient, selectionApiCall],
   )
 
   const updateCampaignSite = useCallback<NonNullable<ContextMethods['updateCampaignSite']>>(
-    (uri) => onSelectionResponse(apiClient.request('PUT', `campaign-site`, { uri }), selectionApiCall),
+    (uri) =>
+      onSelectionResponse(apiClient.request('PUT', `campaign-site`, { uri }), selectionApiCall),
     [apiClient, selectionApiCall],
   )
 

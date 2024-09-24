@@ -108,8 +108,7 @@ export const selectionEmptyResponse: SuccessResponse<SelectionResponse> = {
       handlingCostAsNumber: 0,
     },
   ],
-  paymentFields:
-  {
+  paymentFields: {
     termsAndConditions: {
       type: 'boolean',
       visible: true,
@@ -265,27 +264,26 @@ export const selectionEmptyResponse: SuccessResponse<SelectionResponse> = {
       },
     },
   },
-  shippingMethods:
-    [
-      {
-        shippingMethod: 'dhl-express',
-        name: 'DHL Express',
-        price: '5.00 USD',
-        priceAsNumber: 5,
-      },
-      {
-        shippingMethod: 'standard',
-        name: 'Standard',
-        price: '0.00 USD',
-        priceAsNumber: 0,
-      },
-      {
-        shippingMethod: 'fedex-ground',
-        name: 'Fedex Ground',
-        price: '20.00 USD',
-        priceAsNumber: 20,
-      },
-    ],
+  shippingMethods: [
+    {
+      shippingMethod: 'dhl-express',
+      name: 'DHL Express',
+      price: '5.00 USD',
+      priceAsNumber: 5,
+    },
+    {
+      shippingMethod: 'standard',
+      name: 'Standard',
+      price: '0.00 USD',
+      priceAsNumber: 0,
+    },
+    {
+      shippingMethod: 'fedex-ground',
+      name: 'Fedex Ground',
+      price: '20.00 USD',
+      priceAsNumber: 20,
+    },
+  ],
   countries: [
     {
       country: 'AU',

@@ -53,8 +53,7 @@ export const selectionResponse: SuccessResponse<SelectionResponse> = {
         priceEachReductionAsNumber: 0,
         totalPriceBeforeDiscount: '10.00 USD',
         totalPriceBeforeDiscountAsNumber: 10,
-        product:
-        {
+        product: {
           product: '60',
           name: 'Test Product',
           uri: 'test-product',
@@ -66,8 +65,8 @@ export const selectionResponse: SuccessResponse<SelectionResponse> = {
           collection: '1',
           collectionName: 'Collection',
           collectionUri: 'collection',
-          modifiedAt: "2024-02-16 10:29:55",
-          createdAt: "2024-02-16 10:15:22",
+          modifiedAt: '2024-02-16 10:29:55',
+          createdAt: '2024-02-16 10:15:22',
           variantName: 'Nice',
           countryOrigin: '',
           excerpt: 'AAA',
@@ -265,8 +264,7 @@ export const selectionResponse: SuccessResponse<SelectionResponse> = {
       handlingCostAsNumber: 0,
     },
   ],
-  paymentFields:
-  {
+  paymentFields: {
     termsAndConditions: {
       type: 'boolean',
       visible: true,
@@ -442,32 +440,31 @@ export const selectionResponse: SuccessResponse<SelectionResponse> = {
       priceAsNumber: 20,
     },
   ],
-  countries:
-    [
-      {
-        country: 'AU',
-        name: 'Australia',
-        eu: false,
-        language: 'en',
-        states: [
-          {
-            state: 'ACT',
-            name: 'Australian Capital Territory',
-          },
-          {
-            state: 'NSW',
-            name: 'New South Wales',
-          },
-        ],
-      },
-      {
-        country: 'JP',
-        name: 'Japan',
-        eu: false,
-        language: 'en',
-        currency: 'JPY',
-      },
-    ],
+  countries: [
+    {
+      country: 'AU',
+      name: 'Australia',
+      eu: false,
+      language: 'en',
+      states: [
+        {
+          state: 'ACT',
+          name: 'Australian Capital Territory',
+        },
+        {
+          state: 'NSW',
+          name: 'New South Wales',
+        },
+      ],
+    },
+    {
+      country: 'JP',
+      name: 'Japan',
+      eu: false,
+      language: 'en',
+      currency: 'JPY',
+    },
+  ],
   loggedIn: {
     customer: '123',
     email: 'hello@world.com',
