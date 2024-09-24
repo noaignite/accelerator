@@ -8,14 +8,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
-    "directory": "apps/docs"
+    "directory": "docs"
   },
   "author": "NoA Ignite",
   "type": "module",
   "scripts": {
-    "build": "pnpm generate:markdown && next build",
+    "build": "next build",
+    "build:markdown": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ./scripts/buildMarkdown.ts",
     "dev": "next dev",
-    "generate:markdown": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ./scripts/generateMarkdown.ts",
     "lint": "next lint",
     "start": "next start",
     "test:types": "tsc --noEmit"

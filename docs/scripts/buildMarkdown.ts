@@ -50,7 +50,7 @@ function ensureDirectoryExists(dir: string) {
 }
 
 // Function to extract TSDoc and write to .mdx
-function generateDocs() {
+function buildMarkdown() {
   // Iterate over the source files
   project.getSourceFiles().forEach((sourceFile) => {
     let markdownContent = ''
@@ -90,4 +90,4 @@ function generateDocs() {
 }
 
 // Run the script
-generateDocs()
+buildMarkdown()
