@@ -1,14 +1,14 @@
 /**
- * Capitalize the first letter of a string
+ * Capitalizes the first letter of a given string.
  *
- * @param str - The string to capitalize
- * @returns The capitalized string
+ * @param value - The string to capitalize.
+ * @returns The capitalized string.
  *
  * @example
  * ```ts
- * capitalize('hello') // 'Hello'
+ * capitalize('hello world') // 'Hello world'
  * ```
  */
-export function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+export function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }

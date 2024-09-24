@@ -1,29 +1,29 @@
 /**
- * Check if the given item is a plain object.
+ * The `isPlainObject` function checks if a given value is a plain object.
  *
- * @param item - The item to check.
+ * @param value - The value to check.
  * @returns `true` if the item is a plain object, `false` otherwise.
  *
  * @example
  * ```ts
  * isPlainObject({}) // true
- * isPlainObject({ foo: 'bar' }) // true
+ * isPlainObject(new Date()) // false
  * isPlainObject([]) // false
  * ```
  *
  * @see https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
  */
-export function isPlainObject(item: unknown): item is Record<PropertyKey, unknown> {
-  if (typeof item !== 'object' || item === null) {
+export function isPlainObject(value: unknown): value is Record<PropertyKey, unknown> {
+  if (typeof value !== 'object' || value === null) {
     return false
   }
 
-  const prototype = Object.getPrototypeOf(item) as unknown
+  const prototype = Object.getPrototypeOf(value) as unknown
   return (
     (prototype === null ||
       prototype === Object.prototype ||
       Object.getPrototypeOf(prototype) === null) &&
-    !(Symbol.toStringTag in item) &&
-    !(Symbol.iterator in item)
+    !(Symbol.toStringTag in value) &&
+    !(Symbol.iterator in value)
   )
 }
