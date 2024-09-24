@@ -1,5 +1,14 @@
 # @noaignite/react-utils
 
+## 0.6.0
+
+### Minor Changes
+
+- a2d0531: add useMutationObserver hook
+- 7e377bc: add useIntersectionObserver hook
+- 177d1b6: add useIsomorphic effect hook
+- 699787f: add useResizeObserver hook
+
 ## 0.5.1
 
 ### Patch Changes

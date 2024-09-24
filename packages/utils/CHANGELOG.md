@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 3.1.0
+
+### Minor Changes
+
+- 5f9af13: add more detailed ts-docs
+
 ## 3.0.0
 
 ### Major Changes
