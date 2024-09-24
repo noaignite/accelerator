@@ -1,5 +1,15 @@
 # @noaignite/centra-types
 
+## 3.0.0
+
+### Major Changes
+
+- a26d442: bump minimum engine node version from 14 to 20
+
+### Minor Changes
+
+- f26213f: correct `centra-types` types
+
 ## 2.0.0
 
 ### Major Changes

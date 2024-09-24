@@ -1,5 +1,13 @@
 # @noaignite/create-app
 
+## 0.9.0
+
+### Minor Changes
+
+- af8d9c2: improve tailwind-config template compatibility with turborepo
+- 9d2d05b: add new eslint-config template
+- 2cc7aa4: add new typescript-config template
+
 ## 0.8.0
 
 ### Minor Changes
