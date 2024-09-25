@@ -32,6 +32,16 @@ git push
 
 4. Go to [the repository](https://github.com/noaignite/accelerator) and make a Pull Request.
 
+## Adding a changeset to your Pull Request
+
+Not all Pull Requests need a changeset. Adding a changeset to your Pull Request will cause a version bump for the specified packages. If your changes should not result in a new version, no changeset is needed. When creating a changeset, make sure to include the generated changeset in the same commit as the corresponding code changes.
+
+Create a changeset:
+
+```sh
+pnpm changeset
+```
+
 <!--
 ### Trying the changes on the documentation site
 
