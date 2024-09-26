@@ -8,6 +8,7 @@
     "dev": "turbo dev",
     "docs:build": "pnpm --filter docs run build",
     "docs:build:markdown": "pnpm --filter docs run build:markdown",
+    "docs:dev": "pnpm --filter docs run dev",
     "format": "prettier --write .",
     "lint": "turbo lint",
     "pre-commit": "lint-staged",

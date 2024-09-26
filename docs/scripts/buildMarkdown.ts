@@ -1,6 +1,22 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { type JSDoc, Project } from 'ts-morph'
+import {
+  type ClassDeclaration,
+  type FunctionDeclaration,
+  type InterfaceDeclaration,
+  type JSDoc,
+  type SourceFile,
+  type TypeAliasDeclaration,
+  type VariableStatement,
+  Project,
+} from 'ts-morph'
+
+type DeclarationTypes =
+  | FunctionDeclaration
+  | VariableStatement
+  | ClassDeclaration
+  | InterfaceDeclaration
+  | TypeAliasDeclaration
 
 const sourceDir = '../packages'
 const outputDir = './src/pages/@noaignite'
@@ -15,78 +31,127 @@ project.addSourceFilesAtPaths([
   `!${sourceDir}/**/{.turbo,dist,node_modules,template-*}/**/*.{ts,tsx}`,
 ])
 
-// Function to convert JSDoc comment into Markdown format
-function convertJsDocToMarkdown(doc: JSDoc, functionName: string): string {
-  let markdown = `### \`${functionName}\`\n\n`
-
-  const comment = doc.getComment()
-  if (comment) {
-    markdown += `${comment}\n\n`
-  }
-
-  // Add TSDoc tags
-  doc.getTags().forEach((tag) => {
-    const tagName = tag.getTagName()
-    const tagText = tag.getComment() ?? ''
-
-    if (tagName === 'param') {
-      const paramName = tag.getChildAtIndex(1).getText()
-      markdown += `- @${tagName} \`${paramName}\` ${tagText}\n`
-    } else if (['returns', 'throws'].includes(tagName)) {
-      markdown += `- @${tagName} ${tagText}\n`
-    } else if (tagName === 'example') {
-      markdown += `\n#### Example\n\n${tagText}\n`
-    }
-  })
-
-  return markdown
-}
-
-// Helper function to ensure a directory exists
+/**
+ * Ensures that a directory exists, creating it if it does not.
+ */
 function ensureDirectoryExists(dir: string) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true })
   }
 }
 
-// Function to extract TSDoc and write to .mdx
-function buildMarkdown() {
-  // Iterate over the source files
-  project.getSourceFiles().forEach((sourceFile) => {
-    let markdownContent = ''
+/**
+ * Attempts to retrieve the name from a declaration.
+ */
+function getDeclarationName(declaration: DeclarationTypes): string | undefined {
+  let name: string | undefined
+  if ('getName' in declaration) {
+    name = declaration.getName()
+  } else {
+    // TODO: Is this really correct? How can there be nested declarations?
+    for (const dec of declaration.getDeclarations()) {
+      name = dec.getName()
+    }
+  }
 
-    // Iterate over each function in the file
-    sourceFile.getFunctions().forEach((func) => {
-      const functionName = func.getName()
-      const jsDocs = func.getJsDocs()
+  return name
+}
 
-      if (jsDocs.length > 0) {
-        // Process all TSDoc comments
-        jsDocs.forEach((jsDoc) => {
-          markdownContent += convertJsDocToMarkdown(jsDoc, functionName ?? '')
-        })
+/**
+ * Converts a JSDoc comment into Markdown format.
+ */
+function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
+  let markdown = `### \`${name}\`\n\n`
+
+  const comment = doc.getComment()
+  if (comment) {
+    markdown += `${comment}\n\n`
+  }
+
+  // Add JSDoc tags
+  doc.getTags().forEach((tag) => {
+    const tagName = tag.getTagName()
+    const tagText = tag.getComment() ?? ''
+
+    switch (tagName) {
+      case 'param': {
+        const paramName = tag.getChildAtIndex(1).getText()
+        markdown += `- @${tagName} \`${paramName}\` ${tagText}\n`
+        break
       }
-    })
+      case 'returns':
+      case 'throws':
+        markdown += `- @${tagName} ${tagText}\n`
+        break
+      case 'example':
+        markdown += `\n#### Example\n\n${tagText}\n`
+        break
+    }
+  })
+
+  return markdown
+}
+
+/**
+ * Extracts JSDoc comments from a source file and returns them in Markdown format.
+ */
+function extractJsDocsFromFile(sourceFile: SourceFile): string {
+  let markdownContent = ''
+
+  const declarations: DeclarationTypes[] = [
+    ...sourceFile.getFunctions(),
+    ...sourceFile.getVariableStatements(),
+    ...sourceFile.getClasses(),
+    ...sourceFile.getInterfaces(),
+    ...sourceFile.getTypeAliases(),
+  ].filter((declaration) => declaration.isExported())
+
+  declarations.forEach((declaration) => {
+    const name = getDeclarationName(declaration)
+    const jsDocs = declaration.getJsDocs()
+
+    if (jsDocs.length > 0) {
+      jsDocs.forEach((jsDoc) => {
+        markdownContent += convertJsDocToMarkdown(jsDoc, name ?? '')
+      })
+    }
+  })
+
+  return markdownContent
+}
+
+/**
+ * Writes the Markdown content to the appropriate directory and file.
+ */
+function writeMarkdownToFile(filePath: string, markdownContent: string): void {
+  const outputFilePath = path.join(outputDir, filePath).replace(/\.(ts|tsx)$/, '.generated.mdx')
+  const outputDirectory = path.dirname(outputFilePath)
+
+  // Ensure the output directory exists
+  ensureDirectoryExists(outputDirectory)
+
+  try {
+    fs.writeFileSync(outputFilePath, markdownContent, { encoding: 'utf-8' })
+    console.info(`Generated: ${outputFilePath}`)
+  } catch (error) {
+    console.error(`Failed to write file: ${outputFilePath}`, error)
+  }
+}
+
+/**
+ * Main function to iterate over source files, extract JSDoc, and write to .mdx files.
+ */
+function buildMarkdown() {
+  project.getSourceFiles().forEach((sourceFile) => {
+    const markdownContent = extractJsDocsFromFile(sourceFile)
 
     if (markdownContent) {
       // Get the file's path relative to sourceDir
       let relativePath = path.relative(sourceDir, sourceFile.getFilePath())
-      // Check if 'src/' is in the path and remove it
       relativePath = relativePath.replace(/src\//, '')
 
-      // Get the directory where the mdx file should be created (remove the
-      // file extensions)
-      const outputFilePath = path
-        .join(outputDir, relativePath)
-        .replace(/\.(ts|tsx)$/, '.generated.mdx')
-      const outputDirectory = path.dirname(outputFilePath)
-
-      // Ensure the output directory exists
-      ensureDirectoryExists(outputDirectory)
-
-      // Write the MDX file to the mirrored directory structure
-      fs.writeFileSync(outputFilePath, markdownContent, { encoding: 'utf-8' })
-      console.info(`Generated: ${outputFilePath}`)
+      // Write the Markdown content to the output file
+      writeMarkdownToFile(relativePath, markdownContent)
     }
   })
 }
