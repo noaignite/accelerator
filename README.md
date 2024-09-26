@@ -12,13 +12,13 @@ Create a new project with [Turborepo](https://turbo.build/) from [Vercel](https:
 
 ```bash
 // with pnpm (recommended)
-pnpm dlx create-turbo@latest -e with-tailwind -m pnpm
+pnpm dlx create-turbo@latest -m pnpm
 
 // with yarn
-yarn dlx create-turbo@latest -e with-tailwind -m yarn
+yarn dlx create-turbo@latest -m yarn
 
 // with npm
-npx create-turbo@latest -e with-tailwind -m npm
+npx create-turbo@latest -m npm
 ```
 
 ### Installing NoA Ignite templates
@@ -50,9 +50,13 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `@noaignite/centra-types`: Typescript definitions for centra APIs
+- `docs`: Accelerator docs
+- `@noaignite/centra-mocks`: A collection of mocks to the Centra API
+- `@noaignite/centra-types`: Typescript definitions for Centra APIs
 - `@noaignite/create-app`: A CLI tool to scaffold out templates within a Turborepo project
-- `@noaignite/react-centra-checkout`: React helper functions for centra APIs
+- `@noaignite/react-centra-checkout`: React helper functions for Centra APIs
+- `@noaignite/react-utils`: React helper functions
+- `@noaignite/tailwind-typography`: TailwindCSS plugin to create responsive typography
 - `@noaignite/types`: Type helpers by NoA Ignite
 - `@noaignite/utils`: Basic helper functions
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
