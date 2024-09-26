@@ -17,6 +17,9 @@ build
 # storybook
 storybook-static
 
+# docs
+docs/src/pages/@noaignite/**/*.generated.*
+
 # misc
 .DS_Store
 *.pem
@@ -41,3 +44,4 @@ dist/
 
 # typescript
 tsconfig.tsbuildinfo
+
