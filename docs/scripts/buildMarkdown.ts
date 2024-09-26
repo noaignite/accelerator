@@ -76,7 +76,9 @@ function buildMarkdown() {
 
       // Get the directory where the mdx file should be created (remove the
       // file extensions)
-      const outputFilePath = path.join(outputDir, relativePath).replace(/\.(ts|tsx)$/, '.mdx')
+      const outputFilePath = path
+        .join(outputDir, relativePath)
+        .replace(/\.(ts|tsx)$/, '.generated.mdx')
       const outputDirectory = path.dirname(outputFilePath)
 
       // Ensure the output directory exists
