@@ -1,11 +1,8 @@
-import { typography } from '@noaignite/tailwind-typography'
+import { typography as tailwindTypography } from '@noaignite/tailwind-typography'
 import type { Config } from 'tailwindcss'
 import { breakpoints } from './breakpoints'
 import { palette } from './palette'
-import { pxToRem } from './utils'
-
-const fontPrimary = 'var(--font-primary)'
-const fontSecondary = 'var(--font-secondary)'
+import { typography } from './typography'
 
 const config: Config = {
   content: [
@@ -17,8 +14,8 @@ const config: Config = {
   darkMode: ['class', '[data-color-scheme="dark"]'],
   theme: {
     fontFamily: {
-      primary: fontPrimary,
-      secondary: fontSecondary,
+      primary: 'var(--font-primary)',
+      secondary: 'var(--font-secondary)',
     },
     screens: {
       // Generate the system breakpoints.
@@ -60,34 +57,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    typography({
-      breakpointKeys: breakpoints.keys,
-      prefix: 'type-',
-      unit: 'rem',
-      fluid: true,
-      clamp: true,
-      variants: {
-        h1: {
-          xs: {
-            fontFamily: fontPrimary,
-            fontSize: pxToRem(48),
-            fontWeight: 700,
-            letterSpacing: 0,
-            lineHeight: 1.2,
-            textTransform: 'uppercase',
-          },
-          md: { fontSize: pxToRem(72) },
-        },
-        body1: {
-          fontFamily: fontSecondary,
-          fontSize: pxToRem(14),
-          fontWeight: 400,
-          lineHeight: 1.2,
-        },
-      },
-    }),
-  ],
+  plugins: [tailwindTypography(typography)],
 }
 
 export default config
