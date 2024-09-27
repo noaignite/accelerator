@@ -55,6 +55,7 @@ Example font file import:
    * set by either the className or data attribute defined in the selector below.
    */
   [data-theme='default'],
+  [data-theme='default']:is(.light, [data-color-scheme='light']),
   [data-theme='default'] :is(.light, [data-color-scheme='light']) {
     /* The colors used to represent primary interface elements for a user. */
     --palette-brand1-primary: var(--color-common-black);
@@ -105,6 +106,7 @@ Example font file import:
   /**
    * PALETTE - DARK
    */
+  [data-theme='default']:is(.dark, [data-color-scheme='dark']),
   [data-theme='default'] :is(.dark, [data-color-scheme='dark']) {
     /* The colors used to represent primary interface elements for a user. */
     --palette-brand1-primary: var(--color-common-white);
