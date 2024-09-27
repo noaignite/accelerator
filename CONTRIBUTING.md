@@ -34,12 +34,18 @@ git push
 
 ## Adding a changeset to your Pull Request
 
-Not all Pull Requests need a changeset. Adding a changeset to your Pull Request will cause a version bump for the specified packages. If your changes should not result in a new version, no changeset is needed. When creating a changeset, make sure to include the generated changeset in the same commit as the corresponding code changes.
+Not all Pull Requests need a changeset. Adding a changeset to your Pull Request will cause a version bump for the specified packages. If your changes should not result in a new version, mark your PR with an empty changeset. When creating a changeset, make sure to include the generated changeset in the same commit as the corresponding code changes.
 
 Create a changeset:
 
 ```sh
 pnpm changeset
+```
+
+Create an empty changeset:
+
+```sh
+pnpm changeset --empty
 ```
 
 <!--
@@ -58,4 +64,4 @@ You can now access the documentation site [locally](http://localhost:3000).
  -->
 
 Where possible, please add tests for any changes you make.
-Tests can be run with `pnpm test`.
+Tests can be run locally with `pnpm test`.
