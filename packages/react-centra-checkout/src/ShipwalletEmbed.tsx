@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { useCentraSelection } from '../Context'
-import { HtmlEmbed } from '../internal/HtmlEmbed'
+import { useCentraSelection } from './Context'
+import { HtmlEmbed } from './internal/HtmlEmbed'
 
 export function ShipwalletEmbed() {
   const { selection } = useCentraSelection()

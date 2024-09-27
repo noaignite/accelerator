@@ -2,8 +2,8 @@ import type * as CheckoutApi from '@noaignite/centra-types'
 import { isPlainObject } from '@noaignite/utils'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
-import { useCentraHandlers, useCentraSelection } from '../Context'
-import { HtmlEmbed } from '../internal/HtmlEmbed'
+import { useCentraHandlers, useCentraSelection } from './Context'
+import { HtmlEmbed } from './internal/HtmlEmbed'
 
 export interface PaymentEmbedProps {
   values: Record<string, unknown>
