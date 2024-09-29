@@ -239,7 +239,9 @@ const onSelectionResponse = async <
 }
 
 /**
- * React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks
+ * React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks.
+ * Provides state management and related handlers of the users current Centra selection via the Checkout API.
+ * The handlers could be used for adding products to the selection and making purchases, for example.
  */
 export function CentraProvider(props: ProviderProps) {
   const {
