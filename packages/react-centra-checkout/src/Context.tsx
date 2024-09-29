@@ -9,55 +9,71 @@ import { CentraEvents } from './internal/CentraEvents'
 const defaultApiClient = ApiClient.default
 const centraEvents = CentraEvents.default
 
-/** The prop types that CentraProvider accepts */
+/**
+ * The prop types that CentraProvider accepts
+ */
 export interface ProviderProps {
-  /** Centra API URL */
+  /**
+   * Centra API URL
+   */
   apiUrl?: string
-  /** The api client to use instead of the default one */
+  /**
+   * The api client to use instead of the default one
+   */
   apiClient?: ApiClient
   children: React.ReactNode
-  /** Disables automatic client side fetching of the Centra selection */
+  /**
+   * Disables automatic client side fetching of the Centra selection
+   */
   disableInit?: boolean
-  /** Sets the initial selection */
+  /**
+   * Sets the initial selection
+   */
   initialSelection?: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>
-  /** Used when submitting payment using the POST /payment Centra api call */
+  /**
+   * Used when submitting payment using the POST /payment Centra api call
+   */
   paymentFailedPage: string
-  /** Used when submitting payment using the POST /payment Centra api call */
+  /**
+   * Used when submitting payment using the POST /payment Centra api call
+   */
   paymentReturnPage: string
-  /** Receipt page to redirect to when Centra payment succeeds directly */
+  /**
+   * Receipt page to redirect to when Centra payment succeeds directly
+   */
   receiptPage: string
   /**
-    When the cookie used to store the Centra checkout token will expire, days as a number or a Date
-    @defaultValue `365`
-  */
+   *  When the cookie used to store the Centra checkout token will expire, days as a number or a Date
+   *  @defaultValue `365`
+   */
   tokenExpires?: number | Date
   /**
-    The name of the cookie used to store the Centra checkout token
-    @defaultValue `centra-checkout-token`
-  */
+   * The name of the cookie used to store the Centra checkout token
+   * @defaultValue `centra-checkout-token`
+   */
   tokenName?: string
   tokenCookieOptions?: Cookies.CookieAttributes
 }
 
 export interface ContextMethods {
   /**
-    @param item - The Centra item id
-  */
+   * @param item - The Centra item id
+   */
   addItem?: (
     item: string,
     quantity?: number,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param item - The Centra item id
-    @param data - Bundle data
-  */
+   * @param item - The Centra item id
+   * @param data - Bundle data
+   */
   addBundleItem?: (
     item: string,
     data?: Record<string, unknown>,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param giftCertificate - The `giftCertificate` value of the gift certificate to add
-  */
+   * @param giftCertificate - The `giftCertificate` value of the gift certificate to add
+   */
   addGiftCertificate?: (
     giftCertificate: string,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
@@ -66,9 +82,9 @@ export interface ContextMethods {
     data: Record<string, unknown>,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param giftCertificate - The `giftCertificate` value of the gift certificate to add
-    @param amount - Custom gift certificate amount
-  */
+   * @param giftCertificate - The `giftCertificate` value of the gift certificate to add
+   * @param amount - Custom gift certificate amount
+   */
   addCustomGiftCertificate?: (
     giftCertificate: string,
     amount: string,
@@ -78,20 +94,20 @@ export interface ContextMethods {
     data: Record<string, unknown>,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param voucher - The id of the voucher to add
-  */
+   * @param voucher - The id of the voucher to add
+   */
   addVoucher?: (voucher: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param line - The line id of the item to decrease
-  */
+   * @param line - The line id of the item to decrease
+   */
   decreaseCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param line - The line id of the item to increase
-  */
+   * @param line - The line id of the item to increase
+   */
   increaseCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param selectionData - Initial selection data
-  */
+   * @param selectionData - Initial selection data
+   */
   init?: (selectionData?: CheckoutApi.Response<CheckoutApi.SelectionResponse>) => Promise<void>
   loginCustomer?: (
     email: string,
@@ -99,23 +115,23 @@ export interface ContextMethods {
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   logoutCustomer?: () => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
-  */
+   * @param data - All data to register to customer. See {@link https://docs.centra.com/swagger-ui/?api=CheckoutAPI#/6.%20customer%20handling/post_register | Centra docs} for more details.
+   */
   registerCustomer?: (
     data: Record<string, unknown>,
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param line - The line id of the item to increase
-  */
+   * @param line - The line id of the item to increase
+   */
   removeCartItem?: (line: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param voucher - The id of the voucher to add
-  */
+   * @param voucher - The id of the voucher to add
+   */
   removeVoucher?: (voucher: string) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
-    @param i - The `i` query parameter provided by Centra when landing on the password reset page
-    @param id - The `id` query parameter provided by Centra when landing on the password reset page
-  */
+   * @param i - The `i` query parameter provided by Centra when landing on the password reset page
+   * @param id - The `id` query parameter provided by Centra when landing on the password reset page
+   */
   resetCustomerPassword?: (
     i: string,
     id: string,
@@ -123,8 +139,8 @@ export interface ContextMethods {
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   resetSelection?: () => Promise<void>
   /**
-    @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
-  */
+   * @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
+   */
   sendCustomerResetPasswordEmail?: (
     email: string,
     linkUri: string,
@@ -222,7 +238,9 @@ const onSelectionResponse = async <
   return results as TPromise
 }
 
-/** React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks */
+/**
+ * React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks
+ */
 export function CentraProvider(props: ProviderProps) {
   const {
     apiClient: apiClientProp,
@@ -717,7 +735,9 @@ export function CentraProvider(props: ProviderProps) {
   )
 }
 
-/** This hook returns the centra selection */
+/**
+ * This hook returns the centra selection
+ */
 export function useCentraSelection() {
   const context = useContext(CentraSelectionContext)
 
@@ -734,7 +754,9 @@ export function useCentraSelection() {
   return context
 }
 
-/** This hook returns update handlers */
+/**
+ * This hook returns update handlers
+ */
 export function useCentraHandlers() {
   const context = useContext(CentraHandlersContext)
 
@@ -751,7 +773,9 @@ export function useCentraHandlers() {
   return context
 }
 
-/** Returns the latest order receipt given a selection token */
+/**
+ * Returns the latest order receipt given a selection token
+ */
 export function useCentraReceipt(
   token: string,
 ): CheckoutApi.Response<CheckoutApi.OrderCompleteResponse> {
@@ -779,10 +803,11 @@ export function useCentraReceipt(
   return result
 }
 
-/** Returns the latest orders for the currently logged in user
-  @param from - Display orders from this index. Defaults to 0.
-  @param size - Display this many orders. Defaults lists all orders.
-*/
+/**
+ * Returns the latest orders for the currently logged in user
+ * @param from - Display orders from this index. Defaults to 0.
+ * @param size - Display this many orders. Defaults lists all orders.
+ */
 export function useCentraOrders(
   from?: number,
   size?: number,
