@@ -3,8 +3,8 @@ import { isPlainObject } from '@noaignite/utils'
 import type Cookies from 'js-cookie'
 import cookies from 'js-cookie'
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { ApiClient } from '../ApiClient'
-import { CentraEvents } from '../internal/CentraEvents'
+import { ApiClient } from './ApiClient'
+import { CentraEvents } from './internal/CentraEvents'
 
 const defaultApiClient = ApiClient.default
 const centraEvents = CentraEvents.default
