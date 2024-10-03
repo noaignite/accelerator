@@ -14,39 +14,47 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * @param blocks - A Record of components which will be used to render based on
  * the `blockType` property by the data provided to `renderBlock`.
  * @param options - An optional configuration object for the renderer.
- * @param options.adapters - A Record of adapters with keys matching that of
- * `blocks`. Useful for enriching data provided to the block component. For
- * example, adding a Next.js Link component for routing or simply fetching data
- * from another API. Each adapter will receive data forwarded by `renderBlock`,
- * as long as the adapter name matches it's corresponding block name. The data
- * returned by an adapter must match the interface of it's corresponding block
- * component.
+ * @param options.adapters - A Record of functions with keys matching that of
+ * `blocks`. Useful for transforming or enriching data provided to the block
+ * component. For example, adding a Next.js Link component for routing or
+ * simply fetching data from another API. Each adapter will receive data
+ * forwarded by `renderBlock`, as long as the adapter name matches it's
+ * corresponding block name. The data returned by an adapter must match the
+ * interface of it's corresponding block component.
+ * @param options.defaultProps - A Record of objects with keys matching that of
+ * `blocks`. Useful for overriding default props of a block component.
  * @param options.fallback - An optional component to render instead of the
  * block in case of an error occurring.
  * @returns `renderBlock` function
  *
  * @example
  * ```tsx
- * export const heroAdapter = async (props: HeroData['props']): Promise<HeroProps> => {
- *   const data = (await fetch('https://jsonplaceholder.typicode.com/todos/1').then((res) => {
- *     return res.json()
- *   })) as { title: string }
+ * const blocks = {
+ *   Hero: HeroComponent,
+ * }
  *
- *   return {
- *     ...props,
- *     title: `${props.title} ${data.title}`,
- *     CtaComponent: Link,
+ * const adapters = {
+ *   Hero: async (props: HeroData['props']): Promise<HeroProps> => {
+ *     const data = (await fetch('https://jsonplaceholder.typicode.com/todos/1').then((res) => {
+ *       return res.json()
+ *     })) as { title: string }
+ *
+ *     return {
+ *       ...props,
+ *       title: `${props.title} - ${data.title}`,
+ *     }
  *   }
  * }
  *
- * const blocks = { Hero: HeroComponent }
- *
- * const options = {
- *  adapters: { Hero: heroAdapter },
- *  fallback: FallbackComponent,
+ * const defaultProps = {
+ *   Hero: { LinkComponent: Link },
  * }
  *
- * const renderBlock = createRenderBlock(blocks, options)
+ * const renderBlock = createRenderBlock(blocks, {
+ *   adapters,
+ *   defaultProps,
+ *   fallback: FallbackComponent,
+ * })
  *
  * const blocksData = [{
  *   blockType: 'Hero' as const,
@@ -80,14 +88,20 @@ export function _createRenderBlock<
           ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
         }
       | undefined,
+    TDefaultProps extends
+      | {
+          [K in keyof TBlocks]?: Partial<PropsFrom<TBlocks[K]>>
+        }
+      | undefined,
   >(
     blocks: TBlocks,
     options: {
       adapters?: TAdapters
+      defaultProps?: TDefaultProps
       fallback?: ErrorBoundaryProps['fallback']
     } = {},
   ) {
-    const { adapters, fallback } = options
+    const { adapters, defaultProps, fallback } = options
 
     /**
      * `renderBlock` is a function which renders a block based on the `blockType`.
@@ -129,12 +143,13 @@ export function _createRenderBlock<
 
       // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style -- TS not infering correctly so we assert.
       const Component = blocks[blockType] as ComponentType<any>
-      let componentProps = props
+      const componentDefaultProps = defaultProps?.[blockType]
+      let componentProps = { ...componentDefaultProps, ...props }
 
       if (adapters) {
         const adapter = adapters[blockType]
         if (typeof adapter === 'function') {
-          componentProps = await adapter(props, indexOrAdditionalData)
+          componentProps = await adapter(componentProps, indexOrAdditionalData)
         }
       }
 
