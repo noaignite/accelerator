@@ -38,6 +38,9 @@
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
     "test:types": "tsc --noEmit"
   },
+  "dependencies": {
+    "@noaignite/utils": "workspace:*"
+  },
   "devDependencies": {
     "@noaignite/types": "workspace:^",
     "@repo/eslint-config": "workspace:*",
