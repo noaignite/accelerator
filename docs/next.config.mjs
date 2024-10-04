@@ -1,5 +1,9 @@
 import nextra from 'nextra'
 
+function formatGeneratedName(name) {
+  return name.replace(/\.generated/, '')
+}
+
 function traverseChildren(pageMapItem, callback) {
   if (pageMapItem.children) {
     pageMapItem.children.forEach((child) => {
@@ -10,41 +14,35 @@ function traverseChildren(pageMapItem, callback) {
   return callback(pageMapItem)
 }
 
-function formatGeneratedPageName(name) {
-  return name.replace(/\.generated/, '')
+function formatPageMapItemChild(child) {
+  const name = formatGeneratedName(child.name)
+  // Remove `.generated` from `name`.
+  if (child.name?.endsWith('.generated')) {
+    child.name = name
+  }
+  // `sidebarTitle` should be the same as `name`.
+  if (child.frontMatter?.sidebarTitle) {
+    child.frontMatter.sidebarTitle = name
+  }
+  // TODO: Is there a way override the url?
+  // if (child.route?.endsWith('.generated')) {
+  //   child.route = formatGeneratedPath(child.route)
+  // }
 }
 
 const withNextra = nextra({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.tsx',
-  transformPageOpts: (pageOpts) => {
-    const { pageMap } = pageOpts
-
-    pageOpts.pageMap = pageMap.flatMap((pageMapItem) => {
-      if (pageMapItem.kind === 'Folder' && pageMapItem.name === '@noaignite') {
-        traverseChildren(pageMapItem, (child) => {
-          if (child.kind === 'MdxPage' && child.name.endsWith('.generated')) {
-            child.name = formatGeneratedPageName(child.name)
-          }
-
-          if (child.kind === 'Meta') {
-            child.data = Object.fromEntries(
-              Object.entries(([key, value]) => {
-                const formatted = formatGeneratedPageName(key)
-
-                return [formatted, formatted]
-              }),
-            )
-          }
-
-          return child
-        })
+  transformPageMap: (pageMap) => {
+    const newPageMap = pageMap.flatMap((pageMapItem) => {
+      if (pageMapItem.children) {
+        traverseChildren(pageMapItem, formatPageMapItemChild)
       }
 
       return [pageMapItem]
     })
 
-    return pageOpts
+    return newPageMap
   },
 })
 
