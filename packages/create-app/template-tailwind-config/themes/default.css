@@ -60,19 +60,16 @@ Example font file import:
     --palette-brand1-primary: var(--color-common-black);
     --palette-brand1-secondary: rgba(var(--color-common-blackChannel) / 0.64);
     --palette-brand1-contrast: var(--color-common-white);
-    --palette-brand1-contrast2: var(--color-common-white);
 
     /* The colors used to indicate the successful completion of an action that user triggered. */
     --palette-success-primary: #4caf50;
     --palette-success-secondary: #4caf50;
     --palette-success-contrast: var(--color-common-black);
-    --palette-success-contrast2: var(--color-common-black);
 
     /* The colors used to represent potentially dangerous actions or important messages. */
     --palette-warning-primary: #ff9800;
     --palette-warning-secondary: #ff9800;
     --palette-warning-contrast: var(--color-common-black);
-    --palette-warning-contrast2: var(--color-common-black);
 
     /* The colors used to represent interface elements that the user should be made aware of. */
     --palette-error-primary: #f44336;
