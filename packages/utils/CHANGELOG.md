@@ -1,5 +1,13 @@
 # @noaignite/utils
 
+## 3.2.0
+
+### Minor Changes
+
+- 09a9c15: Expose `calculateContrast`, `calculateLuminance` and `hexToRGB` utility functions
+- 6b42861: add errorType parameter
+- 0198485: add `isObject` predicate
+
 ## 3.1.0
 
 ### Minor Changes
