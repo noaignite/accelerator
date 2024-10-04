@@ -1,5 +1,16 @@
 # @noaignite/create-app
 
+## 0.10.0
+
+### Minor Changes
+
+- e93ea9d: tailwind-config - add separate exported config for typography
+
+### Patch Changes
+
+- 6eb86f1: tailwind-config - theme & color-scheme css selector fix
+- c7c7829: typescript-config - update module to Preserve & moduleResolution to Bundler
+
 ## 0.9.0
 
 ### Minor Changes

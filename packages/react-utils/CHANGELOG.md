@@ -1,5 +1,21 @@
 # @noaignite/react-utils
 
+## 0.7.0
+
+### Minor Changes
+
+- c9ec852: createRenderBlock has a new defaultProps option
+- 233cac3: add useInterval hook
+- 3054df1: add `isRefObject` predicate & `useEvent` hook
+- 407e5a1: add useTimeout hook
+
+### Patch Changes
+
+- Updated dependencies [09a9c15]
+- Updated dependencies [6b42861]
+- Updated dependencies [0198485]
+  - @noaignite/utils@3.2.0
+
 ## 0.6.0
 
 ### Minor Changes
