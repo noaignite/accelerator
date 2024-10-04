@@ -12,12 +12,17 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/noaignite/accelerator',
   },
   docsRepositoryBase: 'https://github.com/noaignite/accelerator',
+  head: () => (
+    <>
+      <title>Accelerator docs</title>
+      <meta content="Accelerator docs" property="og:title" />
+      <meta content="The Accelerator official docs" property="og:description" />
+      <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    </>
+  ),
   footer: {
-    text: 'Accelerator Docs',
+    content: 'Accelerator Docs',
   },
-  useNextSeoProps: () => ({
-    titleTemplate: '%s – Accelerator docs',
-  }),
 }
 
 export default config
