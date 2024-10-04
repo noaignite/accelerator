@@ -1,8 +1,8 @@
 /**
- * The `isPlainObject` function checks if a given value is a plain object.
+ * Checks if a given value is a plain `object` (POJO).
  *
  * @param value - The value to check.
- * @returns `true` if the item is a plain object, `false` otherwise.
+ * @returns `true` if the value is a plain object, `false` otherwise.
  *
  * @example
  * ```ts
