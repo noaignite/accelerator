@@ -11,21 +11,22 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * which in turn does the actual rendering of the blocks provided it receives
  * data matching the interface of the registered block components.
  *
- * @param blocks - A Record of components which will be used to render based on
- * the `blockType` property by the data provided to `renderBlock`.
+ * @param blocks - A Record of components which are rendered based on the data
+ * provided to `renderBlock`.
  * @param options - An optional configuration object for the renderer.
  * @param options.adapters - A Record of functions with keys matching that of
- * `blocks`. Useful for transforming or enriching data provided to the block
- * component. For example, adding a Next.js Link component for routing or
- * simply fetching data from another API. Each adapter will receive data
- * forwarded by `renderBlock`, as long as the adapter name matches it's
- * corresponding block name. The data returned by an adapter must match the
- * interface of it's corresponding block component.
+ * provided `blocks`. Adapters are for transforming or enriching data before
+ * it is passed to the block component. An adapter function will run as long as
+ * its name matches that of a registered block component.
  * @param options.defaultProps - A Record of objects with keys matching that of
- * `blocks`. Useful for overriding default props of a block component.
- * @param options.fallback - An optional component to render instead of the
- * block in case of an error occurring.
- * @returns `renderBlock` function
+ * provided `blocks`. Default props are applied before any adapter and override
+ * block component default props. Useful for when instantiating multiple
+ * `renderBlock` functions where the blocks should behave differently.
+ * @param options.globals - Globals are meant to be the place where one can
+ * register needed utils that all adapters should have access to.
+ * @param options.fallback - A UI component to render for when the internal
+ * block error boundary catches an error.
+ * @returns `renderBlock` function.
  *
  * @example
  * ```tsx
@@ -34,25 +35,34 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * }
  *
  * const adapters = {
- *   Hero: async (props: HeroData['props']): Promise<HeroProps> => {
- *     const data = (await fetch('https://jsonplaceholder.typicode.com/todos/1').then((res) => {
+ *   Hero: async (props: HeroData['props'], additionalData, globals): Promise<HeroProps> => {
+ *     const { locale } = additionalData
+ *     const { LinkComponent } = globals
+ *
+ *     const data = (await fetch( `https://domain.com/${locale}/posts/1`).then((res) => {
  *       return res.json()
  *     })) as { title: string }
  *
  *     return {
  *       ...props,
+ *       LinkComponent,
  *       title: `${props.title} - ${data.title}`,
  *     }
  *   }
  * }
  *
  * const defaultProps = {
- *   Hero: { LinkComponent: Link },
+ *   Hero: { color: 'brand1' },
+ * }
+ *
+ * const globals = {
+ *   LinkComponent: Link,
  * }
  *
  * const renderBlock = createRenderBlock(blocks, {
  *   adapters,
  *   defaultProps,
+ *   globals,
  *   fallback: FallbackComponent,
  * })
  *
@@ -79,12 +89,14 @@ export function _createRenderBlock<
   TAdditionalData extends number | { index: number; [key: string]: unknown },
 >() {
   return function __createRenderBlock<
-    TBlocks extends Record<string, ComponentType<any>>,
+    TBlocks extends Record<PropertyKey, ComponentType<any>>,
+    TGlobals extends Record<PropertyKey, unknown>,
     TAdapters extends
       | {
           [K in keyof TBlocks]?: (
             props: any,
             additionalData: TAdditionalData,
+            globals: TGlobals,
           ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
         }
       | undefined,
@@ -99,9 +111,11 @@ export function _createRenderBlock<
       adapters?: TAdapters
       defaultProps?: TDefaultProps
       fallback?: ErrorBoundaryProps['fallback']
+      globals?: TGlobals
     } = {},
   ) {
     const { adapters, defaultProps, fallback } = options
+    const globals = options.globals ?? ({} as TGlobals)
 
     /**
      * `renderBlock` is a function which renders a block based on the `blockType`.
@@ -149,7 +163,7 @@ export function _createRenderBlock<
       if (adapters) {
         const adapter = adapters[blockType]
         if (typeof adapter === 'function') {
-          componentProps = await adapter(componentProps, indexOrAdditionalData)
+          componentProps = await adapter(componentProps, indexOrAdditionalData, globals)
         }
       }
 
