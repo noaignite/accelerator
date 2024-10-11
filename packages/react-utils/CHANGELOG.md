@@ -1,5 +1,18 @@
 # @noaignite/react-utils
 
+## 0.8.0
+
+### Minor Changes
+
+- c359223: add getReactElementRef helper
+- ece8e69: add useMediaQuery hook
+- b586290: add useInert hook
+- c9a3e72: add useForkRef hook
+- 49d7a6b: add setRef helper
+- 7522638: add new globals option to createRenderBlock
+- 87ee1a6: add useFocusReturn hook
+- 033a3cb: add useRtl hook
+
 ## 0.7.0
 
 ### Minor Changes
