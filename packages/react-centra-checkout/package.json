@@ -29,7 +29,6 @@
   ],
   "scripts": {
     "build": "tsup",
-    "build:docs": "typedoc",
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
     "test:types": "tsc --noEmit",
     "test:unit": "vitest run",
@@ -54,7 +53,6 @@
     "jsdom": "^24.1.3",
     "nock": "14.0.0-beta.15",
     "tsup": "^8.1.2",
-    "typedoc": "^0.22.9",
     "typescript": "5.4.5",
     "vitest": "^2.0.4"
   },
