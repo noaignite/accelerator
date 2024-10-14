@@ -21,22 +21,22 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^14.2.14",
-    "nextra": "^3.0.5",
-    "nextra-theme-docs": "^3.0.5",
-    "react": "^18.2.0",
+    "next": "^14.2.15",
+    "nextra": "^3.0.11",
+    "nextra-theme-docs": "^3.0.11",
+    "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20.14.15",
-    "@types/react": "^18.2.65",
+    "@types/node": "^22.7.5",
+    "@types/react": "^18.3.11",
     "autoprefixer": "10.4.20",
     "postcss": "8.4.47",
     "tailwindcss": "3.4.13",
-    "ts-morph": "^23.0.0",
+    "ts-morph": "^24.0.0",
     "typescript": "5.4.5"
   },
   "engines": {

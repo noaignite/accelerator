@@ -24,12 +24,10 @@
     "src/**"
   ],
   "scripts": {
-    "build:docs": "typedoc",
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "typedoc": "^0.22.9",
     "typescript": "5.4.5"
   },
   "engines": {
