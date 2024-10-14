@@ -32,7 +32,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "tsup": "^8.1.2",
+    "tsup": "^8.3.0",
     "typescript": "5.4.5",
     "vitest": "^2.1.2"
   },
