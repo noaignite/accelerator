@@ -47,7 +47,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@testing-library/react": "^16.0.1",
-    "@types/node": "^20.14.15",
+    "@types/node": "^22.7.5",
     "@types/react": "^18.3.11",
     "esbuild-plugin-preserve-directives": "0.0.11",
     "jsdom": "^24.1.3",
