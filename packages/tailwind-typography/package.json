@@ -16,9 +16,9 @@
     "directory": "packages/tailwind-typography"
   },
   "author": "NoA Ignite",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/typography.js",
+  "module": "./dist/typography.mjs",
+  "types": "./dist/typography.d.ts",
   "files": [
     "dist/**"
   ],
