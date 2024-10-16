@@ -68,6 +68,10 @@ function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
     markdown += `${comment}\n\n`
   }
 
+  // So that we know if a tag is being concatinated for the first time enabling
+  // us to add a tag headline.
+  const registerdTags: Record<string, boolean> = {}
+
   // Add JSDoc tags
   doc.getTags().forEach((tag) => {
     const tagName = tag.getTagName()
@@ -79,14 +83,26 @@ function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
         markdown += `- @${tagName} \`${paramName}\` ${tagText}\n`
         break
       }
+      case 'see': {
+        // `getComment()` strips out the protocol. How to only get the url?
+        const url = tag.getText().split(' ')[1]?.trim()
+        if (!registerdTags[tagName]) {
+          markdown += `\n#### See\n\n`
+        }
+        markdown += `- [${url}](${url})\n`
+        break
+      }
       case 'returns':
-      case 'throws':
+      case 'throws': {
         markdown += `- @${tagName} ${tagText}\n`
         break
+      }
       case 'example':
         markdown += `\n#### Example\n\n${tagText}\n`
         break
     }
+
+    registerdTags[tagName] = true
   })
 
   return markdown
@@ -124,7 +140,7 @@ function extractJsDocsFromFile(sourceFile: SourceFile): string {
  * Writes the Markdown content to the appropriate directory and file.
  */
 function writeMarkdownToFile(filePath: string, markdownContent: string): void {
-  const outputFilePath = path.join(outputDir, filePath).replace(/\.(ts|tsx)$/, '.generated.mdx')
+  const outputFilePath = path.join(outputDir, filePath).replace(/\.(ts|tsx)$/, '.generated.md')
   const outputDirectory = path.dirname(outputFilePath)
 
   // Ensure the output directory exists
