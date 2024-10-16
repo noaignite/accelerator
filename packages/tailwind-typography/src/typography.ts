@@ -130,7 +130,7 @@ export interface TypographyOptions<TKeys extends readonly [string, ...string[]]>
  * breakpoints. This can be overridden per variant. Defaults to `false`.
  * @param options.prefix - A string to prefix all generated class names with.
  * For example, if `prefix` is set to `'type-'`, the generated class names
- * would look like `.text-variantName`.
+ * would look like `.type-variantName`.
  * @param options.unit - The unit to be used for font size values, such as
  * `px`, `rem`, or `em`. Defaults to `px`.
  * @param options.variants - An object mapping variant names to either a single
@@ -145,6 +145,7 @@ export interface TypographyOptions<TKeys extends readonly [string, ...string[]]>
  *   breakpointKeys: ['xs', 'md', 'xl'] as const,
  *   prefix: 'type-' as const,
  *   unit: 'rem',
+ *   fluid: true,
  *   variants: {
  *     h1: {
  *       xs: {
