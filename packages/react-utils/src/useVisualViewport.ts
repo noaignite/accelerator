@@ -55,6 +55,8 @@ const getVisualViewport = () =>
  *   </div>
  * )
  * ```
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Visual_Viewport_API
  */
 export const useVisualViewport = ({ when = true }: VisualViewportOptions = {}) => {
   const [visualViewport, setVisualViewport] =
