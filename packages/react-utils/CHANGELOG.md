@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.9.0
+
+### Minor Changes
+
+- e5af57e: add useElementSize hook
+
 ## 0.8.0
 
 ### Minor Changes
