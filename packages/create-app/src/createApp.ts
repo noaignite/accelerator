@@ -101,7 +101,7 @@ const moveFiles: Record<string, string | undefined> = {
   '_prettier.config.mjs': '../../prettier.config.mjs',
 }
 
-async function init() {
+async function createApp() {
   const help = argv.help
   if (help) {
     console.log(helpMessage)
@@ -412,6 +412,6 @@ function pkgFromUserAgent(userAgent: string | undefined) {
   }
 }
 
-init().catch((error: unknown) => {
+createApp().catch((error: unknown) => {
   console.error(error)
 })
