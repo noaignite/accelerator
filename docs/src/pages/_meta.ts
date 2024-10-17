@@ -1,5 +1,5 @@
 export default {
-  index: 'Introduction',
+  index: 'Get Started',
   contact: {
     title: 'Contact ↗',
     type: 'page',

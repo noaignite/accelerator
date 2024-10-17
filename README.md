@@ -2,6 +2,10 @@
 
 A collection of NoA Ignite packages.
 
+## Documentation
+
+For details on how to use the accelerator, check out our [documentation](https://noaignite.dev/).
+
 ## Starting a new project?
 
 Starting a new project is done through a combination of the `create-turbo` and the `@noaignite/create-app` executables.
