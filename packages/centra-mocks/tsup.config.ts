@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ['src/**/*.{ts,tsx}'],
+  entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
   format: ['esm', 'cjs'],
   bundle: false, // TODO: Do we even need to bundle a mock package?
   clean: true,
