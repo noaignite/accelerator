@@ -13,8 +13,8 @@
   "author": "NoA Ignite",
   "type": "module",
   "scripts": {
-    "build": "pnpm build:markdown && next build",
-    "build:markdown": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ./scripts/buildMarkdown.ts",
+    "build": "pnpm build:files && next build",
+    "build:files": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ./scripts/buildFiles.ts",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",

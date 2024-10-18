@@ -7,7 +7,7 @@
     "ci:test": "changeset status --since=origin/main && pnpm run build && pnpm run test",
     "dev": "turbo dev",
     "docs:build": "pnpm --filter docs run build",
-    "docs:build:markdown": "pnpm --filter docs run build:markdown",
+    "docs:build:files": "pnpm --filter docs run build:files",
     "docs:dev": "pnpm --filter docs run dev",
     "format": "prettier --write .",
     "lint": "turbo lint",
