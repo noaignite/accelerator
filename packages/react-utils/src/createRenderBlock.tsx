@@ -170,7 +170,7 @@ export function _createRenderBlock<
       return (
         <ErrorBoundary blockType={blockType} fallback={fallback} key={index}>
           <Suspense fallback={null}>
-            <Component renderIndex={index} {...componentProps} />
+            <Component blockType={blockType} renderIndex={index} {...componentProps} />
           </Suspense>
         </ErrorBoundary>
       )
