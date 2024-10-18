@@ -44,12 +44,14 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        // Allow imports of `devDependencies` inside test files.
+        // Allow imports of `devDependencies` inside certain files.
         devDependencies: [
           'test.{ts,tsx}', // repos with a single test file
           'test-*.{ts,tsx}', // repos with multiple top-level test files
           '**/*{.,_}{test,spec}.{ts,tsx}', // tests where the extension or filename suffix denotes that it is a test
-          '**/vitest.config.mts', // vitest config
+          '**/scripts/**/*.{mts,ts,tsx}', // script files
+          '**/tsup.config.{mts,ts,tsx}', // tsup files
+          '**/vitest.config.{mts,ts,tsx}', // vitest files
         ],
         optionalDependencies: false,
       },
@@ -64,6 +66,7 @@ module.exports = {
 
     'lines-around-directive': ['error', 'always'], // Enable & let prettier format.
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }], // Allow warn and error logs.
+    'prefer-named-capture-group': 'off', // Too strict.
   },
   overrides: [
     {
