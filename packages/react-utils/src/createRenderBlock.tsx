@@ -35,8 +35,8 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * }
  *
  * const adapters = {
- *   Hero: async (props: HeroData['props'], additionalData, globals): Promise<HeroProps> => {
- *     const { locale } = additionalData
+ *   Hero: async (props: HeroData['props'], context, globals): Promise<HeroProps> => {
+ *     const { locale } = context
  *     const { LinkComponent } = globals
  *
  *     const data = (await fetch( `https://domain.com/${locale}/posts/1`).then((res) => {
@@ -77,27 +77,39 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
 export const createRenderBlock = _createRenderBlock()
 
 /**
+ * The interface that block data needs to conform to.
+ */
+export interface BlockTypeMap {
+  blockType: string
+  props: Record<PropertyKey, unknown>
+}
+
+/**
+ * Type helper to set up a block adapter.
+ */
+export type BlockAdapter<
+  TInProps extends Record<PropertyKey, unknown>,
+  TOutProps extends Record<PropertyKey, unknown>,
+  TContext extends Record<PropertyKey, unknown>,
+  TGlobals extends Record<PropertyKey, unknown>,
+> = (props: TInProps, context: TContext, globals: TGlobals) => Promise<TOutProps> | TOutProps
+
+/**
  * A wrapper around `createRenderBlock` to give the posibility to define the
- * `TAdditionalData` type. This is currently a workaround as there is
- * currently no way in typescript to partially provide generics while having
- * the rest infer.
+ * `TContext` interface. This is currently a workaround as there is currently
+ * no way in typescript to partially provide generics while having the rest
+ * self-infer.
  *
  * @see https://github.com/microsoft/TypeScript/issues/10571
  * @see https://github.com/microsoft/TypeScript/pull/26349
  */
-export function _createRenderBlock<
-  TAdditionalData extends number | { index: number; [key: string]: unknown },
->() {
+export function _createRenderBlock<TContext extends { index: number; [key: string]: unknown }>() {
   return function __createRenderBlock<
     TBlocks extends Record<PropertyKey, ComponentType<any>>,
     TGlobals extends Record<PropertyKey, unknown>,
     TAdapters extends
       | {
-          [K in keyof TBlocks]?: (
-            props: any,
-            additionalData: TAdditionalData,
-            globals: TGlobals,
-          ) => Promise<PropsFrom<TBlocks[K]>> | PropsFrom<TBlocks[K]>
+          [K in keyof TBlocks]?: BlockAdapter<any, PropsFrom<TBlocks[K]>, TContext, TGlobals>
         }
       | undefined,
     TDefaultProps extends
@@ -126,19 +138,18 @@ export function _createRenderBlock<
         blockType: TBlockType
         props: keyof TAdapters extends never ? PropsFrom<TBlocks[TBlockType]> : any
       },
-      indexOrAdditionalData: TAdditionalData,
+      indexOrContext: number | TContext,
     ) {
       const { blockType, props } = data
-      const { index } =
-        typeof indexOrAdditionalData === 'number'
-          ? { index: indexOrAdditionalData }
-          : indexOrAdditionalData
+      const context = (
+        typeof indexOrContext === 'number' ? { index: indexOrContext } : indexOrContext
+      ) as TContext
 
       if (typeof blockType !== 'string') {
         if (process.env.NODE_ENV !== 'production') {
           console.error(
             'renderBlock: Block with index `%s` is missing the property `blockType`.',
-            index,
+            context.index,
           )
         }
         return null
@@ -148,7 +159,7 @@ export function _createRenderBlock<
         if (process.env.NODE_ENV !== 'production') {
           console.error(
             'renderBlock: Block with index `%s` and blockType `%s` could not find a matching component.',
-            index,
+            context.index,
             blockType,
           )
         }
@@ -163,14 +174,14 @@ export function _createRenderBlock<
       if (adapters) {
         const adapter = adapters[blockType]
         if (typeof adapter === 'function') {
-          componentProps = await adapter(componentProps, indexOrAdditionalData, globals)
+          componentProps = await adapter(componentProps, context, globals)
         }
       }
 
       return (
-        <ErrorBoundary blockType={blockType} fallback={fallback} key={index}>
+        <ErrorBoundary blockType={blockType} fallback={fallback} key={context.index}>
           <Suspense fallback={null}>
-            <Component renderIndex={index} {...componentProps} />
+            <Component blockType={blockType} renderIndex={context.index} {...componentProps} />
           </Suspense>
         </ErrorBoundary>
       )
