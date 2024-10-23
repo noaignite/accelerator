@@ -1,5 +1,17 @@
 # @noaignite/react-utils
 
+## 0.9.0
+
+### Minor Changes
+
+- cf69875: add useSticky hook
+- f214535: add useWindowSize hook
+- e5af57e: add useElementSize hook
+- a34f3c6: add useVisualViewport hook
+- 0110ff7: createRenderBlock - `blockType` is now passed to block component
+- 0110ff7: createRenderBlock - adapter `context` argument (prev `additionalData`) is now always an object
+- 0110ff7: createRenderBlock - export new `BlockTypeMap` & `BlockAdapter` types
+
 ## 0.8.0
 
 ### Minor Changes
