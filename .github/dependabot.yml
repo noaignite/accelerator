@@ -10,6 +10,10 @@ updates:
     schedule:
       interval: 'weekly'
     groups:
+      nextra:
+        patterns:
+          - 'nextra'
+          - 'nextra-theme-docs'
       storybook:
         patterns:
           - '@storybook/*'
