@@ -18,8 +18,10 @@ type DeclarationTypes =
   | InterfaceDeclaration
   | TypeAliasDeclaration
 
+const rootDir = '..'
 const sourceDir = '../packages'
 const outputDir = './src/pages/@noaignite'
+const ignoreDirs = ['.turbo', 'dist', 'node_modules', 'template-*']
 
 // Initialize the project
 const project = new Project()
@@ -28,7 +30,7 @@ const project = new Project()
 project.addSourceFilesAtPaths([
   `${sourceDir}/**/*.{ts,tsx}`,
   `!${sourceDir}/**/*index.{ts,tsx}`,
-  `!${sourceDir}/**/{.turbo,dist,node_modules,template-*}/**/*.{ts,tsx}`,
+  `!${sourceDir}/**/{${ignoreDirs.join(',')}}/**/*.{ts,tsx}`,
 ])
 
 /**
@@ -147,6 +149,7 @@ function writeMarkdownToFile(filePath: string, markdownContent: string): void {
   ensureDirectoryExists(outputDirectory)
 
   try {
+    // Write the file to the outputDir
     fs.writeFileSync(outputFilePath, markdownContent, { encoding: 'utf-8' })
     console.info(`Generated: ${outputFilePath}`)
   } catch (error) {
@@ -157,7 +160,7 @@ function writeMarkdownToFile(filePath: string, markdownContent: string): void {
 /**
  * Main function to iterate over source files, extract JSDoc, and write to .mdx files.
  */
-function buildMarkdown() {
+function generateMarkdown() {
   project.getSourceFiles().forEach((sourceFile) => {
     const markdownContent = extractJsDocsFromFile(sourceFile)
 
@@ -172,5 +175,73 @@ function buildMarkdown() {
   })
 }
 
-// Run the script
-buildMarkdown()
+/**
+ * Recursively finds all README.md files in a directory.
+ */
+function findReadmeFiles(dir: string): string[] {
+  let readmeFiles: string[] = []
+
+  // Read the directory contents
+  const filesAndDirs = fs.readdirSync(dir)
+
+  // Traverse the directory contents
+  for (const item of filesAndDirs) {
+    const fullPath = path.join(dir, item)
+    const stats = fs.statSync(fullPath)
+
+    if (stats.isDirectory()) {
+      // Skip ignored directories
+      if (ignoreDirs.includes(item)) {
+        continue
+      }
+
+      // Recurse into directories
+      readmeFiles = readmeFiles.concat(findReadmeFiles(fullPath))
+    } else if (stats.isFile() && item.toLowerCase() === 'readme.md') {
+      // Add README.md files to the list
+      readmeFiles.push(fullPath)
+    }
+  }
+
+  return readmeFiles
+}
+
+function copyReadmeFiles() {
+  // Find all README.md files under the sourceDir
+  const readmeFiles = findReadmeFiles(sourceDir)
+
+  readmeFiles.forEach((filePath) => {
+    const relativePath = path.relative(sourceDir, filePath)
+    const outputFilePath = path.join(outputDir, path.dirname(relativePath), 'README.md')
+
+    // Ensure the directory exists in the outputDir
+    const outputDirectory = path.dirname(outputFilePath)
+    ensureDirectoryExists(outputDirectory)
+
+    try {
+      // Copy the file to the outputDir
+      fs.copyFileSync(filePath, outputFilePath)
+      console.info(`Copied README.md to: ${outputFilePath}`)
+    } catch (error) {
+      console.error(`Failed to copy README.md to: ${outputFilePath}`, error)
+    }
+  })
+
+  // Find monorepo README.md
+  const filePath = path.resolve(rootDir, 'README.md')
+  const outputFilePath = path.join(outputDir, 'README.md')
+  try {
+    // Copy the file to the outputDir
+    fs.copyFileSync(filePath, outputFilePath)
+    console.info(`Copied README.md to: ${outputFilePath}`)
+  } catch (error) {
+    console.error(`Failed to copy README.md to: ${outputFilePath}`, error)
+  }
+}
+
+function buildFiles() {
+  generateMarkdown()
+  copyReadmeFiles()
+}
+
+buildFiles()
