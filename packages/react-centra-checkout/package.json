@@ -37,7 +37,8 @@
   },
   "dependencies": {
     "@noaignite/utils": "workspace:*",
-    "js-cookie": "^3.0.1"
+    "js-cookie": "^3.0.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@noaignite/centra-mocks": "workspace:*",
@@ -51,6 +52,7 @@
     "@types/react": "^18.3.12",
     "@vitest/coverage-v8": "^2.1.5",
     "jsdom": "^25.0.1",
+    "next": "^14.2.15",
     "nock": "14.0.0-beta.16",
     "tsup": "^8.3.5",
     "typescript": "5.4.5",
