@@ -39,7 +39,7 @@
     "@noaignite/centra-types": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "tsup": "^8.3.0",
+    "tsup": "^8.3.5",
     "typescript": "5.4.5"
   },
   "engines": {
