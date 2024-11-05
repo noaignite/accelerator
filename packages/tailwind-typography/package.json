@@ -35,7 +35,7 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "tailwindcss": "^3.4.14",
-    "tsup": "^8.3.0",
+    "tsup": "^8.3.5",
     "typescript": "5.4.5"
   },
   "peerDependencies": {
