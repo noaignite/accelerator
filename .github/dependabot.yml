@@ -22,6 +22,10 @@ updates:
         patterns:
           - 'turbo'
           - 'eslint-config-turbo'
+      vitest:
+        patterns:
+          - 'vitest'
+          - '@vitest/coverage-v8'
     ignore:
       - dependency-name: '*'
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
