@@ -39,6 +39,6 @@ export const breakpoints: Breakpoints = {
   },
   down: (key) => {
     const value = typeof key === 'number' ? key : values[key]
-    return `(max-width: ${value - pxToRem(0.05)}rem)`
+    return `not all and (min-width: ${value}rem)`
   },
 }
