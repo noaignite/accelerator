@@ -4,7 +4,8 @@
   "scripts": {
     "build": "turbo build",
     "ci:release": "pnpm run build && pnpm run test && changeset publish",
-    "ci:test": "changeset status --since=origin/main && pnpm run build && pnpm run test",
+    "ci:status": "changeset status --since=origin/main",
+    "ci:test": "pnpm run build && pnpm run test",
     "dev": "turbo dev",
     "docs:build": "pnpm --filter docs run build",
     "docs:build:files": "pnpm --filter docs run build:files",

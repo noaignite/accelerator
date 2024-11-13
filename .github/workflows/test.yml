@@ -25,5 +25,12 @@ jobs:
           node-version: 20.x
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run ci:test
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check changeset status
+        if: github.actor != 'dependabot[bot]'
+        run: pnpm run ci:status
+
+      - name: Run tests
+        run: pnpm run ci:test
