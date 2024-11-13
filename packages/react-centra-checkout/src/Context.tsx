@@ -335,7 +335,10 @@ export function CentraProvider(props: ProviderProps) {
 
         if (response.token && response.token !== apiToken) {
           apiClient.headers.set('api-token', response.token)
-          cookies.set(tokenName, response.token, { expires: tokenExpires, ...tokenCookieOptions })
+          cookies.set(tokenName, response.token, {
+            expires: tokenExpires,
+            ...tokenCookieOptions,
+          })
         }
       }
     },
