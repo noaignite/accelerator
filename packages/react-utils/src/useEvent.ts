@@ -64,10 +64,10 @@ export function useEvent<Type extends keyof MediaQueryListEventMap>(
   options?: EventOptions,
 ): void
 
-export function useEvent<Type extends keyof ElementEventMap, E extends Element | null>(
+export function useEvent<Type extends keyof HTMLElementEventMap, E extends Element | null>(
   reference: EventReference<RefObject<E>>,
   type: Type,
-  listener: (event: ElementEventMap[Type]) => void,
+  listener: (event: HTMLElementEventMap[Type]) => void,
   options?: EventOptions,
 ): void
 
@@ -92,7 +92,7 @@ export function useEvent(
       | VisualViewportEventMap[keyof VisualViewportEventMap]
       | MediaQueryListEventMap[keyof MediaQueryListEventMap]
       // eslint-disable-next-line @typescript-eslint/no-duplicate-type-constituents -- For symmetry with other parameters
-      | ElementEventMap[keyof ElementEventMap],
+      | HTMLElementEventMap[keyof ElementEventMap],
   ) => void,
   { when = true, capture = false, once = false, passive = false, signal }: EventOptions = {},
 ) {
