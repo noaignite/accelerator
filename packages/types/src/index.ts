@@ -1,6 +1,7 @@
 export * from './AnyFunction'
 export * from './Concatenate'
 export * from './DistributiveOmit'
+export * from './Entries'
 export * from './HintedNumber'
 export * from './HintedString'
 export * from './KeyOfAny'
