@@ -28,4 +28,4 @@ updates:
           - '@vitest/coverage-v8'
     ignore:
       - dependency-name: '*'
-        update-types: ['version-update:semver-major', 'version-update:semver-minor']
+        update-types: ['version-update:semver-major']
