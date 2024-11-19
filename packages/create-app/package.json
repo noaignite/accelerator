@@ -34,7 +34,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "cross-spawn": "^7.0.5",
+    "cross-spawn": "^7.0.6",
     "kolorist": "^1.8.0",
     "minimist": "^1.2.8",
     "prompts": "^2.4.2"
