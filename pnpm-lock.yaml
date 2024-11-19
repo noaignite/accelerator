@@ -228,8 +228,8 @@ importers:
         specifier: ^25.0.1
         version: 25.0.1
       nock:
-        specifier: 14.0.0-beta.15
-        version: 14.0.0-beta.15
+        specifier: 14.0.0-beta.16
+        version: 14.0.0-beta.16
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(jiti@2.1.2)(postcss@8.4.47)(typescript@5.4.5)(yaml@2.6.0)
@@ -1014,8 +1014,8 @@ packages:
   '@microsoft/tsdoc@0.14.2':
     resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
 
-  '@mswjs/interceptors@0.36.4':
-    resolution: {integrity: sha512-ktzj7bra4HatOGqXw/PXyresXxFtnZa570rm4olAyf9HbvNdEWRkQl81ykmJK0nCHxNndmh2zQ84TBYKFDM+sg==}
+  '@mswjs/interceptors@0.36.10':
+    resolution: {integrity: sha512-GXrJgakgJW3DWKueebkvtYgGKkxA7s0u5B0P5syJM5rvQUnrpLPigvci8Hukl7yEM+sU06l+er2Fgvx/gmiRgg==}
     engines: {node: '>=18'}
 
   '@napi-rs/simple-git-android-arm-eabi@0.1.19':
@@ -3955,8 +3955,8 @@ packages:
   nlcst-to-string@4.0.0:
     resolution: {integrity: sha512-YKLBCcUYKAg0FNlOBT6aI91qFmSiFKiluk655WzPF+DDMA02qIyy8uiRqI8QXtcFpEvll12LpL5MXqEmAZ+dcA==}
 
-  nock@14.0.0-beta.15:
-    resolution: {integrity: sha512-rp72chatxoZbR/2cYHwtb+IX6n6kkanYKGN2PKn4c12JBrj9n4xGUKFykuQHB+Gkz3fynlikFbMH2LI6VoebuQ==}
+  nock@14.0.0-beta.16:
+    resolution: {integrity: sha512-H6ZyT+Naz9wfy0gNrhD0m+VIkCq9li/eaNQPEUEjXg06gsLR3/jDctROt44Z+iT3gFnkTQ0wXtwKJPdvbueBbg==}
     engines: {node: '>= 18'}
 
   node-releases@2.0.18:
@@ -6146,7 +6146,7 @@ snapshots:
 
   '@microsoft/tsdoc@0.14.2': {}
 
-  '@mswjs/interceptors@0.36.4':
+  '@mswjs/interceptors@0.36.10':
     dependencies:
       '@open-draft/deferred-promise': 2.2.0
       '@open-draft/logger': 0.3.0
@@ -10150,9 +10150,9 @@ snapshots:
     dependencies:
       '@types/nlcst': 2.0.3
 
-  nock@14.0.0-beta.15:
+  nock@14.0.0-beta.16:
     dependencies:
-      '@mswjs/interceptors': 0.36.4
+      '@mswjs/interceptors': 0.36.10
       json-stringify-safe: 5.0.1
       propagate: 2.0.1
 
