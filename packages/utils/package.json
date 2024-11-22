@@ -30,6 +30,7 @@
     "test:unit": "vitest run"
   },
   "devDependencies": {
+    "@noaignite/types": "workspace:^",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "tsup": "^8.3.5",
