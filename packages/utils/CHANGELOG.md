@@ -1,5 +1,16 @@
 # @noaignite/utils
 
+## 3.3.0
+
+### Minor Changes
+
+- e51d5d3: add normalizeToArray helper
+- 189cd03: add random helper
+- 6f4eb57: add debounce helper
+- 0554c4f: add URLSearchParamsFromObject helper
+- 7bec3e0: add chunk helper
+- 910044d: add objectFromURLSearchParams helper
+
 ## 3.2.0
 
 ### Minor Changes

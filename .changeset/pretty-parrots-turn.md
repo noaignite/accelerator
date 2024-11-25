@@ -2,4 +2,4 @@
 '@noaignite/utils': minor
 ---
 
-add random helper
+add collate utility function

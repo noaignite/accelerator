@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/utils",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "private": false,
   "description": "Utility functions used by NoA Ignite",
   "keywords": [
@@ -30,11 +30,12 @@
     "test:unit": "vitest run"
   },
   "devDependencies": {
+    "@noaignite/types": "workspace:^",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "tsup": "^8.3.5",
     "typescript": "5.4.5",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.8"
   },
   "engines": {
     "node": ">=20"
