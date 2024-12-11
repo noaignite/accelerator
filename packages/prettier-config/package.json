@@ -5,7 +5,7 @@
   "main": "./index.mjs",
   "devDependencies": {
     "@vercel/style-guide": "6.0.0",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "prettier-plugin-organize-imports": "4.1.0",
     "prettier-plugin-style-order": "0.2.2"
   }
