@@ -1,5 +1,12 @@
 # @noaignite/types
 
+## 1.3.0
+
+### Minor Changes
+
+- 3cb112d: add Keys type helper
+- bb18ba4: add Entries type helper
+
 ## 1.2.0
 
 ### Minor Changes
