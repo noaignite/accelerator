@@ -327,6 +327,9 @@ importers:
 
   packages/utils:
     devDependencies:
+      '@noaignite/types':
+        specifier: workspace:^
+        version: link:../types
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
