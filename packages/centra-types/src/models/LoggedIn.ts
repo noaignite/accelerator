@@ -13,4 +13,12 @@ export interface LoggedIn {
   phoneNumber?: string
   language?: string
   newsletter?: boolean
+  consents?: {
+    key: string
+    consented: boolean
+    name?: string
+    text?: string
+    version?: string
+    lanuguage?: string
+  }[]
 }
