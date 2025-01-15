@@ -1,5 +1,16 @@
 # @noaignite/types
 
+## 1.3.0
+
+### Minor Changes
+
+- 3cb112d: add Keys type helper
+- bb18ba4: add Entries type helper
+
+### Patch Changes
+
+- 13691fb: allow react 19 as a peer dep
+
 ## 1.2.0
 
 ### Minor Changes

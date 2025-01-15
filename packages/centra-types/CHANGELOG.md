@@ -1,5 +1,11 @@
 # @noaignite/centra-types
 
+## 3.1.0
+
+### Minor Changes
+
+- 49ef98d: Add `consents` to `LoggedIn` type
+
 ## 3.0.0
 
 ### Major Changes
