@@ -1,5 +1,25 @@
 # @noaignite/react-utils
 
+## 0.10.0
+
+### Minor Changes
+
+- cb9b64e: add useGesture hook
+- 17c785b: add useDragScroll hook
+- cb9b64e: limit event map in useEvent to HTMLElement
+- 6d3b3d8: add usePressHold hook
+
+### Patch Changes
+
+- cb9b64e: change extension of useEvent from .tsx to .ts
+- Updated dependencies [e51d5d3]
+- Updated dependencies [189cd03]
+- Updated dependencies [6f4eb57]
+- Updated dependencies [0554c4f]
+- Updated dependencies [7bec3e0]
+- Updated dependencies [910044d]
+  - @noaignite/utils@3.3.0
+
 ## 0.9.0
 
 ### Minor Changes
