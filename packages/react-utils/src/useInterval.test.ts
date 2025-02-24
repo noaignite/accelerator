@@ -12,6 +12,8 @@ test('callback is executed at each interval', () => {
     useInterval(callback, 1000, { when: true })
   })
 
+  expect(callback).not.toHaveBeenCalled()
+
   vi.advanceTimersByTime(1000)
   expect(callback).toHaveBeenCalledTimes(1)
 
