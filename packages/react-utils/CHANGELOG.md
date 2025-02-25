@@ -1,5 +1,13 @@
 # @noaignite/react-utils
 
+## 0.10.1
+
+### Patch Changes
+
+- 25b9e22: fix double-negation in conditional inside useTimeout hook
+- Updated dependencies [06e90d3]
+  - @noaignite/utils@3.4.0
+
 ## 0.10.0
 
 ### Minor Changes
