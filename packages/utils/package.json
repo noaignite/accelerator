@@ -35,7 +35,7 @@
     "@repo/typescript-config": "workspace:*",
     "tsup": "^8.3.5",
     "typescript": "5.4.5",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "engines": {
     "node": ">=20"
