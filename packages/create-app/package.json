@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/create-app",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "private": false,
   "description": "Scaffold NoA Ignite templates within a turborepo project",
   "keywords": [

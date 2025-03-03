@@ -1,5 +1,21 @@
 # @noaignite/react-utils
 
+## 0.11.0
+
+### Minor Changes
+
+- 759368c: add createPolymorph helper
+
+### Patch Changes
+
+- d88ed47: fix double-negation in condition
+- 7362013: bump react from 18 to 19
+- 7bdd79e: fix threshold value in useIntersectionObserver being checked as reference
+- 25b9e22: fix double-negation in conditional inside useTimeout hook
+- Updated dependencies [06e90d3]
+- Updated dependencies [bb1ebc9]
+  - @noaignite/utils@3.4.0
+
 ## 0.10.0
 
 ### Minor Changes

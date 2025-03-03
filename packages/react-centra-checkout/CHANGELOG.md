@@ -1,5 +1,14 @@
 # @noaignite/react-centra-checkout
 
+## 2.0.3
+
+### Patch Changes
+
+- e2985b4: bump react from 18 to 19
+- Updated dependencies [06e90d3]
+- Updated dependencies [bb1ebc9]
+  - @noaignite/utils@3.4.0
+
 ## 2.0.2
 
 ### Patch Changes
