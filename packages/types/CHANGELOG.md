@@ -1,5 +1,11 @@
 # @noaignite/types
 
+## 1.3.1
+
+### Patch Changes
+
+- 30d25be: bump react from 18 to 19
+
 ## 1.3.0
 
 ### Minor Changes

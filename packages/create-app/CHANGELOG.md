@@ -1,5 +1,11 @@
 # @noaignite/create-app
 
+## 0.10.1
+
+### Patch Changes
+
+- d5a3609: bump react from 18 to 19
+
 ## 0.10.0
 
 ### Minor Changes
