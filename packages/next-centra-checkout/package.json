@@ -1,0 +1,63 @@
+{
+  "name": "@noaignite/next-centra-checkout",
+  "version": "0.0.0",
+  "private": false,
+  "description": "Next.js helpers for Centra checkout api",
+  "keywords": [
+    "backend",
+    "centra",
+    "nextjs",
+    "react",
+    "typescript",
+    "vercel"
+  ],
+  "bugs": {
+    "url": "https://github.com/noaignite/accelerator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noaignite/accelerator.git",
+    "directory": "packages/next-centra-checkout"
+  },
+  "license": "MIT",
+  "author": "NoA Ignite",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
+    "test:coverage": "vitest run --coverage",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
+  },
+  "dependencies": {
+    "@noaignite/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@noaignite/centra-types": "workspace:*",
+    "@noaignite/style-guide": "workspace:*",
+    "@types/react": "^19.1.2",
+    "next": "^15.0.0",
+    "nock": "14.0.1",
+    "react": "^19.1.0",
+    "tsup": "^8.3.5",
+    "typescript": "5.4.5"
+  },
+  "peerDependencies": {
+    "next": "^14.0.0 || ^15.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
