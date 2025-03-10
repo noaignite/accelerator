@@ -32,9 +32,7 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
-    "test:coverage": "vitest run --coverage",
-    "test:unit": "vitest run",
-    "test:unit:watch": "vitest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@noaignite/utils": "workspace:*"
