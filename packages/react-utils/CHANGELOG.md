@@ -1,5 +1,12 @@
 # @noaignite/react-utils
 
+## 0.11.1
+
+### Patch Changes
+
+- Updated dependencies [47502b3]
+  - @noaignite/utils@3.5.0
+
 ## 0.11.0
 
 ### Minor Changes
