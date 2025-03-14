@@ -27,12 +27,14 @@
     "build": "tsup",
     "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
     "test:types": "tsc --noEmit",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "test:unit:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@noaignite/types": "workspace:^",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@vitest/coverage-v8": "^2.1.9",
     "tsup": "^8.3.5",
     "typescript": "5.4.5",
     "vitest": "^2.1.9"
