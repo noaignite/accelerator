@@ -49,7 +49,7 @@ module.exports = {
           '**/*{.,_}{test,spec}.{ts,tsx}', // tests where the extension or filename suffix denotes that it is a test
           '**/scripts/**/*.{mts,ts,tsx}', // script files
           '**/tsup.config.{mts,ts,tsx}', // tsup files
-          '**/vitest.config.{mts,ts,tsx}', // vitest files
+          '**/vitest.{config,setup}.{mts,ts,tsx}', // vitest files
         ],
         optionalDependencies: false,
       },
@@ -62,4 +62,12 @@ module.exports = {
     'no-console': ['error', { allow: ['info', 'warn', 'error'] }], // Allow warn and error logs.
     'prefer-named-capture-group': 'off', // Too strict.
   },
+  overrides: [
+    {
+      files: ['**/*.test.ts', '**/*.test.tsx'],
+      rules: {
+        '@typescript-eslint/no-empty-function': 'off',
+      },
+    },
+  ],
 }
