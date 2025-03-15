@@ -1,4 +1,5 @@
 /* eslint-disable tsdoc/syntax -- Allow documentation of object params */
+import { debounce } from './debounce'
 
 type Options<T> = {
   callback: (args: T[]) => void
@@ -48,37 +49,32 @@ type Options<T> = {
 export function createBatchedCallback<T>(options: Options<T>) {
   const { callback, limit, wait } = options
 
-  let timeoutId: ReturnType<typeof setTimeout> | null = null
   let argsQueue: T[] = []
+
+  // Flush the queue: call the callback and clear the queue.
+  const flush = () => {
+    callback(argsQueue)
+    argsQueue = []
+  }
+
+  // Create a debounced flush function.
+  const flushDebounced = debounce(flush, wait)
+
+  // Helper to determine if the flush condition is met.
+  const isLimitReached = (queue: T[]) => {
+    if (typeof limit === 'number') return queue.length >= limit
+    if (typeof limit === 'function') return limit(queue)
+    return false
+  }
 
   return (arg: T) => {
     argsQueue.push(arg)
 
-    let condition = false
-    if (typeof limit === 'number') {
-      condition = argsQueue.length >= limit
-    } else if (typeof limit === 'function') {
-      condition = limit(argsQueue)
-    }
-
-    if (condition) {
-      callback(argsQueue)
-      argsQueue = []
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-      }
-
-      timeoutId = null
-      return
-    }
-
-    // Set a new timeout to process the queue after the specified wait time
-    if (!timeoutId) {
-      timeoutId = setTimeout(() => {
-        callback(argsQueue)
-        argsQueue = []
-        timeoutId = null
-      }, wait)
+    if (isLimitReached(argsQueue)) {
+      flushDebounced.clear()
+      flush()
+    } else {
+      flushDebounced()
     }
   }
 }
