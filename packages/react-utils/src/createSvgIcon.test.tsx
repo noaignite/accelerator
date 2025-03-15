@@ -53,7 +53,13 @@ describe('createSvgIcon', () => {
         <circle cx="12" cy="12" data-testid="custom-child" r="10" />
       </TestIcon>,
     )
-    expect(screen.getByTestId('custom-child')).toBeInTheDocument()
+
+    const customChild = screen.getByTestId('custom-child')
+    const svgIcon = screen.getByTestId('svg-icon')
+
+    expect(customChild).toBeInTheDocument()
+    expect(customChild.parentNode).toBe(svgIcon)
+    expect(svgIcon.children.length).toBe(1)
   })
 
   // Test that ref is forwarded to the SVG element.
