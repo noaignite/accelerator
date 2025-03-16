@@ -17,4 +17,4 @@ import type { RefObject } from 'react'
  * ```
  */
 export const isRefObject = (value: unknown): value is RefObject<unknown> =>
-  isObject(value) && Object.isExtensible(value) && 'current' in value
+  isObject(value) && 'current' in value
