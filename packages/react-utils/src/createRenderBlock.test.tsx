@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for test files */
-import '@testing-library/jest-dom' // for toBeInTheDocument, etc.
 import { render, screen, waitFor } from '@testing-library/react'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import type { BlockAdapter } from './createRenderBlock'
