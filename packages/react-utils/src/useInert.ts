@@ -1,3 +1,5 @@
+'use client'
+
 import type { HintedString } from '@noaignite/types'
 import type { RefObject } from 'react'
 import { useIsomorphicEffect } from './useIsomorphicEffect'
