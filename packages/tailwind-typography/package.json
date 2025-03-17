@@ -25,7 +25,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
+    "lint": "eslint .",
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
@@ -36,7 +36,7 @@
     "@repo/typescript-config": "workspace:*",
     "tailwindcss": "^3.4.17",
     "tsup": "^8.3.5",
-    "typescript": "5.4.5"
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.0"

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-confusing-void-expression -- Allow for testing purposes */
-
 import { describe, expect, it } from 'vitest'
 import { assert } from './assert'
 

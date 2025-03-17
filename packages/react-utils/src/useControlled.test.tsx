@@ -57,8 +57,7 @@ describe('useControlled', () => {
   })
 
   it('warns when switching from uncontrolled to controlled', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function -- Don't log when expecting error.
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
 
     const { rerender } = render(<TestComponent>{() => null}</TestComponent>)
 
@@ -74,8 +73,7 @@ describe('useControlled', () => {
   })
 
   it('warns when switching from controlled to uncontrolled', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function -- Don't log when expecting error.
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
 
     const { rerender } = render(<TestComponent value="foobar">{() => null}</TestComponent>)
 
@@ -91,8 +89,7 @@ describe('useControlled', () => {
   })
 
   it('warns when changing the defaultValue prop after initial rendering', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function -- Don't log when expecting error.
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
 
     const { rerender } = render(<TestComponent>{() => null}</TestComponent>)
 
@@ -108,8 +105,7 @@ describe('useControlled', () => {
   })
 
   it('should not raise a warning if changing the defaultValue when controlled', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function -- Don't log when expecting error.
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
 
     const { rerender } = render(
       <TestComponent defaultValue={0} value={1}>
@@ -129,8 +125,7 @@ describe('useControlled', () => {
   })
 
   it('should not raise a warning if setting NaN as the defaultValue when uncontrolled', () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function -- Don't log when expecting error.
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
 
     render(<TestComponent defaultValue={NaN}>{() => null}</TestComponent>)
     expect(consoleSpy).not.toHaveBeenCalled()

@@ -21,7 +21,7 @@ test('updates on window size changes', () => {
   act(dispatch.bind(null, 1920, 1080))
 
   // Either all or none of the property values should be numbers
-  expect(Object.values(result.current).every((v) => typeof v === 'number'))
+  expect(Object.values(result.current).every((v) => typeof v === 'number')).toBe(true)
 
   expect(result.current.innerWidth).toBe(1920)
   expect(result.current.innerHeight).toBe(1080)
