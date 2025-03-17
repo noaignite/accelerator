@@ -1,0 +1,89 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.0-beta.1/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/src/**/*.{js,jsx,ts,tsx,cjs,cjsx,mjs,mjsx,mts,mtsx,cts,ctsx}",
+      "**/*.{json,jsonc,md,mdx}"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noEmptyInterface": "off",
+        // Vercel style-guide
+        "noConsole": {
+          "level": "error",
+          "options": { "allow": ["error", "warn", "info"] }
+        },
+        // Vercel style-guide
+        "noLabelVar": "error",
+        // Vercel style-guide
+        "useDefaultSwitchClauseLast": "error"
+      },
+      "complexity": {
+        // Consider removing this rule
+        "noForEach": "off",
+        // Vercel style-guide
+        "noUselessUndefinedInitialization": "error",
+        // Vercel style-guide
+        "noUselessStringConcat": "error"
+      },
+      "correctness": {
+        // Vercel style-guide
+        "useHookAtTopLevel": "error",
+        // Vercel style-guide
+        "useArrayLiterals": "error",
+        // temp
+        "useExhaustiveDependencies": "off"
+      },
+      "nursery": {
+        // Vercel style-guide
+        "noTemplateCurlyInString": "error",
+        // Vercel style-guide
+        "useConsistentCurlyBraces": "warn",
+        // Vercel style-guide
+        "noNestedTernary": "error"
+      },
+      "style": {
+        // Vercel style-guide
+        "noYodaExpression": "error",
+        // Vercel style-guide
+        "useConsistentBuiltinInstantiation": "error",
+        // Vercel style-guide
+        "noImplicitBoolean": "warn",
+        // Vercel style-guide
+        "useFragmentSyntax": "warn",
+        // Vercel style-guide
+        "useCollapsedElseIf": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "quoteStyle": "single",
+      "semicolons": "asNeeded"
+    }
+  }
+}
