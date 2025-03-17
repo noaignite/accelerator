@@ -1,3 +1,5 @@
+'use client'
+
 import { assert } from '@noaignite/utils'
 import type { RefObject } from 'react'
 import { useEffect, useRef } from 'react'

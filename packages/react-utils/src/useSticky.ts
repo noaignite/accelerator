@@ -1,3 +1,5 @@
+'use client'
+
 import { assert } from '@noaignite/utils'
 import { useCallback, useEffect, useState, type RefObject } from 'react'
 import { useIntersectionObserver } from './useIntersectionObserver'

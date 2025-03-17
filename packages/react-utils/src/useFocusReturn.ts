@@ -1,3 +1,5 @@
+'use client'
+
 import type { RefObject } from 'react'
 import { useIsomorphicEffect } from './useIsomorphicEffect'
 
