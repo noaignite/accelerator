@@ -19,14 +19,14 @@ describe('chunk', () => {
   })
 
   it('should turn array into thunks of n size', () => {
-    const arr = [1, 2, 3, 4, 5, 6] // prettier-ignore
-    const len1chunks = [[1], [2], [3], [4], [5], [6]] // prettier-ignore
-    const len2chunks = [[1, 2], [3, 4], [5, 6]] // prettier-ignore
-    const len3chunks = [[1, 2, 3], [4, 5, 6]] // prettier-ignore
-    const len4chunks = [[1, 2, 3, 4], [5, 6]] // prettier-ignore
-    const len5chunks = [[1, 2, 3, 4, 5], [6]] // prettier-ignore
-    const len6chunks = [[1, 2, 3, 4, 5, 6]] // prettier-ignore
-    const len7chunks = [[1, 2, 3, 4, 5, 6]] // prettier-ignore
+    const arr = [1, 2, 3, 4, 5, 6] // biome-ignore:
+    const len1chunks = [[1], [2], [3], [4], [5], [6]] // biome-ignore:
+    const len2chunks = [[1, 2], [3, 4], [5, 6]] // biome-ignore:
+    const len3chunks = [[1, 2, 3], [4, 5, 6]] // biome-ignore:
+    const len4chunks = [[1, 2, 3, 4], [5, 6]] // biome-ignore:
+    const len5chunks = [[1, 2, 3, 4, 5], [6]] // biome-ignore:
+    const len6chunks = [[1, 2, 3, 4, 5, 6]] // biome-ignore:
+    const len7chunks = [[1, 2, 3, 4, 5, 6]] // biome-ignore:
 
     expect(chunk(arr, 1)).toStrictEqual(len1chunks)
     expect(chunk(arr, 2)).toStrictEqual(len2chunks)
