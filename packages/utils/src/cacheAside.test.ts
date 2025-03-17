@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { CacheAsideOptions, cacheAside } from './cacheAside'
+import { type CacheAsideOptions, cacheAside } from './cacheAside'
 
 describe('EntriesClient', () => {
   type ClientCacheEntry = { id: string; name: string }
@@ -24,7 +24,7 @@ describe('EntriesClient', () => {
           })
 
           return Promise.resolve(entries.filter(Boolean) as ClientCacheEntry[])
-        } catch (e) {
+        } catch {
           return []
         }
       }),
