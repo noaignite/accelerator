@@ -21,7 +21,7 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.1.4",
+    "next": "^15.2.3",
     "nextra": "^3.3.1",
     "nextra-theme-docs": "^3.3.1",
     "react": "^19.0.0",
