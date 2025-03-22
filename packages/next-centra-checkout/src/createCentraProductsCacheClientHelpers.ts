@@ -1,0 +1,47 @@
+type ClientHelperOptions = {
+  /**
+   * Endpoint base path.
+   * The returned API endpoint should be absolute, meaning either a full URL or a path beginning
+   * with a `/`. The returned API endpoint should not contain any search parameters.
+   *
+   * @example `/api/centra`
+   */
+  endpointBasePath: string
+}
+
+export type SessionContext = {
+  market: string
+  pricelist: string
+  language: string
+}
+
+/**
+ * Create Centra product cache client helpers.
+ * Helpers to be called client-side to retrieve cached data from Centra.
+ * To be used in conjunction with `createCentraProductsCacheServerHelpers`
+ */
+function createCentraProductsCacheClientHelper<TProduct>(options: ClientHelperOptions) {
+  const { endpointBasePath } = options
+
+  return {
+    /**
+     * Fetch products.
+     *
+     * @param sessionContext -  The current users session context.
+     * @param ids - The product IDs to be fetched.
+     */
+    fetchProducts: async (
+      sessionContext: SessionContext,
+      ids: string[],
+      init?: { signal: AbortSignal },
+    ) => {
+      const endpoint = `${endpointBasePath}/${sessionContext.market}/${sessionContext.pricelist}/${sessionContext.language}`
+
+      return fetch(`${endpoint}?ids=${ids.join(',')}`, { signal: init?.signal ?? null }).then(
+        (response) => response.json() as Promise<TProduct[]>,
+      )
+    },
+  }
+}
+
+export default createCentraProductsCacheClientHelper
