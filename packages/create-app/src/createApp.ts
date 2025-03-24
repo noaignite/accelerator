@@ -1,6 +1,3 @@
-/* eslint-disable import/no-named-as-default -- Not sure what this is about */
-/* eslint-disable no-console -- Allow as it is a CLI tool */
-
 import { sync as spawnSync } from 'cross-spawn'
 import { blue, bold, cyan, gray, lightBlue, lightGray, magenta, red } from 'kolorist'
 import minimist from 'minimist'
@@ -29,7 +26,7 @@ Scaffold NoA Ignite templates within a turborepo project.
 
 type ColorFunc = (str: string | number) => string
 
-// `node:fs` commands as are stricly typed arrays
+// `node:fs` commands as are strictly typed arrays
 type NodeFsCommand = ['writeFileSync', ...Parameters<typeof fs.writeFileSync>]
 // `spawnSync` commands are loosely typed strings
 type SpawnSyncCommand = `${string} ${string}`
@@ -257,8 +254,7 @@ async function createApp() {
 
   // Flatten all selected template commands
   const customCommands = templates
-    .map((t) => t.customCommands)
-    .flat()
+    .flatMap((t) => t.customCommands)
     .filter(Boolean) as Command[]
 
   // Run commands from project root
@@ -267,7 +263,7 @@ async function createApp() {
   }
 
   for (const customCommand of customCommands) {
-    // `node:fs` commands as are stricly typed arrays
+    // `node:fs` commands as are strictly typed arrays
     if (Array.isArray(customCommand)) {
       const [command, ...args] = customCommand
       const formattedArgs = args.map((arg) =>
