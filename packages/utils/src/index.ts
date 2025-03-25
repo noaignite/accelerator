@@ -1,4 +1,5 @@
 export * from './assert'
+export * from './cacheAside'
 export * from './calculateContrast'
 export * from './calculateLuminance'
 export * from './capitalize'
