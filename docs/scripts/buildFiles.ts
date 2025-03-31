@@ -18,6 +18,7 @@ type DeclarationTypes =
   | InterfaceDeclaration
   | TypeAliasDeclaration
 
+const githubUrl = 'https://github.com/noaignite/accelerator/tree/main'
 const rootDir = '..'
 const sourceDir = '../packages'
 const outputDir = './src/pages/@noaignite'
@@ -64,6 +65,9 @@ function getDeclarationName(declaration: DeclarationTypes): string | undefined {
  */
 function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
   let markdown = `### \`${name}\`\n\n`
+
+  const srcUrl = `${githubUrl}/${path.relative(rootDir, doc.getSourceFile().getFilePath())}`
+  markdown += `[See source](${srcUrl})\n\n`
 
   const comment = doc.getComment()
   if (comment) {
@@ -206,42 +210,40 @@ function findReadmeFiles(dir: string): string[] {
   return readmeFiles
 }
 
-function copyReadmeFiles() {
-  // Find all README.md files under the sourceDir
+function copyFile(source: string, destination: string) {
+  try {
+    fs.copyFileSync(source, destination)
+    console.info(`Copied ${path.basename(source)} to: ${destination}`)
+  } catch (error) {
+    console.error(`Failed to copy ${path.basename(source)} to: ${destination}`, error)
+  }
+}
+
+function copyFiles() {
+  // Copy all package README.md files
   const readmeFiles = findReadmeFiles(sourceDir)
 
   readmeFiles.forEach((filePath) => {
     const relativePath = path.relative(sourceDir, filePath)
     const outputFilePath = path.join(outputDir, path.dirname(relativePath), 'README.md')
 
-    // Ensure the directory exists in the outputDir
-    const outputDirectory = path.dirname(outputFilePath)
-    ensureDirectoryExists(outputDirectory)
-
-    try {
-      // Copy the file to the outputDir
-      fs.copyFileSync(filePath, outputFilePath)
-      console.info(`Copied README.md to: ${outputFilePath}`)
-    } catch (error) {
-      console.error(`Failed to copy README.md to: ${outputFilePath}`, error)
-    }
+    ensureDirectoryExists(path.dirname(outputFilePath))
+    copyFile(filePath, outputFilePath)
   })
 
-  // Find monorepo README.md
-  const filePath = path.resolve(rootDir, 'README.md')
-  const outputFilePath = path.join(outputDir, 'README.md')
-  try {
-    // Copy the file to the outputDir
-    fs.copyFileSync(filePath, outputFilePath)
-    console.info(`Copied README.md to: ${outputFilePath}`)
-  } catch (error) {
-    console.error(`Failed to copy README.md to: ${outputFilePath}`, error)
-  }
+  // Copy specified monorepo root files
+  const monorepoRootFiles = ['CONTRIBUTING.md', 'README.md']
+
+  monorepoRootFiles.forEach((filename) => {
+    const sourcePath = path.resolve(rootDir, filename)
+    const destinationPath = path.join(outputDir, filename)
+    copyFile(sourcePath, destinationPath)
+  })
 }
 
 function buildFiles() {
   generateMarkdown()
-  copyReadmeFiles()
+  copyFiles()
 }
 
 buildFiles()
