@@ -54,18 +54,18 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: Accelerator docs
-- `@noaignite/centra-mocks`: A collection of mocks to the Centra API
-- `@noaignite/centra-types`: Typescript definitions for Centra APIs
-- `@noaignite/create-app`: A CLI tool to scaffold out templates within a Turborepo project
-- `@noaignite/react-centra-checkout`: React helper functions for Centra APIs
-- `@noaignite/react-utils`: React helper functions
-- `@noaignite/tailwind-typography`: TailwindCSS plugin to create responsive typography
-- `@noaignite/types`: Type helpers by NoA Ignite
-- `@noaignite/utils`: Basic helper functions
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/prettier-config`: `prettier` configurations (includes `@vercel/style-guide`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- [`docs`](./docs): Accelerator docs
+- [`@noaignite/centra-mocks`](./packages/centra-mocks): A collection of mocks to the Centra API
+- [`@noaignite/centra-types`](./packages/centra-types): Typescript definitions for Centra APIs
+- [`@noaignite/create-app`](./packages/create-app): A CLI tool to scaffold out templates within a Turborepo project
+- [`@noaignite/react-centra-checkout`](./packages/react-centra-checkout): React helper functions for Centra APIs
+- [`@noaignite/react-utils`](./packages/react-utils): React helper functions
+- [`@noaignite/tailwind-typography`](./packages/tailwind-typography): TailwindCSS plugin to create responsive typography
+- [`@noaignite/types`](./packages/types): Type helpers by NoA Ignite
+- [`@noaignite/utils`](./packages/utils): Basic helper functions
+- [`@repo/eslint-config`](./packages/eslint-config): `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- [`@repo/prettier-config`](./packages/prettier-config): `prettier` configurations (includes `@vercel/style-guide`)
+- [`@repo/typescript-config`](./packages/typescript-config): `tsconfig.json`s used throughout the monorepo
 
 The goal is for each package/app to be 100% [TypeScript](https://www.typescriptlang.org/).
 
