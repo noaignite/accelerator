@@ -18,6 +18,7 @@ type DeclarationTypes =
   | InterfaceDeclaration
   | TypeAliasDeclaration
 
+const githubUrl = 'https://github.com/noaignite/accelerator/tree/main'
 const rootDir = '..'
 const sourceDir = '../packages'
 const outputDir = './src/pages/@noaignite'
@@ -64,6 +65,9 @@ function getDeclarationName(declaration: DeclarationTypes): string | undefined {
  */
 function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
   let markdown = `### \`${name}\`\n\n`
+
+  const srcUrl = `${githubUrl}/${path.relative(rootDir, doc.getSourceFile().getFilePath())}`
+  markdown += `[See source](${srcUrl})\n\n`
 
   const comment = doc.getComment()
   if (comment) {
