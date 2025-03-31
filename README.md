@@ -92,3 +92,7 @@ To develop all apps and packages, run the following command:
 ```
 pnpm dev
 ```
+
+## Contributing
+
+Want to help out and contribute? Please see our [contributing doc](./CONTRIBUTING.md).
