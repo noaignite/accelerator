@@ -227,9 +227,20 @@ function copyReadmeFiles() {
     }
   })
 
+  // Find monorepo CONTRIBUTING.md
+  let filePath = path.resolve(rootDir, 'CONTRIBUTING.md')
+  let outputFilePath = path.join(outputDir, 'CONTRIBUTING.md')
+  try {
+    // Copy the file to the outputDir
+    fs.copyFileSync(filePath, outputFilePath)
+    console.info(`Copied CONTRIBUTING.md to: ${outputFilePath}`)
+  } catch (error) {
+    console.error(`Failed to copy CONTRIBUTING.md to: ${outputFilePath}`, error)
+  }
+
   // Find monorepo README.md
-  const filePath = path.resolve(rootDir, 'README.md')
-  const outputFilePath = path.join(outputDir, 'README.md')
+  filePath = path.resolve(rootDir, 'README.md')
+  outputFilePath = path.join(outputDir, 'README.md')
   try {
     // Copy the file to the outputDir
     fs.copyFileSync(filePath, outputFilePath)
