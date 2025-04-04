@@ -1,4 +1,3 @@
-/* eslint-disable import/no-named-as-default -- Not sure what this is about */
 /* eslint-disable no-console -- Allow as it is a CLI tool */
 
 import { sync as spawnSync } from 'cross-spawn'

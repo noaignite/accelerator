@@ -13,9 +13,8 @@ describe('deepmerge', () => {
     )
 
     // @ts-expect-error -- Allow `__proto__` for testing
-    // eslint-disable-next-line no-proto -- Allow `__proto__` for testing
-    expect(result.__proto__).to.have.property('isAdmin')
-    expect({}).not.to.have.property('isAdmin')
+    expect(result.__proto__).toHaveProperty('isAdmin')
+    expect({}).not.toHaveProperty('isAdmin')
   })
 
   // https://cwe.mitre.org/data/definitions/915.html
@@ -28,8 +27,8 @@ describe('deepmerge', () => {
       },
     )
 
-    expect(result.constructor.prototype).to.have.property('isAdmin')
-    expect({}).not.to.have.property('isAdmin')
+    expect(result.constructor.prototype).toHaveProperty('isAdmin')
+    expect({}).not.toHaveProperty('isAdmin')
   })
 
   // https://cwe.mitre.org/data/definitions/915.html
@@ -43,8 +42,8 @@ describe('deepmerge', () => {
     )
 
     // @ts-expect-error -- Allow `__proto__` for testing
-    expect(result.prototype).to.have.property('isAdmin')
-    expect({}).not.to.have.property('isAdmin')
+    expect(result.prototype).toHaveProperty('isAdmin')
+    expect({}).not.toHaveProperty('isAdmin')
   })
 
   it('should appropriately copy the fields without prototype pollution', () => {
@@ -54,14 +53,13 @@ describe('deepmerge', () => {
     )
 
     // @ts-expect-error -- Allow `__proto__` for testing
-    // eslint-disable-next-line no-proto -- Allow `__proto__` for testing
-    expect(result.__proto__).to.have.property('isAdmin')
-    expect({}).not.to.have.property('isAdmin')
+    expect(result.__proto__).toHaveProperty('isAdmin')
+    expect({}).not.toHaveProperty('isAdmin')
   })
 
   it('should merge keys that do not exist in source', () => {
     const result = deepmerge({ foo: { baz: 'test' } }, { foo: { bar: 'test' }, bar: 'test' })
-    expect(result).to.deep.equal({
+    expect(result).toEqual({
       foo: { baz: 'test', bar: 'test' },
       bar: 'test',
     })
@@ -73,13 +71,12 @@ describe('deepmerge', () => {
 
     const result = deepmerge(bar, foo)
 
-    expect(result).to.deep.equal({ foo: { baz: 'test' } })
+    expect(result).toEqual({ foo: { baz: 'test' } })
 
     // @ts-expect-error -- Allow for easy testing
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Allow for easy testing
     result.foo.baz = 'new test'
 
-    expect(result).to.deep.equal({ foo: { baz: 'new test' } })
-    expect(foo).to.deep.equal({ foo: { baz: 'test' } })
+    expect(result).toEqual({ foo: { baz: 'new test' } })
+    expect(foo).toEqual({ foo: { baz: 'test' } })
   })
 })

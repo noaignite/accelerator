@@ -32,6 +32,7 @@ export class ApiClient {
   }
 
   public static get default(): ApiClient {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- TODO: Remove rule disable when appropriate
     if (!ApiClient._default) {
       ApiClient._default = new ApiClient()
     }

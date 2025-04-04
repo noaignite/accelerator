@@ -35,7 +35,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
+    "lint": "eslint .",
     "test:types": "tsc --noEmit",
     "test:unit": "vitest run",
     "test:unit:coverage": "vitest run --coverage"
@@ -54,10 +54,11 @@
     "@types/react": "^19.0.2",
     "@vitest/coverage-v8": "^2.1.9",
     "esbuild-plugin-preserve-directives": "0.0.11",
+    "eslint-config-react-hooks": "^1.0.0",
     "jsdom": "^25.0.1",
     "react": "^19.0.0",
     "tsup": "^8.3.5",
-    "typescript": "5.4.5",
+    "typescript": "^5.8.2",
     "vitest": "^2.1.9"
   },
   "peerDependencies": {

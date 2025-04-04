@@ -26,8 +26,8 @@ describe('setRef', () => {
     const instance = 'proxy'
 
     // all no-ops
-    setRef(undefined, instance)
-    setRef(null, instance)
+    expect(() => setRef(undefined, instance)).not.toThrow()
+    expect(() => setRef(null, instance)).not.toThrow()
   })
 
   it('throws on legacy string refs', () => {

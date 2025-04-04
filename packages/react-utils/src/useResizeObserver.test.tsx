@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for test files */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Allow for test files */
 import { render, screen } from '@testing-library/react'
 import { useRef } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'

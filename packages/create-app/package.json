@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint src/ --ignore-pattern '**/*.test.*'",
+    "lint": "eslint src/",
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
@@ -44,7 +44,7 @@
     "@types/minimist": "^1.2.5",
     "@types/prompts": "^2.4.9",
     "tsup": "^8.3.5",
-    "typescript": "5.4.5"
+    "typescript": "^5.8.2"
   },
   "engines": {
     "node": ">=20"

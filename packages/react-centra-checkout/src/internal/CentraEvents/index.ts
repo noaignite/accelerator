@@ -70,6 +70,7 @@ export class CentraEvents {
   }
 
   public static get default(): CentraEvents {
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing -- TODO: Remove rule disable when appropriate
     if (!CentraEvents._default) {
       CentraEvents._default = new CentraEvents()
     }

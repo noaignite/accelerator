@@ -16,7 +16,7 @@ describe('<ErrorBoundary />', () => {
 
   beforeAll(() => {
     // Suppress error logs expected from the error boundary catching errors
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   afterAll(() => {
