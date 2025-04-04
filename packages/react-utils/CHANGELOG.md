@@ -1,5 +1,19 @@
 # @noaignite/react-utils
 
+## 0.12.0
+
+### Minor Changes
+
+- 247ff8f: Add new useControlled hook
+
+### Patch Changes
+
+- ab5bb47: Add missing 'use client' directive
+- f250796: Fix faulty check for `isRefObject`
+- Updated dependencies [269cb8e]
+- Updated dependencies [47502b3]
+  - @noaignite/utils@3.5.0
+
 ## 0.11.0
 
 ### Minor Changes
