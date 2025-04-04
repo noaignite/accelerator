@@ -20,6 +20,7 @@ storybook-static
 # docs
 docs/src/pages/@noaignite/**/*.generated.*
 docs/src/pages/@noaignite/**/README.*
+docs/src/pages/@noaignite/**/CONTRIBUTING.*
 
 # misc
 .DS_Store

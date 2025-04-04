@@ -30,6 +30,8 @@ git checkout -b my-topic-branch
 git push
 ```
 
+> It is recommended to use [conventional commits](https://www.conventionalcommits.org/).
+
 4. Go to [the repository](https://github.com/noaignite/accelerator) and make a Pull Request.
 
 ## Adding a changeset to your Pull Request
