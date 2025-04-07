@@ -1,3 +1,3 @@
-import nextConfig from '@repo/eslint-config/next-js'
+import nextConfig from '@noaignite/style-guide/eslint/next'
 
 export default nextConfig

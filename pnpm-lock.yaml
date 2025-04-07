@@ -14,9 +14,6 @@ importers:
       '@noaignite/style-guide':
         specifier: workspace:*
         version: link:packages/style-guide
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:packages/eslint-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:packages/typescript-config
@@ -51,9 +48,9 @@ importers:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.7.9)(typescript@5.8.2)
     devDependencies:
-      '@repo/eslint-config':
+      '@noaignite/style-guide':
         specifier: workspace:*
-        version: link:../packages/eslint-config
+        version: link:../packages/style-guide
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../packages/typescript-config
@@ -84,9 +81,9 @@ importers:
       '@noaignite/centra-types':
         specifier: workspace:*
         version: link:../centra-types
-      '@repo/eslint-config':
+      '@noaignite/style-guide':
         specifier: workspace:*
-        version: link:../eslint-config
+        version: link:../style-guide
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -121,6 +118,9 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
     devDependencies:
+      '@noaignite/style-guide':
+        specifier: workspace:*
+        version: link:../style-guide
       '@types/cross-spawn':
         specifier: ^6.0.6
         version: 6.0.6
@@ -133,21 +133,6 @@ importers:
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(jiti@2.1.2)(postcss@8.5.3)(typescript@5.8.2)(yaml@2.6.1)
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
-  packages/eslint-config:
-    devDependencies:
-      '@eslint/compat':
-        specifier: ^1.2.8
-        version: 1.2.8(eslint@9.24.0(jiti@2.1.2))
-      '@noaignite/style-guide':
-        specifier: workspace:*
-        version: link:../style-guide
-      eslint:
-        specifier: ^9.24.0
-        version: 9.24.0(jiti@2.1.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -176,12 +161,12 @@ importers:
       '@noaignite/centra-types':
         specifier: workspace:*
         version: link:../centra-types
+      '@noaignite/style-guide':
+        specifier: workspace:*
+        version: link:../style-guide
       '@noaignite/types':
         specifier: workspace:*
         version: link:../types
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -225,12 +210,12 @@ importers:
         specifier: ^18.0.0 || ^19.0.0
         version: 19.0.0(react@19.0.0)
     devDependencies:
+      '@noaignite/style-guide':
+        specifier: workspace:*
+        version: link:../style-guide
       '@noaignite/types':
         specifier: workspace:^
         version: link:../types
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -255,9 +240,6 @@ importers:
       esbuild-plugin-preserve-directives:
         specifier: 0.0.11
         version: 0.0.11(esbuild@0.24.0)
-      eslint-config-react-hooks:
-        specifier: ^1.0.0
-        version: 1.0.0
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
@@ -343,9 +325,9 @@ importers:
         specifier: workspace:*
         version: link:../utils
     devDependencies:
-      '@repo/eslint-config':
+      '@noaignite/style-guide':
         specifier: workspace:*
-        version: link:../eslint-config
+        version: link:../style-guide
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -378,12 +360,12 @@ importers:
 
   packages/utils:
     devDependencies:
+      '@noaignite/style-guide':
+        specifier: workspace:*
+        version: link:../style-guide
       '@noaignite/types':
         specifier: workspace:^
         version: link:../types
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -837,15 +819,6 @@ packages:
   '@eslint-community/regexpp@4.12.1':
     resolution: {integrity: sha512-CCZCDJuduB9OUkFkY2IgppNZMi2lBQgD2qzwXkEia16cge2pijY/aXi96CJMquDMn3nJdlPV1A5KrJEXwfLNzQ==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
-
-  '@eslint/compat@1.2.8':
-    resolution: {integrity: sha512-LqCYHdWL/QqKIJuZ/ucMAv8d4luKGs4oCPgpt8mWztQAtPrHfXKQ/XAUc8ljCHAfJCn6SvkpTcGt5Tsh8saowA==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-    peerDependencies:
-      eslint: ^9.10.0
-    peerDependenciesMeta:
-      eslint:
-        optional: true
 
   '@eslint/config-array@0.20.0':
     resolution: {integrity: sha512-fxlS1kkIjx8+vy2SjuCB94q3htSNrufYTXubwiBFeaQHbH6Ipi43gFJq2zCMt6PHhImH3Xmr0NksKDvchWlpQQ==}
@@ -2790,9 +2763,6 @@ packages:
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
-
-  eslint-config-react-hooks@1.0.0:
-    resolution: {integrity: sha512-M4hotJLA7bZUxq7alpmcNNdJnVAgLjZAI8qT/Wj6/9gEmJgjE1xmsy2+fsuxCLkQ6PKczpt6i1ihM4YYQ78pPQ==}
 
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
@@ -6069,10 +6039,6 @@ snapshots:
 
   '@eslint-community/regexpp@4.12.1': {}
 
-  '@eslint/compat@1.2.8(eslint@9.24.0(jiti@2.1.2))':
-    optionalDependencies:
-      eslint: 9.24.0(jiti@2.1.2)
-
   '@eslint/config-array@0.20.0':
     dependencies:
       '@eslint/object-schema': 2.1.6
@@ -8187,8 +8153,6 @@ snapshots:
   eslint-config-prettier@10.1.1(eslint@9.24.0(jiti@2.1.2)):
     dependencies:
       eslint: 9.24.0(jiti@2.1.2)
-
-  eslint-config-react-hooks@1.0.0: {}
 
   eslint-import-resolver-node@0.3.9:
     dependencies:

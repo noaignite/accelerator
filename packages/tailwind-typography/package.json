@@ -32,7 +32,7 @@
     "@noaignite/utils": "workspace:*"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
+    "@noaignite/style-guide": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "tailwindcss": "^3.4.17",
     "tsup": "^8.3.5",

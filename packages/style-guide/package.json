@@ -5,8 +5,8 @@
   "type": "module",
   "exports": {
     "./eslint/*": "./eslint/*.js",
-    "./prettier": "./prettier/index.js",
-    "./typescript": "./typescript/tsconfig.base.json"
+    "./eslint/rules/*": "./eslint/rules/*.js",
+    "./prettier": "./prettier/index.js"
   },
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",

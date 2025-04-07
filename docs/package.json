@@ -29,7 +29,7 @@
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
+    "@noaignite/style-guide": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.7.9",
     "@types/react": "^19.0.2",

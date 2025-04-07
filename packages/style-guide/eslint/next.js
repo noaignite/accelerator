@@ -1,13 +1,9 @@
-import pluginNext from '@next/eslint-plugin-next'
+import reactConfig from './react.js'
+import nextConfig from './rules/next.js'
 
-export default [
-  {
-    plugins: {
-      '@next/next': pluginNext,
-    },
-    rules: {
-      ...pluginNext.configs.recommended.rules,
-      ...pluginNext.configs['core-web-vitals'].rules,
-    },
-  },
-]
+/**
+ * A shared ESLint configuration for the repository.
+ *
+ * @type {import("eslint").Linter.Config[]}
+ */
+export default [...reactConfig, ...nextConfig]
