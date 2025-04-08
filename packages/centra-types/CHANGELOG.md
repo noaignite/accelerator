@@ -1,5 +1,11 @@
 # @noaignite/centra-types
 
+## 3.1.1
+
+### Patch Changes
+
+- 7111f04: export totals from centra-types/models
+
 ## 3.1.0
 
 ### Minor Changes
