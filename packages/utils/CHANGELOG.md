@@ -1,5 +1,12 @@
 # @noaignite/utils
 
+## 3.5.0
+
+### Minor Changes
+
+- 269cb8e: Refactor `createBatchedCallback` logic to use `debounce` util
+- 47502b3: add initial version of `createBatchedCallback`
+
 ## 3.4.0
 
 ### Minor Changes
