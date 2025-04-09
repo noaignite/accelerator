@@ -38,7 +38,6 @@
   "devDependencies": {
     "@noaignite/centra-types": "workspace:*",
     "@noaignite/style-guide": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "tsup": "^8.3.5",
     "typescript": "^5.8.2"
   },

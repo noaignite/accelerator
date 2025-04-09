@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "tailwindcss": "^3.4.17",
     "tsup": "^8.3.5",
     "typescript": "^5.8.2"

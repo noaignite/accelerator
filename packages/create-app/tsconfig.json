@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/base.json",
+  "extends": "@noaignite/style-guide/typescript/base",
   "include": ["src", "tsup.config.ts"],
   "exclude": ["dist", "node_modules"]
 }

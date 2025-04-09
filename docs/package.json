@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.7.9",
     "@types/react": "^19.0.2",
     "autoprefixer": "10.4.20",

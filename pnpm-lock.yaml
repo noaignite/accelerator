@@ -14,9 +14,6 @@ importers:
       '@noaignite/style-guide':
         specifier: workspace:*
         version: link:packages/style-guide
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:packages/typescript-config
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -51,9 +48,6 @@ importers:
       '@noaignite/style-guide':
         specifier: workspace:*
         version: link:../packages/style-guide
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../packages/typescript-config
       '@types/node':
         specifier: ^22.7.9
         version: 22.7.9
@@ -84,9 +78,6 @@ importers:
       '@noaignite/style-guide':
         specifier: workspace:*
         version: link:../style-guide
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       tsup:
         specifier: ^8.3.5
         version: 8.3.5(jiti@2.1.2)(postcss@8.5.3)(typescript@5.8.2)(yaml@2.6.1)
@@ -96,9 +87,9 @@ importers:
 
   packages/centra-types:
     devDependencies:
-      '@repo/typescript-config':
+      '@noaignite/style-guide':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../style-guide
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -167,9 +158,6 @@ importers:
       '@noaignite/types':
         specifier: workspace:*
         version: link:../types
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       '@testing-library/react':
         specifier: ^16.2.0
         version: 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.0)(@types/react@19.0.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -216,9 +204,6 @@ importers:
       '@noaignite/types':
         specifier: workspace:^
         version: link:../types
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       '@testing-library/jest-dom':
         specifier: ^6.6.3
         version: 6.6.3
@@ -328,9 +313,6 @@ importers:
       '@noaignite/style-guide':
         specifier: workspace:*
         version: link:../style-guide
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       tailwindcss:
         specifier: ^3.4.17
         version: 3.4.17(ts-node@10.9.2(@types/node@22.7.9)(typescript@5.8.2))
@@ -343,9 +325,9 @@ importers:
 
   packages/types:
     devDependencies:
-      '@repo/typescript-config':
+      '@noaignite/style-guide':
         specifier: workspace:*
-        version: link:../typescript-config
+        version: link:../style-guide
       '@types/react':
         specifier: ^19.0.2
         version: 19.0.2
@@ -356,8 +338,6 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
 
-  packages/typescript-config: {}
-
   packages/utils:
     devDependencies:
       '@noaignite/style-guide':
@@ -366,9 +346,6 @@ importers:
       '@noaignite/types':
         specifier: workspace:^
         version: link:../types
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
       '@vitest/coverage-v8':
         specifier: ^2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@22.7.9)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0))

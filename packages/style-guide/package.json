@@ -6,7 +6,10 @@
   "exports": {
     "./eslint/*": "./eslint/*.js",
     "./eslint/rules/*": "./eslint/rules/*.js",
-    "./prettier": "./prettier/index.js"
+    "./prettier": "./prettier/index.js",
+    "./typescript/base": "./typescript/tsconfig.base.json",
+    "./typescript/next": "./typescript/tsconfig.next.json",
+    "./typescript/react": "./typescript/tsconfig.react.json"
   },
   "dependencies": {
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
