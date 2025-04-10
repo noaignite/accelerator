@@ -1,6 +1,7 @@
 // Based on https://github.com/vercel/style-guide/blob/canary/eslint/rules/stylistic.js
 export default [
   {
+    name: '@noaignite/style-guide/stylistic',
     rules: {
       /**
        * Require camel case names.

@@ -4,6 +4,7 @@ import globals from 'globals'
 
 export default [
   {
+    name: '@noaignite/style-guide/unicorn',
     languageOptions: {
       globals: globals.builtin,
     },
@@ -11,6 +12,8 @@ export default [
       unicorn: eslintPluginUnicorn,
     },
     rules: {
+      // TODO: Consider enabling more rules.
+      // ...eslintPluginUnicorn.configs.recommended.rules,
       /**
        * Require using the `node:` protocol when importing Node.js built-in modules.
        *

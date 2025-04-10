@@ -18,10 +18,17 @@ import vitestConfig from './rules/vitest.js'
  */
 export default [
   {
+    name: '@noaignite/style-guide/ignores',
     ignores: ['node_modules', 'build', 'dist', 'coverage', '.turbo', '*.map', '*.min.js', '*.snap'],
   },
-  js.configs.recommended,
-  eslintConfigPrettier,
+  {
+    name: '@eslint/js/configs/recommended',
+    ...js.configs.recommended,
+  },
+  {
+    name: 'eslint-config-prettier',
+    ...eslintConfigPrettier,
+  },
   ...typescriptConfig,
   ...bestPracticeConfig,
   ...possibleErrorsConfig,

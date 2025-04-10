@@ -3,6 +3,7 @@ import constants from './constants.js'
 
 export default [
   {
+    name: '@noaignite/style-guide/vitest',
     files: constants.TEST_FILES,
     plugins: {
       vitest,

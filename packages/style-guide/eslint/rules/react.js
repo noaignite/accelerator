@@ -4,9 +4,13 @@ import pluginReactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 
 export default [
-  jsxA11y.flatConfigs.recommended,
-  pluginReact.configs.flat.recommended,
   {
+    ...jsxA11y.flatConfigs.recommended,
+    name: '@noaignite/style-guide/jsx-a11y',
+  },
+  {
+    ...pluginReact.configs.flat.recommended,
+    name: '@noaignite/style-guide/react',
     languageOptions: {
       ...pluginReact.configs.flat.recommended.languageOptions,
       globals: {
@@ -16,6 +20,7 @@ export default [
     },
   },
   {
+    name: '@noaignite/style-guide/react-hooks',
     plugins: {
       'react-hooks': pluginReactHooks,
     },
@@ -25,7 +30,7 @@ export default [
       },
     },
     rules: {
-      ...pluginReactHooks.configs.recommended.rules,
+      ...pluginReactHooks.configs['recommended-latest'].rules,
       // React scope no longer necessary with new JSX transform.
       'react/react-in-jsx-scope': 'off',
     },
