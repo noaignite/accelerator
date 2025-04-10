@@ -13,6 +13,7 @@ describe('deepmerge', () => {
     )
 
     // @ts-expect-error -- Allow `__proto__` for testing
+    // eslint-disable-next-line no-proto -- Allow `__proto__` for testing
     expect(result.__proto__).toHaveProperty('isAdmin')
     expect({}).not.toHaveProperty('isAdmin')
   })
@@ -53,6 +54,7 @@ describe('deepmerge', () => {
     )
 
     // @ts-expect-error -- Allow `__proto__` for testing
+    // eslint-disable-next-line no-proto -- Allow `__proto__` for testing
     expect(result.__proto__).toHaveProperty('isAdmin')
     expect({}).not.toHaveProperty('isAdmin')
   })

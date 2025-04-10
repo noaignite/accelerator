@@ -1,8 +1,14 @@
-import baseConfig from './rules/base.js'
+import js from '@eslint/js'
+import eslintConfigPrettier from 'eslint-config-prettier'
+import bestPracticeConfig from './rules/best-practice.js'
 import commentsConfig from './rules/comments.js'
+import es6Config from './rules/es6.js'
 import importConfig from './rules/import.js'
+import possibleErrorsConfig from './rules/possible-errors.js'
+import stylisticConfig from './rules/stylistic.js'
 import turboConfig from './rules/turbo.js'
 import typescriptConfig from './rules/typescript.js'
+import unicornConfig from './rules/unicorn.js'
 import vitestConfig from './rules/vitest.js'
 
 /**
@@ -11,10 +17,19 @@ import vitestConfig from './rules/vitest.js'
  * @type {import("eslint").Linter.Config[]}
  */
 export default [
-  ...baseConfig,
+  {
+    ignores: ['node_modules', 'build', 'dist', 'coverage', '.turbo', '*.map', '*.min.js', '*.snap'],
+  },
+  js.configs.recommended,
+  eslintConfigPrettier,
+  ...typescriptConfig,
+  ...bestPracticeConfig,
+  ...possibleErrorsConfig,
+  ...es6Config,
+  ...stylisticConfig,
+  ...unicornConfig,
   ...commentsConfig,
   ...importConfig,
-  ...typescriptConfig,
   ...turboConfig,
   ...vitestConfig,
 ]

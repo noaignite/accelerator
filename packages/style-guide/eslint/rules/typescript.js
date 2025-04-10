@@ -3,6 +3,7 @@ import tsEslint from 'typescript-eslint'
 import constants from './constants.js'
 
 export default [
+  ...tsEslint.configs.recommended,
   {
     files: constants.TYPESCRIPT_FILES,
     languageOptions: {
