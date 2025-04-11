@@ -1,9 +1,8 @@
 import pluginNext from '@next/eslint-plugin-next'
-import reactConfig from './react.js'
 
 export default [
-  ...reactConfig,
   {
+    name: '@noaignite/style-guide/next',
     plugins: {
       '@next/next': pluginNext,
     },

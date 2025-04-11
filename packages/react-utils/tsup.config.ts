@@ -12,7 +12,6 @@ export default defineConfig({
   esbuildPlugins: [
     preserveDirectivesPlugin({
       directives: ['use client', 'use strict'],
-
       include: /\.(js|ts|jsx|tsx)$/,
       exclude: /node_modules/,
     }),

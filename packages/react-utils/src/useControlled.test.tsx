@@ -57,7 +57,7 @@ describe('useControlled', () => {
   })
 
   it('warns when switching from uncontrolled to controlled', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     const { rerender } = render(<TestComponent>{() => null}</TestComponent>)
 
@@ -73,7 +73,7 @@ describe('useControlled', () => {
   })
 
   it('warns when switching from controlled to uncontrolled', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     const { rerender } = render(<TestComponent value="foobar">{() => null}</TestComponent>)
 
@@ -89,7 +89,7 @@ describe('useControlled', () => {
   })
 
   it('warns when changing the defaultValue prop after initial rendering', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     const { rerender } = render(<TestComponent>{() => null}</TestComponent>)
 
@@ -105,7 +105,7 @@ describe('useControlled', () => {
   })
 
   it('should not raise a warning if changing the defaultValue when controlled', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     const { rerender } = render(
       <TestComponent defaultValue={0} value={1}>
@@ -125,7 +125,7 @@ describe('useControlled', () => {
   })
 
   it('should not raise a warning if setting NaN as the defaultValue when uncontrolled', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     render(<TestComponent defaultValue={NaN}>{() => null}</TestComponent>)
     expect(consoleSpy).not.toHaveBeenCalled()
