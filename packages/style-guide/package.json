@@ -1,0 +1,69 @@
+{
+  "name": "@noaignite/style-guide",
+  "version": "0.0.0",
+  "private": false,
+  "type": "module",
+  "exports": {
+    "./eslint/*": "./eslint/*.js",
+    "./eslint/rules/*": "./eslint/rules/*.js",
+    "./prettier": "./prettier/index.js",
+    "./typescript/base": "./typescript/tsconfig.base.json",
+    "./typescript/next": "./typescript/tsconfig.next.json",
+    "./typescript/react": "./typescript/tsconfig.react.json"
+  },
+  "scripts": {
+    "inspect": "pnpx @eslint/config-inspector"
+  },
+  "dependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
+    "@eslint/js": "^9.24.0",
+    "@next/eslint-plugin-next": "^15.1.4",
+    "@vitest/eslint-plugin": "^1.1.39",
+    "eslint": "^9.24.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-import-resolver-typescript": "^4.3.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-tsdoc": "^0.4.0",
+    "eslint-plugin-turbo": "^2.5.0",
+    "eslint-plugin-unicorn": "^58.0.0",
+    "globals": "^16.0.0",
+    "prettier-plugin-organize-imports": "4.1.0",
+    "prettier-plugin-packagejson": "2.5.10",
+    "prettier-plugin-style-order": "0.2.2",
+    "typescript-eslint": "^8.29.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.23.0",
+    "prettier": "3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "@next/eslint-plugin-next": ">=15.0.0",
+    "eslint": ">=9.0.0",
+    "prettier": ">=3.0.0",
+    "typescript": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@next/eslint-plugin-next": {
+      "optional": true
+    },
+    "eslint": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
