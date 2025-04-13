@@ -175,8 +175,9 @@ export const useSticky = (
     if (!when || !ref.current) return
 
     const newProperties = getProperties(ref)
-    if (properties?.inset === newProperties?.inset && properties?.side === newProperties?.side)
+    if (properties?.inset === newProperties?.inset && properties?.side === newProperties?.side) {
       return
+    }
 
     setProperties(newProperties)
   }, [when, ref, isRTL, properties?.inset, properties?.side])

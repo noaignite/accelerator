@@ -47,16 +47,14 @@
     "@noaignite/utils": "workspace:*"
   },
   "devDependencies": {
+    "@noaignite/style-guide": "workspace:*",
     "@noaignite/types": "workspace:^",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/node": "^22.7.9",
     "@types/react": "^19.0.2",
     "@vitest/coverage-v8": "^2.1.9",
-    "eslint-config-react-hooks": "^1.0.0",
     "jsdom": "^25.0.1",
     "react": "^19.0.0",
     "vitest": "^2.1.9"

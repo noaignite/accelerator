@@ -30,7 +30,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint src/",
+    "lint": "eslint . --ignore-pattern 'template-*'",
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
@@ -40,6 +40,7 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
+    "@noaignite/style-guide": "workspace:*",
     "@types/cross-spawn": "^6.0.6",
     "@types/minimist": "^1.2.5",
     "@types/prompts": "^2.4.9"

@@ -27,7 +27,7 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+    "@noaignite/style-guide": "workspace:*",
     "typescript": "^5.8.2"
   },
   "engines": {

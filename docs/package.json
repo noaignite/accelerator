@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm build:files && next build",
-    "build:files": "node --loader ts-node/esm --no-warnings=ExperimentalWarning ../scripts/generateDocs.ts",
+    "build:files": "tsx ../scripts/generateDocs.ts",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
@@ -25,17 +25,16 @@
     "nextra": "^3.3.1",
     "nextra-theme-docs": "^3.3.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "ts-node": "^10.9.2"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@noaignite/style-guide": "workspace:*",
     "@types/node": "^22.7.9",
     "@types/react": "^19.0.2",
     "autoprefixer": "10.4.20",
     "postcss": "8.4.49",
-    "tailwindcss": "3.4.17"
+    "tailwindcss": "3.4.17",
+    "tsx": "^4.19.3"
   },
   "engines": {
     "node": ">=20.0.0"

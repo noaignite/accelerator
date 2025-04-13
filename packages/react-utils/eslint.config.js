@@ -1,3 +1,3 @@
-import reactConfig from '@repo/eslint-config/react'
+import reactConfig from '@noaignite/style-guide/eslint/react'
 
 export default reactConfig
