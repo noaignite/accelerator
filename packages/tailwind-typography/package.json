@@ -16,11 +16,22 @@
     "directory": "packages/tailwind-typography"
   },
   "author": "NoA Ignite",
-  "main": "./dist/typography.js",
-  "module": "./dist/typography.mjs",
-  "types": "./dist/typography.d.ts",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "files": [
-    "dist/**"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
@@ -34,9 +45,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "tailwindcss": "^3.4.17",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.2"
+    "tailwindcss": "^3.4.17"
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.0"

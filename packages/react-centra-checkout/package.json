@@ -20,12 +20,21 @@
   "license": "MIT",
   "author": "NoA Ignite",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
   "files": [
-    "dist/**",
-    "README.md"
+    "dist"
   ],
   "scripts": {
     "build": "tsup",
@@ -52,8 +61,6 @@
     "@vitest/coverage-v8": "^2.1.9",
     "jsdom": "^25.0.1",
     "nock": "14.0.1",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.2",
     "vitest": "^2.1.9"
   },
   "peerDependencies": {

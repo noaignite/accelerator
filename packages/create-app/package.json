@@ -42,9 +42,7 @@
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
     "@types/minimist": "^1.2.5",
-    "@types/prompts": "^2.4.9",
-    "tsup": "^8.3.5",
-    "typescript": "^5.8.2"
+    "@types/prompts": "^2.4.9"
   },
   "engines": {
     "node": ">=20"
