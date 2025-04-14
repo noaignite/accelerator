@@ -53,7 +53,7 @@
     "@noaignite/centra-types": "workspace:*",
     "@noaignite/style-guide": "workspace:*",
     "@noaignite/types": "workspace:*",
-    "@testing-library/react": "^16.2.0",
+    "@testing-library/react": "^16.3.0",
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.1",
