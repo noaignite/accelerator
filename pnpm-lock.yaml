@@ -185,6 +185,25 @@ importers:
         specifier: ^8.29.0
         version: 8.29.0(eslint@9.23.0(jiti@2.1.2))(typescript@5.8.2)
 
+  packages/next-centra-checkout:
+    dependencies:
+      '@noaignite/utils':
+        specifier: workspace:*
+        version: link:../utils
+    devDependencies:
+      '@noaignite/centra-types':
+        specifier: workspace:*
+        version: link:../centra-types
+      next:
+        specifier: ^15.0.0
+        version: 15.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.79.4)
+      tsup:
+        specifier: ^8.3.5
+        version: 8.3.5(jiti@2.1.2)(postcss@8.5.3)(typescript@5.4.5)(yaml@2.6.1)
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
+
   packages/prettier-config:
     devDependencies:
       prettier:
