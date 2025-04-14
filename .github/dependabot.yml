@@ -14,6 +14,10 @@ updates:
         patterns:
           - 'nextra'
           - 'nextra-theme-docs'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
       storybook:
         patterns:
           - '@storybook/*'
