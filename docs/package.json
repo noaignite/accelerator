@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@types/node": "^22.7.9",
+    "@types/node": "^22.14.1",
     "@types/react": "^19.1.1",
     "autoprefixer": "10.4.20",
     "postcss": "8.4.49",
