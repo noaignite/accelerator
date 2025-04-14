@@ -1,5 +1,13 @@
 # @noaignite/tailwind-typography
 
+## 0.1.7
+
+### Patch Changes
+
+- 1a6a692: Update tsup config and package exports
+- Updated dependencies [1a6a692]
+  - @noaignite/utils@3.5.1
+
 ## 0.1.6
 
 ### Patch Changes

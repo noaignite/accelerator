@@ -1,5 +1,13 @@
 # @noaignite/react-utils
 
+## 0.12.1
+
+### Patch Changes
+
+- 1a6a692: Update tsup config and package exports
+- Updated dependencies [1a6a692]
+  - @noaignite/utils@3.5.1
+
 ## 0.12.0
 
 ### Minor Changes

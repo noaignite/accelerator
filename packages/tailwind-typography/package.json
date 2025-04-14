@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/tailwind-typography",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": false,
   "description": "TailwindCSS plugin to create responsive typography",
   "keywords": [
@@ -44,8 +44,7 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17",
-    "@noaignite/style-guide": "workspace:*",
-    "tailwindcss": "^3.4.17"
+    "@noaignite/style-guide": "workspace:*"
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.0"
