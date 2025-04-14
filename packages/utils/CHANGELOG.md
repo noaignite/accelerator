@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 3.5.1
+
+### Patch Changes
+
+- 1a6a692: Update tsup config and package exports
+
 ## 3.5.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @noaignite/create-app
 
+## 0.10.2
+
+### Patch Changes
+
+- 1a6a692: Update tsup config and package exports
+
 ## 0.10.1
 
 ### Patch Changes

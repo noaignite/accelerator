@@ -1,5 +1,13 @@
 # @noaignite/react-centra-checkout
 
+## 2.0.5
+
+### Patch Changes
+
+- 1a6a692: Update tsup config and package exports
+- Updated dependencies [1a6a692]
+  - @noaignite/utils@3.5.1
+
 ## 2.0.4
 
 ### Patch Changes
