@@ -43,8 +43,8 @@
     "@noaignite/utils": "workspace:*"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "tailwindcss": "^3.4.17",
+    "@noaignite/style-guide": "workspace:*",
     "tailwindcss": "^3.4.17"
   },
   "peerDependencies": {

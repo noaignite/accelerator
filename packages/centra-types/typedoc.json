@@ -1,5 +1,0 @@
-{
-  "entryPoints": ["index.d.ts"],
-  "out": "docs",
-  "gitRevision": "main"
-}

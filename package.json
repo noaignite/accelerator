@@ -26,11 +26,9 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/prettier-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.7.9",
     "esbuild-plugin-file-path-extensions": "^2.1.4",
+    "@noaignite/style-guide": "workspace:*",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
     "ts-morph": "^24.0.0",

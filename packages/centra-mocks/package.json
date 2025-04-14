@@ -41,8 +41,7 @@
   },
   "devDependencies": {
     "@noaignite/centra-types": "workspace:*",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "@noaignite/style-guide": "workspace:*"
   },
   "engines": {
     "node": ">=20"

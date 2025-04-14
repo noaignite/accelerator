@@ -41,9 +41,8 @@
     "test:unit:coverage": "vitest run --coverage"
   },
   "devDependencies": {
+    "@noaignite/style-guide": "workspace:*",
     "@noaignite/types": "workspace:^",
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@vitest/coverage-v8": "^2.1.9",
     "vitest": "^2.1.9"
   },
