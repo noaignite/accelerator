@@ -30,7 +30,7 @@
     "esbuild-plugin-file-path-extensions": "^2.1.4",
     "@noaignite/style-guide": "workspace:*",
     "husky": "^9.1.7",
-    "lint-staged": "^15.3.0",
+    "lint-staged": "^15.5.1",
     "ts-morph": "^24.0.0",
     "tsup": "^8.4.0",
     "turbo": "^2.5.0",
