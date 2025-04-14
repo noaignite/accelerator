@@ -1,6 +1,7 @@
 {
   "name": "accelerator",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo build",
     "ci:release": "pnpm run build && pnpm run test && changeset publish",
@@ -28,9 +29,14 @@
     "@repo/eslint-config": "workspace:*",
     "@repo/prettier-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.7.9",
+    "esbuild-plugin-file-path-extensions": "^2.1.4",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
-    "turbo": "^2.5.0"
+    "ts-morph": "^24.0.0",
+    "tsup": "^8.4.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.2"
   },
   "packageManager": "pnpm@9.3.0",
   "engines": {

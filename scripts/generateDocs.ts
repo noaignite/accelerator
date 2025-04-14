@@ -241,9 +241,9 @@ function copyFiles() {
   })
 }
 
-function buildFiles() {
+function generateDocs() {
   generateMarkdown()
   copyFiles()
 }
 
-buildFiles()
+generateDocs()

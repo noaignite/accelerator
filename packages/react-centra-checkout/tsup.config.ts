@@ -1,10 +1,9 @@
 import { defineConfig } from 'tsup'
+import { getTsupConfig } from '../../scripts/getTsupConfig'
 
-export default defineConfig({
-  entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
-  format: ['esm', 'cjs'],
-  clean: true,
-  dts: true,
-  minify: true,
-  sourcemap: true,
-})
+export default defineConfig(
+  getTsupConfig({
+    entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
+    external: ['react', 'react-dom', 'react-fast-compare'],
+  }),
+)

@@ -1,12 +1,9 @@
-import { defineConfig, type Options } from 'tsup'
+import { defineConfig } from 'tsup'
+import { getTsupConfig } from '../../scripts/getTsupConfig'
 
-export default defineConfig((options: Options) => ({
-  entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
-  format: ['esm', 'cjs'],
-  dts: true,
-  sourcemap: true,
-  minify: true,
-  clean: true,
-  external: ['tailwindcss'],
-  ...options,
-}))
+export default defineConfig(
+  getTsupConfig({
+    entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
+    external: ['tailwindcss'],
+  }),
+)
