@@ -25,7 +25,7 @@
     "*": "prettier --ignore-unknown --write"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.10",
+    "@changesets/cli": "^2.29.0",
     "@types/node": "^22.14.1",
     "esbuild-plugin-file-path-extensions": "^2.1.4",
     "@noaignite/style-guide": "workspace:*",
