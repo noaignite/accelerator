@@ -10,6 +10,10 @@ updates:
     schedule:
       interval: 'weekly'
     groups:
+      next:
+        patterns:
+          - 'next'
+          - '@next/eslint-plugin-next'
       nextra:
         patterns:
           - 'nextra'
