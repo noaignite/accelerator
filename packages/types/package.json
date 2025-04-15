@@ -29,7 +29,7 @@
     "@noaignite/style-guide": "workspace:*",
     "@types/react": "^19.1.2",
     "react": "^19.1.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "peerDependencies": {
     "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",
