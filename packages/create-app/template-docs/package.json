@@ -1,20 +1,20 @@
 {
   "name": "docs",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "storybook build",
     "dev": "storybook dev -p 6006",
-    "lint": "eslint src/"
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "^19",
     "react-dom": "^19"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
+    "@noaignite/style-guide": "^0.0.1",
     "@repo/tailwind-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
     "@storybook/addon-essentials": "^8",
     "@storybook/addon-interactions": "^8",
     "@storybook/addon-links": "^8",
@@ -24,14 +24,14 @@
     "@storybook/nextjs": "^8",
     "@storybook/react": "^8",
     "@storybook/theming": "^8",
-    "@types/node": "^20",
+    "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10",
-    "eslint-plugin-storybook": "^0.8.0",
+    "eslint-plugin-storybook": "^0.12.0",
     "postcss": "^8",
     "storybook": "^8",
     "tailwindcss": "^3",
-    "typescript": "5.4.5"
+    "typescript": "^5"
   }
 }

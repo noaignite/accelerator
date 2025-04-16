@@ -1,0 +1,3 @@
+{
+  "extends": "@noaignite/style-guide/typescript/base"
+}

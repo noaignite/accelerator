@@ -2,16 +2,22 @@
   "name": "@repo/tailwind-config",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "exports": {
     ".": "./tailwind.config.ts",
     "./*.css": "./*.css",
     "./*": "./*.ts"
   },
   "dependencies": {
-    "@noaignite/tailwind-typography": "0.1.0"
+    "@noaignite/tailwind-typography": "^0.1.8"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
-    "tailwindcss": "3.4.10"
+    "@noaignite/style-guide": "^0.0.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.14"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.4.0"
   }
 }
