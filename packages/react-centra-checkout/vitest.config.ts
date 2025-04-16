@@ -1,9 +1,4 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
+import { getVitestConfig } from '../../scripts/getVitestConfig'
 
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'jsdom',
-  },
-})
+export default defineConfig(getVitestConfig({}))

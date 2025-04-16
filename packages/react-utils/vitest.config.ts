@@ -1,10 +1,10 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
+import { getVitestConfig } from '../../scripts/getVitestConfig'
 
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'jsdom', // Ensure jsdom is set as the environment
-    setupFiles: ['./vitest.setup.ts'],
-  },
-})
+export default defineConfig(
+  getVitestConfig({
+    test: {
+      setupFiles: ['./vitest.setup.ts'],
+    },
+  }),
+)

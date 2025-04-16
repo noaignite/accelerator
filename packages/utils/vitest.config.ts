@@ -1,4 +1,4 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
+import { getVitestConfig } from '../../scripts/getVitestConfig'
 
-export default defineConfig({})
+export default defineConfig(getVitestConfig({}))

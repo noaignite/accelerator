@@ -42,9 +42,7 @@
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@noaignite/types": "workspace:^",
-    "@vitest/coverage-v8": "^3.1.1",
-    "vitest": "^3.1.1"
+    "@noaignite/types": "workspace:^"
   },
   "engines": {
     "node": ">=20"
