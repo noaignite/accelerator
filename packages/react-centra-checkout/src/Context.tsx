@@ -27,7 +27,8 @@ export interface ProviderProps {
    */
   disableInit?: boolean
   /**
-   * Sets the initial selection
+   * Sets the initial selection.
+   * The `initialSelection` is ignore after the initial render
    */
   initialSelection?: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>
   /**
