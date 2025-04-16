@@ -43,8 +43,8 @@
     "@noaignite/utils": "workspace:*"
   },
   "devDependencies": {
-    "tailwindcss": "^3.4.17",
-    "@noaignite/style-guide": "workspace:*"
+    "@noaignite/style-guide": "workspace:*",
+    "tailwindcss": "^3.4.17"
   },
   "peerDependencies": {
     "tailwindcss": "^3.4.0"
