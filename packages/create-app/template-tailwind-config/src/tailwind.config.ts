@@ -7,9 +7,9 @@ import { typography } from './typography'
 const config: Config = {
   content: [
     // App content
-    'src/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
     // Include packages if not transpiling
-    '../../packages/*/src/**/*.{js,ts,jsx,tsx}',
+    '../../packages/*/src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   darkMode: ['class', '[data-color-scheme="dark"]'],
   theme: {

@@ -53,8 +53,7 @@ const TEMPLATES: Template[] = [
     name: 'style-guide',
     display: 'Style Guide Config (eslint, prettier & typescript)',
     customCommands: [
-      'npm pkg delete devDependencies.prettier',
-      'npm install -w -D @noaignite/style-guide prettier-plugin-tailwindcss',
+      'npm install -w -D @noaignite/style-guide eslint prettier typescript',
       'rm -rf packages/style-guide',
     ],
     color: magenta,
