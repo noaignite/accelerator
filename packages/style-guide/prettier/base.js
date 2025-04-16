@@ -19,6 +19,7 @@ export default {
   ...overridableDefaults,
   semi: false,
   singleQuote: true,
+  // Include Prettier plugins. Include order matters.
   plugins: [
     'prettier-plugin-packagejson',
     'prettier-plugin-style-order',

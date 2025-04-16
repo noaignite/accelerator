@@ -27,7 +27,10 @@ The package provides several ESLint configurations that you can extend in your p
 // eslint.config.js
 import baseConfig from '@noaignite/style-guide/eslint/base'
 
-export default baseConfig
+export default {
+  ...baseConfig,
+  // Your custom rules
+}
 ```
 
 Available configurations:
@@ -55,7 +58,7 @@ export default [
   ...prettierConfig,
   ...typescriptConfig,
   ...importConfig,
-  // Add your custom rules
+  // Your custom rules
 ]
 ```
 
@@ -79,15 +82,22 @@ Available rule sets:
 
 ### Prettier Configuration
 
+The package provides several Prettier configurations that you can extend in your project:
+
 ```js
 // prettier.config.js
-import prettierConfig from '@noaignite/style-guide/prettier'
+import baseConfig from '@noaignite/style-guide/prettier/base'
 
 export default {
-  ...prettierConfig,
-  // Your custom prettier options
+  ...baseConfig,
+  // Your custom rules
 }
 ```
+
+Available configurations:
+
+- `@noaignite/style-guide/prettier/base` - Base configuration for Prettier projects
+- `@noaignite/style-guide/prettier/tailwind` - Configuration for TailwindCss projects
 
 ### TypeScript Configuration
 

@@ -1,3 +1,3 @@
-import prettierConfig from '@noaignite/style-guide/prettier'
+import baseConfig from '@noaignite/style-guide/prettier/base'
 
-export default prettierConfig
+export default baseConfig
