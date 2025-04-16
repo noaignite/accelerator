@@ -43,8 +43,8 @@
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
     "@noaignite/types": "workspace:^",
-    "@vitest/coverage-v8": "^2.1.9",
-    "vitest": "^2.1.9"
+    "@vitest/coverage-v8": "^3.1.1",
+    "vitest": "^3.1.1"
   },
   "engines": {
     "node": ">=20"
