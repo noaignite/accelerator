@@ -1,5 +1,11 @@
 # @noaignite/tailwind-typography
 
+## 0.1.8
+
+### Patch Changes
+
+- 94bdc2a: Rename entry file to index.ts as set in package.json
+
 ## 0.1.7
 
 ### Patch Changes
