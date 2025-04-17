@@ -37,7 +37,8 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "lint": "eslint .",
-    "test:types": "tsc --noEmit"
+    "test:types": "tsc --noEmit",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@noaignite/utils": "workspace:*"

@@ -14,10 +14,8 @@ import plugin from 'tailwindcss/plugin'
  * @param clampMin - Whether to clamp the value at the minimum.
  * @param clampMax - Whether to clamp the value at the maximum.
  * @returns A string containing the CSS `calc` or `clamp` formula for the fluid value.
- *
- * @internal
  */
-function fluidValue(
+export function fluidValue(
   minValue: number,
   maxValue: number,
   minViewport: number,
@@ -39,7 +37,7 @@ function fluidValue(
     return `max(${minValue}${unit}, ${value})`
   }
   if (clampMax) {
-    return `min(${minValue}${unit}, ${value})`
+    return `min(${maxValue}${unit}, ${value})`
   }
   return value
 }
