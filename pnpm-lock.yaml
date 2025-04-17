@@ -17,12 +17,18 @@ importers:
       '@types/node':
         specifier: ^22.14.1
         version: 22.14.1
+      '@vitest/coverage-v8':
+        specifier: ^3.1.1
+        version: 3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))
       esbuild-plugin-file-path-extensions:
         specifier: ^2.1.4
         version: 2.1.4
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1
       lint-staged:
         specifier: ^15.5.1
         version: 15.5.1
@@ -41,6 +47,9 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
+      vitest:
+        specifier: ^3.1.1
+        version: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1)
 
   docs:
     dependencies:
@@ -167,18 +176,9 @@ importers:
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
-      '@vitest/coverage-v8':
-        specifier: ^3.1.1
-        version: 3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))
-      jsdom:
-        specifier: ^25.0.1
-        version: 25.0.1
       nock:
         specifier: 14.0.3
         version: 14.0.3
-      vitest:
-        specifier: ^3.1.1
-        version: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1)
 
   packages/react-utils:
     dependencies:
@@ -210,18 +210,9 @@ importers:
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
-      '@vitest/coverage-v8':
-        specifier: ^3.1.1
-        version: 3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))
-      jsdom:
-        specifier: ^25.0.1
-        version: 25.0.1
       react:
         specifier: ^19.1.0
         version: 19.1.0
-      vitest:
-        specifier: ^3.1.1
-        version: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1)
 
   packages/style-guide:
     dependencies:
@@ -329,12 +320,6 @@ importers:
       '@noaignite/types':
         specifier: workspace:^
         version: link:../types
-      '@vitest/coverage-v8':
-        specifier: ^3.1.1
-        version: 3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@26.1.0)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))
-      vitest:
-        specifier: ^3.1.1
-        version: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@26.1.0)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1)
 
 packages:
 
@@ -6712,7 +6697,7 @@ snapshots:
   '@testing-library/jest-dom@6.6.3':
     dependencies:
       '@adobe/css-tools': 4.4.2
-      aria-query: 5.3.0
+      aria-query: 5.3.2
       chalk: 3.0.0
       css.escape: 1.5.1
       dom-accessibility-api: 0.6.3
@@ -7116,24 +7101,6 @@ snapshots:
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
       vitest: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vitest/coverage-v8@3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@26.1.0)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))':
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@bcoe/v8-coverage': 1.0.2
-      debug: 4.4.0
-      istanbul-lib-coverage: 3.2.2
-      istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 5.0.6
-      istanbul-reports: 3.1.7
-      magic-string: 0.30.17
-      magicast: 0.3.5
-      std-env: 3.9.0
-      test-exclude: 7.0.1
-      tinyrainbow: 2.0.0
-      vitest: 3.1.1(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.1.2)(jsdom@26.1.0)(less@4.2.0)(lightningcss@1.27.0)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1)
     transitivePeerDependencies:
       - supports-color
 
