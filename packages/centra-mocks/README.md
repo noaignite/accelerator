@@ -4,7 +4,7 @@ Centra mocks - A collection of mocks to the Centra API.
 
 ## Installation
 
-Centa mocks is available as an [npm package](https://www.npmjs.com/package/@noaignite/centra-mocks).
+Centra mocks is available as an [npm package](https://www.npmjs.com/package/@noaignite/centra-mocks).
 
 ```sh
 // with pnpm

@@ -4,7 +4,7 @@ Thank you for helping out!
 
 ## Environment
 
-The project is dependent on Node v20.x.x in order to run in development. It is recommended to have [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#node-version-manager---) installed to conveniently manage your node versions between projects. Once you have it installed you can install the node version denoted in the `.nvmrc` file.
+The project is dependent on Node v22.x.x in order to run in development. It is recommended to have [nvm](https://github.com/nvm-sh/nvm?tab=readme-ov-file#node-version-manager---) installed to conveniently manage your node versions between projects. Once you have it installed you can install the node version denoted in the `.nvmrc` file.
 
 ```bash
 nvm use

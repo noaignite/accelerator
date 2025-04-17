@@ -13,27 +13,27 @@
   "author": "NoA Ignite",
   "type": "module",
   "scripts": {
-    "build": "pnpm build:files && next build",
-    "build:files": "tsx ../scripts/generateDocs.ts",
-    "dev": "next dev",
+    "prebuild": "pnpm generate",
+    "build": "next build",
+    "dev": "next dev --turbopack",
+    "generate": "tsx ../scripts/generateDocs.ts",
     "lint": "next lint",
     "start": "next start",
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.3.0",
-    "nextra": "^3.3.1",
-    "nextra-theme-docs": "^3.3.1",
+    "next": "15.3.1",
+    "nextra": "4.2.17",
+    "nextra-theme-docs": "4.2.17",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "15.3.1",
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.2",
-    "autoprefixer": "10.4.21",
-    "postcss": "8.4.49",
-    "tailwindcss": "3.4.17"
+    "tailwindcss": "^4.1.4"
   },
   "engines": {
     "node": ">=20.0.0"

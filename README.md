@@ -1,6 +1,6 @@
 # NoA Ignite Accelerator
 
-A collection of NoA Ignite packages.
+NoA Ignite Accelerator is a Turborepo‑powered monorepo that bundles a suite of first‑class TypeScript packages and tools designed to jump‑start and standardize frontend projects at NoA Ignite.
 
 ## Documentation
 
@@ -60,12 +60,10 @@ This Turborepo includes the following packages/apps:
 - [`@noaignite/create-app`](https://noaignite.dev/@noaignite/create-app/README): A CLI tool to scaffold out templates within a Turborepo project
 - [`@noaignite/react-centra-checkout`](https://noaignite.dev/@noaignite/react-centra-checkout/README): React helper functions for Centra APIs
 - [`@noaignite/react-utils`](https://noaignite.dev/@noaignite/react-utils/README): React helper functions
+- [`@noaignite/style-guide`](https://noaignite.dev/@noaignite/style-guide/README): A collection of configurations for `eslint`, `prettier` & `typescript`
 - [`@noaignite/tailwind-typography`](https://noaignite.dev/@noaignite/tailwind-typography/README): TailwindCSS plugin to create responsive typography
 - [`@noaignite/types`](https://noaignite.dev/@noaignite/types/README): Type helpers by NoA Ignite
 - [`@noaignite/utils`](https://noaignite.dev/@noaignite/utils/README): Basic helper functions
-- [`@repo/eslint-config`](https://github.com/noaignite/accelerator/tree/main/packages/eslint-config): `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- [`@repo/prettier-config`](https://github.com/noaignite/accelerator/tree/main/packages/prettier-config): `prettier` configurations (includes `@vercel/style-guide`)
-- [`@repo/typescript-config`](https://github.com/noaignite/accelerator/tree/main/packages/typescript-config): `tsconfig.json`s used throughout the monorepo
 
 The goal is for each package/app to be 100% [TypeScript](https://www.typescriptlang.org/).
 

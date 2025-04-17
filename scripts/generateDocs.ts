@@ -21,7 +21,7 @@ type DeclarationTypes =
 const githubUrl = 'https://github.com/noaignite/accelerator/tree/main'
 const rootDir = '..'
 const sourceDir = '../packages'
-const outputDir = './src/pages/@noaignite'
+const outputDir = './src/content'
 const ignoreDirs = ['.turbo', 'dist', 'node_modules', 'template-*']
 
 // Initialize the project
@@ -29,9 +29,9 @@ const project = new Project()
 
 // Add source files from the directory
 project.addSourceFilesAtPaths([
-  `${sourceDir}/**/*.{ts,tsx}`,
-  `!${sourceDir}/**/*index.{ts,tsx}`,
-  `!${sourceDir}/**/{${ignoreDirs.join(',')}}/**/*.{ts,tsx}`,
+  `${sourceDir}/*/src/**/*.{ts,tsx}`,
+  `!${sourceDir}/*/src/**/*index.{ts,tsx}`,
+  `!${sourceDir}/*/src/**/*.test.{ts,tsx}`,
 ])
 
 /**
@@ -67,11 +67,11 @@ function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
   let markdown = `### \`${name}\`\n\n`
 
   const srcUrl = `${githubUrl}/${path.relative(rootDir, doc.getSourceFile().getFilePath())}`
-  markdown += `[See source](${srcUrl})\n\n`
+  markdown += `[See source on Github](${srcUrl})\n\n`
 
   const comment = doc.getComment()
   if (comment) {
-    markdown += `${comment}\n\n`
+    markdown += `${comment}\n`
   }
 
   // So that we know if a tag is being concatinated for the first time enabling
@@ -104,7 +104,7 @@ function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
         break
       }
       case 'example':
-        markdown += `\n#### Example\n\n${tagText}\n`
+        markdown += `\n#### Example\n\n${tagText}\n\n`
         break
     }
 
@@ -138,6 +138,11 @@ function extractJsDocsFromFile(sourceFile: SourceFile): string {
       })
     }
   })
+
+  if (markdownContent !== '') {
+    const name = sourceFile.getBaseNameWithoutExtension()
+    markdownContent = `---\ntitle: ${name}\n---\n\n` + markdownContent
+  }
 
   return markdownContent
 }
