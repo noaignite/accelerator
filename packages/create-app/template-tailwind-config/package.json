@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./tailwind.config.ts",
-    "./*.css": "./*.css",
-    "./*": "./*.ts"
+    ".": "./src/index.ts",
+    "./preset": "./src/tailwind.config.ts",
+    "./*.css": "./src/*.css"
   },
   "dependencies": {
     "@noaignite/tailwind-typography": "^0.1.8"

@@ -1,6 +1,4 @@
-// tailwind config is required for editor support
-
-import sharedConfig from '@repo/tailwind-config'
+import sharedConfig from '@repo/tailwind-config/preset'
 import type { Config } from 'tailwindcss'
 
 const config: Pick<Config, 'presets'> = {
