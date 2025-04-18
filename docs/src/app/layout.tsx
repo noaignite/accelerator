@@ -3,18 +3,22 @@ import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import 'nextra-theme-docs/style.css'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import type { ReactNode } from 'react'
 import packageJson from '../../package.json'
 
+const SITE_NAME = 'Accelerator Docs'
+const REPO_URL = packageJson.repository.url.replace(/\.git$/, '')
+
 export const metadata = {
-  metadataBase: new URL('https://noaignite.dev'),
+  metadataBase: new URL(packageJson.homepage),
   title: {
-    template: '%s - Accelerator Docs',
+    template: `%s - ${SITE_NAME}`,
   },
-  description: 'The NoA Ignite Accelerator official docs',
-  applicationName: 'Accelerator Docs',
+  description: packageJson.description,
+  applicationName: SITE_NAME,
   generator: 'Next.js',
   appleWebApp: {
-    title: 'Accelerator Docs',
+    title: SITE_NAME,
   },
 }
 
@@ -25,19 +29,19 @@ export const viewport = {
   userScalable: false,
 }
 
-export default async function RootLayout({ children }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const navbar = (
     <Navbar
       logo={
         <div style={{ display: 'flex', gap: 12 }}>
-          <Image alt="NoA Ignite" height={16} src="/icon.svg" width={16} />
-          <span>Accelerator Docs</span>
+          <Image alt={packageJson.author} height={16} src="/icon.svg" width={16} />
+          <span>{SITE_NAME}</span>
           <span style={{ opacity: 0.7, fontSize: 14, alignSelf: 'end' }}>
             {`v${packageJson.version}`}
           </span>
         </div>
       }
-      projectLink="https://github.com/noaignite/accelerator"
+      projectLink={REPO_URL}
     />
   )
   const pageMap = await getPageMap()
@@ -48,9 +52,9 @@ export default async function RootLayout({ children }) {
       <body>
         <Layout
           navbar={navbar}
-          footer={<Footer>MIT {new Date().getFullYear()} © Accelerator Docs.</Footer>}
+          footer={<Footer>{`MIT ${new Date().getFullYear()} © ${SITE_NAME}.`}</Footer>}
           editLink={null}
-          docsRepositoryBase="https://github.com/noaignite/accelerator"
+          docsRepositoryBase={REPO_URL}
           sidebar={{ defaultMenuCollapseLevel: 1 }}
           pageMap={pageMap}
         >

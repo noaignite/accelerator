@@ -2,7 +2,8 @@
   "name": "docs",
   "version": "0.1.2",
   "private": true,
-  "description": "Accelerator docs",
+  "description": "NoA Ignite Accelerator is a Turborepo‑powered monorepo that bundles a suite of first‑class TypeScript packages and tools designed to jump‑start and standardize frontend projects at NoA Ignite.",
+  "homepage": "https://noaignite.dev",
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
