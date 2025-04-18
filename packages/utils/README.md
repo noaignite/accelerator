@@ -8,11 +8,15 @@ Utils is available as an [npm package](https://www.npmjs.com/package/@noaignite/
 
 ```sh
 // with pnpm
-pnpm install @noaignite/utils
-
-// with npm
-npm install @noaignite/utils
+pnpm add @noaignite/utils
 
 // with yarn
 yarn add @noaignite/utils
+
+// with npm
+npm install @noaignite/utils
 ```
+
+## Documentation
+
+Visit [https://noaignite.dev](https://noaignite.dev) to view the full documentation.

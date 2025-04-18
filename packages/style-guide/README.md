@@ -8,13 +8,13 @@ Style Guide is available as an [npm package](https://www.npmjs.com/package/@noai
 
 ```sh
 // with pnpm
-pnpm install @noaignite/style-guide
-
-// with npm
-npm install @noaignite/style-guide
+pnpm add @noaignite/style-guide
 
 // with yarn
 yarn add @noaignite/style-guide
+
+// with npm
+npm install @noaignite/style-guide
 ```
 
 ## Usage
@@ -117,3 +117,7 @@ Available configurations:
 - `@noaignite/style-guide/typescript/next` - Configuration for Next.js projects
 
 Each configuration includes sensible defaults for different project types. The base configuration includes settings like strict type checking, module resolution settings, and other common TypeScript options.
+
+## Documentation
+
+Visit [https://noaignite.dev](https://noaignite.dev) to view the full documentation.
