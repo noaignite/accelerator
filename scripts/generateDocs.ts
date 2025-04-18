@@ -230,7 +230,7 @@ function copyFiles() {
 
   readmeFiles.forEach((filePath) => {
     const relativePath = path.relative(sourceDir, filePath)
-    const outputFilePath = path.join(outputDir, path.dirname(relativePath), 'README.md')
+    const outputFilePath = path.join(outputDir, path.dirname(relativePath), 'index.md')
 
     ensureDirectoryExists(path.dirname(outputFilePath))
     copyFile(filePath, outputFilePath)
@@ -241,7 +241,7 @@ function copyFiles() {
 
   monorepoRootFiles.forEach((filename) => {
     const sourcePath = path.resolve(rootDir, filename)
-    const destinationPath = path.join(outputDir, filename)
+    const destinationPath = path.join(outputDir, filename === 'README.md' ? 'index.md' : filename)
     copyFile(sourcePath, destinationPath)
   })
 }
