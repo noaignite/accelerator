@@ -8,11 +8,15 @@ Types is available as an [npm package](https://www.npmjs.com/package/@noaignite/
 
 ```sh
 // with pnpm
-pnpm install @noaignite/types
-
-// with npm
-npm install @noaignite/types
+pnpm add @noaignite/types
 
 // with yarn
 yarn add @noaignite/types
+
+// with npm
+npm install @noaignite/types
 ```
+
+## Documentation
+
+Visit [https://noaignite.dev](https://noaignite.dev) to view the full documentation.

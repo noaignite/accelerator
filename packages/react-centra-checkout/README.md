@@ -8,13 +8,13 @@ react-centra-checkout is available as an [npm package](https://www.npmjs.com/pac
 
 ```sh
 // with pnpm
-pnpm install @noaignite/react-centra-checkout
-
-// with npm
-npm install @noaignite/react-centra-checkout
+pnpm add @noaignite/react-centra-checkout
 
 // with yarn
 yarn add @noaignite/react-centra-checkout
+
+// with npm
+npm install @noaignite/react-centra-checkout
 ```
 
 ## Why
@@ -29,20 +29,22 @@ It does not attempt to abstract the Centra api, but rather exposes the endpoints
 
 Start by wrapping your applications root component with `CentraProvider` and supply it with `apiUrl` (the api url to your Centra checkout api), `paymentReturnPage` (url to the api route in your app which handles successful payments) and `paymentFailedPage` (url to the api route for failed payments) like so:
 
-```JSX
+```tsx
 import { CentraProvider } from '@noaignite/react-centra-checkout'
 
-<CentraProvider
-  apiUrl={process.env.CHECKOUT_API}
-  paymentReturnPage={`${process.env.APP_URL}/api/centra/checkout-success`}
-  paymentFailedPage={`${process.env.APP_URL}/api/centra/checkout-failed`}
->
-  <AppProvider>
-    <AppBase>
-      <Component {...pageProps} />
-    </AppBase>
-  </AppProvider>
-</CentraProvider>
+const App = () => (
+  <CentraProvider
+    apiUrl={process.env.CHECKOUT_API}
+    paymentReturnPage={`${process.env.APP_URL}/api/centra/checkout-success`}
+    paymentFailedPage={`${process.env.APP_URL}/api/centra/checkout-failed`}
+  >
+    <AppProvider>
+      <AppBase>
+        <Component {...pageProps} />
+      </AppBase>
+    </AppProvider>
+  </CentraProvider>
+)
 ```
 
 By default, the CentraProvider will handle fetching the initial selection for the user, so by wrapping your apps root component, you get access to the `useCentraSelection` and `useCentraHandlers` hooks.
@@ -51,30 +53,38 @@ By default, the CentraProvider will handle fetching the initial selection for th
 
 To get data from the current selection, simply destruct whatever you want from the `useCentraSelection` hook, like so:
 
-```JSX
+```tsx
 import { useCentraSelection } from '@noaignite/react-centra-checkout'
 
-const { selection, paymentMethods } = useCentraSelection()
-const { items, currency, totals } = selection
+const Component = () => {
+  const { selection, paymentMethods } = useCentraSelection()
+  const { items, currency, totals } = selection
+
+  // ...
+}
 ```
 
 ### Updating the selection
 
 To update the selection, call one of the update handlers from the `useCentraHandlers` hook:
 
-```JSX
+```tsx
 import { useCentraHandlers } from '@noaignite/react-centra-checkout'
 
-const { addItem } = useCentraHandlers()
+const Component = () => {
+  const { addItem } = useCentraHandlers()
 
-addItem(size, quantity)
+  const handleClick = () => {
+    addItem(size, 1)
+  }
+}
 ```
 
 ### Calling endpoints server-side
 
 The Centra selection and handlers will only be available client-side. To make api calls against Centra server-side (e.g when fetching products), you need to call the api directly using the Api client:
 
-```JSX
+```tsx
 import { ApiClient } from '@noaignite/react-centra-checkout'
 
 const response = await ApiClient.default.request('POST', 'products', { categories: ['15'] })
@@ -82,4 +92,4 @@ const response = await ApiClient.default.request('POST', 'products', { categorie
 
 ## Documentation
 
-https://react-centra-checkout-docs.vercel.app
+Visit [https://noaignite.dev](https://noaignite.dev) to view the full documentation.
