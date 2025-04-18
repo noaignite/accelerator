@@ -18,35 +18,99 @@ type DeclarationTypes =
   | InterfaceDeclaration
   | TypeAliasDeclaration
 
+/**
+ * Config
+ */
 const githubUrl = 'https://github.com/noaignite/accelerator/tree/main'
 const rootDir = '..'
-const sourceDir = '../packages'
+const packagesDir = '../packages'
 const outputDir = './src/content'
 const ignoreDirs = ['.turbo', 'dist', 'node_modules', 'template-*']
+const copyPackageFileNames = ['CHANGELOG.md', 'README.md']
+const copyDocsFilePaths = ['./CONTRIBUTING.md', './README.md', './docs/CHANGELOG.md']
+const renameFileNames: Record<string, string> = {
+  'README.md': 'index.md',
+}
 
-// Initialize the project
+/**
+ * Initialize a `ts-morph` project and add source files.
+ */
 const project = new Project()
-
-// Add source files from the directory
 project.addSourceFilesAtPaths([
-  `${sourceDir}/*/src/**/*.{ts,tsx}`,
-  `!${sourceDir}/*/src/**/*index.{ts,tsx}`,
-  `!${sourceDir}/*/src/**/*.test.{ts,tsx}`,
+  `${packagesDir}/*/src/**/*.{ts,tsx}`,
+  `!${packagesDir}/*/src/**/*index.{ts,tsx}`,
+  `!${packagesDir}/*/src/**/*.test.{ts,tsx}`,
 ])
 
 /**
  * Ensures that a directory exists, creating it if it does not.
  */
-function ensureDirectoryExists(dir: string) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true })
+function ensureDirectoryExists(directory: string) {
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true })
   }
+}
+
+/**
+ * Copy `source` to `destination`, creating its directory if needed, and log
+ * the result.
+ */
+function copyFile(source: string, destination: string) {
+  ensureDirectoryExists(path.dirname(destination))
+
+  try {
+    fs.copyFileSync(source, destination)
+    console.info(`Copied ${path.basename(source)} to: ${destination}`)
+  } catch (error) {
+    console.error(`Failed to copy ${path.basename(source)} to: ${destination}`, error)
+  }
+}
+
+/**
+ * Write `content` to `destination`, creating its directory if needed, and log
+ * the result.
+ */
+function writeToFile(destination: string, content: string) {
+  ensureDirectoryExists(path.dirname(destination))
+
+  try {
+    fs.writeFileSync(destination, content, { encoding: 'utf-8' })
+    console.info(`Wrote file to: ${destination}`)
+  } catch (error) {
+    console.error(`Failed to write to: ${destination}`, error)
+  }
+}
+
+/**
+ * Recursively searches for files whose base names appear in `fileNames`,
+ * starting from `directory`, and skips any directories listed in `ignoreDirectories`.
+ */
+function findFiles(directory: string, fileNames: string[], ignoreDirectories?: string[]) {
+  let foundFiles: string[] = []
+  const entries = fs.readdirSync(directory, { withFileTypes: true })
+
+  // Traverse the directory contents
+  for (const entry of entries) {
+    const fullPath = path.join(directory, entry.name)
+
+    if (entry.isDirectory()) {
+      if (ignoreDirectories?.includes(entry.name)) continue
+
+      // Recurse into directories
+      foundFiles.push(...findFiles(fullPath, fileNames, ignoreDirectories))
+    } else if (entry.isFile() && fileNames.includes(entry.name)) {
+      // Add found files to the list
+      foundFiles.push(fullPath)
+    }
+  }
+
+  return foundFiles
 }
 
 /**
  * Attempts to retrieve the name from a declaration.
  */
-function getDeclarationName(declaration: DeclarationTypes): string | undefined {
+function getDeclarationName(declaration: DeclarationTypes) {
   let name: string | undefined
   if ('getName' in declaration) {
     name = declaration.getName()
@@ -63,7 +127,7 @@ function getDeclarationName(declaration: DeclarationTypes): string | undefined {
 /**
  * Converts a JSDoc comment into Markdown format.
  */
-function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
+function convertJsDocToMarkdown(doc: JSDoc, name: string) {
   let markdown = `### \`${name}\`\n\n`
 
   const srcUrl = `${githubUrl}/${path.relative(rootDir, doc.getSourceFile().getFilePath())}`
@@ -117,7 +181,7 @@ function convertJsDocToMarkdown(doc: JSDoc, name: string): string {
 /**
  * Extracts JSDoc comments from a source file and returns them in Markdown format.
  */
-function extractJsDocsFromFile(sourceFile: SourceFile): string {
+function extractJsDocsFromFile(sourceFile: SourceFile) {
   let markdownContent = ''
 
   const declarations: DeclarationTypes[] = [
@@ -148,104 +212,64 @@ function extractJsDocsFromFile(sourceFile: SourceFile): string {
 }
 
 /**
- * Writes the Markdown content to the appropriate directory and file.
- */
-function writeMarkdownToFile(filePath: string, markdownContent: string): void {
-  const outputFilePath = path.join(outputDir, filePath).replace(/\.(ts|tsx)$/, '.generated.md')
-  const outputDirectory = path.dirname(outputFilePath)
-
-  // Ensure the output directory exists
-  ensureDirectoryExists(outputDirectory)
-
-  try {
-    // Write the file to the outputDir
-    fs.writeFileSync(outputFilePath, markdownContent, { encoding: 'utf-8' })
-    console.info(`Generated: ${outputFilePath}`)
-  } catch (error) {
-    console.error(`Failed to write file: ${outputFilePath}`, error)
-  }
-}
-
-/**
- * Main function to iterate over source files, extract JSDoc, and write to .mdx files.
+ * Iterate over source files, extract JSDoc, and write each as a generated
+ * Markdown file.
  */
 function generateMarkdown() {
   project.getSourceFiles().forEach((sourceFile) => {
     const markdownContent = extractJsDocsFromFile(sourceFile)
+    if (!markdownContent) return
 
-    if (markdownContent) {
-      // Get the file's path relative to sourceDir
-      let relativePath = path.relative(sourceDir, sourceFile.getFilePath())
-      relativePath = relativePath.replace(/src\//, '')
+    // Build the path relative to the packages folder, strip out "src/"
+    const relativePath = path.relative(packagesDir, sourceFile.getFilePath()).replace(/src\//, '')
 
-      // Write the Markdown content to the output file
-      writeMarkdownToFile(relativePath, markdownContent)
-    }
+    // Change .ts/.tsx to .generated.md and prepend the outputDir
+    const outputFilePath = path
+      .join(outputDir, relativePath)
+      .replace(/\.(ts|tsx)$/, '.generated.md')
+
+    writeToFile(outputFilePath, markdownContent)
   })
 }
 
 /**
- * Recursively find files in a directory.
+ * Copies both package and documentation files into the configured output
+ * directory.
  */
-function findFiles(dir: string, fileNames: string[]): string[] {
-  let foundFiles: string[] = []
-
-  // Read the directory contents
-  const filesAndDirs = fs.readdirSync(dir)
-
-  // Traverse the directory contents
-  for (const item of filesAndDirs) {
-    const fullPath = path.join(dir, item)
-    const stats = fs.statSync(fullPath)
-
-    if (stats.isDirectory()) {
-      // Skip ignored directories
-      if (ignoreDirs.includes(item)) {
-        continue
-      }
-
-      // Recurse into directories
-      foundFiles = foundFiles.concat(findFiles(fullPath, fileNames))
-    } else if (stats.isFile() && fileNames.includes(item)) {
-      // Add found files to the list
-      foundFiles.push(fullPath)
-    }
-  }
-
-  return foundFiles
-}
-
-function copyFile(source: string, destination: string) {
-  try {
-    fs.copyFileSync(source, destination)
-    console.info(`Copied ${path.basename(source)} to: ${destination}`)
-  } catch (error) {
-    console.error(`Failed to copy ${path.basename(source)} to: ${destination}`, error)
-  }
-}
-
 function copyFiles() {
-  // Copy package files
-  const packageFiles = findFiles(sourceDir, ['CHANGELOG.md', 'README.md'])
+  const jobs = [
+    {
+      // Source files + their base for relative paths
+      sources: findFiles(packagesDir, copyPackageFileNames, ignoreDirs),
+      baseDir: packagesDir,
+      preserveSubdirectories: true,
+    },
+    {
+      // Docs lives at various root‑relative paths
+      sources: copyDocsFilePaths.map((p) => path.join(rootDir, p)),
+      baseDir: rootDir,
+      preserveSubdirectories: false,
+    },
+  ]
 
-  packageFiles.forEach((filePath) => {
-    const sourcePath = path.relative(sourceDir, filePath)
-    const filename = path.basename(sourcePath)
-    const outputFileName = filename === 'README.md' ? 'index.md' : filename
-    const outputFilePath = path.join(outputDir, path.dirname(sourcePath), outputFileName)
+  jobs.forEach(({ sources, baseDir, preserveSubdirectories }) => {
+    sources.forEach((source) => {
+      // Determine the relative file path to use under outputDir
+      const relativeFilePath = preserveSubdirectories
+        ? path.relative(baseDir, source)
+        : path.basename(source)
 
-    ensureDirectoryExists(path.dirname(outputFilePath))
-    copyFile(filePath, outputFilePath)
-  })
+      // Apply any filename renames
+      const originalName = path.basename(relativeFilePath)
+      const finalName = renameFileNames[originalName] ?? originalName
 
-  // Copy monorepo root files
-  const monorepoRootFiles = ['CONTRIBUTING.md', 'README.md']
+      // Build the full destination path
+      const destination = preserveSubdirectories
+        ? path.join(outputDir, path.dirname(relativeFilePath), finalName)
+        : path.join(outputDir, finalName)
 
-  monorepoRootFiles.forEach((filename) => {
-    const sourcePath = path.resolve(rootDir, filename)
-    const outputFileName = filename === 'README.md' ? 'index.md' : filename
-    const outputFilePath = path.join(outputDir, outputFileName)
-    copyFile(sourcePath, outputFilePath)
+      copyFile(source, destination)
+    })
   })
 }
 
