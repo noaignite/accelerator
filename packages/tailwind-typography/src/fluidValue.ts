@@ -1,6 +1,7 @@
 /**
  * Generates a fluid value based on the given parameters.
  *
+ * @internal
  * @param minValue - The minimum value for the property (at the smallest viewport).
  * @param maxValue - The maximum value for the property (at the largest viewport).
  * @param minViewport - The minimum viewport width where the fluid value starts.
