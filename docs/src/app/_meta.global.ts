@@ -26,6 +26,7 @@ export default {
   },
   index: 'Getting Started',
   CONTRIBUTING: 'Contributing',
+  CHANGELOG: 'Changelog',
   '-': {
     type: 'separator',
     title: 'Packages',

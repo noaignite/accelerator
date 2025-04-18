@@ -3,6 +3,7 @@ import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import 'nextra-theme-docs/style.css'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+import packageJson from '../../package.json'
 
 export const metadata = {
   metadataBase: new URL('https://noaignite.dev'),
@@ -28,9 +29,12 @@ export default async function RootLayout({ children }) {
   const navbar = (
     <Navbar
       logo={
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 12 }}>
           <Image alt="NoA Ignite" height={16} src="/icon.svg" width={16} />
           <span>Accelerator Docs</span>
+          <span style={{ opacity: 0.7, fontSize: 14, alignSelf: 'end' }}>
+            {`v${packageJson.version}`}
+          </span>
         </div>
       }
       projectLink="https://github.com/noaignite/accelerator"
