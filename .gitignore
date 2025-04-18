@@ -10,14 +10,15 @@ coverage
 
 # next.js
 .next/
-out/
-build
 .swc/
+build
+out/
 
 # storybook
 storybook-static
 
 # docs
+docs/public/_pagefind/
 docs/src/content/**/*.generated.*
 docs/src/content/**/CHANGELOG.*
 docs/src/content/**/CONTRIBUTING.*
