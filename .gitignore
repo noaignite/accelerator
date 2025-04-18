@@ -19,8 +19,10 @@ storybook-static
 
 # docs
 docs/src/content/**/*.generated.*
+docs/src/content/**/CHANGELOG.*
 docs/src/content/**/CONTRIBUTING.*
 docs/src/content/**/README.*
+docs/src/content/**/index.md
 
 # misc
 .DS_Store
