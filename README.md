@@ -54,16 +54,16 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- [`docs`](https://github.com/noaignite/accelerator/tree/main/docs): Accelerator docs
-- [`@noaignite/centra-mocks`](https://noaignite.dev/@noaignite/centra-mocks/README): A collection of mocks to the Centra API
-- [`@noaignite/centra-types`](https://noaignite.dev/@noaignite/centra-types/README): Typescript definitions for Centra APIs
-- [`@noaignite/create-app`](https://noaignite.dev/@noaignite/create-app/README): A CLI tool to scaffold out templates within a Turborepo project
-- [`@noaignite/react-centra-checkout`](https://noaignite.dev/@noaignite/react-centra-checkout/README): React helper functions for Centra APIs
-- [`@noaignite/react-utils`](https://noaignite.dev/@noaignite/react-utils/README): React helper functions
-- [`@noaignite/style-guide`](https://noaignite.dev/@noaignite/style-guide/README): A collection of configurations for `eslint`, `prettier` & `typescript`
-- [`@noaignite/tailwind-typography`](https://noaignite.dev/@noaignite/tailwind-typography/README): TailwindCSS plugin to create responsive typography
-- [`@noaignite/types`](https://noaignite.dev/@noaignite/types/README): Type helpers by NoA Ignite
-- [`@noaignite/utils`](https://noaignite.dev/@noaignite/utils/README): Basic helper functions
+- [`docs`](https://noaignite.dev): Accelerator docs
+- [`@noaignite/centra-mocks`](https://noaignite.dev/centra-mocks): A collection of mocks to the Centra API
+- [`@noaignite/centra-types`](https://noaignite.dev/centra-types): Typescript definitions for Centra APIs
+- [`@noaignite/create-app`](https://noaignite.dev/create-app): A CLI tool to scaffold out templates within a Turborepo project
+- [`@noaignite/react-centra-checkout`](https://noaignite.dev/react-centra-checkout): React helper functions for Centra APIs
+- [`@noaignite/react-utils`](https://noaignite.dev/react-utils): React helper functions
+- [`@noaignite/style-guide`](https://noaignite.dev/style-guide): A collection of configurations for `eslint`, `prettier` & `typescript`
+- [`@noaignite/tailwind-typography`](https://noaignite.dev/tailwind-typography): TailwindCSS plugin to create responsive typography
+- [`@noaignite/types`](https://noaignite.dev/types): Type helpers by NoA Ignite
+- [`@noaignite/utils`](https://noaignite.dev/utils): Basic helper functions
 
 The goal is for each package/app to be 100% [TypeScript](https://www.typescriptlang.org/).
 
