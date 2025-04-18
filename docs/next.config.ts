@@ -1,17 +1,7 @@
 import type { NextConfig } from 'next'
 import nextra, { type NextraConfig } from 'nextra'
 
-const nextConfig: NextConfig = {
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/README',
-        permanent: true,
-      },
-    ]
-  },
-}
+const nextConfig: NextConfig = {}
 
 const nextraConfig: NextraConfig = {}
 

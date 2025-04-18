@@ -24,7 +24,7 @@ export default {
     title: 'Contact us',
     href: 'https://www.noaignite.se/contact',
   },
-  README: 'Getting Started',
+  index: 'Getting Started',
   CONTRIBUTING: 'Contributing',
   '-': {
     type: 'separator',
@@ -36,7 +36,7 @@ export default {
       [title]: {
         title,
         items: {
-          README: 'Getting Started',
+          index: 'Getting Started',
           ...(packagesWithExports.includes(title) && {
             '-': {
               type: 'separator',
