@@ -185,10 +185,10 @@ function generateMarkdown() {
 }
 
 /**
- * Recursively finds all README.md files in a directory.
+ * Recursively find files in a directory.
  */
-function findReadmeFiles(dir: string): string[] {
-  let readmeFiles: string[] = []
+function findFiles(dir: string, fileNames: string[]): string[] {
+  let foundFiles: string[] = []
 
   // Read the directory contents
   const filesAndDirs = fs.readdirSync(dir)
@@ -205,14 +205,14 @@ function findReadmeFiles(dir: string): string[] {
       }
 
       // Recurse into directories
-      readmeFiles = readmeFiles.concat(findReadmeFiles(fullPath))
-    } else if (stats.isFile() && item.toLowerCase() === 'readme.md') {
-      // Add README.md files to the list
-      readmeFiles.push(fullPath)
+      foundFiles = foundFiles.concat(findFiles(fullPath, fileNames))
+    } else if (stats.isFile() && fileNames.includes(item)) {
+      // Add found files to the list
+      foundFiles.push(fullPath)
     }
   }
 
-  return readmeFiles
+  return foundFiles
 }
 
 function copyFile(source: string, destination: string) {
@@ -225,24 +225,27 @@ function copyFile(source: string, destination: string) {
 }
 
 function copyFiles() {
-  // Copy all package README.md files
-  const readmeFiles = findReadmeFiles(sourceDir)
+  // Copy package files
+  const packageFiles = findFiles(sourceDir, ['CHANGELOG.md', 'README.md'])
 
-  readmeFiles.forEach((filePath) => {
-    const relativePath = path.relative(sourceDir, filePath)
-    const outputFilePath = path.join(outputDir, path.dirname(relativePath), 'index.md')
+  packageFiles.forEach((filePath) => {
+    const sourcePath = path.relative(sourceDir, filePath)
+    const filename = path.basename(sourcePath)
+    const outputFileName = filename === 'README.md' ? 'index.md' : filename
+    const outputFilePath = path.join(outputDir, path.dirname(sourcePath), outputFileName)
 
     ensureDirectoryExists(path.dirname(outputFilePath))
     copyFile(filePath, outputFilePath)
   })
 
-  // Copy specified monorepo root files
+  // Copy monorepo root files
   const monorepoRootFiles = ['CONTRIBUTING.md', 'README.md']
 
   monorepoRootFiles.forEach((filename) => {
     const sourcePath = path.resolve(rootDir, filename)
-    const destinationPath = path.join(outputDir, filename === 'README.md' ? 'index.md' : filename)
-    copyFile(sourcePath, destinationPath)
+    const outputFileName = filename === 'README.md' ? 'index.md' : filename
+    const outputFilePath = path.join(outputDir, outputFileName)
+    copyFile(sourcePath, outputFilePath)
   })
 }
 

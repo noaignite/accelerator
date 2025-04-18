@@ -37,6 +37,7 @@ export default {
         title,
         items: {
           index: 'Getting Started',
+          CHANGELOG: 'Changelog',
           ...(packagesWithExports.includes(title) && {
             '-': {
               type: 'separator',

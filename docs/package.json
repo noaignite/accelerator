@@ -13,9 +13,8 @@
   "author": "NoA Ignite",
   "type": "module",
   "scripts": {
-    "prebuild": "pnpm generate",
-    "build": "next build",
-    "dev": "next dev --turbopack",
+    "build": "pnpm generate && next build",
+    "dev": "pnpm generate && next dev --turbopack",
     "generate": "tsx ../scripts/generateDocs.ts",
     "lint": "next lint",
     "start": "next start",
