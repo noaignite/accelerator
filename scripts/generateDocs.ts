@@ -134,7 +134,11 @@ function extractJsDocsFromFile(sourceFile: SourceFile): string {
 
     if (jsDocs.length > 0) {
       jsDocs.forEach((jsDoc) => {
-        markdownContent += convertJsDocToMarkdown(jsDoc, name ?? '')
+        const isInternal = !!jsDoc.getTags().find((tag) => tag.getTagName() === 'internal')
+
+        if (!isInternal) {
+          markdownContent += convertJsDocToMarkdown(jsDoc, name ?? '')
+        }
       })
     }
   })
