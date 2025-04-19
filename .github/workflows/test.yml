@@ -12,7 +12,7 @@ env:
   HUSKY: 0
 
 jobs:
-  test:
+  test-and-coverage:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -37,5 +37,18 @@ jobs:
         if: github.actor != 'dependabot[bot]'
         run: pnpm run ci:status
 
+      - name: Run build
+        run: pnpm run build
+
       - name: Run tests
-        run: pnpm run ci:test
+        run: pnpm run test
+
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./**/lcov.info
+          fail_ci_if_error: true

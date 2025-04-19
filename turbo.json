@@ -10,14 +10,14 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "test:coverage": {
+      "dependsOn": ["^test:coverage"]
+    },
     "test:unit": {
       "dependsOn": ["^test:unit"]
     },
     "test:types": {
       "dependsOn": ["^test:types"]
-    },
-    "test:unit:coverage": {
-      "dependsOn": ["^test:unit:coverage"]
     },
     "dev": {
       "cache": false,
