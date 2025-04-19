@@ -36,9 +36,9 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint .",
+    "test:coverage": "vitest run --coverage",
     "test:types": "tsc --noEmit",
-    "test:unit": "vitest run",
-    "test:unit:coverage": "vitest run --coverage"
+    "test:unit": "vitest run"
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
