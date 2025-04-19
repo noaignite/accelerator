@@ -1,5 +1,12 @@
 # @noaignite/create-app
 
+## 0.11.0
+
+### Minor Changes
+
+- 49236bc: Replace eslint, prettier & typescript with style-guide template
+- ebc57fb: Refactor tailwind-config template installer
+
 ## 0.10.2
 
 ### Patch Changes
