@@ -11,17 +11,24 @@ env:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up node
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 20
           cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
