@@ -1,5 +1,13 @@
 # @noaignite/tailwind-typography
 
+## 0.1.9
+
+### Patch Changes
+
+- 3a476d4: Move out logic from index file for docs generation
+- 1dbe5d8: Fix incorrect fontSize if clampMax true
+  - @noaignite/utils@3.5.1
+
 ## 0.1.8
 
 ### Patch Changes

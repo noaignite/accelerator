@@ -1,5 +1,13 @@
 # @noaignite/style-guide
 
+## 0.0.2
+
+### Patch Changes
+
+- 65538d3: @next/eslint-plugin-next should be a dev dep
+- dbfe2db: Enable eslint rule consistent-type-imports
+- 392d39e: Export multiple prettier configs
+
 ## 0.0.1
 
 ### Patch Changes
