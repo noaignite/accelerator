@@ -106,7 +106,26 @@ describe('createRenderBlock', () => {
     expect(mockComponent).toHaveTextContent('"adapterApplied":true')
   })
 
-  it('should log an error and returns null if blockType is missing from blocks', async () => {
+  it('should log an error and returns null if blockType is missing in data', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const renderBlock = createRenderBlock(blocks)
+    // @ts-expect-error - We want to specifically test for this error
+    const result = await renderBlock({ props: {} }, 3)
+
+    // result should be null, so there's nothing to render.
+    expect(result).toBeNull()
+
+    // Make sure the error was logged.
+    expect(console.error).toHaveBeenCalledWith(
+      'renderBlock: Block with index `%s` is missing the property `blockType`.',
+      3,
+    )
+  })
+
+  it('should log an error and returns null if blockType is missing from registered blocks', async () => {
     const blocks = {
       Hero: MockComponent,
     }
