@@ -27,10 +27,10 @@ The package provides several ESLint configurations that you can extend in your p
 // eslint.config.js
 import baseConfig from '@noaignite/style-guide/eslint/base'
 
-export default {
+export default [
   ...baseConfig,
   // Your custom rules
-}
+]
 ```
 
 Available configurations:
