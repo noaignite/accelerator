@@ -41,7 +41,8 @@
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",
     "test:types": "tsc --noEmit",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "dependencies": {
     "@noaignite/utils": "workspace:*"
