@@ -4,6 +4,7 @@ import es6Config from './rules/es6.js'
 import ignoresConfig from './rules/ignores.js'
 import importConfig from './rules/import.js'
 import javascriptConfig from './rules/javascript.js'
+import nodeConfig from './rules/node.js'
 import possibleErrorsConfig from './rules/possible-errors.js'
 import prettierConfig from './rules/prettier.js'
 import stylisticConfig from './rules/stylistic.js'
@@ -20,6 +21,7 @@ import vitestConfig from './rules/vitest.js'
 export default [
   ...ignoresConfig,
   ...javascriptConfig,
+  ...nodeConfig,
   ...prettierConfig,
   ...typescriptConfig,
   ...bestPracticeConfig,
