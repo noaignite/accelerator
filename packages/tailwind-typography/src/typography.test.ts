@@ -3,7 +3,14 @@ import { describe, expect, it, vi } from 'vitest'
 import { typography } from './index'
 
 describe('typography', () => {
-  it('calls addComponents with correct flat variant for non-responsive plain object', () => {
+  const theme = (path: string) => {
+    if (path === 'screens.sm') return '640px'
+    if (path === 'screens.md') return '768px'
+    if (path === 'screens.lg') return '1024px'
+    throw new Error(`Unexpected theme key: ${path}`)
+  }
+
+  it('generates non-responsive non-fluid typography', () => {
     // 1) Define options that use a plain variant (no breakpoints)
     const options = {
       breakpointKeys: ['sm', 'md'] as const,
@@ -21,10 +28,6 @@ describe('typography', () => {
 
     // 2) Spy on addComponents, stub theme
     const addComponents = vi.fn()
-    const theme = (_path: string) => {
-      // not used for plain variants
-      return ''
-    }
 
     // 3) Extract the plugin object and invoke its handler
     const pluginObj = typography(options) as any
@@ -42,7 +45,43 @@ describe('typography', () => {
     })
   })
 
-  it('generates responsive fluid font-sizes between breakpoints without `@media` if only 2 breakpoint keys', () => {
+  it('generates responsive non-fluid typography', () => {
+    // 1) Define options that use a responsive variant
+    const options = {
+      breakpointKeys: ['sm', 'md'] as const,
+      prefix: 'type-',
+      unit: 'px',
+      variants: {
+        title: {
+          sm: { fontSize: 14, lineHeight: 1.5 },
+          md: { fontSize: 20 },
+        },
+      },
+    }
+
+    // 2) Spy on addComponents, stub theme
+    const addComponents = vi.fn()
+
+    // 3) Extract the plugin object and invoke its handler
+    const pluginObj = typography(options) as any
+    pluginObj.handler({ addComponents, theme })
+
+    // 4) Assert
+    expect(addComponents).toHaveBeenCalledTimes(1)
+    const result = addComponents.mock.calls[0]?.[0]
+
+    expect(result).toHaveProperty('.type-title')
+    expect(result['.type-title']).toMatchObject({
+      fontSize: '14px',
+      lineHeight: 1.5,
+      [`@media (min-width: ${theme('screens.md')})`]: {
+        fontSize: '20px',
+      },
+    })
+  })
+
+  it('generates responsive fluid typography without breakpoints', () => {
+    // 1) Define options that use a responsive variant
     const options = {
       breakpointKeys: ['sm', 'md', 'lg'] as const,
       unit: 'px',
@@ -55,29 +94,27 @@ describe('typography', () => {
       },
     }
 
+    // 2) Spy on addComponents, stub theme
     const addComponents = vi.fn()
-    const theme = (path: string) => {
-      if (path === 'screens.sm') return '640px'
-      if (path === 'screens.md') return '768px'
-      throw new Error(`Unexpected theme key: ${path}`)
-    }
 
+    // 3) Extract the plugin object and invoke its handler
     const pluginObj = typography(options) as any
     pluginObj.handler({ addComponents, theme })
 
     expect(addComponents).toHaveBeenCalledOnce()
-    const generated = addComponents.mock.calls[0]?.[0]
+    const result = addComponents.mock.calls[0]?.[0]
 
     // The base `.title` key should have the fluid calc()
-    const base = generated['.title']
+    const base = result['.title']
     expect(base.fontSize).toContain('calc(')
 
     // Also non-responsive utilities `.title-sm` and `.title-md`
-    expect(generated['.title-sm'].fontSize).toBe('20px')
-    expect(generated['.title-md'].fontSize).toBe('30px')
+    expect(result['.title-sm'].fontSize).toBe('20px')
+    expect(result['.title-md'].fontSize).toBe('30px')
   })
 
-  it('generates responsive fluid font-sizes between breakpoints with `@media` if at least 3 breakpoint keys', () => {
+  it('generates responsive fluid typography with breakpoints', () => {
+    // 1) Define options that use a responsive variant
     const options = {
       breakpointKeys: ['sm', 'md', 'lg'] as const,
       unit: 'px',
@@ -91,29 +128,25 @@ describe('typography', () => {
       },
     }
 
+    // 2) Spy on addComponents, stub theme
     const addComponents = vi.fn()
-    const theme = (path: string) => {
-      if (path === 'screens.sm') return '640px'
-      if (path === 'screens.md') return '768px'
-      if (path === 'screens.lg') return '1024px'
-      throw new Error(`Unexpected theme key: ${path}`)
-    }
 
+    // 3) Extract the plugin object and invoke its handler
     const pluginObj = typography(options) as any
     pluginObj.handler({ addComponents, theme })
 
+    // 4) Assert
     expect(addComponents).toHaveBeenCalledOnce()
-    const generated = addComponents.mock.calls[0]?.[0]
+    const result = addComponents.mock.calls[0]?.[0]
 
     // The base `.title` key should have the fluid calc()
-    const base = generated['.title']
-    expect(base.fontSize).toContain('calc(')
+    expect(result['.title'].fontSize).toContain('calc(')
     // And there should be a media query for min-width:768px
-    expect(generated['.title']['@media (min-width: 768px)']).toBeDefined()
+    expect(result['.title']['@media (min-width: 768px)']).toBeDefined()
 
     // Also non-responsive utilities `.title-sm`, `.title-md` & `.title-lg`
-    expect(generated['.title-sm'].fontSize).toBe('20px')
-    expect(generated['.title-md'].fontSize).toBe('30px')
-    expect(generated['.title-lg'].fontSize).toBe('40px')
+    expect(result['.title-sm'].fontSize).toBe('20px')
+    expect(result['.title-md'].fontSize).toBe('30px')
+    expect(result['.title-lg'].fontSize).toBe('40px')
   })
 })
