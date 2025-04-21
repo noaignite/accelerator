@@ -34,11 +34,15 @@ export interface ProviderProps {
   /**
    * Used when submitting payment using the POST /payment Centra api call
    */
-  paymentFailedPage: string
+  paymentFailedPage:
+    | string
+    | ((selection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>) => string)
   /**
    * Used when submitting payment using the POST /payment Centra api call
    */
-  paymentReturnPage: string
+  paymentReturnPage:
+    | string
+    | ((selection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>) => string)
   /**
    * Receipt page to redirect to when Centra payment succeeds directly
    */
@@ -261,7 +265,9 @@ export function CentraProvider(props: ProviderProps) {
 
   const apiClient = apiClientProp ?? defaultApiClient
 
-  const [selection, setSelection] = useState(initialSelection ?? SELECTION_INITIAL_VALUE)
+  const [selection, setSelection] = useState<
+    CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>
+  >(initialSelection ?? SELECTION_INITIAL_VALUE)
 
   const centraCheckoutScript = 'selection' in selection && selection.selection?.centraCheckoutScript
 
@@ -481,8 +487,14 @@ export function CentraProvider(props: ProviderProps) {
   const submitPayment = useCallback<NonNullable<ContextMethods['submitPayment']>>(
     async (data) => {
       const response = (await apiClient.request('POST', 'payment', {
-        paymentReturnPage,
-        paymentFailedPage,
+        paymentReturnPage:
+          typeof paymentReturnPage === 'function'
+            ? paymentReturnPage(selection)
+            : paymentReturnPage,
+        paymentFailedPage:
+          typeof paymentFailedPage === 'function'
+            ? paymentFailedPage(selection)
+            : paymentFailedPage,
         ...data,
       })) as CheckoutApi.Response<CheckoutApi.Payment>
 
@@ -518,7 +530,7 @@ export function CentraProvider(props: ProviderProps) {
       }
       return response
     },
-    [apiClient, paymentFailedPage, paymentReturnPage, receiptPage],
+    [apiClient, paymentFailedPage, paymentReturnPage, receiptPage, selection],
   )
 
   const addBackInStockSubscription = useCallback<
