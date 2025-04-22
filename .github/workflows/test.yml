@@ -44,9 +44,11 @@ jobs:
         run: pnpm run test
 
       - name: Run tests with coverage
+        if: ${{ github.actor != 'dependabot[bot]' }}
         run: pnpm test:coverage
 
       - name: Upload coverage to Codecov
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
