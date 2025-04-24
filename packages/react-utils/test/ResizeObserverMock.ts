@@ -9,8 +9,8 @@ export class ResizeObserverMock {
   private isDisconnected = false
   static instances: ResizeObserverMock[] = []
 
-  constructor(cb: ResizeObserverCallback) {
-    this.callback = cb
+  constructor(callback: ResizeObserverCallback) {
+    this.callback = callback
 
     ResizeObserverMock.instances.push(this)
   }
