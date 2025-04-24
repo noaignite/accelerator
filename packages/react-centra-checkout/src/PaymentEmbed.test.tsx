@@ -34,13 +34,15 @@ describe('PaymentEmbed', () => {
   }
 
   beforeEach(() => {
-    // Clear all mocks before each test
-    vi.clearAllMocks()
+    // overwrite the global location with a plain object
+    vi.stubGlobal('location', {
+      href: '',
+    })
   })
 
   afterEach(() => {
-    // Cleanup after each test
-    vi.restoreAllMocks()
+    // Clear all mocks before each test
+    vi.clearAllMocks()
   })
 
   it('renders formHtml if current paymentMethod supports initiateOnly', async () => {
