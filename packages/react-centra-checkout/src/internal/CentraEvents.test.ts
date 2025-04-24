@@ -1,6 +1,6 @@
 import { selectionEmptyResponse } from '@noaignite/centra-mocks'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { CentraEvents } from './index'
+import { CentraEvents } from './CentraEvents'
 
 const centraEvents = new CentraEvents()
 
