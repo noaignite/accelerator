@@ -87,7 +87,9 @@ The Centra selection and handlers will only be available client-side. To make ap
 ```tsx
 import { ApiClient } from '@noaignite/react-centra-checkout'
 
-const response = await ApiClient.default.request('POST', 'products', { categories: ['15'] })
+const fetchProductsFromCategory = async () => {
+  const response = await ApiClient.default.request('POST', 'products', { categories: ['15'] })
+}
 ```
 
 ## Documentation
