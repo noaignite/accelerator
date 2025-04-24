@@ -35,8 +35,8 @@ import { CentraProvider } from '@noaignite/react-centra-checkout'
 const App = () => (
   <CentraProvider
     apiUrl={process.env.CHECKOUT_API}
-    paymentReturnPage={`${process.env.APP_URL}/api/centra/checkout-success`}
-    paymentFailedPage={`${process.env.APP_URL}/api/centra/checkout-failed`}
+    paymentReturnPage={({ token }) => `${process.env.APP_URL}/api/centra/checkout-success/${token}`})}
+    paymentFailedPage={({ token }) => `${process.env.APP_URL}/api/centra/checkout-failed/${token}`)}
   >
     <AppProvider>
       <AppBase>
@@ -87,7 +87,9 @@ The Centra selection and handlers will only be available client-side. To make ap
 ```tsx
 import { ApiClient } from '@noaignite/react-centra-checkout'
 
-const response = await ApiClient.default.request('POST', 'products', { categories: ['15'] })
+const fetchProductsFromCategory = async () => {
+  const response = await ApiClient.default.request('POST', 'products', { categories: ['15'] })
+}
 ```
 
 ## Documentation

@@ -2,8 +2,9 @@ import { selectionEmptyResponse, selectionResponse } from '@noaignite/centra-moc
 import type * as CheckoutApi from '@noaignite/centra-types'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
+import type { ComponentProps } from 'react'
 import { useEffect } from 'react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { CentraProvider, SELECTION_INITIAL_VALUE, useCentraHandlers, useCentraSelection } from '.'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
@@ -11,13 +12,15 @@ const TEST_ITEM = '370-261'
 
 nock(CENTRA_API_URL).persist().get('/selection').reply(200, selectionEmptyResponse)
 
-function CentraProviderWrapper({ children }: { children: React.ReactNode }) {
+const CentraProviderWrapper = (props: Partial<ComponentProps<typeof CentraProvider>>) => {
+  const { children, ...other } = props
   return (
     <CentraProvider
       apiUrl={CENTRA_API_URL}
       paymentFailedPage=""
       paymentReturnPage=""
       receiptPage=""
+      {...other}
     >
       {children}
     </CentraProvider>
@@ -25,6 +28,13 @@ function CentraProviderWrapper({ children }: { children: React.ReactNode }) {
 }
 
 describe('CentraProvider', () => {
+  beforeEach(() => {
+    // overwrite the global location with a plain object
+    vi.stubGlobal('location', {
+      href: '',
+    })
+  })
+
   it('Renders children', () => {
     render(
       <CentraProvider disableInit paymentFailedPage="" paymentReturnPage="" receiptPage="">
@@ -203,6 +213,77 @@ describe('CentraProvider', () => {
 
       await waitFor(() => {
         expect(resultingSelection?.items?.length).toBe(0)
+      })
+    })
+  })
+
+  describe('submitPayment', () => {
+    describe('when paymentReturnPage and paymentFailedPage props are callbacks', () => {
+      it('passes returned strings parameters to POST /payment', async () => {
+        const scope = nock(CENTRA_API_URL)
+
+        const helpers = {
+          paymentReturnPage: ({ token }) => `/payment/return/${token}`,
+          paymentFailedPage: ({ token }) => `/payment/failed/${token}`,
+        } satisfies Pick<
+          React.ComponentProps<typeof CentraProvider>,
+          'paymentReturnPage' | 'paymentFailedPage'
+        >
+
+        scope
+          .post('/payment', (retrievedRequestBody) => {
+            expect(retrievedRequestBody.paymentReturnPage).toBe(
+              helpers.paymentReturnPage(selectionEmptyResponse),
+            )
+            expect(retrievedRequestBody.paymentFailedPage).toBe(
+              helpers.paymentFailedPage(selectionEmptyResponse),
+            )
+
+            return true
+          })
+          .reply(
+            200,
+            // Just need to respond with a JSON-parseable response body.
+            {
+              token: 'foo',
+              action: 'redirect',
+              url: 'https://example.com/checkout',
+            },
+          )
+          .persist()
+
+        function TestComponent() {
+          const { submitPayment } = useCentraHandlers()
+          const { token } = useCentraSelection()
+
+          useEffect(() => {
+            if (token) {
+              void submitPayment?.({
+                address: {},
+              })
+            }
+          }, [submitPayment, token])
+
+          return null
+        }
+
+        render(<TestComponent />, {
+          wrapper: (props) => {
+            return (
+              <CentraProvider
+                paymentFailedPage={({ token }) => `/payment/failed/${token}`}
+                paymentReturnPage={({ token }) => `/payment/return/${token}`}
+                receiptPage="/receipt-page"
+                {...props}
+              />
+            )
+          },
+        })
+
+        await waitFor(async () => {
+          // using `isDone` as indicator that all generated interceptors are used and therefore handlers perform API requests as expected.
+          expect(scope.isDone()).toBe(true)
+        })
       })
     })
   })
