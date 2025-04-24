@@ -4,7 +4,7 @@ import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 import type { ComponentProps } from 'react'
 import { useEffect } from 'react'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { CentraProvider, SELECTION_INITIAL_VALUE, useCentraHandlers, useCentraSelection } from '.'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
