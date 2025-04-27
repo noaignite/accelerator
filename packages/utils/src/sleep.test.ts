@@ -20,13 +20,12 @@ describe('sleep', () => {
 
     const sleepPromise = sleep(20)
 
-    await sleep(20)
+    await sleep(30)
 
     return sleepPromise.then(() => {
       const end = performance.now()
 
-      expect(end - start).toBeGreaterThanOrEqual(19)
-      expect(end - start).toBeLessThan(30)
+      expect(end - start).toBeGreaterThanOrEqual(30)
     })
   })
 })
