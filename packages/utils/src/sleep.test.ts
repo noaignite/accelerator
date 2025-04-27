@@ -1,31 +1,60 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { assert } from './assert'
 import { sleep } from './sleep'
 
 describe('sleep', () => {
+  beforeEach(vi.useFakeTimers)
+
+  afterEach(vi.useRealTimers)
+
+  const getMockedSystemTime = () => {
+    const systemTime = vi.getMockedSystemTime()?.getTime()
+    assert(systemTime, 'The system time is not mocked')
+    return systemTime
+  }
+
   it('async await', async () => {
-    const start = performance.now()
-    await sleep(20)
-    expect(performance.now() - start).toBeGreaterThanOrEqual(19)
+    const start = getMockedSystemTime()
+
+    const promise = sleep(20)
+
+    await vi.advanceTimersToNextTimerAsync()
+
+    await expect(promise).resolves.toBeUndefined()
+    expect(getMockedSystemTime() - start).toBeGreaterThanOrEqual(19)
   })
 
   it('then', async () => {
-    const start = performance.now()
-    return sleep(20).then(() => {
-      expect(performance.now() - start).toBeGreaterThanOrEqual(19)
+    const start = getMockedSystemTime()
+
+    const promise = sleep(20).then(() => {
+      expect(getMockedSystemTime() - start).toBeGreaterThanOrEqual(19)
     })
+
+    await vi.advanceTimersToNextTimerAsync()
+
+    await expect(promise).resolves.toBeUndefined()
   })
 
   it('delayed sleep', async () => {
-    const start = performance.now()
+    const start = getMockedSystemTime()
 
     const sleepPromise = sleep(20)
 
-    await sleep(30)
+    const delaySleepPromise = sleep(30)
 
-    return sleepPromise.then(() => {
-      const end = performance.now()
+    await vi.runAllTimersAsync()
+
+    await expect(delaySleepPromise).resolves.toBeUndefined()
+
+    const promise = sleepPromise.then(() => {
+      const end = getMockedSystemTime()
 
       expect(end - start).toBeGreaterThanOrEqual(30)
     })
+
+    await vi.advanceTimersToNextTimerAsync()
+
+    await expect(promise).resolves.toBeUndefined()
   })
 })
