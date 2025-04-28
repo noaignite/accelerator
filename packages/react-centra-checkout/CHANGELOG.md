@@ -1,5 +1,15 @@
 # @noaignite/react-centra-checkout
 
+## 2.1.0
+
+### Minor Changes
+
+- 3804891: Allow callbacks for `paymentReturnPage` and `paymentFailedPage`
+
+### Patch Changes
+
+- @noaignite/utils@3.5.1
+
 ## 2.0.5
 
 ### Patch Changes

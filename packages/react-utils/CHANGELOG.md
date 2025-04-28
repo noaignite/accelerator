@@ -1,5 +1,15 @@
 # @noaignite/react-utils
 
+## 0.13.0
+
+### Minor Changes
+
+- fba2271: add useDismiss hook
+
+### Patch Changes
+
+- @noaignite/utils@3.5.1
+
 ## 0.12.1
 
 ### Patch Changes
