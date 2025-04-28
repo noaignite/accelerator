@@ -2,7 +2,7 @@ import turboPlugin from 'eslint-plugin-turbo'
 
 export default [
   {
-    name: '@noaignite/style-guide/turbo',
+    name: '@noaignite/style-guide/eslint/turbo',
     plugins: {
       turbo: turboPlugin,
     },

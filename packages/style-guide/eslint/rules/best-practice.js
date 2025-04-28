@@ -1,7 +1,7 @@
 // Based on https://github.com/vercel/style-guide/blob/canary/eslint/rules/best-practice.js
 export default [
   {
-    name: '@noaignite/style-guide/best-practice',
+    name: '@noaignite/style-guide/eslint/best-practice',
     rules: {
       /**
        * Require return statements in array methods callbacks.

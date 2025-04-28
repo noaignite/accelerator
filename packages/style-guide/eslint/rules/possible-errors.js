@@ -1,7 +1,7 @@
 // Based on https://github.com/vercel/style-guide/blob/canary/eslint/rules/possible-errors.js
 export default [
   {
-    name: '@noaignite/style-guide/possible-errors',
+    name: '@noaignite/style-guide/eslint/possible-errors',
     rules: {
       /**
        * Disallow the use of console.log.

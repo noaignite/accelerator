@@ -1,7 +1,7 @@
 // Based on https://github.com/vercel/style-guide/blob/canary/eslint/rules/es6.js
 export default [
   {
-    name: '@noaignite/style-guide/es6',
+    name: '@noaignite/style-guide/eslint/es6',
     rules: {
       /**
        * Disallow useless computed property keys.
