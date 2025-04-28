@@ -1,5 +1,18 @@
 # docs
 
+## 0.2.0
+
+### Minor Changes
+
+- 3fde4b3: Migrate to Nextra 4
+
+### Patch Changes
+
+- 3d5b27c: Add docs changelog and print docs version in header
+- 78fb7fd: Fix site search
+- 54103f6: Refactor generateDocs script
+- 5e86d57: Add package changelogs to package docs
+
 ## 0.1.2
 
 ### Patch Changes
