@@ -19,7 +19,8 @@
     "test": "pnpm lint && pnpm test:types && pnpm test:unit",
     "test:coverage": "turbo test:coverage",
     "test:types": "turbo test:types",
-    "test:unit": "turbo test:unit"
+    "test:unit": "turbo test:unit",
+    "test:unit:watch": "turbo watch test:unit:watch"
   },
   "lint-staged": {
     "*": "prettier --ignore-unknown --write"
