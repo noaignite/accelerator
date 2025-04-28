@@ -74,6 +74,15 @@ export default [
        */
       'no-unneeded-ternary': 'error',
       /**
+       * Require or disallow padding lines between statements
+       *
+       * 🔧 Fixable - https://eslint.org/docs/latest/rules/padding-line-between-statements
+       */
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'never', prev: 'import', next: 'import' },
+      ],
+      /**
        * Require use of an object spread over Object.assign.
        *
        * 🔧 Fixable - https://eslint.org/docs/rules/prefer-object-spread
