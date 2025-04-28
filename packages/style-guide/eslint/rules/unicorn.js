@@ -4,7 +4,7 @@ import globals from 'globals'
 
 export default [
   {
-    name: '@noaignite/style-guide/unicorn',
+    name: '@noaignite/style-guide/eslint/unicorn',
     languageOptions: {
       globals: globals.builtin,
     },

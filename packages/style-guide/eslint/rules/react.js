@@ -6,11 +6,11 @@ import globals from 'globals'
 export default [
   {
     ...jsxA11y.flatConfigs.recommended,
-    name: '@noaignite/style-guide/jsx-a11y',
+    name: '@noaignite/style-guide/eslint/jsx-a11y',
   },
   {
     ...pluginReact.configs.flat.recommended,
-    name: '@noaignite/style-guide/react',
+    name: '@noaignite/style-guide/eslint/react',
     languageOptions: {
       ...pluginReact.configs.flat.recommended.languageOptions,
       globals: {
@@ -20,7 +20,7 @@ export default [
     },
   },
   {
-    name: '@noaignite/style-guide/react-hooks',
+    name: '@noaignite/style-guide/eslint/react-hooks',
     plugins: {
       'react-hooks': pluginReactHooks,
     },

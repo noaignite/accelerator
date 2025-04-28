@@ -2,7 +2,7 @@ import pluginNext from '@next/eslint-plugin-next'
 
 export default [
   {
-    name: '@noaignite/style-guide/next',
+    name: '@noaignite/style-guide/eslint/next',
     plugins: {
       '@next/next': pluginNext,
     },

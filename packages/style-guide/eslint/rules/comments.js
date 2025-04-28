@@ -3,7 +3,7 @@ import eslintConfigComments from '@eslint-community/eslint-plugin-eslint-comment
 export default [
   {
     ...eslintConfigComments.recommended,
-    name: '@noaignite/style-guide/comments',
+    name: '@noaignite/style-guide/eslint/comments',
     rules: {
       ...eslintConfigComments.recommended.rules,
       /**

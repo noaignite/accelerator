@@ -5,7 +5,7 @@ import constants from './constants.js'
 export default [
   ...tsEslint.configs.recommended,
   {
-    name: '@noaignite/style-guide/typescript',
+    name: '@noaignite/style-guide/eslint/typescript',
     files: constants.TYPESCRIPT_FILES,
     languageOptions: {
       parser: tsEslint.parser,
