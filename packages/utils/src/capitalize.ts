@@ -9,6 +9,6 @@
  * capitalize('hello world') // 'Hello world'
  * ```
  */
-export function capitalize(value: string): string {
-  return value.charAt(0).toUpperCase() + value.slice(1)
+export function capitalize<T extends string>(value: T) {
+  return (value.charAt(0).toUpperCase() + value.slice(1)) as Capitalize<T>
 }
