@@ -223,8 +223,8 @@ importers:
         specifier: ^9.25.1
         version: 9.25.1
       '@vitest/eslint-plugin':
-        specifier: ^1.1.43
-        version: 1.1.43(@typescript-eslint/utils@8.30.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/debug@4.1.12)(@types/node@22.15.3)(jiti@2.4.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.29.2)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))
+        specifier: ^1.1.44
+        version: 1.1.44(@typescript-eslint/utils@8.30.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/debug@4.1.12)(@types/node@22.15.3)(jiti@2.4.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.29.2)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))
       eslint:
         specifier: ^9.26.0
         version: 9.26.0(jiti@2.4.2)
@@ -1607,6 +1607,9 @@ packages:
   '@types/react@19.1.2':
     resolution: {integrity: sha512-oxLPMytKchWGbnQM9O7D67uPa9paTNxO7jVoNMXgkkErULBPhPARCfkKL9ytcIJJRGjbsVwW4ugJzyFFvm/Tiw==}
 
+  '@types/react@19.1.3':
+    resolution: {integrity: sha512-dLWQ+Z0CkIvK1J8+wrDPwGxEYFA4RAyHoZPxHVGspYmFVnwGSNT24cGIhFJrtfRnWVuW8X7NO52gCXmhkVUWGQ==}
+
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
 
@@ -1765,8 +1768,8 @@ packages:
       '@vitest/browser':
         optional: true
 
-  '@vitest/eslint-plugin@1.1.43':
-    resolution: {integrity: sha512-OLoUMO67Yg+kr7E6SjF5+Qvl2f6uNJ7ImQYnXT8WgnPiZE41ZQBsnzn70jehXrhFVadphHs2smk+yl0TFKLV5Q==}
+  '@vitest/eslint-plugin@1.1.44':
+    resolution: {integrity: sha512-m4XeohMT+Dj2RZfxnbiFR+Cv5dEC0H7C6TlxRQT7GK2556solm99kxgzJp/trKrZvanZcOFyw7aABykUTfWyrg==}
     peerDependencies:
       '@typescript-eslint/utils': '>= 8.24.0'
       eslint: '>= 8.57.0'
@@ -7142,12 +7145,17 @@ snapshots:
 
   '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 19.1.2
+      '@types/react': 19.1.3
     optional: true
 
   '@types/react@19.1.2':
     dependencies:
       csstype: 3.1.3
+
+  '@types/react@19.1.3':
+    dependencies:
+      csstype: 3.1.3
+    optional: true
 
   '@types/trusted-types@2.0.7':
     optional: true
@@ -7313,7 +7321,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/eslint-plugin@1.1.43(@typescript-eslint/utils@8.30.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/debug@4.1.12)(@types/node@22.15.3)(jiti@2.4.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.29.2)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))':
+  '@vitest/eslint-plugin@1.1.44(@typescript-eslint/utils@8.30.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)(vitest@3.1.2(@types/debug@4.1.12)(@types/node@22.15.3)(jiti@2.4.2)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.29.2)(sass@1.79.4)(stylus@0.63.0)(tsx@4.19.3)(yaml@2.7.1))':
     dependencies:
       '@typescript-eslint/utils': 8.30.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)
       eslint: 9.26.0(jiti@2.4.2)
