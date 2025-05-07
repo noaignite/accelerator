@@ -35,17 +35,13 @@ jobs:
 
       - name: Check changeset status
         if: github.actor != 'dependabot[bot]'
-        run: pnpm run ci:status
+        run: pnpm ci:status
 
       - name: Run build
-        run: pnpm run build
-
-      - name: Run tests
-        run: pnpm run test
+        run: pnpm build
 
       - name: Run tests with coverage
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        run: pnpm test:coverage
+        run: pnpm ci:test
 
       - name: Upload coverage to Codecov
         if: ${{ github.actor != 'dependabot[bot]' }}
