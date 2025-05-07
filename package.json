@@ -6,6 +6,7 @@
     "build": "turbo build",
     "ci:release": "pnpm build && pnpm test && changeset publish",
     "ci:status": "changeset status --since=origin/main",
+    "ci:test": "pnpm lint && pnpm test:types && pnpm test:coverage",
     "clean": "node --experimental-strip-types ./scripts/clean.ts",
     "dev": "turbo dev",
     "docs:build": "pnpm --filter docs build",
