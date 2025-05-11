@@ -3,6 +3,8 @@
   "display": "NoA Ignite Next.js",
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
     "plugins": [{ "name": "next" }],
     "module": "ESNext",
     "allowJs": true,
