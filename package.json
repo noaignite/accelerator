@@ -34,7 +34,7 @@
     "esbuild-plugin-file-path-extensions": "^2.1.4",
     "husky": "^9.1.7",
     "jsdom": "^25.0.1",
-    "lint-staged": "^15.5.1",
+    "lint-staged": "^15.5.2",
     "ts-morph": "^25.0.1",
     "tsup": "^8.4.0",
     "tsx": "^4.19.4",
