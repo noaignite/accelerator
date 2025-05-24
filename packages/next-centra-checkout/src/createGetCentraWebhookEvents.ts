@@ -65,44 +65,44 @@ export type CreateGetCentraWebhookEventsConfig<TRequest> = {
  */
 export type CentraWebhookEventsError =
   | [
-      {
-        /**
-         * The incoming request method used from Centra is invalid.
-         * The request method should be `"POST"`.
-         *
-         */
-        message: 'Invalid request method'
-      },
-    ]
+    {
+      /**
+       * The incoming request method used from Centra is invalid.
+       * The request method should be `"POST"`.
+       *
+       */
+      message: 'Invalid request method'
+    },
+  ]
   | [
-      {
-        /**
-         * The incoming request didn't contain a signature.
-         * @see https://centra.dev/docs/services/centra-webhooks#signature-verification
-         *
-         */
-        message: 'No signature'
-      },
-    ]
+    {
+      /**
+       * The incoming request didn't contain a signature.
+       * @see https://centra.dev/docs/services/centra-webhooks#signature-verification
+       *
+       */
+      message: 'No signature'
+    },
+  ]
   | [
-      {
-        /**
-         * The incoming request body is invalid.
-         *
-         */
-        message: 'Invalid request body'
-      },
-    ]
+    {
+      /**
+       * The incoming request body is invalid.
+       *
+       */
+      message: 'Invalid request body'
+    },
+  ]
   | [
-      {
-        /*
-         * The incoming signature is invalid.
-         * @see https://centra.dev/docs/services/centra-webhooks#signature-verification
-         *
-         */
-        message: 'Invalid signature'
-      },
-    ]
+    {
+      /*
+       * The incoming signature is invalid.
+       * @see https://centra.dev/docs/services/centra-webhooks#signature-verification
+       *
+       */
+      message: 'Invalid signature'
+    },
+  ]
 
 export type CentraWebhookEventsData = [undefined, Partial<Record<Events, string[]>>]
 
