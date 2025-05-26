@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.5",
     "react": "^19.1.0",
     "typescript": "^5.8.3"
   },
