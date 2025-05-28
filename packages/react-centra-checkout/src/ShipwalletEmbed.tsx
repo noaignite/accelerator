@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react'
 import { useCentraSelection } from './Context'
 import { HtmlEmbed } from './internal/HtmlEmbed'
