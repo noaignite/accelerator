@@ -1,3 +1,5 @@
+'use client'
+
 import type * as CheckoutApi from '@noaignite/centra-types'
 import { isPlainObject } from '@noaignite/utils'
 import type Cookies from 'js-cookie'

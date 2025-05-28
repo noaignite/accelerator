@@ -1,3 +1,5 @@
+'use client'
+
 import type * as CheckoutApi from '@noaignite/centra-types'
 import { isPlainObject } from '@noaignite/utils'
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
