@@ -74,7 +74,34 @@ export interface ContextMethods {
    */
   addBundleItem?: (
     item: string,
-    data?: Record<string, unknown>,
+    data?: {
+      /**
+       * The quantity of items that should be added to the cart.
+       * Minimum should be 1.
+       * Defaults to 1.
+       */
+      quantity?: number
+      /**
+       * The URL to the product added, so the item can be linked back to its origin
+       */
+      productUrl?: string
+      /**
+       * The category id of the added product, so the item can be linked back to its origin
+       */
+      category?: string
+      /**
+       * Requires shared secret. Comment that will end up on the order line
+       */
+      comment?: string
+      /**
+       * Localized size (localizedSize) & localization definition name (localizationDefinitionName)
+       */
+      localizedProdSize?: string
+      /**
+       * The ID of subscription plan
+       */
+      subscriptionPlan?: string
+    },
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
    * @param giftCertificate - The `giftCertificate` value of the gift certificate to add
