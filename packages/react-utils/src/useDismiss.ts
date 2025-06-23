@@ -1,9 +1,9 @@
 'use client'
 
 import type { HintedString } from '@noaignite/types'
-import { useCallback, useEffect, useRef, type RefObject } from 'react'
+import { useCallback, useEffect, type RefObject } from 'react'
 import { useEvent } from './useEvent'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useStableCallback } from './useStableCallback'
 
 export type DismissOptions = {
   /**
@@ -59,20 +59,20 @@ export const useDismiss = (
   callback: (event: PointerEvent | KeyboardEvent) => void,
   { when = true, keyboard = true, pointer = true }: DismissOptions = {},
 ) => {
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
-  const handleKeydown = useCallback((event: KeyboardEvent) => {
-    if (event.defaultPrevented) return
+  const handleKeydown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.defaultPrevented) return
 
-    const { key } = event
-    if (key !== 'Escape') return
+      const { key } = event
+      if (key !== 'Escape') return
 
-    savedCallback.current(event)
-    event.preventDefault()
-  }, [])
+      stableCallback(event)
+      event.preventDefault()
+    },
+    [stableCallback],
+  )
 
   useEvent(ref, 'keydown', handleKeydown, { when: Boolean(when && keyboard) })
 
@@ -88,10 +88,10 @@ export const useDismiss = (
       if (element.querySelector('[data-dismissible]')) return
       if (event.button !== 0) return
 
-      savedCallback.current(event)
+      stableCallback(event)
       event.preventDefault()
     },
-    [ref, pointer],
+    [ref, pointer, stableCallback],
   )
 
   useEvent('window', 'pointerdown', handlePointerdown, {

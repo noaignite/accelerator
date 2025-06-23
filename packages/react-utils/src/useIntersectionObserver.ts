@@ -1,8 +1,8 @@
 'use client'
 
 import type { RefObject } from 'react'
-import { useEffect, useRef, useState } from 'react'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useEffect, useState } from 'react'
+import { useStableCallback } from './useStableCallback'
 
 export type UseIntersectionObserverCallback = (
   entry: IntersectionObserverEntry,
@@ -50,11 +50,7 @@ export const useIntersectionObserver = (
   { when = true, once = false, root, rootMargin, threshold }: IntersectionObserverOptions = {},
 ) => {
   const [isTerminated, setIsTerminated] = useState(false)
-
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
   useEffect(() => {
     if (!when || isTerminated) return
@@ -65,7 +61,7 @@ export const useIntersectionObserver = (
     const observer = new IntersectionObserver(
       ([entry], observer) => {
         if (!entry) return
-        savedCallback.current(entry, observer)
+        stableCallback(entry, observer)
         setIsTerminated(Boolean(entry.isIntersecting && once))
       },
       { root, rootMargin, threshold },
@@ -79,5 +75,5 @@ export const useIntersectionObserver = (
 
     // @see https://github.com/facebook/react/issues/14476#issuecomment-471199055
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Compare threshold as string
-  }, [ref, when, isTerminated, once, root, rootMargin, JSON.stringify(threshold)])
+  }, [ref, when, isTerminated, once, root, rootMargin, stableCallback, JSON.stringify(threshold)])
 }
