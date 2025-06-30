@@ -15,11 +15,11 @@
   "author": "NoA Ignite",
   "type": "module",
   "scripts": {
-    "build": "pnpm generate && next build",
-    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
+    "build2": "pnpm generate && next build",
     "dev": "pnpm generate && next dev --turbopack",
     "generate": "tsx ../scripts/generateDocs.ts",
     "lint": "next lint",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
     "start": "next start",
     "test:types": "tsc --noEmit"
   },
