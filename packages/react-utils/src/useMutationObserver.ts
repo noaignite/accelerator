@@ -1,8 +1,8 @@
 'use client'
 
 import type { RefObject } from 'react'
-import { useEffect, useRef } from 'react'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useEffect } from 'react'
+import { useStableCallback } from './useStableCallback'
 
 export type UseMutationCallback = (record: MutationRecord) => void
 
@@ -49,10 +49,7 @@ export const useMutationObserver = (
     subtree,
   }: MutationObserverOptions = {},
 ) => {
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
   useEffect(() => {
     if (!when) return
@@ -65,7 +62,7 @@ export const useMutationObserver = (
       const record = records[0]
       if (!record) return
 
-      savedCallback.current(record)
+      stableCallback(record)
     })
 
     observer.observe(element, {
@@ -91,5 +88,6 @@ export const useMutationObserver = (
     childList,
     subtree,
     attributeFilter,
+    stableCallback,
   ])
 }

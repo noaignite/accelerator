@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useEffect } from 'react'
+import { useStableCallback } from './useStableCallback'
 
 export type TimeoutOptions = {
   /**
@@ -39,20 +39,17 @@ export const useTimeout = (
   delay: number,
   { when = true }: TimeoutOptions = {},
 ) => {
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
   useEffect(() => {
     if (!when || typeof delay !== 'number') return
 
     const timeout = setTimeout(() => {
-      savedCallback.current()
+      stableCallback()
     }, delay)
 
     return () => {
       clearTimeout(timeout)
     }
-  }, [when, delay])
+  }, [when, delay, stableCallback])
 }
