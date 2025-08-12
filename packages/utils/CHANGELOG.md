@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 3.5.2
+
+### Patch Changes
+
+- 4b628b5: Capitalize now respects string literals and returns if so
+
 ## 3.5.1
 
 ### Patch Changes
