@@ -1,5 +1,6 @@
 export * from './AnyFunction'
 export * from './Concatenate'
+export * from './DeepPartial'
 export * from './DistributiveOmit'
 export * from './Entries'
 export * from './HintedNumber'
