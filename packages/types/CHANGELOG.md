@@ -1,5 +1,11 @@
 # @noaignite/types
 
+## 1.4.0
+
+### Minor Changes
+
+- c765f40: extend N in Repeat type helper with number[] to allow union of differently sized repeat output
+
 ## 1.3.1
 
 ### Patch Changes
