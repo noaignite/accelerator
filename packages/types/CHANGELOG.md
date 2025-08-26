@@ -1,5 +1,11 @@
 # @noaignite/types
 
+## 1.5.0
+
+### Minor Changes
+
+- 85e1d0c: Add new DeepPartial helper
+
 ## 1.4.0
 
 ### Minor Changes
