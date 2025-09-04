@@ -1,5 +1,12 @@
 # @noaignite/react-centra-checkout
 
+## 2.1.2
+
+### Patch Changes
+
+- dc772b8: Resolve TS2340 error while trying to call `super.request` from sub class
+  - @noaignite/utils@3.5.2
+
 ## 2.1.1
 
 ### Patch Changes
