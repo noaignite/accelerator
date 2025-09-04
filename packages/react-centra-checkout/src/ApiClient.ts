@@ -17,7 +17,7 @@ export class ApiClient {
     })
   }
 
-  request = async (method: string, endpoint: string, data: Record<string, unknown> = {}) => {
+  async request(method: string, endpoint: string, data: Record<string, unknown> = {}) {
     const response = await fetch(`${this.baseUrl}/${endpoint}`, {
       ...this.options,
       headers: this.headers,
