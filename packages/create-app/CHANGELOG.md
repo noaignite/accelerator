@@ -1,5 +1,15 @@
 # @noaignite/create-app
 
+## 0.12.0
+
+### Minor Changes
+
+- 653bc29: create-app: upgrade to Storybook 9
+
+### Patch Changes
+
+- 184a003: Add `storybook-static` to `.gitignore`
+
 ## 0.11.0
 
 ### Minor Changes
