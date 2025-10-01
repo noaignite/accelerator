@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.14.0
+
+### Minor Changes
+
+- 32c8b81: Add the observer as the secondary callback arg
+
 ## 0.13.1
 
 ### Patch Changes
