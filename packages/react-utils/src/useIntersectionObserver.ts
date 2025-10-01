@@ -4,7 +4,10 @@ import type { RefObject } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { useIsomorphicEffect } from './useIsomorphicEffect'
 
-export type UseIntersectionObserverCallback = (entry: IntersectionObserverEntry) => void
+export type UseIntersectionObserverCallback = (
+  entry: IntersectionObserverEntry,
+  observer: IntersectionObserver,
+) => void
 
 export type IntersectionObserverOptions = IntersectionObserverInit & {
   /**
@@ -60,11 +63,9 @@ export const useIntersectionObserver = (
     if (!(element instanceof Element)) return
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]
+      ([entry], observer) => {
         if (!entry) return
-
-        savedCallback.current(entry)
+        savedCallback.current(entry, observer)
         setIsTerminated(Boolean(entry.isIntersecting && once))
       },
       { root, rootMargin, threshold },

@@ -33,7 +33,7 @@ describe('useIntersectionObserver', () => {
       observer?.trigger([fakeEntry])
     })
 
-    expect(callback).toHaveBeenCalledWith(fakeEntry)
+    expect(callback).toHaveBeenCalledWith(fakeEntry, observer)
   })
 
   it('does not observe when `when` is false', () => {
@@ -114,7 +114,7 @@ describe('useIntersectionObserver', () => {
     rerender({ cb: callback2 })
     act(() => observer?.trigger([fakeEntry]))
     expect(callback1).toHaveBeenCalledTimes(1)
-    expect(callback2).toHaveBeenCalledWith(fakeEntry)
+    expect(callback2).toHaveBeenCalledWith(fakeEntry, observer)
   })
 
   it('passes correct options to IntersectionObserver constructor', async () => {
