@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/react-native-eslint",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A comprehensive ESLint configuration for React Native projects with TypeScript support",
   "keywords": [
     "eslint",
@@ -27,13 +27,15 @@
   "dependencies": {
     "@eslint/compat": "1.2.9",
     "@stylistic/eslint-plugin": "4.2.0",
-    "eslint": "9.27.0",
     "eslint-config-expo": "9.2.0",
     "eslint-plugin-jest": "28.11.0",
     "eslint-plugin-promise": "7.2.1",
     "eslint-plugin-react-native": "5.0.0",
-    "typescript": "5.8.3",
-    "typescript-eslint": "8.32.1"
+    "typescript-eslint": "8.39.0"
+  },
+  "peerDependencies": {
+    "eslint": "9.27.0",
+    "typescript": "5.8.3"
   },
   "engines": {
     "node": ">=18.0.0"
