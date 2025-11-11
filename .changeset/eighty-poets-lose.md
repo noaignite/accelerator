@@ -2,4 +2,4 @@
 '@noaignite/react-native-eslint': major
 ---
 
-Add eslint config to React Native project
+Introduce a new eslint configuration package for React Native project
