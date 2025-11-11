@@ -2,14 +2,6 @@
   "name": "@noaignite/react-native-eslint",
   "version": "1.0.0",
   "description": "A comprehensive ESLint configuration for React Native projects with TypeScript support",
-  "main": "eslint.config.mjs",
-  "type": "module",
-  "author": "NoA Ignite",
-  "files": [
-    "eslint.config.mjs",
-    "README.md",
-    "LICENSE"
-  ],
   "keywords": [
     "eslint",
     "react-native",
@@ -18,18 +10,20 @@
     "config",
     "javascript"
   ],
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/react-native-eslint"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
+  "license": "MIT",
+  "author": "NoA Ignite",
+  "type": "module",
+  "main": "eslint.config.js",
+  "files": [
+    "eslint.config.js",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "@eslint/compat": "1.2.9",
     "@stylistic/eslint-plugin": "4.2.0",
@@ -40,5 +34,11 @@
     "eslint-plugin-react-native": "5.0.0",
     "typescript": "5.8.3",
     "typescript-eslint": "8.32.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

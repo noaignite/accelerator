@@ -26,7 +26,7 @@ yarn add --dev @noaignite/react-native-eslint
 
 ## Usage
 
-Create an `eslint.config.mjs` file in your project root:
+Create an `eslint.config.js` file in your project root:
 
 ```javascript
 import reactNativeConfig from '@noaignite/react-native-eslint'

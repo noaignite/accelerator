@@ -19,11 +19,11 @@ export default [
     plugins: {
       '@stylistic': stylisticPlugin,
       'react-hooks': reactHooksPlugin,
-      'react-native': fixupPluginRules(reactNativePlugin)
-    }
+      'react-native': fixupPluginRules(reactNativePlugin),
+    },
   },
   {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    files: ['**/*.{js,cjs,ts,jsx,tsx}'],
     settings: { react: { version: 'detect' } },
     languageOptions: {
       parser: tsParser,
@@ -32,8 +32,8 @@ export default [
         __DEV__: true,
         global: false,
         jest: false,
-        Promise: true
-      }
+        Promise: true,
+      },
     },
     rules: {
       // PROMISE
@@ -80,31 +80,37 @@ export default [
       'react/no-multi-comp': [1, { ignoreStateless: true }],
       'react/no-unused-prop-types': 0,
       // TYPESCRIPT
-      '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'separate-type-imports' }],
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { fixStyle: 'separate-type-imports' },
+      ],
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-shadow': ['error'],
       '@stylistic/indent': ['warn', 2],
       '@stylistic/indent-binary-ops': ['error', 2],
       '@stylistic/jsx-curly-spacing': [2, { when: 'never', children: { when: 'never' } }],
       '@typescript-eslint/ban-ts-comment': 'warn',
-      '@stylistic/member-delimiter-style': ['warn', {
-        'multiline': {
-          'delimiter': 'none',
-          'requireLast': true
+      '@stylistic/member-delimiter-style': [
+        'warn',
+        {
+          multiline: {
+            delimiter: 'none',
+            requireLast: true,
+          },
+          singleline: {
+            delimiter: 'comma',
+            requireLast: false,
+          },
         },
-        'singleline': {
-          'delimiter': 'comma',
-          'requireLast': false
-        }
-      }],
+      ],
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
           args: 'after-used',
           caughtErrors: 'none',
           destructuredArrayIgnorePattern: '^_',
-          reportUsedIgnorePattern: true
-        }
+          reportUsedIgnorePattern: true,
+        },
       ],
       '@typescript-eslint/no-require-imports': 0,
       '@typescript-eslint/no-empty-object-type': 0,
@@ -119,28 +125,37 @@ export default [
       // REST
       '@stylistic/no-trailing-spaces': 'warn',
       '@stylistic/no-multiple-empty-lines': ['warn', { max: 1 }],
-      'no-restricted-imports': ['error', {
-        patterns: [{
-          group: [
-            '@lckygrp/mobile-*/**',
-            '!@lckygrp/mobile-web-services/**',
-            '!@lckygrp/mobile-unit-testing/**',
-            '!@lckygrp/mobile-core-types/global',
-            '!@lckygrp/mobile-code-config/eslint.config.js'
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '@lckygrp/mobile-*/**',
+                '!@lckygrp/mobile-web-services/**',
+                '!@lckygrp/mobile-unit-testing/**',
+                '!@lckygrp/mobile-core-types/global',
+                '!@lckygrp/mobile-code-config/eslint.config.js',
+              ],
+              message: 'Only imports from index are allowed',
+            },
           ],
-          message: 'Only imports from index are allowed'
-        }]
-      }],
-      '@stylistic/no-extra-parens': ['error', 'all', {
-        'conditionalAssign': false,
-        'returnAssign': false,
-        'nestedBinaryExpressions': false,
-        'ternaryOperandBinaryExpressions': false,
-        'enforceForArrowConditionals': false,
-        'enforceForSequenceExpressions': false,
-        'enforceForNewInMemberExpressions': false,
-        'enforceForFunctionPrototypeMethods': false
-      }],
+        },
+      ],
+      '@stylistic/no-extra-parens': [
+        'error',
+        'all',
+        {
+          conditionalAssign: false,
+          returnAssign: false,
+          nestedBinaryExpressions: false,
+          ternaryOperandBinaryExpressions: false,
+          enforceForArrowConditionals: false,
+          enforceForSequenceExpressions: false,
+          enforceForNewInMemberExpressions: false,
+          enforceForFunctionPrototypeMethods: false,
+        },
+      ],
       'no-shadow': 'off',
       'no-undef': 'off',
       '@stylistic/quote-props': 0,
@@ -150,7 +165,7 @@ export default [
       '@stylistic/type-annotation-spacing': 1,
       'no-dupe-class-members': 1,
       'dot-notation': 0,
-      'quotes': ['error', 'single', { allowTemplateLiterals: true }],
+      quotes: ['error', 'single', { allowTemplateLiterals: true }],
       '@stylistic/object-curly-newline': 0,
       '@stylistic/array-bracket-spacing': 1,
       'lines-between-class-members': 1,
@@ -158,7 +173,7 @@ export default [
       'no-prototype-builtins': 0,
       'no-case-declarations': 1,
       'no-var': 'warn',
-      'curly': [1, 'all'],
+      curly: [1, 'all'],
       'sort-keys': [0, 'asc', { caseSensitive: false }],
       'sort-imports': 0,
       'no-console': 2,
@@ -169,7 +184,7 @@ export default [
       'space-infix-ops': 1,
       '@stylistic/no-multi-spaces': 1,
       'spaced-comment': 1,
-      'camelcase': 1,
+      camelcase: 1,
       '@stylistic/comma-spacing': 1,
       '@stylistic/comma-dangle': ['error', 'never'],
       '@stylistic/space-before-blocks': 1,
@@ -187,33 +202,33 @@ export default [
       '@stylistic/arrow-spacing': 1,
       '@stylistic/block-spacing': ['warn', 'always'],
       '@stylistic/jsx-equals-spacing': [2, 'never'],
-      '@stylistic/type-generic-spacing': ['error']
+      '@stylistic/type-generic-spacing': ['error'],
       /*
       IMPORT (no support for eslint 9)
       'import/no-unresolved': ['error', {caseSensitive: true}],
       */
-    }
+    },
   },
   {
     files: [
       '**/__tests__/**/*.{js,jsx,ts,tsx}',
       '**/__mocks__/**/*.{js,jsx,ts,tsx}',
-      '**/scripts/**/*.{js,jsx,ts,tsx}'
+      '**/scripts/**/*.{js,jsx,ts,tsx}',
     ],
     settings: { react: { version: 'detect' } },
     rules: {
       'no-restricted-syntax': 0,
-      '@typescript-eslint/no-unsafe-function-type': 0
-    }
+      '@typescript-eslint/no-unsafe-function-type': 0,
+    },
   },
   {
     files: ['**/types/*.{js,jsx,ts,tsx}'],
     settings: { react: { version: 'detect' } },
     rules: {
-      '@typescript-eslint/no-unused-vars': 0
-    }
+      '@typescript-eslint/no-unused-vars': 0,
+    },
   },
   {
-    ignores: ['ios/*', 'android/*', 'node_modules', '.yarn/*', '**/dist/**']
-  }
+    ignores: ['ios/*', 'android/*', 'node_modules', '.yarn/*', '**/dist/**'],
+  },
 ]
