@@ -57,7 +57,7 @@
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^22.15.3",
     "@types/react": "^19.2.0",
-    "nock": "14.0.4"
+    "nock": "14.0.10"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
