@@ -125,23 +125,6 @@ export default [
       // REST
       '@stylistic/no-trailing-spaces': 'warn',
       '@stylistic/no-multiple-empty-lines': ['warn', { max: 1 }],
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: [
-                '@lckygrp/mobile-*/**',
-                '!@lckygrp/mobile-web-services/**',
-                '!@lckygrp/mobile-unit-testing/**',
-                '!@lckygrp/mobile-core-types/global',
-                '!@lckygrp/mobile-code-config/eslint.config.js',
-              ],
-              message: 'Only imports from index are allowed',
-            },
-          ],
-        },
-      ],
       '@stylistic/no-extra-parens': [
         'error',
         'all',
