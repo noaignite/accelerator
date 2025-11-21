@@ -1,30 +1,9 @@
-import type { DistributiveOmit, Overwrite } from '@noaignite/types'
 import { assert } from '@noaignite/utils'
 import type { ComponentPropsWithRef, ElementType, ReactElement, ReactPortal } from 'react'
 import { version } from 'react'
 
-/** Returns `keyof T` if it exists, otherwise fallback to `D` */
-type PickOrDefault<T, K extends PropertyKey, D> = K extends keyof T ? Pick<T, K> : D
-
-/**
- * Return `true` if `K` exists in `O`, otherwise `false`.
- * Similar in use to `in` operator in JavaScript
- */
-type KeyIn<K extends PropertyKey, O extends Record<PropertyKey, unknown>> = O extends object
-  ? K extends keyof O
-    ? true
-    : false
-  : false
-
-/**
- * Enforce strict object shape of `T` by requiring only properties of `U` to be
- * present in `T` and none other. Useful in generics, where TypeScript loosely
- * matches object shapes.
- */
-type Exact<T, U extends T> = T & Record<Exclude<keyof U, keyof T>, never>
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Promote user-defined types
-type Props = Record<string, any>
+// Keep props structural without introducing an `any` index signature that would widen fields
+type Props = object
 
 /** Derived props of element `T` */
 type PropsOf<T extends ElementType> = ComponentPropsWithRef<T>
@@ -37,7 +16,7 @@ type Config<P extends Props, T extends ElementType> = {
    * These are applied after native attributes of `T` and before user-provided
    * props `P`. Meaning that user-provided props will always take precedence.
    */
-  overrides?: { [K in keyof PropsOf<T>]?: unknown }
+  overrides?: Partial<PropsOf<T>>
   /**
    * An object which specifies which props should be omitted from the resulting
    * polymorphic component (provided that they exist).
@@ -48,21 +27,20 @@ type Config<P extends Props, T extends ElementType> = {
   omit?: keyof P | keyof PropsOf<T>
 }
 
-/** Derived `as` prop from `P` if it matches `ElementType`. */
-type AsOf<P extends Props> = 'as' extends keyof P
-  ? P['as'] extends ElementType
-    ? P['as']
-    : ElementType
-  : ElementType
-
-/** Return `P` if `as` exists in `P`, otherwise `unknown`  */
-type IfValidAs<P extends Props> = P extends { as?: ElementType } ? P : unknown
-
-/** Composes an object of all `C['overrides']` keys which exist in `PropsOf<T>` */
-type ComposeOverrides<T extends ElementType, C extends Config<Props, T>> =
-  KeyIn<'overrides', C> extends true
-    ? Pick<C['overrides'], Extract<keyof C['overrides'], keyof PropsOf<T>>>
+type OverridesFor<T extends ElementType, C> = C extends { overrides: infer O }
+  ? O extends object
+    ? Pick<O, Extract<keyof O, keyof PropsOf<T>>>
     : object
+  : object
+
+type OmittedKeys<C> = C extends { omit: infer O } ? (O extends PropertyKey ? O : never) : never
+
+type NativeProps<T extends ElementType, C> =
+  OverridesFor<T, C> extends infer O
+    ? O extends object
+      ? Omit<PropsOf<T>, keyof O> & O
+      : PropsOf<T>
+    : PropsOf<T>
 
 /**
  * Return type of `PolymorphicExoticComponent`.
@@ -82,13 +60,12 @@ export type PolymorphicElement<P extends Props, T extends ElementType> =
 export type PolymorphicProps<
   P extends Props,
   T extends ElementType,
-  C extends Exact<Config<P, T>, C> = object,
-> = DistributiveOmit<
-  Overwrite<Overwrite<PropsOf<T>, ComposeOverrides<T, C>>, P>,
-  'as' | 'ref' | (KeyIn<'omit', C> extends true ? C['omit'] : '')
-> &
-  PickOrDefault<P & IfValidAs<P>, 'as', { as?: T }> &
-  PickOrDefault<P & IfValidAs<P>, 'ref', { ref?: PropsOf<T>['ref'] }>
+  C extends Config<P, T> = Config<P, T>,
+> = Omit<NativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C>> &
+  Omit<P, OmittedKeys<C>> & {
+    as?: T
+    ref?: PropsOf<T>['ref']
+  }
 
 /**
  * Render function of `createPolymorph`.
@@ -99,8 +76,8 @@ export type PolymorphicProps<
  */
 export type PolymorphicRenderFunction<
   P extends Props,
-  T extends ElementType = AsOf<P>,
-  C extends Exact<Config<P, T>, C> = object,
+  T extends ElementType,
+  C extends Config<P, T> = Config<P, T>,
 > = (props: PolymorphicProps<P, T, C>) => PolymorphicElement<P, T>
 
 /**
@@ -112,11 +89,9 @@ export type PolymorphicRenderFunction<
  */
 export type PolymorphicExoticComponent<
   P extends Props,
-  T extends ElementType = AsOf<P>,
-  C extends Exact<Config<P, T>, C> = object,
-> = <TT = AsOf<P> extends ElementType ? P['as'] : T>(
-  props: PolymorphicProps<P, TT extends ElementType ? TT : T, C>,
-) => PolymorphicElement<P, TT extends ElementType ? TT : T>
+  T extends ElementType,
+  C extends Config<P, T> = Config<P, T>,
+> = <TT extends ElementType = T>(props: PolymorphicProps<P, TT, C>) => PolymorphicElement<P, TT>
 
 /**
  * Creates a polymorphic component.
@@ -163,7 +138,7 @@ export type PolymorphicExoticComponent<
 export const createPolymorph = <
   P extends Props,
   T extends ElementType,
-  C extends Exact<Config<P, T>, C> = object,
+  C extends Config<P, T> = Config<P, T>,
 >(
   render: PolymorphicRenderFunction<P, T, C>,
 ) => {
