@@ -1,0 +1,5 @@
+{
+  "extends": "@noaignite/style-guide/typescript/base",
+  "include": ["src", "tsup.config.ts"],
+  "exclude": ["dist", "node_modules"]
+}

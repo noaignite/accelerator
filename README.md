@@ -64,6 +64,7 @@ This Turborepo includes the following packages/apps:
 - [`@noaignite/tailwind-typography`](https://noaignite.dev/tailwind-typography): TailwindCSS plugin to create responsive typography
 - [`@noaignite/types`](https://noaignite.dev/types): Type helpers by NoA Ignite
 - [`@noaignite/utils`](https://noaignite.dev/utils): Basic helper functions
+- [`@noaignite/create-cms`](https://noaignite.dev/create-cms): A CLI tool to scaffold out templates within a Turborepo project with Sanity Schema Types ex media blocks documents etc
 
 The goal is for each package/app to be 100% [TypeScript](https://www.typescriptlang.org/).
 
