@@ -1,4 +1,3 @@
 #!/usr/bin/env node
 
-// import './dist/createCms.js'
-import './src/createCms.js'
+import './dist/createCms.js'

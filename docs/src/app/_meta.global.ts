@@ -2,6 +2,7 @@ const packages = [
   'centra-mocks',
   'centra-types',
   'create-app',
+  'create-cms',
   'react-centra-checkout',
   'react-utils',
   'style-guide',

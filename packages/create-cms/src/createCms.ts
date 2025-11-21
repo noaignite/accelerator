@@ -50,11 +50,13 @@ const TEMPLATES: Template[] = [
     //   'npm create sanity@latest -- --template clean --typescript'
     // ],
     color: magenta,
+    targetDir: '.',
   },
   {
     name: 'sanity-schema-types',
     display: 'Sanity Schema Types (blocks, components, objects, utils, documents etc...)',
     color: lightBlue,
+    targetDir: '.',
   },
 ]
 
@@ -74,7 +76,7 @@ async function createCms() {
 
   let result: {
     rootDir: string
-    templates: Template[]
+    templates: Template
     overwrite: string
   }
 
@@ -183,37 +185,40 @@ async function createCms() {
   // Step 2. Copy the templates
 
   console.log(`\nScaffolding templates in ${rootPath}...`)
+  console.log(`\nTemplates array:\n`)
+  console.log(templates)
+  console.log(`\nTemplates:\n`)
+  console.log(templates.name)
 
-  for (const template of templates) {
-    const callerPath = fileURLToPath(import.meta.url)
-    const templateDir = `template-${template.name}`
-    const templateSrc = path.resolve(callerPath, '../..', templateDir)
-    const templateDest = path.join(rootPath, template.targetDir ?? `packages/${template.name}`)
+  const template = templates || {}
+  const callerPath = fileURLToPath(import.meta.url)
+  const templateDir = `template-${template.name}`
+  const templateSrc = path.resolve(callerPath, '../..', templateDir)
+  const templateDest = path.join(rootPath, template.targetDir ?? `packages/${template.name}`)
 
-    // Exit if no template files found
-    if (!fs.existsSync(templateSrc)) {
-      continue
-    }
+  // Exit if no template files found
+  if (!fs.existsSync(templateSrc)) {
+    return
+  }
 
-    if (fs.existsSync(templateDest) && overwrite === 'yes') {
-      emptyDir(templateDest)
+  if (fs.existsSync(templateDest) && overwrite === 'yes') {
+    emptyDir(templateDest)
+  } else {
+    fs.mkdirSync(templateDest, { recursive: true })
+  }
+
+  const write = (file: string, content?: string) => {
+    const targetPath = path.join(templateDest, moveFiles[file] ?? file)
+    if (content) {
+      fs.writeFileSync(targetPath, content)
     } else {
-      fs.mkdirSync(templateDest, { recursive: true })
+      copy(path.join(templateSrc, file), targetPath)
     }
+  }
 
-    const write = (file: string, content?: string) => {
-      const targetPath = path.join(templateDest, moveFiles[file] ?? file)
-      if (content) {
-        fs.writeFileSync(targetPath, content)
-      } else {
-        copy(path.join(templateSrc, file), targetPath)
-      }
-    }
-
-    const files = fs.readdirSync(templateSrc)
-    for (const file of files) {
-      write(file)
-    }
+  const files = fs.readdirSync(templateSrc)
+  for (const file of files) {
+    write(file)
   }
 
   // Step 3. Run the custom commands
@@ -221,10 +226,7 @@ async function createCms() {
   console.log(`\nDone. Now running template commands.`)
 
   // Flatten all selected template commands
-  const customCommands = templates
-    .map((t) => t.customCommands)
-    .flat()
-    .filter(Boolean) as Command[]
+  const customCommands = templates.customCommands ?? []
 
   // Run commands from project root
   if (rootPath !== cwd) {
