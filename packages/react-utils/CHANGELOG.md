@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.14.1
+
+### Patch Changes
+
+- 76fb511: useControlled: `value` return type signature is now only `T`, previously `T | undefined`
+
 ## 0.14.0
 
 ### Minor Changes
