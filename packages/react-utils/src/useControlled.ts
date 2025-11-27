@@ -4,7 +4,7 @@
 
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { type Dispatch, type SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
 
 export type UseControlledOptions<T = unknown> = {
   /**
@@ -54,7 +54,9 @@ export type UseControlledOptions<T = unknown> = {
  * }
  * ```
  */
-export function useControlled<T>(options: UseControlledOptions<T>) {
+export function useControlled<T = unknown>(
+  options: UseControlledOptions<T>,
+): [T, Dispatch<SetStateAction<T | undefined>>] {
   const { controlled, default: defaultProp, name, state = 'value' } = options
 
   // isControlled is ignored in the hook dependency lists as it should never change.
@@ -83,9 +85,7 @@ export function useControlled<T>(options: UseControlledOptions<T>) {
     const { current: defaultValue } = useRef(defaultProp)
 
     useEffect(() => {
-      // Object.is() is not equivalent to the === operator.
-      // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is for more details.
-      if (!isControlled && !Object.is(defaultValue, defaultProp)) {
+      if (!isControlled && JSON.stringify(defaultProp) !== JSON.stringify(defaultValue)) {
         console.error(
           [
             `A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. ` +
@@ -96,11 +96,18 @@ export function useControlled<T>(options: UseControlledOptions<T>) {
     }, [JSON.stringify(defaultProp)])
   }
 
-  const setValueIfUncontrolled = useCallback((newValue: T) => {
-    if (!isControlled) {
-      setValueState(newValue)
-    }
-  }, [])
+  const setValueIfUncontrolled: Dispatch<SetStateAction<T | undefined>> = useCallback(
+    (newValue: SetStateAction<T | undefined>) => {
+      if (!isControlled) {
+        setValueState(newValue)
+      }
+    },
+    [],
+  )
 
-  return [value, setValueIfUncontrolled] as const
+  // TODO: provide overloads for the useControlled function to account for the case where either
+  // controlled or default is not undefined.
+  // In that case the return type should be [T, Dispatch<SetStateAction<T>>]
+  // otherwise it should be [T | undefined, Dispatch<SetStateAction<T | undefined>>]
+  return [value as T, setValueIfUncontrolled]
 }
