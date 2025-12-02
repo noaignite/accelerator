@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.14.2
+
+### Patch Changes
+
+- f068cb3: createPolymorph: eliminate unintentional `any` type widening
+
 ## 0.14.1
 
 ### Patch Changes
