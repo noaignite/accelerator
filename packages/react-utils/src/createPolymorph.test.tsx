@@ -62,12 +62,12 @@ describe('createPolymorph', () => {
     const { createPolymorph } = await import('./createPolymorph')
 
     type CustomProps = { variant: 'primary' | 'ghost' }
-    type ButtonProps = PolymorphicProps<CustomProps, 'button'>
     type AnchorProps = PolymorphicProps<CustomProps, 'a'>
+    type ButtonProps = PolymorphicProps<CustomProps, 'button'>
 
+    expectTypeOf<AnchorProps['href']>().toEqualTypeOf<string | undefined>()
     expectTypeOf<ButtonProps['as']>().toEqualTypeOf<'button' | undefined>()
     expectTypeOf<ButtonProps['variant']>().toEqualTypeOf<'primary' | 'ghost'>()
-    expectTypeOf<AnchorProps['href']>().toEqualTypeOf<string | undefined>()
 
     const Button = createPolymorph<CustomProps, 'button'>(() => null)
     expect(Button({ variant: 'primary', type: 'button' })).toBeNull()
@@ -86,6 +86,52 @@ describe('createPolymorph', () => {
     expect(Button({ className: 123 })).toBeNull()
     // @ts-expect-error -- CustomProps overrides native `className` string type.
     expect(Button({ className: 'primary' })).toBeNull()
+  })
+
+  it('keeps base component requirements while allowing polymorphic overrides', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    type AnchorProps = { href: string }
+    type ButtonLinkProps = { variant: 'primary' | 'ghost' }
+
+    const Link = createPolymorph<AnchorProps, 'a'>(() => null)
+    expect(Link({ href: '/' })).toBeNull()
+    // @ts-expect-error -- `href` is required on the base anchor.
+    expect(Link({})).toBeNull()
+
+    const ButtonLink = createPolymorph<ButtonLinkProps, typeof Link>(() => null)
+    expect(ButtonLink({ href: '/', variant: 'ghost' })).toBeNull()
+    // @ts-expect-error -- `ButtonLink` requires `href`
+    expect(ButtonLink({ variant: 'ghost' })).toBeNull()
+    expect(ButtonLink({ as: 'button', variant: 'ghost' })).toBeNull()
+    expect(
+      ButtonLink({
+        as: 'button',
+        // @ts-expect-error -- `href` should not be accepted when rendering as a button.
+        href: '/',
+        variant: 'primary',
+      }),
+    ).toBeNull()
+  })
+
+  it('matches extracted component props to polymorphic props', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    type CustomProps = { variant?: 'primary' | 'ghost' }
+    const Button = createPolymorph<CustomProps, 'button'>(() => null)
+
+    type ExtractedProps = ComponentPropsWithRef<typeof Button>
+    type ExpectedProps = PolymorphicProps<CustomProps, 'button'>
+
+    expectTypeOf<ExtractedProps>().toEqualTypeOf<ExpectedProps>()
+    expectTypeOf<PropOf<ExtractedProps, 'href'>>().toBeNever()
+
+    expect(Button({ variant: 'primary' })).toBeNull()
+    expect(Button({ as: 'a', href: '#', variant: 'ghost' })).toBeNull()
+    // @ts-expect-error -- unknown props should be rejected.
+    expect(Button({ sdfsdf: '/url-path' })).toBeNull()
+    // @ts-expect-error -- base `button` props do not allow `href` without polymorphic `as`.
+    expect(Button({ href: 14 })).toBeNull()
   })
 
   it('restricts render function props to attributes of the base element', async () => {

@@ -152,9 +152,9 @@ export type PolymorphicRenderFunction<
  */
 export type PolymorphicExoticComponent<
   P extends Props,
-  T extends ElementType = ElementType,
+  T extends ElementType = AsOrDefault<P, ElementType>,
   C extends Exact<Config<P, T>, C> = object,
-> = <TT extends ElementType = AsOrDefault<P, T>>(
+> = <TT = AsOrDefault<P, T>>(
   props: PolymorphicProps<P, TT extends ElementType ? TT : T, C>,
 ) => PolymorphicElement<P, TT extends ElementType ? TT : T>
 
