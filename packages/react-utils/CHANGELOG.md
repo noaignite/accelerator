@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.14.3
+
+### Patch Changes
+
+- 1429bb5: createPolymorph: fix so that extracted component props match polymorphic props
+
 ## 0.14.2
 
 ### Patch Changes
