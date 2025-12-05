@@ -114,6 +114,24 @@ describe('createPolymorph', () => {
     ).toBeNull()
   })
 
+  it('preserves required unions when extending another polymorph', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    type ButtonProps = { variant: 'primary' | 'ghost' }
+    type AriaLabelRequired =
+      | { 'aria-label': string; 'aria-labelledby'?: never }
+      | { 'aria-label'?: never; 'aria-labelledby': string }
+    type IconButtonProps = AriaLabelRequired & { edge: 'start' | 'end' }
+
+    const Button = createPolymorph<ButtonProps, 'button'>(() => null)
+    expect(Button({ variant: 'ghost' })).toBeNull()
+
+    const IconButton = createPolymorph<IconButtonProps, typeof Button>(() => null)
+    expect(IconButton({ 'aria-label': 'foo', edge: 'start', variant: 'ghost' })).toBeNull()
+    // @ts-expect-error -- `aria-label` or `aria-labelledby` should be required.
+    expect(IconButton({ edge: 'start', variant: 'ghost' })).toBeNull()
+  })
+
   it('matches extracted component props to polymorphic props', async () => {
     const { createPolymorph } = await import('./createPolymorph')
 

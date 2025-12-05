@@ -37,11 +37,13 @@ type InternalPolymorphicProps<
   P extends Props,
   T extends ElementType,
   C extends Exact<Config<P, T>, C> = object,
-> = Omit<InternalNativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | keyof P> &
-  Omit<P, OmittedKeys<C>> & {
-    as?: T
-    ref?: BasePropsOf<T>['ref']
-  }
+> = P extends unknown
+  ? Omit<InternalNativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | keyof P> &
+      Omit<P, OmittedKeys<C>> & {
+        as?: T
+        ref?: BasePropsOf<T>['ref']
+      }
+  : never
 
 /**
  * Derived props of element `T`, unwrapping polymorphic components when needed.
@@ -124,11 +126,13 @@ export type PolymorphicProps<
   P extends Props,
   T extends ElementType,
   C extends Exact<Config<P, T>, C> = object,
-> = Omit<NativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | keyof P> &
-  Omit<P, OmittedKeys<C>> & {
-    as?: T
-    ref?: BasePropsOf<T>['ref']
-  }
+> = P extends unknown
+  ? Omit<NativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | keyof P> &
+      Omit<P, OmittedKeys<C>> & {
+        as?: T
+        ref?: BasePropsOf<T>['ref']
+      }
+  : never
 
 /**
  * Render function of `createPolymorph`.
