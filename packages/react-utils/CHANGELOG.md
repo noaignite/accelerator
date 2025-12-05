@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.14.4
+
+### Patch Changes
+
+- f8d7e83: createPolymorph: fix union preservation when extending another polymorph
+
 ## 0.14.3
 
 ### Patch Changes
