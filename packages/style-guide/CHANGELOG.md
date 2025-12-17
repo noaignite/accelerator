@@ -1,5 +1,11 @@
 # @noaignite/style-guide
 
+## 0.1.1
+
+### Patch Changes
+
+- b1b4da6: Eslint: add `.next` to ignores list
+
 ## 0.1.0
 
 ### Minor Changes

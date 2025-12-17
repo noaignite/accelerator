@@ -1,5 +1,12 @@
 # @noaignite/react-utils
 
+## 0.14.5
+
+### Patch Changes
+
+- d66f00b: createPolymorph: fix so `Props` can be typed as `object` again
+  - @noaignite/utils@3.5.2
+
 ## 0.14.4
 
 ### Patch Changes
