@@ -6,11 +6,53 @@ import { version } from 'react'
  * Enforce strict object shape of `T` by requiring only properties of `U` to be
  * present in `T` and none other. Useful in generics, where TypeScript loosely
  * matches object shapes.
+ *
+ * @example
+ * ```tsx
+ * type User = { id: number }
+ *
+ * type T1 = Exact<User, { id: number }>               // { id: number }
+ * type T2 = Exact<User, { id: number; name: string }> // never (extra property)
+ * ```
  */
 type Exact<T, U extends T> = T & Record<Exclude<keyof U, keyof T>, never>
 
+/**
+ * Conditionally resolves to `A` if types `X` and `Y` are equal, otherwise to `B`.
+ *
+ * Type equality here means **mutual assignability**:
+ * - `X` is assignable to `Y`
+ * - `Y` is assignable to `X`
+ *
+ * This helper uses a generic function wrapper to:
+ * - Prevent distributive conditional types over unions
+ * - Perform a stricter comparison than a simple `X extends Y`
+ *
+ * @typeParam X - First type to compare
+ * @typeParam Y - Second type to compare
+ * @typeParam A - Result type if `X` and `Y` are equal
+ * @typeParam B - Result type if `X` and `Y` are not equal
+ *
+ * @example
+ * ```tsx
+ * type T1 = IfEquals<1, 1, "yes", "no">           // "yes"
+ * type T2 = IfEquals<1, number, "yes", "no">      // "no"
+ * type T3 = IfEquals<{a: 1}, {a: 1}, "yes", "no"> // "yes"
+ * type T4 = IfEquals<"a" | "b", "a", "yes", "no"> // "no"
+ * ```
+ */
+type IfEquals<X, Y, A, B> =
+  (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
+    ? (<T>() => T extends Y ? 1 : 2) extends <T>() => T extends X ? 1 : 2
+      ? A
+      : B
+    : B
+
 // Avoid widening to `any`, but keep structural indexing
-type Props = Record<string, unknown>
+type Props = object
+
+// Treat a bare `object` prop as "no custom keys"
+type PropKeys<P extends Props> = IfEquals<P, object, never, keyof P>
 
 /**
  * Native props of `T` without polymorphic unwrapping.
@@ -38,7 +80,7 @@ type InternalPolymorphicProps<
   T extends ElementType,
   C extends Exact<Config<P, T>, C> = object,
 > = P extends unknown
-  ? Omit<InternalNativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | keyof P> &
+  ? Omit<InternalNativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | PropKeys<P>> &
       Omit<P, OmittedKeys<C>> & {
         as?: T
         ref?: BasePropsOf<T>['ref']
@@ -49,10 +91,11 @@ type InternalPolymorphicProps<
  * Derived props of element `T`, unwrapping polymorphic components when needed.
  * If `T` is a polymorphic component itself, resolve to its internal props shape.
  */
-type PropsOf<T extends ElementType> =
-  T extends PolymorphicExoticComponent<infer P, infer TT, infer C>
-    ? InternalPolymorphicProps<P, TT, C>
-    : BasePropsOf<T>
+type PropsOf<T extends ElementType> = [T] extends [
+  PolymorphicExoticComponent<infer P, infer TT, infer C>,
+]
+  ? InternalPolymorphicProps<P, TT, C>
+  : BasePropsOf<T>
 
 type Config<P extends Props, T extends ElementType> = {
   /**
@@ -127,7 +170,7 @@ export type PolymorphicProps<
   T extends ElementType,
   C extends Exact<Config<P, T>, C> = object,
 > = P extends unknown
-  ? Omit<NativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | keyof P> &
+  ? Omit<NativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | PropKeys<P>> &
       Omit<P, OmittedKeys<C>> & {
         as?: T
         ref?: BasePropsOf<T>['ref']
