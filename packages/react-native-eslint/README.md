@@ -45,9 +45,9 @@ export default [
     // Your custom rules here
     rules: {
       // Override or add rules
-      'no-console': 'warn'
-    }
-  }
+      'no-console': 'warn',
+    },
+  },
 ]
 ```
 
@@ -56,7 +56,7 @@ export default [
 This configuration includes rules for:
 
 - **JavaScript/TypeScript**: Core language rules and TypeScript-specific linting
-- **React**: React best practices and hooks rules  
+- **React**: React best practices and hooks rules
 - **React Native**: Platform-specific rules for React Native development
 - **Jest**: Testing rules and best practices
 - **Promises**: Async/await and Promise handling
@@ -67,7 +67,7 @@ This configuration includes rules for:
 Create eslint.config.js file in your project root, import eslintConfig from package.
 
 ```javascript
-import eslintConfig from '@noaignite/react-native-eslint';
+import eslintConfig from '@noaignite/react-native-eslint'
 
 export default eslintConfig
 ```
@@ -75,30 +75,27 @@ export default eslintConfig
 Use a config object if your project want to apply new rules.
 
 ```javascript
-import eslintConfig from '@noaignite/react-native-eslint';
-import { defineConfig } from "eslint/config";
+import eslintConfig from '@noaignite/react-native-eslint'
+import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
   {
     extends: eslintConfig,
     rules: {
       // add new rules here
-    }
-  }
-]);
+    },
+  },
+])
 ```
 
-Use a config array If your project want to combine with other package's eslint config. 
+Use a config array If your project want to combine with other package's eslint config.
 
 ```javascript
-import eslintConfig from '@noaignite/react-native-eslint';
-import otherEslintConfig from '@other/package';
-import { defineConfig } from "eslint/config";
+import eslintConfig from '@noaignite/react-native-eslint'
+import otherEslintConfig from '@other/package'
+import { defineConfig } from 'eslint/config'
 
-export default defineConfig([
-  ...eslintConfig,
-  ...otherEslintConfig
-]);
+export default defineConfig([...eslintConfig, ...otherEslintConfig])
 ```
 
 ## Scripts
@@ -110,7 +107,8 @@ Add these scripts to your `package.json`:
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
-  }}
+  }
+}
 ```
 
 ## Requirements
