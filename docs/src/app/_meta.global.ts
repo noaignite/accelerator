@@ -3,6 +3,7 @@ const packages = [
   'centra-types',
   'create-app',
   'react-centra-checkout',
+  'react-native-eslint',
   'react-utils',
   'style-guide',
   'tailwind-typography',
