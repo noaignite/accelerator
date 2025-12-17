@@ -1,5 +1,11 @@
 # docs
 
+## 0.3.0
+
+### Minor Changes
+
+- 14063da: Bump `next` from v15.5.7 to v16.0.10
+
 ## 0.2.0
 
 ### Minor Changes
