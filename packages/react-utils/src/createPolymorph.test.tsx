@@ -42,7 +42,20 @@ describe('createPolymorph', () => {
 
     const testFunction: PolymorphicRenderFunction<Record<string, unknown>, HTMLElementType> = () =>
       null
-    expect(createPolymorph(testFunction)).toEqual(testFunction)
+    expect(createPolymorph(testFunction)).toBe(testFunction)
+  })
+
+  it('treats a bare `object` props definition as having no custom keys', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    const Button = createPolymorph<object, 'button'>((_props) => {
+      expectTypeOf<PropOf<typeof _props, 'foo'>>().toBeNever()
+      return null
+    })
+
+    expect(Button({ type: 'button' })).toBeNull()
+    // @ts-expect-error -- bare object props should not allow arbitrary custom keys.
+    expect(Button({ foo: 'bar' })).toBeNull()
   })
 
   it('constrains `as` defaults to the declared prop shape when present on custom props', async () => {
