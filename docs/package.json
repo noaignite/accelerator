@@ -27,14 +27,14 @@
     "next": "15.5.7",
     "nextra": "4.6.1",
     "nextra-theme-docs": "4.6.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "15.5.7",
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^22.15.3",
-    "@types/react": "^19.2.0",
+    "@types/react": "^19.2.7",
     "pagefind": "^1.4.0",
     "tailwindcss": "^4.1.4"
   },
