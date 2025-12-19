@@ -1,5 +1,11 @@
 # @noaignite/style-guide
 
+## 0.1.2
+
+### Patch Changes
+
+- bfae993: use `eqeqeq smart`
+
 ## 0.1.1
 
 ### Patch Changes
