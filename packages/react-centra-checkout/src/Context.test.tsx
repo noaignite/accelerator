@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/globals -- Allow in tests */
 import { selectionEmptyResponse, selectionResponse } from '@noaignite/centra-mocks'
 import type * as CheckoutApi from '@noaignite/centra-types'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
@@ -562,6 +563,7 @@ describe('CentraProvider', () => {
           .intercept(endpoint, httpMethod, (retrievedRequestBody) => {
             if (requestBody) {
               // If we've specified an expected request body, we shall assure that this request body get sent to the API endpoint.
+              // eslint-disable-next-line vitest/no-conditional-expect -- This is fine
               expect(JSON.stringify(retrievedRequestBody) === JSON.stringify(requestBody)).toBe(
                 true,
               )
