@@ -31,6 +31,10 @@ export default [
     },
     rules: {
       ...pluginReactHooks.configs['recommended-latest'].rules,
+      'react-hooks/preserve-manual-memoization': 'off', // TODO: See if we should enable this rule.
+      'react-hooks/purity': 'off', // TODO: See if we should enable this rule.
+      'react-hooks/refs': 'off', // TODO: See if we should enable this rule.
+      'react-hooks/set-state-in-effect': 'off', // TODO: See if we should enable this rule.
       // React scope no longer necessary with new JSX transform.
       'react/react-in-jsx-scope': 'off',
     },

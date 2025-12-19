@@ -273,6 +273,7 @@ export function CentraProvider(props: ProviderProps) {
 
   // set api client url
   if (apiUrl) {
+    // eslint-disable-next-line react-hooks/immutability -- TODO: Allow for now
     apiClient.baseUrl = apiUrl
   }
 
