@@ -163,7 +163,9 @@ describe('PaymentEmbed', () => {
       scope
         .post('/payment', (body) => {
           if (mockedEvent.detail.addressIncluded) {
+            // eslint-disable-next-line vitest/no-conditional-expect -- This is fine.
             expect(body.address).toMatchObject(mockedEvent.detail.billingAddress)
+            // eslint-disable-next-line vitest/no-conditional-expect -- This is fine.
             expect(body.shippingAddress).toMatchObject(mockedEvent.detail.shippingAddress)
           }
 

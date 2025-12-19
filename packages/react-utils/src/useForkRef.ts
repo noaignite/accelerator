@@ -22,7 +22,6 @@ export function useForkRef<Instance>(
    * with the ref. Cleanup naturally emerges from this behavior.
    */
   return useMemo(() => {
-    // eslint-disable-next-line eqeqeq -- Check for falsy values.
     if (refs.every((ref) => ref == null)) {
       return null
     }
