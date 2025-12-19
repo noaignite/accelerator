@@ -32,7 +32,7 @@ export default [
        *
        * 🔧 Fixable - https://eslint.org/docs/rules/eqeqeq
        */
-      eqeqeq: 'error',
+      eqeqeq: ['error', 'smart'],
       /**
        * Require grouped accessor pairs in object literals and classes.
        *
