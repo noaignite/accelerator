@@ -290,16 +290,16 @@ importers:
         version: 16.1.0
       prettier-plugin-organize-imports:
         specifier: 4.1.0
-        version: 4.1.0(prettier@3.5.3)(typescript@5.8.3)
+        version: 4.1.0(prettier@3.7.4)(typescript@5.8.3)
       prettier-plugin-packagejson:
         specifier: 2.5.19
-        version: 2.5.19(prettier@3.5.3)
+        version: 2.5.19(prettier@3.7.4)
       prettier-plugin-style-order:
         specifier: 0.2.2
-        version: 0.2.2(prettier@3.5.3)
+        version: 0.2.2(prettier@3.7.4)
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
-        version: 0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3))(prettier-plugin-style-order@0.2.2(prettier@3.5.3))(prettier@3.5.3)
+        version: 0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.7.4)(typescript@5.8.3))(prettier-plugin-style-order@0.2.2(prettier@3.7.4))(prettier@3.7.4)
       typescript-eslint:
         specifier: ^8.46.4
         version: 8.46.4(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
@@ -308,8 +308,8 @@ importers:
         specifier: ^16.0.10
         version: 16.0.10
       prettier:
-        specifier: 3.5.3
-        version: 3.5.3
+        specifier: 3.7.4
+        version: 3.7.4
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -4845,8 +4845,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.5.3:
-    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
+  prettier@3.7.4:
+    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -11086,34 +11086,34 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3):
+  prettier-plugin-organize-imports@4.1.0(prettier@3.7.4)(typescript@5.8.3):
     dependencies:
-      prettier: 3.5.3
+      prettier: 3.7.4
       typescript: 5.8.3
 
-  prettier-plugin-packagejson@2.5.19(prettier@3.5.3):
+  prettier-plugin-packagejson@2.5.19(prettier@3.7.4):
     dependencies:
       sort-package-json: 3.4.0
       synckit: 0.11.11
     optionalDependencies:
-      prettier: 3.5.3
+      prettier: 3.7.4
 
-  prettier-plugin-style-order@0.2.2(prettier@3.5.3):
+  prettier-plugin-style-order@0.2.2(prettier@3.7.4):
     dependencies:
       postcss-sorting: 5.0.1
-      prettier: 3.5.3
+      prettier: 3.7.4
       resolve-cwd: 3.0.0
 
-  prettier-plugin-tailwindcss@0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.5.3)(typescript@5.8.3))(prettier-plugin-style-order@0.2.2(prettier@3.5.3))(prettier@3.5.3):
+  prettier-plugin-tailwindcss@0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.7.4)(typescript@5.8.3))(prettier-plugin-style-order@0.2.2(prettier@3.7.4))(prettier@3.7.4):
     dependencies:
-      prettier: 3.5.3
+      prettier: 3.7.4
     optionalDependencies:
-      prettier-plugin-organize-imports: 4.1.0(prettier@3.5.3)(typescript@5.8.3)
-      prettier-plugin-style-order: 0.2.2(prettier@3.5.3)
+      prettier-plugin-organize-imports: 4.1.0(prettier@3.7.4)(typescript@5.8.3)
+      prettier-plugin-style-order: 0.2.2(prettier@3.7.4)
 
   prettier@2.8.8: {}
 
-  prettier@3.5.3: {}
+  prettier@3.7.4: {}
 
   pretty-format@27.5.1:
     dependencies:
