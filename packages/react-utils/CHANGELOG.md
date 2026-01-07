@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 0.14.6
+
+### Patch Changes
+
+- 4961941: add support for async components in createPolymorph
+
 ## 0.14.5
 
 ### Patch Changes
@@ -198,5 +204,4 @@
 ### Minor Changes
 
 - 11b2554: add react helper functions
-
   - Add createRenderBlock helper
