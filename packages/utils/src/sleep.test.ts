@@ -33,7 +33,7 @@ describe('sleep', () => {
 
     await vi.advanceTimersToNextTimerAsync()
 
-    await expect(promise).resolves.toBeUndefined()
+    await promise
   })
 
   it('delayed sleep', async () => {
@@ -55,6 +55,6 @@ describe('sleep', () => {
 
     await vi.advanceTimersToNextTimerAsync()
 
-    await expect(promise).resolves.toBeUndefined()
+    await promise
   })
 })

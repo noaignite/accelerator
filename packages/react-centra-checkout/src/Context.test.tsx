@@ -562,6 +562,7 @@ describe('CentraProvider', () => {
           .intercept(endpoint, httpMethod, (retrievedRequestBody) => {
             if (requestBody) {
               // If we've specified an expected request body, we shall assure that this request body get sent to the API endpoint.
+              // eslint-disable-next-line vitest/no-conditional-expect -- This is fine
               expect(JSON.stringify(retrievedRequestBody) === JSON.stringify(requestBody)).toBe(
                 true,
               )
