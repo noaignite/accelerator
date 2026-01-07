@@ -1,5 +1,16 @@
 # @noaignite/style-guide
 
+## 0.2.0
+
+### Minor Changes
+
+- 60e0d8d: Refresh linting/formatting toolchain versions: bump `@eslint/js`, `@vitest/eslint-plugin`, `eslint-plugin-import`, `eslint-plugin-react-hooks`, `eslint-plugin-turbo`, `eslint-plugin-unicorn`, `globals`, and `prettier` plugins; align `eslint` and `prettier` versions in devDependencies.
+
+### Patch Changes
+
+- 60e0d8d: Disable new `eslint-plugin-react-hooks` rules related to React Compiler with TODO comment to revisit
+- bfae993: use `eqeqeq smart`
+
 ## 0.1.1
 
 ### Patch Changes
