@@ -188,7 +188,9 @@ export type PolymorphicRenderFunction<
   P extends Props,
   T extends ElementType = ElementType,
   C extends Exact<Config<P, T>, C> = object,
-> = (props: PolymorphicProps<P, T, C>) => PolymorphicElement<P, T>
+> = (
+  props: PolymorphicProps<P, T, C>,
+) => PolymorphicElement<P, T> | Promise<PolymorphicElement<P, T>>
 
 /**
  * Return type of `createPolymorph`.
@@ -203,7 +205,9 @@ export type PolymorphicExoticComponent<
   C extends Exact<Config<P, T>, C> = object,
 > = <TT = AsOrDefault<P, T>>(
   props: PolymorphicProps<P, TT extends ElementType ? TT : T, C>,
-) => PolymorphicElement<P, TT extends ElementType ? TT : T>
+) =>
+  | PolymorphicElement<P, TT extends ElementType ? TT : T>
+  | Promise<PolymorphicElement<P, TT extends ElementType ? TT : T>>
 
 /**
  * Creates a polymorphic component.
