@@ -25,7 +25,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@eslint/compat": "1.2.9",
+    "@eslint/compat": "1.4.1",
     "@stylistic/eslint-plugin": "4.2.0",
     "eslint-config-expo": "9.2.0",
     "eslint-plugin-jest": "28.11.0",
