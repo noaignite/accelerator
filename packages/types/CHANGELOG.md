@@ -46,7 +46,6 @@
 ### Major Changes
 
 - aceaf42: add new type helpers
-
   - Add AnyFunction helper
   - Add Concatenate helper
   - Add DistributiveOmit helper

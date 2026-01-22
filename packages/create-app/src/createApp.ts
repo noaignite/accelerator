@@ -146,10 +146,9 @@ async function createApp() {
           type: (_, { templates }: { templates?: Template[] }) => {
             if (templates?.length === 0) {
               throw new Error(
-                [
-                  `${red('✖')} No templates were selected`,
-                  `${red('✖')} Operation cancelled`,
-                ].join('\n'),
+                [`${red('✖')} No templates were selected`, `${red('✖')} Operation cancelled`].join(
+                  '\n',
+                ),
               )
             }
             return null

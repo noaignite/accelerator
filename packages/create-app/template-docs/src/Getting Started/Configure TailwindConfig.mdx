@@ -95,20 +95,19 @@ const config: Config = {
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --font-primary: 'Aften Screen', sans-serif;
+    --font-secondary: 'Aften Screen 2', sans-serif;
+    --palette-brand1-primary: white;
+    --palette-brand1-secondary: black;
+    --palette-brand1-contrast: white;
+  }
+
   html {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
   }
-
-  /* ... */
-
-  --font-primary: 'Aften Screen', sans-serif;
-  --font-secondary: 'Aften Screen 2', sans-serif;
-
-  --palette-brand1-primary: white;
-  --palette-brand1-secondary: black;
-  --palette-brand1-contrast: white;
 }
 ```
 

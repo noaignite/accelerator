@@ -198,5 +198,4 @@
 ### Minor Changes
 
 - 11b2554: add react helper functions
-
   - Add createRenderBlock helper
