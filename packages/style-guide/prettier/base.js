@@ -22,7 +22,7 @@ export default {
   // Include Prettier plugins. Include order matters.
   plugins: [
     'prettier-plugin-packagejson',
-    'prettier-plugin-style-order',
+    'prettier-plugin-css-order',
     'prettier-plugin-organize-imports',
   ],
 }
