@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/react-native-eslint",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A comprehensive ESLint configuration for React Native projects with TypeScript support",
   "keywords": [
     "eslint",

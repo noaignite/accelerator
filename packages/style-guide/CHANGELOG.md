@@ -1,5 +1,20 @@
 # @noaignite/style-guide
 
+## 1.0.0
+
+### Major Changes
+
+- d976bdb: deps: bump `prettier-plugin-packagejson` from 2.5.20 to 3.0.0
+- d976bdb: deps: replace `prettier-plugin-style-order` with `prettier-plugin-css-order` due to project not being maintained.
+
+### Minor Changes
+
+- d976bdb: deps: bump `@eslint-community/eslint-plugin-eslint-comments` from 4.4.1 to 4.6.0
+
+### Patch Changes
+
+- d976bdb: deps: bump `eslint-plugin-turbo` from 2.7.3 to 2.7.5
+
 ## 0.2.0
 
 ### Minor Changes
