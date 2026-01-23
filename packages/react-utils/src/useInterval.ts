@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useEffect } from 'react'
+import { useStableCallback } from './useStableCallback'
 
 export type IntervalOptions = {
   /**
@@ -33,20 +33,17 @@ export const useInterval = (
   delay: number,
   { when = true }: IntervalOptions = {},
 ) => {
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
   useEffect(() => {
     if (!when || typeof delay !== 'number') return
 
     const interval = setInterval(() => {
-      savedCallback.current()
+      stableCallback()
     }, delay)
 
     return () => {
       clearInterval(interval)
     }
-  }, [when, delay])
+  }, [when, delay, stableCallback])
 }

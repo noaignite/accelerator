@@ -2,9 +2,9 @@
 
 import { assert } from '@noaignite/utils'
 import type { RefObject } from 'react'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { isRefObject } from './isRefObject'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useStableCallback } from './useStableCallback'
 
 type EventReference<BaseReference> = BaseReference | null | false | undefined
 
@@ -98,10 +98,7 @@ export function useEvent(
   ) => void,
   { when = true, capture = false, once = false, passive = false, signal }: EventOptions = {},
 ) {
-  const savedListener = useRef(listener)
-  useIsomorphicEffect(() => {
-    savedListener.current = listener
-  }, [listener])
+  const stableListener = useStableCallback(listener)
 
   useEffect(() => {
     if (!when) return
@@ -130,15 +127,11 @@ export function useEvent(
       `Parameter target of useEvent() must be one of the following:\n\n- String: "window", "document", "visualViewport"\n- RefObject: Element | MediaQueryList`,
     )
 
-    // We save the listener to its own variable (`callback`) to ensure that
-    // when clean-up runs; that we reference the same pointer in memory.
-    const callback = savedListener.current
     const options = { capture, once, passive, signal }
-
-    element.addEventListener(type, callback, options)
+    element.addEventListener(type, stableListener, options)
 
     return () => {
-      element.removeEventListener(type, callback, options)
+      element.removeEventListener(type, stableListener, options)
     }
-  }, [target, type, when, capture, once, passive, signal])
+  }, [target, type, when, capture, once, passive, signal, stableListener])
 }

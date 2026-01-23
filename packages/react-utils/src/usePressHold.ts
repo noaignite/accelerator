@@ -2,9 +2,8 @@
 
 import type { Prettify } from '@noaignite/types'
 import type { RefObject } from 'react'
-import { useRef } from 'react'
 import { useGesture, type GestureOptions } from './useGesture'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useStableCallback } from './useStableCallback'
 
 /** Properties to extract from `useGesture` for re-use in this hook. */
 type GestureProperties =
@@ -61,10 +60,7 @@ export const usePressHold = (
     pointerType,
   }: PressHoldOptions = {},
 ) => {
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
   useGesture(ref, {
     when,
@@ -81,7 +77,7 @@ export const usePressHold = (
       onGestureEnd?.(event)
 
       if (event.aborted || !event.expired) return
-      savedCallback.current()
+      stableCallback()
     },
   })
 }

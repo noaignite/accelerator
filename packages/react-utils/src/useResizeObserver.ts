@@ -1,8 +1,8 @@
 'use client'
 
 import type { RefObject } from 'react'
-import { useEffect, useRef } from 'react'
-import { useIsomorphicEffect } from './useIsomorphicEffect'
+import { useEffect } from 'react'
+import { useStableCallback } from './useStableCallback'
 
 export type UseResizeObserverCallback = (entry: ResizeObserverEntry) => void
 
@@ -41,10 +41,7 @@ export const useResizeObserver = (
   callback: UseResizeObserverCallback,
   { when = true }: ResizeObserverOptions = {},
 ) => {
-  const savedCallback = useRef(callback)
-  useIsomorphicEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
+  const stableCallback = useStableCallback(callback)
 
   useEffect(() => {
     if (!when) return
@@ -56,7 +53,7 @@ export const useResizeObserver = (
       const entry = entries[0]
       if (!entry) return
 
-      savedCallback.current(entry)
+      stableCallback(entry)
     })
 
     observer.observe(element)
@@ -64,5 +61,5 @@ export const useResizeObserver = (
     return () => {
       observer.disconnect()
     }
-  }, [ref, when])
+  }, [ref, when, stableCallback])
 }
