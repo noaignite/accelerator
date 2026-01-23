@@ -1,5 +1,15 @@
 # @noaignite/react-utils
 
+## 0.15.0
+
+### Minor Changes
+
+- fa3dd8b: useStableCallback: add new hook
+
+### Patch Changes
+
+- fa3dd8b: Hooks: fix stale values in stable callback references
+
 ## 0.14.6
 
 ### Patch Changes
