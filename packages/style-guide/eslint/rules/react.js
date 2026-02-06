@@ -51,6 +51,8 @@ export default [
       'react-hooks/incompatible-library': 'off',
 
       'react/react-in-jsx-scope': 'off', // React scope no longer necessary with new JSX transform.
+      // TODO: Change to `error` in v2
+      'react/jsx-no-leaked-render': ['warn', { validStrategies: ['coerce', 'ternary'] }],
     },
   },
 ]
