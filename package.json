@@ -30,7 +30,7 @@
     "@changesets/cli": "^2.29.2",
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^22.15.3",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/coverage-v8": "^4.0.18",
     "esbuild-plugin-file-path-extensions": "^2.1.4",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
@@ -42,7 +42,7 @@
     "tsx": "^4.21.0",
     "turbo": "^2.8.11",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.18"
   },
   "packageManager": "pnpm@9.3.0",
   "engines": {

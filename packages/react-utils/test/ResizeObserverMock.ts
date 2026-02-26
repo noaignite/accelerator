@@ -15,9 +15,9 @@ export class ResizeObserverMock {
     ResizeObserverMock.instances.push(this)
   }
 
-  observe = vi.fn()
-  unobserve = vi.fn()
-  disconnect = vi.fn(() => {
+  observe: ResizeObserver['observe'] = vi.fn()
+  unobserve: ResizeObserver['unobserve'] = vi.fn()
+  disconnect: ResizeObserver['disconnect'] = vi.fn(() => {
     this.isDisconnected = true
   })
   trigger = (entries: ResizeObserverEntry[]) => {
