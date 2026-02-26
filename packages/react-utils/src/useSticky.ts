@@ -136,12 +136,9 @@ export const useSticky = (
         const element = ref.current
         if (!(element instanceof HTMLElement)) return
 
-        const pRect = parent?.getBoundingClientRect() ?? {
-          top: 0,
-          left: 0,
-          bottom: window.innerHeight,
-          right: window.innerWidth,
-        }
+        const pRect =
+          parent?.getBoundingClientRect() ??
+          new DOMRect(0, 0, window.innerWidth, window.innerHeight)
 
         const cRect = element.getBoundingClientRect()
 
