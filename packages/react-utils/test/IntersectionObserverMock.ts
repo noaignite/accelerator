@@ -25,10 +25,10 @@ export class IntersectionObserverMock {
     IntersectionObserverMock.instances.push(this)
   }
 
-  observe = vi.fn()
-  unobserve = vi.fn()
-  takeRecords = vi.fn()
-  disconnect = vi.fn(() => {
+  observe: IntersectionObserver['observe'] = vi.fn()
+  unobserve: IntersectionObserver['unobserve'] = vi.fn()
+  takeRecords: IntersectionObserver['takeRecords'] = vi.fn()
+  disconnect: IntersectionObserver['disconnect'] = vi.fn(() => {
     this.isDisconnected = true
   })
   trigger = (entries: IntersectionObserverEntry[]) => {
