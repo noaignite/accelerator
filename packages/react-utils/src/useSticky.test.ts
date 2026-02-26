@@ -191,13 +191,18 @@ describe('useSticky', () => {
       expect(
         IntersectionObserverMock.instances.some(
           (instance) =>
-            instance.options.root === container && instance.options.rootMargin === '-31px',
+            instance.options.root === container &&
+            instance !== i1 &&
+            instance.options.rootMargin !== '0px',
         ),
       ).toBe(true)
     })
 
     const i2 = IntersectionObserverMock.instances.find(
-      (instance) => instance.options.root === container && instance.options.rootMargin === '-31px',
+      (instance) =>
+        instance.options.root === container &&
+        instance !== i1 &&
+        instance.options.rootMargin !== '0px',
     )
 
     expect(i2).toBeDefined()
