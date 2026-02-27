@@ -27,11 +27,10 @@
   "dependencies": {
     "@eslint/compat": "1.4.1",
     "@stylistic/eslint-plugin": "4.2.0",
-    "eslint-config-expo": "9.2.0",
     "eslint-plugin-jest": "28.11.0",
     "eslint-plugin-promise": "7.2.1",
     "eslint-plugin-react-native": "5.0.0",
-    "typescript-eslint": "8.53.1"
+    "typescript-eslint": "8.56.1"
   },
   "peerDependencies": {
     "eslint": ">=9.0.0",
