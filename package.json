@@ -32,7 +32,7 @@
     "@types/node": "^22.19.12",
     "@vitest/coverage-v8": "^4.0.18",
     "esbuild-plugin-file-path-extensions": "^2.1.4",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.3",
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
     "lint-staged": "^15.5.2",
