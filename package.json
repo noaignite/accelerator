@@ -29,7 +29,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.8",
     "@noaignite/style-guide": "workspace:*",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.19.12",
     "@vitest/coverage-v8": "^4.0.18",
     "esbuild-plugin-file-path-extensions": "^2.1.4",
     "eslint": "^9.39.2",

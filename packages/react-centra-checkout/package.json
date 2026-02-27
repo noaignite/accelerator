@@ -55,7 +55,7 @@
     "@noaignite/types": "workspace:*",
     "@testing-library/react": "^16.3.2",
     "@types/js-cookie": "^3.0.1",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.19.12",
     "@types/react": "^19.2.14",
     "nock": "14.0.10"
   },
