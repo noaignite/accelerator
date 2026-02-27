@@ -1,5 +1,19 @@
 # @noaignite/style-guide
 
+## 1.1.0
+
+### Minor Changes
+
+- aefdd31: Deps: bump `turbo` & `eslint-plugin-turbo` from 2.7.5 to 2.8.11
+- 8b69e96: feat(style-guide): enable `react/jsx-no-leaked-render` rule
+
+### Patch Changes
+
+- cfff87d: Deps: bump `@eslint/js` from 9.39.2 to 9.39.3
+- 4aab86e: Deps: bump `eslint-plugin-tsdoc` from 0.5.0 to 0.5.2
+- f1aa5ac: Deps: bump `@vitest/eslint-plugin` from 1.6.6 to 1.6.9
+- 4aab86e: Deps: bump `typescript-eslint` from 8.53.1 to 8.56.1
+
 ## 1.0.0
 
 ### Major Changes
