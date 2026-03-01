@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - '**'
+  pull_request_review:
+    types: [submitted]
 
 env:
   HUSKY: 0
 
 jobs:
   test-and-coverage:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
