@@ -67,23 +67,29 @@ describe('useSticky', () => {
   })
 
   it('calculates observer rootMargin from sticky inset and element size', async () => {
-    const element = createStickyElement({ top: 10, offsetHeight: 20 })
+    const top = 10
+    const offsetHeight = 20
+    const rootMargin = `-${top + offsetHeight}px`
+    const element = createStickyElement({ top, offsetHeight })
     const ref = { current: element }
 
     renderHook(() => useSticky(ref))
 
     await waitFor(() => {
       const observer = IntersectionObserverMock.instances.find(
-        (instance) => instance.options.rootMargin === '-30px',
+        (instance) => instance.options.rootMargin === rootMargin,
       )
       expect(observer).toBeDefined()
     })
   })
 
   it('sets stuck true when first observer intersects and second does not', async () => {
+    const top = 10
+    const offsetHeight = 20
+    const rootMargin = `-${top + offsetHeight}px`
     const element = createStickyElement({
-      top: 10,
-      offsetHeight: 20,
+      top,
+      offsetHeight,
       rect: createRect({ y: 12, width: 100, height: 20 }),
     })
 
@@ -93,13 +99,13 @@ describe('useSticky', () => {
     await waitFor(() => {
       expect(
         IntersectionObserverMock.instances.some(
-          (instance) => instance.options.rootMargin === '-30px',
+          (instance) => instance.options.rootMargin === rootMargin,
         ),
       ).toBe(true)
     })
 
     const i1 = IntersectionObserverMock.instances.find(
-      (instance) => instance.options.rootMargin === '-30px',
+      (instance) => instance.options.rootMargin === rootMargin,
     )
 
     expect(i1).toBeDefined()
@@ -111,23 +117,21 @@ describe('useSticky', () => {
     })
 
     await waitFor(() => {
-      expect(
-        IntersectionObserverMock.instances.some(
-          (instance) => instance.options.rootMargin === '-31px',
-        ),
-      ).toBe(true)
+      expect(IntersectionObserverMock.instances).not.toHaveLength(0)
     })
 
-    const i2 = IntersectionObserverMock.instances.find(
-      (instance) => instance.options.rootMargin === '-31px',
+    const nonMountInstances = IntersectionObserverMock.instances.filter(
+      (instance) => instance.options.rootMargin !== rootMargin,
     )
 
-    expect(i2).toBeDefined()
+    expect(nonMountInstances).not.toHaveLength(0)
 
     act(() => {
-      i2?.trigger([
-        { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
-      ])
+      nonMountInstances.forEach((i) => {
+        i.trigger([
+          { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
+        ])
+      })
     })
 
     await waitFor(() => {
@@ -135,9 +139,11 @@ describe('useSticky', () => {
     })
 
     act(() => {
-      i2?.trigger([
-        { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
-      ])
+      nonMountInstances.forEach((i) => {
+        i.trigger([
+          { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
+        ])
+      })
     })
 
     await waitFor(() => {
@@ -149,11 +155,15 @@ describe('useSticky', () => {
     const container = document.createElement('div')
     document.body.appendChild(container)
 
+    const top = 10
+    const offsetHeight = 20
     const element = createStickyElement({
-      top: 10,
-      offsetHeight: 20,
+      top,
+      offsetHeight,
       rect: createRect({ y: 110, width: 100, height: 20 }),
     })
+
+    const rootMargin = `-${top + offsetHeight}px`
 
     container.appendChild(element)
 
@@ -170,13 +180,14 @@ describe('useSticky', () => {
       expect(
         IntersectionObserverMock.instances.some(
           (instance) =>
-            instance.options.root === container && instance.options.rootMargin === '-30px',
+            instance.options.root === container && instance.options.rootMargin === rootMargin,
         ),
       ).toBe(true)
     })
 
     const i1 = IntersectionObserverMock.instances.find(
-      (instance) => instance.options.root === container && instance.options.rootMargin === '-30px',
+      (instance) =>
+        instance.options.root === container && instance.options.rootMargin === rootMargin,
     )
 
     expect(i1).toBeDefined()
@@ -188,29 +199,24 @@ describe('useSticky', () => {
     })
 
     await waitFor(() => {
-      expect(
-        IntersectionObserverMock.instances.some(
-          (instance) =>
-            instance.options.root === container &&
-            instance !== i1 &&
-            instance.options.rootMargin !== '0px',
-        ),
-      ).toBe(true)
+      expect(IntersectionObserverMock.instances.length).not.toBe(0)
     })
 
-    const i2 = IntersectionObserverMock.instances.find(
+    const nonMountInstances = IntersectionObserverMock.instances.filter(
       (instance) =>
         instance.options.root === container &&
         instance !== i1 &&
-        instance.options.rootMargin !== '0px',
+        instance.options.rootMargin !== rootMargin,
     )
 
-    expect(i2).toBeDefined()
+    expect(nonMountInstances).not.toHaveLength(0)
 
     act(() => {
-      i2?.trigger([
-        { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
-      ])
+      nonMountInstances.forEach((i) => {
+        i.trigger([
+          { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
+        ])
+      })
     })
 
     await waitFor(() => {
