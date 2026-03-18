@@ -37,7 +37,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown --config-loader unrun",
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",
     "test:types": "tsc --noEmit",
@@ -45,14 +45,14 @@
     "test:unit:watch": "vitest"
   },
   "dependencies": {
+    "@noaignite/centra-types": "workspace:*",
+    "@noaignite/types": "workspace:*",
     "@noaignite/utils": "workspace:*",
     "js-cookie": "^3.0.1"
   },
   "devDependencies": {
     "@noaignite/centra-mocks": "workspace:*",
-    "@noaignite/centra-types": "workspace:*",
     "@noaignite/style-guide": "workspace:*",
-    "@noaignite/types": "workspace:*",
     "@testing-library/react": "^16.3.2",
     "@types/js-cookie": "^3.0.1",
     "@types/node": "^22.19.15",

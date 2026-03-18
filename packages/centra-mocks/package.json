@@ -35,12 +35,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown --config-loader unrun",
     "lint": "eslint .",
     "test:types": "tsc --noEmit"
   },
+  "dependencies": {
+    "@noaignite/centra-types": "workspace:*"
+  },
   "devDependencies": {
-    "@noaignite/centra-types": "workspace:*",
     "@noaignite/style-guide": "workspace:*"
   },
   "engines": {

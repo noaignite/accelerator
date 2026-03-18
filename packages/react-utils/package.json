@@ -36,8 +36,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build": "tsdown --config-loader unrun",
+    "dev": "tsdown --config-loader unrun --watch",
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",
     "test:types": "tsc --noEmit",
@@ -45,11 +45,11 @@
     "test:unit:watch": "vitest"
   },
   "dependencies": {
+    "@noaignite/types": "workspace:*",
     "@noaignite/utils": "workspace:*"
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@noaignite/types": "workspace:^",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
