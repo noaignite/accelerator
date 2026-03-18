@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 3.6.0
+
+### Minor Changes
+
+- bb936cc: hasNonNullableValues: add new helper which checks if values of given keys are non-nullable.
+
 ## 3.5.2
 
 ### Patch Changes
