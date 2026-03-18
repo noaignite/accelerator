@@ -1,3 +1,7 @@
+import cssOrderPlugin from 'prettier-plugin-css-order'
+import organizeImportsPlugin from 'prettier-plugin-organize-imports'
+import packageJsonPlugin from 'prettier-plugin-packagejson'
+
 /**
  * Some of Prettier's defaults can be overridden by an EditorConfig file. We
  * define those here to ensure that doesn't happen.
@@ -20,9 +24,5 @@ export default {
   semi: false,
   singleQuote: true,
   // Include Prettier plugins. Include order matters.
-  plugins: [
-    'prettier-plugin-packagejson',
-    'prettier-plugin-css-order',
-    'prettier-plugin-organize-imports',
-  ],
+  plugins: [packageJsonPlugin, organizeImportsPlugin, cssOrderPlugin],
 }
