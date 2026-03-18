@@ -1,3 +1,4 @@
+import * as tailwindPlugin from 'prettier-plugin-tailwindcss'
 import baseConfig from './base.js'
 
 /**
@@ -13,6 +14,6 @@ export default {
   // Include Prettier plugins. Include order matters.
   plugins: [
     ...baseConfig.plugins,
-    'prettier-plugin-tailwindcss', // MUST come last.
+    tailwindPlugin, // MUST come last.
   ],
 }
