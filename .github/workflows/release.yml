@@ -60,9 +60,10 @@ jobs:
             const summary = packages.length
               ? packages
                   .map(({ name, version }) => {
-                    const packageUrl = `https://www.npmjs.com/package/${encodeURIComponent(name)}`;
+                    const releaseTag = encodeURIComponent(`${name}@${version}`);
+                    const packageUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}/releases/tag/${releaseTag}`;
 
-                    return `- <${packageUrl}|${name}>@${version}`;
+                    return `* <${packageUrl}|${name}@${version}>`;
                   })
                   .join('\n')
               : 'Package details were not returned by Changesets.';
@@ -86,8 +87,4 @@ jobs:
               - type: section
                 text:
                   type: mrkdwn
-                  text: "*Repository:* <https://github.com/${{ github.repository }}|${{ github.repository }}>\n*Packages:* ${{ steps.release_summary.outputs.count }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
-              - type: section
-                text:
-                  type: mrkdwn
-                  text: "${{ steps.release_summary.outputs.summary }}"
+                  text: "*:package: Packages*\n${{ steps.release_summary.outputs.summary }}"
