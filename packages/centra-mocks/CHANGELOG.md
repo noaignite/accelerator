@@ -1,5 +1,11 @@
 # @noaignite/centra-mocks
 
+## 0.1.2
+
+### Patch Changes
+
+- 2cee90e: Include changelog in published package
+
 ## 0.1.1
 
 ### Patch Changes
