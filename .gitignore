@@ -13,6 +13,7 @@ coverage
 .swc/
 build
 out/
+next-env.d.ts
 
 # storybook
 storybook-static

@@ -8,6 +8,7 @@ import {
   type SourceFile,
   type TypeAliasDeclaration,
   type VariableStatement,
+  Node,
   Project,
 } from 'ts-morph'
 
@@ -184,13 +185,17 @@ function convertJsDocToMarkdown(doc: JSDoc, name: string) {
 function extractJsDocsFromFile(sourceFile: SourceFile) {
   let markdownContent = ''
 
-  const declarations: DeclarationTypes[] = [
-    ...sourceFile.getFunctions(),
-    ...sourceFile.getVariableStatements(),
-    ...sourceFile.getClasses(),
-    ...sourceFile.getInterfaces(),
-    ...sourceFile.getTypeAliases(),
-  ].filter((declaration) => declaration.isExported())
+  const declarations: DeclarationTypes[] = sourceFile
+    .getStatements()
+    .filter(
+      (statement): statement is DeclarationTypes =>
+        Node.isFunctionDeclaration(statement) ||
+        Node.isVariableStatement(statement) ||
+        Node.isClassDeclaration(statement) ||
+        Node.isInterfaceDeclaration(statement) ||
+        Node.isTypeAliasDeclaration(statement),
+    )
+    .filter((declaration) => declaration.isExported())
 
   declarations.forEach((declaration) => {
     const name = getDeclarationName(declaration)
