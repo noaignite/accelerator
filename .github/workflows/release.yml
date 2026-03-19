@@ -10,6 +10,10 @@ env:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -23,7 +27,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install dependencies
