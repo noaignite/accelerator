@@ -1,6 +1,12 @@
-# NoA Ignite Accelerator
+<p align="center">
+  <a href="https://noaignite.dev/" rel="noopener" target="_blank">
+    <img width="150" height="150" src="/docs/public/accelerator-logo.png" alt="NoA Ignite Accelerator logo">
+  </a>
+</p>
 
-NoA Ignite Accelerator is a Turborepo‑powered monorepo that bundles a suite of first‑class TypeScript packages and tools designed to jump‑start and standardize frontend projects at NoA Ignite.
+<h1 align="center">NoA Ignite Accelerator</h1>
+
+The NoA Ignite Accelerator is a Turborepo‑powered monorepo that bundles a suite of first‑class TypeScript packages and tools designed to jump‑start and standardize frontend projects at NoA Ignite.
 
 ## Documentation
 
@@ -90,3 +96,15 @@ To develop all apps and packages, run the following command:
 ```sh
 pnpm dev
 ```
+
+## Contributing
+
+Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
+
+## Changelog
+
+The [changelog](https://github.com/noaignite/accelerator/releases) is regularly updated to reflect what's changed in each new release.
+
+## License
+
+This project is licensed under the terms of the [MIT license](/LICENSE).
