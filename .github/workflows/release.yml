@@ -37,3 +37,47 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build Slack release summary
+        if: steps.changesets.outputs.published == 'true'
+        id: release_summary
+        uses: actions/github-script@v7
+        env:
+          PUBLISHED_PACKAGES: ${{ steps.changesets.outputs.publishedPackages }}
+        with:
+          script: |
+            const packages = JSON.parse(process.env.PUBLISHED_PACKAGES || '[]');
+            const summary = packages.length
+              ? packages
+                  .map(({ name, version }) => {
+                    const packageUrl = `https://www.npmjs.com/package/${encodeURIComponent(name)}`;
+
+                    return `- <${packageUrl}|${name}>@${version}`;
+                  })
+                  .join('\n')
+              : 'Package details were not returned by Changesets.';
+
+            core.setOutput('count', String(packages.length));
+            core.setOutput('summary', summary);
+
+      - name: Notify Slack
+        if: steps.changesets.outputs.published == 'true'
+        uses: slackapi/slack-github-action@v3.0.1
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "A new Accelerator release was published."
+            blocks:
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "*:rocket: Accelerator packages published*"
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "*Repository:* <https://github.com/${{ github.repository }}|${{ github.repository }}>\n*Packages:* ${{ steps.release_summary.outputs.count }}\n*Commit:* <https://github.com/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "${{ steps.release_summary.outputs.summary }}"
