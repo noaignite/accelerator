@@ -11,23 +11,29 @@ env:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
+  # Allow the release step to comment on issues, pull requests and write to the repo.
+  contents: write
+  issues: write
+  pull-requests: write
+  # Required for OIDC to let npm registry know that this workflow is trusted.
   id-token: write
-  contents: read
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
 
       - name: Set up node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          # npm trusted publishing via OIDC requires a newer npm version.
+          # Using Node 24 ensures the bundled npm meets npm's OIDC requirements.
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install dependencies

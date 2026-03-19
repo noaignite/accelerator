@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{github.event.pull_request.head.sha}}
           fetch-depth: 0
@@ -25,9 +25,11 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Set up node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          # Keep CI on Node 24 so the bundled npm matches the release workflow's
+          # OIDC-compatible npm version requirement for trusted publishing.
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install dependencies
