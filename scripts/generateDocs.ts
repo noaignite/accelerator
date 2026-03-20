@@ -83,6 +83,14 @@ function writeToFile(destination: string, content: string) {
 }
 
 /**
+ * Rewrites docs public asset paths so copied Markdown files work in Next.js
+ * public routing.
+ */
+function transformCopiedMarkdownContent(content: string) {
+  return content.replace(/src="\/docs\/public\//g, 'src="/').replace(/\]\(\/docs\/public\//g, '](/')
+}
+
+/**
  * Recursively searches for files whose base names appear in `fileNames`,
  * starting from `directory`, and skips any directories listed in `ignoreDirectories`.
  */
@@ -272,6 +280,13 @@ function copyFiles() {
       const destination = preserveSubdirectories
         ? path.join(outputDir, path.dirname(relativeFilePath), finalName)
         : path.join(outputDir, finalName)
+
+      if (path.extname(source) === '.md') {
+        const content = fs.readFileSync(source, { encoding: 'utf-8' })
+        const transformedContent = transformCopiedMarkdownContent(content)
+        writeToFile(destination, transformedContent)
+        return
+      }
 
       copyFile(source, destination)
     })
