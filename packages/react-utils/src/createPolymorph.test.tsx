@@ -1,6 +1,21 @@
 import { type ComponentPropsWithRef, type HTMLElementType, type ReactNode } from 'react'
-import { afterAll, afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest'
 import type { PolymorphicProps, PolymorphicRenderFunction } from './createPolymorph'
+
+const reactMockState = vi.hoisted(() => ({
+  version: null as string | null,
+}))
+
+vi.mock('react', async () => {
+  const actual = await vi.importActual('react')
+
+  return {
+    ...actual,
+    get version() {
+      return reactMockState.version ?? actual.version
+    },
+  }
+})
 
 /**
  * Extracts the type of a property `K` from object type `T`.
@@ -21,15 +36,11 @@ type PropOf<T, K extends PropertyKey> = K extends keyof T ? T[K] : never
 describe('createPolymorph', () => {
   beforeEach(() => {
     vi.resetModules()
-    vi.doUnmock('react')
+    reactMockState.version = null
   })
 
   afterEach(() => {
-    vi.doUnmock('react')
-  })
-
-  afterAll(() => {
-    vi.restoreAllMocks()
+    reactMockState.version = null
   })
 
   it('is a function', async () => {
@@ -363,13 +374,11 @@ describe('createPolymorph', () => {
   })
 
   it('throws if React version is below 19', async () => {
-    vi.doMock('react', async () => {
-      const actual = await vi.importActual('react')
-      return { ...actual, version: '18.2.0' }
-    })
+    reactMockState.version = '18.2.0'
+
     const { createPolymorph } = await import('./createPolymorph')
 
-    expect(() => createPolymorph(() => null)).toThrowError(
+    expect(() => createPolymorph(() => null)).toThrow(
       'To use `createPolymorph`, please upgrade "react" and "@types/react" to version 19 or higher.',
     )
   })
