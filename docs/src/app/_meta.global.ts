@@ -1,23 +1,21 @@
-const packages = [
-  'centra-mocks',
-  'centra-types',
-  'create-app',
-  'react-centra-checkout',
-  'react-native-eslint',
-  'react-utils',
-  'style-guide',
-  'tailwind-typography',
-  'types',
-  'utils',
-]
+import fs from 'node:fs'
+import path from 'node:path'
 
-const packagesWithExports = [
-  'react-centra-checkout',
-  'react-utils',
-  'tailwind-typography',
-  'types',
-  'utils',
-]
+const contentDir = path.join(process.cwd(), 'src/content')
+
+const packages = fs
+  .readdirSync(contentDir, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .sort((left, right) => left.localeCompare(right))
+
+const packagesWithExports = packages.filter((packageName) => {
+  const packageDir = path.join(contentDir, packageName)
+
+  return fs
+    .readdirSync(packageDir, { withFileTypes: true })
+    .some((entry) => entry.isFile() && entry.name.endsWith('.generated.md'))
+})
 
 export default {
   contact: {
