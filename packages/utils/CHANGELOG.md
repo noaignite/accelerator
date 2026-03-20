@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 3.6.1
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+
 ## 3.6.0
 
 ### Minor Changes

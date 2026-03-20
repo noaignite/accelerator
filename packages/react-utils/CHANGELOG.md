@@ -1,5 +1,13 @@
 # @noaignite/react-utils
 
+## 0.15.2
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+- Updated dependencies [cd109f6]
+  - @noaignite/utils@3.6.1
+
 ## 0.15.1
 
 ### Patch Changes
