@@ -44,6 +44,13 @@ project.addSourceFilesAtPaths([
 ])
 
 /**
+ * Returns whether `source` matches a root-relative file path.
+ */
+function isRootFile(source: string, filePathFromRoot: string) {
+  return path.resolve(source) === path.resolve(rootDir, filePathFromRoot)
+}
+
+/**
  * Ensures that a directory exists, creating it if it does not.
  */
 function ensureDirectoryExists(directory: string) {
@@ -56,7 +63,7 @@ function ensureDirectoryExists(directory: string) {
  * Copy `source` to `destination`, creating its directory if needed, and log
  * the result.
  */
-function copyFile(source: string, destination: string) {
+function copyFileTo(source: string, destination: string) {
   ensureDirectoryExists(path.dirname(destination))
 
   try {
@@ -80,6 +87,20 @@ function writeToFile(destination: string, content: string) {
   } catch (error) {
     console.error(`Failed to write to: ${destination}`, error)
   }
+}
+
+/**
+ * Reads a file and returns its contents. Additionally injects docs frontmatter
+ * when needed.
+ */
+function readFromFile(source: string) {
+  const content = fs.readFileSync(source, { encoding: 'utf-8' })
+
+  if (isRootFile(source, 'README.md') && !content.startsWith('---\n')) {
+    return `---\ntitle: Getting Started\n---\n\n${content}`
+  }
+
+  return content
 }
 
 /**
@@ -273,7 +294,12 @@ function copyFiles() {
         ? path.join(outputDir, path.dirname(relativeFilePath), finalName)
         : path.join(outputDir, finalName)
 
-      copyFile(source, destination)
+      if (originalName === 'README.md') {
+        writeToFile(destination, readFromFile(source))
+        return
+      }
+
+      copyFileTo(source, destination)
     })
   })
 }

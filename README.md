@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://noaignite.dev/" rel="noopener" target="_blank">
-    <img width="150" height="150" src="/docs/public/accelerator-logo.png" alt="NoA Ignite Accelerator logo">
+    <img width="150" height="150" src="https://github.com/noaignite/accelerator/blob/main/docs/public/accelerator-logo.png?raw=1" alt="NoA Ignite Accelerator logo">
   </a>
 </p>
 
@@ -99,7 +99,7 @@ pnpm dev
 
 ## Contributing
 
-Read the [contributing guide](/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
+Read the [contributing guide](https://github.com/noaignite/accelerator/blob/main/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
 
 ## Changelog
 
@@ -107,4 +107,4 @@ The [changelog](https://github.com/noaignite/accelerator/releases) is regularly 
 
 ## License
 
-This project is licensed under the terms of the [MIT license](/LICENSE).
+This project is licensed under the terms of the [MIT license](https://github.com/noaignite/accelerator/blob/main/LICENSE).

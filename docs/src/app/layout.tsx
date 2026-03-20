@@ -1,7 +1,7 @@
+import type { Metadata, Viewport } from 'next'
 import Image from 'next/image'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import 'nextra-theme-docs/style.css'
-import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import type { ReactNode } from 'react'
 import packageJson from '../../package.json'
@@ -9,20 +9,20 @@ import packageJson from '../../package.json'
 const SITE_NAME = 'Accelerator Docs'
 const REPO_URL = packageJson.repository.url.replace(/\.git$/, '')
 
-export const metadata = {
+export const metadata: Metadata = {
+  description: packageJson.description,
+  generator: 'Next.js',
+  icons: {
+    icon: '/accelerator-logo.png',
+  },
   metadataBase: new URL(packageJson.homepage),
   title: {
+    default: SITE_NAME,
     template: `%s - ${SITE_NAME}`,
-  },
-  description: packageJson.description,
-  applicationName: SITE_NAME,
-  generator: 'Next.js',
-  appleWebApp: {
-    title: SITE_NAME,
   },
 }
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -34,7 +34,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <Navbar
       logo={
         <div style={{ display: 'flex', gap: 12 }}>
-          <Image alt={packageJson.author} height={16} src="/icon.svg" width={16} />
+          <Image
+            alt={packageJson.author}
+            height={24}
+            src="/accelerator-logo.png"
+            width={24}
+            style={{ width: 24, height: 24 }}
+          />
           <span>{SITE_NAME}</span>
           <span style={{ opacity: 0.7, fontSize: 14, alignSelf: 'end' }}>
             {`v${packageJson.version}`}
@@ -48,7 +54,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
-      <Head faviconGlyph="✦" />
       <body>
         <Layout
           navbar={navbar}
