@@ -1,3 +1,4 @@
+import { capitalize } from '@noaignite/utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { IntersectionObserverMock } from '../test'
@@ -16,24 +17,47 @@ const createRect = ({
 }) => new DOMRect(x, y, width, height)
 
 const createStickyElement = ({
-  top = 10,
-  offsetHeight = 20,
-  rect = createRect({ y: 12, width: 100, height: 20 }),
+  side,
+  sideOffset,
+  offsetDimension = 20,
 }: {
-  top?: number
-  offsetHeight?: number
-  rect?: DOMRect
-} = {}) => {
+  side: 'top' | 'left' | 'bottom' | 'right'
+  sideOffset: number
+  offsetDimension?: number
+}) => {
   const element = document.createElement('div')
   element.style.position = 'sticky'
-  element.style.top = `${top}px`
+  element.style[side] = `${sideOffset}px`
 
-  Object.defineProperty(element, 'offsetHeight', {
+  const [primaryDimension, secondaryDimension] = ['left', 'right'].includes(side)
+    ? (['width', 'height'] as const)
+    : (['height', 'width'] as const)
+
+  const rectBySide: Record<typeof side, DOMRect> = {
+    top: createRect({ x: 12, y: 2, width: 100, height: offsetDimension }),
+    left: createRect({ x: 2, y: 12, width: offsetDimension, height: 100 }),
+    bottom: createRect({
+      x: 12,
+      y: window.innerHeight - offsetDimension - 2,
+      width: 100,
+      height: offsetDimension,
+    }),
+    right: createRect({
+      x: window.innerWidth - offsetDimension - 2,
+      y: 12,
+      width: offsetDimension,
+      height: 100,
+    }),
+  }
+
+  const rect = rectBySide[side]
+
+  Object.defineProperty(element, `offset${capitalize(primaryDimension)}`, {
     configurable: true,
-    value: offsetHeight,
+    value: offsetDimension,
   })
 
-  Object.defineProperty(element, 'offsetWidth', {
+  Object.defineProperty(element, `offset${capitalize(secondaryDimension)}`, {
     configurable: true,
     value: 100,
   })
@@ -66,161 +90,163 @@ describe('useSticky', () => {
     expect(IntersectionObserverMock.instances.length).toBe(0)
   })
 
-  it('calculates observer rootMargin from sticky inset and element size', async () => {
-    const top = 10
-    const offsetHeight = 20
-    const rootMargin = `-${top + offsetHeight}px`
-    const element = createStickyElement({ top, offsetHeight })
-    const ref = { current: element }
+  describe.each(['top', 'left', 'bottom', 'right'] as const)('%s', (side) => {
+    const sideOffset = 10
+    const offsetDimension = 20
+    const rootMargin = `-${sideOffset + offsetDimension}px`
 
-    renderHook(() => useSticky(ref))
+    it('calculates observer rootMargin from sticky inset and element size', async () => {
+      const element = createStickyElement({ side, sideOffset, offsetDimension })
+      const ref = { current: element }
 
-    await waitFor(() => {
-      const observer = IntersectionObserverMock.instances.find(
-        (instance) => instance.options.rootMargin === rootMargin,
-      )
-      expect(observer).toBeDefined()
-    })
-  })
+      renderHook(() => useSticky(ref))
 
-  it('sets stuck true when first observer intersects and second does not', async () => {
-    const top = 10
-    const offsetHeight = 20
-    const rootMargin = `-${top + offsetHeight}px`
-    const element = createStickyElement({
-      top,
-      offsetHeight,
-      rect: createRect({ y: 12, width: 100, height: 20 }),
-    })
-
-    const ref = { current: element }
-    const { result } = renderHook(() => useSticky(ref))
-
-    await waitFor(() => {
-      expect(
-        IntersectionObserverMock.instances.some(
+      await waitFor(() => {
+        const observer = IntersectionObserverMock.instances.find(
           (instance) => instance.options.rootMargin === rootMargin,
-        ),
-      ).toBe(true)
-    })
-
-    const i1 = IntersectionObserverMock.instances.find(
-      (instance) => instance.options.rootMargin === rootMargin,
-    )
-
-    expect(i1).toBeDefined()
-
-    act(() => {
-      i1?.trigger([
-        { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
-      ])
-    })
-
-    await waitFor(() => {
-      expect(IntersectionObserverMock.instances).not.toHaveLength(0)
-    })
-
-    const nonMountInstances = IntersectionObserverMock.instances.filter(
-      (instance) => instance.options.rootMargin !== rootMargin,
-    )
-
-    expect(nonMountInstances).not.toHaveLength(0)
-
-    act(() => {
-      nonMountInstances.forEach((i) => {
-        i.trigger([
-          { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
-        ])
+        )
+        expect(observer).toBeDefined()
       })
     })
 
-    await waitFor(() => {
-      expect(result.current).toBe(true)
-    })
+    it('sets stuck true when first observer intersects and second does not', async () => {
+      const element = createStickyElement({
+        side,
+        sideOffset,
+        offsetDimension,
+      })
 
-    act(() => {
-      nonMountInstances.forEach((i) => {
-        i.trigger([
+      const ref = { current: element }
+      const { result } = renderHook(() => useSticky(ref))
+
+      await waitFor(() => {
+        expect(
+          IntersectionObserverMock.instances.some(
+            (instance) => instance.options.rootMargin === rootMargin,
+          ),
+        ).toBe(true)
+      })
+
+      const i1 = IntersectionObserverMock.instances.find(
+        (instance) => instance.options.rootMargin === rootMargin,
+      )
+
+      expect(i1).toBeDefined()
+
+      act(() => {
+        i1?.trigger([
           { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
         ])
       })
-    })
 
-    await waitFor(() => {
-      expect(result.current).toBe(false)
-    })
-  })
+      await waitFor(() => {
+        expect(IntersectionObserverMock.instances).not.toHaveLength(0)
+      })
 
-  it('uses custom container as observer root and stickiness boundary', async () => {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
+      const nonMountInstances = IntersectionObserverMock.instances.filter(
+        (instance) => instance.options.rootMargin !== rootMargin,
+      )
 
-    const top = 10
-    const offsetHeight = 20
-    const element = createStickyElement({
-      top,
-      offsetHeight,
-      rect: createRect({ y: 110, width: 100, height: 20 }),
-    })
+      expect(nonMountInstances).not.toHaveLength(0)
 
-    const rootMargin = `-${top + offsetHeight}px`
+      act(() => {
+        nonMountInstances.forEach((i) => {
+          i.trigger([
+            { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
+          ])
+        })
+      })
 
-    container.appendChild(element)
+      await waitFor(() => {
+        expect(result.current).toBe(true)
+      })
 
-    vi.spyOn(container, 'getBoundingClientRect').mockImplementation(() =>
-      createRect({ y: 100, width: 300, height: 300 }),
-    )
+      act(() => {
+        nonMountInstances.forEach((i) => {
+          i.trigger([
+            { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
+          ])
+        })
+      })
 
-    const ref = { current: element }
-    const containerRef = { current: container }
-
-    const { result } = renderHook(() => useSticky(ref, { container: containerRef }))
-
-    await waitFor(() => {
-      expect(
-        IntersectionObserverMock.instances.some(
-          (instance) =>
-            instance.options.root === container && instance.options.rootMargin === rootMargin,
-        ),
-      ).toBe(true)
-    })
-
-    const i1 = IntersectionObserverMock.instances.find(
-      (instance) =>
-        instance.options.root === container && instance.options.rootMargin === rootMargin,
-    )
-
-    expect(i1).toBeDefined()
-
-    act(() => {
-      i1?.trigger([
-        { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
-      ])
-    })
-
-    await waitFor(() => {
-      expect(IntersectionObserverMock.instances.length).not.toBe(0)
-    })
-
-    const nonMountInstances = IntersectionObserverMock.instances.filter(
-      (instance) =>
-        instance.options.root === container &&
-        instance !== i1 &&
-        instance.options.rootMargin !== rootMargin,
-    )
-
-    expect(nonMountInstances).not.toHaveLength(0)
-
-    act(() => {
-      nonMountInstances.forEach((i) => {
-        i.trigger([
-          { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
-        ])
+      await waitFor(() => {
+        expect(result.current).toBe(false)
       })
     })
 
-    await waitFor(() => {
-      expect(result.current).toBe(true)
+    it('uses custom container as observer root and stickiness boundary', async () => {
+      const container = document.createElement('div')
+      document.body.appendChild(container)
+
+      const coordKey = ['left', 'right'].includes(side) ? 'x' : 'y'
+
+      const sideOffset = 10
+      const offsetDimension = 20
+      const element = createStickyElement({
+        side,
+        sideOffset,
+        offsetDimension,
+      })
+
+      const rootMargin = `-${sideOffset + offsetDimension}px`
+
+      container.appendChild(element)
+
+      vi.spyOn(container, 'getBoundingClientRect').mockImplementation(() =>
+        createRect({ [coordKey]: 100, width: 300, height: 300 }),
+      )
+
+      const ref = { current: element }
+      const containerRef = { current: container }
+
+      const { result } = renderHook(() => useSticky(ref, { container: containerRef }))
+
+      await waitFor(() => {
+        expect(
+          IntersectionObserverMock.instances.some(
+            (instance) =>
+              instance.options.root === container && instance.options.rootMargin === rootMargin,
+          ),
+        ).toBe(true)
+      })
+
+      const i1 = IntersectionObserverMock.instances.find(
+        (instance) =>
+          instance.options.root === container && instance.options.rootMargin === rootMargin,
+      )
+
+      expect(i1).toBeDefined()
+
+      act(() => {
+        i1?.trigger([
+          { target: element, isIntersecting: true } as unknown as IntersectionObserverEntry,
+        ])
+      })
+
+      await waitFor(() => {
+        expect(IntersectionObserverMock.instances.length).not.toBe(0)
+      })
+
+      const nonMountInstances = IntersectionObserverMock.instances.filter(
+        (instance) =>
+          instance.options.root === container &&
+          instance !== i1 &&
+          instance.options.rootMargin !== rootMargin,
+      )
+
+      expect(nonMountInstances).not.toHaveLength(0)
+
+      act(() => {
+        nonMountInstances.forEach((i) => {
+          i.trigger([
+            { target: element, isIntersecting: false } as unknown as IntersectionObserverEntry,
+          ])
+        })
+      })
+
+      await waitFor(() => {
+        expect(result.current).toBe(true)
+      })
     })
   })
 
