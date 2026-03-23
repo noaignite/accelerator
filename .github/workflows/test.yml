@@ -52,3 +52,6 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: packages
           fail_ci_if_error: true
+
+      - name: Check for 'amend!', 'fixup!', or 'squash!' commits
+        uses: matijs/no-fixups-action@v1    
