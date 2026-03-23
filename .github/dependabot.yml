@@ -30,6 +30,10 @@ updates:
         patterns:
           - 'turbo'
           - 'eslint-config-turbo'
+      typescript-eslint:
+        patterns:
+          - 'typescript-eslint'
+          - '@typescript-eslint/parser'
       vitest:
         patterns:
           - 'vitest'
