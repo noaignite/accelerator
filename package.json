@@ -7,7 +7,7 @@
     "ci:release": "pnpm build && pnpm test && changeset publish",
     "ci:status": "changeset status --since=origin/main",
     "ci:test": "pnpm lint && pnpm test:types && pnpm test:coverage",
-    "clean": "node --experimental-strip-types ./scripts/clean.ts",
+    "clean": "node ./scripts/clean.ts",
     "dev": "turbo dev",
     "docs:build": "pnpm --filter docs build",
     "docs:dev": "pnpm --filter docs dev",
@@ -38,7 +38,6 @@
     "prettier": "^3.8.1",
     "ts-morph": "^27.0.2",
     "tsdown": "^0.21.4",
-    "tsx": "^4.21.0",
     "turbo": "^2.8.20",
     "typescript": "^5.8.3",
     "vitest": "^4.1.0"
