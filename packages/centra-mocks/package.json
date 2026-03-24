@@ -33,6 +33,7 @@
   },
   "files": [
     "CHANGELOG.md",
+    "SKILLS.md",
     "dist"
   ],
   "scripts": {

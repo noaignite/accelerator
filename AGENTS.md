@@ -46,6 +46,8 @@ Use existing repo commands first. Prefer `pnpm` for all workspace workflows.
 
 - Changes to publishable packages usually require a changeset.
 - If a change affects package behavior, public API, package config, generated package output, or user-facing docs for a published package, assume a changeset is needed unless there is strong evidence the change is internal only.
+- Changeset descriptions should be written from the package's perspective and stay self-contained; do not mention other packages or the monorepo layout in the prose.
+- A single changeset may cover multiple packages, but the description itself should still read like a change note for the affected package(s) only.
 - Bump guidance:
   - `patch` - bug fixes, small non-breaking improvements, maintenance
   - `minor` - new backward-compatible features

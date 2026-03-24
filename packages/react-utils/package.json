@@ -33,6 +33,7 @@
     }
   },
   "files": [
+    "SKILLS.md",
     "dist"
   ],
   "scripts": {

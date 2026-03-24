@@ -20,7 +20,8 @@
   "sideEffects": false,
   "types": "./src/index.ts",
   "files": [
-    "src/**"
+    "SKILLS.md",
+    "src"
   ],
   "scripts": {
     "test:types": "tsc --noEmit"
