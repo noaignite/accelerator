@@ -11,7 +11,15 @@
     "./typescript/next": "./typescript/tsconfig.next.json",
     "./typescript/react": "./typescript/tsconfig.react.json"
   },
+  "files": [
+    "dist",
+    "eslint",
+    "prettier",
+    "typescript"
+  ],
   "scripts": {
+    "build": "pnpm build:docs",
+    "build:docs": "node ../../scripts/buildPackageDocs.ts",
     "inspect": "pnpx @eslint/config-inspector"
   },
   "dependencies": {

@@ -18,7 +18,7 @@
     "build": "pnpm generate && next build",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
     "dev": "pnpm generate && next dev --turbopack",
-    "generate": "node ../scripts/generateDocs.ts",
+    "generate": "pnpm --dir .. packages:build-docs && node ../scripts/generateDocs.ts",
     "lint": "eslint .",
     "start": "next start",
     "test:types": "tsc --noEmit"

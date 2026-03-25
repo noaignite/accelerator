@@ -32,11 +32,11 @@
     }
   },
   "files": [
-    "CHANGELOG.md",
     "dist"
   ],
   "scripts": {
-    "build": "tsdown --config-loader unrun",
+    "build": "tsdown --config-loader unrun && pnpm build:docs",
+    "build:docs": "node ../../scripts/buildPackageDocs.ts",
     "lint": "eslint .",
     "test:types": "tsc --noEmit"
   },

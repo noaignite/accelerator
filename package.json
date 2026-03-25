@@ -14,6 +14,8 @@
     "docs:start": "pnpm --filter docs start",
     "format": "prettier --write .",
     "lint": "turbo lint",
+    "packages:build": "turbo build --filter=@noaignite/*",
+    "packages:build-docs": "turbo build:docs --filter=@noaignite/*",
     "pre-commit": "lint-staged",
     "prepare": "node .husky/install.mjs",
     "release:verdaccio": "pnpm build && pnpm test && pnpm publish --no-git-checks --recursive --registry=\"http://localhost:4873/\"",

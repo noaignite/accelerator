@@ -20,10 +20,13 @@
   "type": "module",
   "main": "eslint.config.js",
   "files": [
-    "eslint.config.js",
-    "README.md",
-    "LICENSE"
+    "dist",
+    "eslint.config.js"
   ],
+  "scripts": {
+    "build": "pnpm build:docs",
+    "build:docs": "node ../../scripts/buildPackageDocs.ts"
+  },
   "dependencies": {
     "@eslint/compat": "1.4.1",
     "@stylistic/eslint-plugin": "4.4.1",

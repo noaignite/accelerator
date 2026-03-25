@@ -1,12 +1,12 @@
 import { exec } from 'node:child_process'
 import { readdirSync, statSync } from 'node:fs'
-import { join } from 'node:path'
+import { join, relative, sep } from 'node:path'
 import { promisify } from 'node:util'
 
 // Use the current working directory
 const baseDir = process.cwd()
 // Add any folder or file names you want to remove
-const targetPaths = ['.turbo', '.next', 'coverage', 'dist', 'node_modules']
+const targetPaths = ['.next', '.turbo', 'coverage', 'dist', 'node_modules']
 
 // Convert exec to return a Promise
 const execPromise = promisify(exec)
@@ -18,18 +18,35 @@ function findPaths(dir: string, targetPaths: string[]) {
 
   for (const file of files) {
     const filePath = join(dir, file)
+    const relativePath = relative(baseDir, filePath).split(sep).join('/')
+    const isMatch = targetPaths.some((targetPath) =>
+      matchesTargetPath(relativePath, file, targetPath),
+    )
 
     if (statSync(filePath).isDirectory()) {
-      if (targetPaths.includes(file)) {
+      if (isMatch) {
         results.push(filePath) // Add directory to results
       } else {
         results = results.concat(findPaths(filePath, targetPaths)) // Recursively search
       }
-    } else if (targetPaths.includes(file)) {
+    } else if (isMatch) {
       results.push(filePath) // Add matching file
     }
   }
   return results
+}
+
+function matchesTargetPath(relativePath: string, fileName: string, targetPath: string) {
+  if (!targetPath.includes('*')) {
+    return fileName === targetPath
+  }
+
+  const pattern = '^' + targetPath.split('*').map(escapeRegExp).join('[^/]+') + '$'
+  return new RegExp(pattern).test(relativePath)
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
 // Function to delete directories and files
