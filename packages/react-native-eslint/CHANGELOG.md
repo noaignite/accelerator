@@ -1,5 +1,11 @@
 # @noaignite/react-native-eslint
 
+## 1.2.1
+
+### Patch Changes
+
+- 06665fa: Align the `@typescript-eslint` package versions and add the missing parser dependency. This fixes pnpm peer dependency warnings during installation.
+
 ## 1.2.0
 
 ### Minor Changes

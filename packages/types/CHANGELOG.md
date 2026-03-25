@@ -1,5 +1,11 @@
 # @noaignite/types
 
+## 1.6.0
+
+### Minor Changes
+
+- e4e8b38: `Traverse`: introduce utility type to traverse keys in given type.
+
 ## 1.5.0
 
 ### Minor Changes

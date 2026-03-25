@@ -1,5 +1,12 @@
 # @noaignite/centra-mocks
 
+## 0.1.3
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+  - @noaignite/centra-types@3.1.1
+
 ## 0.1.2
 
 ### Patch Changes
