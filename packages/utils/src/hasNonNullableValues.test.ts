@@ -2,6 +2,22 @@ import { describe, expect, expectTypeOf, it } from 'vitest'
 import { hasNonNullableValues } from './hasNonNullableValues'
 
 describe('hasNonNullableValues', () => {
+  it('works with interface types', () => {
+    interface LiteralRecord {
+      foo?: 'bar'
+    }
+
+    const example = {
+      foo: 'bar',
+    } as LiteralRecord
+
+    expect(hasNonNullableValues(example, ['foo'])).toBe(true)
+
+    if (hasNonNullableValues(example, ['foo'])) {
+      expectTypeOf(example.foo).toEqualTypeOf<'bar'>()
+    }
+  })
+
   it('returns true when all requested keys are defined and non-null', () => {
     expect(hasNonNullableValues({ key1: 'value', key2: 2 }, ['key1', 'key2'])).toBe(true)
   })

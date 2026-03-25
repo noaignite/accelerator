@@ -20,7 +20,10 @@
  * entries.filter((entry) => hasNonNullableValues(entry, ['key1', 'key2'])) // [{key1: '02-value1', key2: '02-value2'}]
  * ```
  */
-export const hasNonNullableValues = <T extends Record<PropertyKey, unknown>, K extends keyof T>(
+export const hasNonNullableValues = <
+  T extends { [key in K]?: unknown } & object,
+  K extends PropertyKey,
+>(
   obj: T,
   keys: Array<K>,
 ): obj is T & { [key in K]-?: NonNullable<T[key]> } => {
