@@ -6,7 +6,7 @@ import { promisify } from 'node:util'
 // Use the current working directory
 const baseDir = process.cwd()
 // Add any folder or file names you want to remove
-const targetPaths = ['.turbo', '.next', 'coverage', 'dist', 'node_modules']
+const targetPaths = ['.next', '.pnpm-store', '.turbo', 'coverage', 'dist', 'node_modules']
 
 // Convert exec to return a Promise
 const execPromise = promisify(exec)

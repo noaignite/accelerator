@@ -6,7 +6,7 @@ import { getPageMap } from 'nextra/page-map'
 import type { ReactNode } from 'react'
 import packageJson from '../../package.json'
 
-const SITE_NAME = 'Accelerator Docs'
+const SITE_NAME = 'NoA Accelerator'
 const REPO_URL = packageJson.repository.url.replace(/\.git$/, '')
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(packageJson.homepage),
   title: {
     default: SITE_NAME,
-    template: `%s - ${SITE_NAME}`,
+    template: `%s | ${SITE_NAME}`,
   },
 }
 

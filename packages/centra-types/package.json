@@ -21,9 +21,12 @@
   "sideEffects": false,
   "types": "./src/index.ts",
   "files": [
-    "src/**"
+    "dist",
+    "src"
   ],
   "scripts": {
+    "build": "pnpm build:docs",
+    "build:docs": "node ../../scripts/buildPackageDocs.ts",
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {

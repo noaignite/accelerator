@@ -23,12 +23,13 @@
     "create-app": "./index.js"
   },
   "files": [
+    "dist",
     "index.js",
-    "template-*",
-    "dist"
+    "template-*"
   ],
   "scripts": {
-    "build": "tsdown --config-loader unrun",
+    "build": "tsdown --config-loader unrun && pnpm build:docs",
+    "build:docs": "node ../../scripts/buildPackageDocs.ts",
     "dev": "tsdown --config-loader unrun --watch",
     "lint": "eslint . --ignore-pattern 'template-*'",
     "test:types": "tsc --noEmit"
