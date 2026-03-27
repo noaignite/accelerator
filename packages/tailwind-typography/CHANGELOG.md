@@ -1,5 +1,15 @@
 # @noaignite/tailwind-typography
 
+## 0.1.12
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+- Updated dependencies [10e865b]
+- Updated dependencies [cd109f6]
+- Updated dependencies [b8a547b]
+  - @noaignite/utils@3.7.0
+
 ## 0.1.11
 
 ### Patch Changes

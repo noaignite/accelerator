@@ -1,5 +1,14 @@
 # @noaignite/style-guide
 
+## 1.1.1
+
+### Patch Changes
+
+- 9023dfc: Deps: bump `globals` from `17.0.0` to `17.4.0`
+- 2f70ca0: Deps: bump `@eslint-community/eslint-plugin-eslint-comments` from `4.6.0` to `4.7.1`
+- 68d1c01: Deps: bump `eslint-plugin-turbo` from 2.8.11 to 2.8.20
+- 06665fa: Align the `@typescript-eslint` package versions and add the missing parser dependency. This fixes pnpm peer dependency warnings during installation.
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,21 @@
 # @noaignite/react-utils
 
+## 0.16.0
+
+### Minor Changes
+
+- 3227cda: useScrollProgress: add new hook
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+- Updated dependencies [10e865b]
+- Updated dependencies [cd109f6]
+- Updated dependencies [e4e8b38]
+- Updated dependencies [b8a547b]
+  - @noaignite/utils@3.7.0
+  - @noaignite/types@1.6.0
+
 ## 0.15.1
 
 ### Patch Changes

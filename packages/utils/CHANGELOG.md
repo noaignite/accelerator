@@ -1,5 +1,18 @@
 # @noaignite/utils
 
+## 3.7.0
+
+### Minor Changes
+
+- 10e865b: `traverse`: add new function that recursively traverses the given key on an object.
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+- b8a547b: `hasNonNullableValues`: add support for interfaces
+- Updated dependencies [e4e8b38]
+  - @noaignite/types@1.6.0
+
 ## 3.6.0
 
 ### Minor Changes

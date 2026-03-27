@@ -1,5 +1,11 @@
 # docs
 
+## 0.3.1
+
+### Patch Changes
+
+- 6d8f0ea: Improve the docs app navigation and metadata generation so package pages are discovered dynamically and the updated branding assets render correctly.
+
 ## 0.3.0
 
 ### Minor Changes

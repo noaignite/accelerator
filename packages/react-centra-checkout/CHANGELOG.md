@@ -1,5 +1,18 @@
 # @noaignite/react-centra-checkout
 
+## 2.1.4
+
+### Patch Changes
+
+- cd109f6: Migrate package builds from tsup to tsdown and update the generated dist output. This updates the published build artifacts and declaration generation.
+- Updated dependencies [10e865b]
+- Updated dependencies [cd109f6]
+- Updated dependencies [e4e8b38]
+- Updated dependencies [b8a547b]
+  - @noaignite/utils@3.7.0
+  - @noaignite/types@1.6.0
+  - @noaignite/centra-types@3.1.1
+
 ## 2.1.3
 
 ### Patch Changes
