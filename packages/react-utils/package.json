@@ -36,7 +36,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown --config-loader unrun",
+    "build": "tsdown --config-loader unrun && pnpm build:docs",
+    "build:docs": "node ../../scripts/buildPackageDocs.ts",
     "dev": "tsdown --config-loader unrun --watch",
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",

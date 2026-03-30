@@ -3,19 +3,28 @@ import path from 'node:path'
 
 const contentDir = path.join(process.cwd(), 'src/content')
 
-const packages = fs
-  .readdirSync(contentDir, { withFileTypes: true })
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => entry.name)
-  .sort((left, right) => left.localeCompare(right))
-
-const packagesWithExports = packages.filter((packageName) => {
-  const packageDir = path.join(contentDir, packageName)
-
+function getPackageNames() {
   return fs
-    .readdirSync(packageDir, { withFileTypes: true })
-    .some((entry) => entry.isFile() && entry.name.endsWith('.generated.md'))
-})
+    .readdirSync(contentDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+}
+
+function buildPackageMeta(packageName: string) {
+  const fileCount = fs
+    .readdirSync(path.join(contentDir, packageName), { withFileTypes: true })
+    .filter((entry) => entry.isFile()).length
+
+  return [
+    packageName,
+    {
+      title: packageName,
+      items: fileCount > 1 ? { '-': { type: 'separator', title: 'Exports' } } : {},
+    },
+  ] as const
+}
+
+const packageMeta = Object.fromEntries(getPackageNames().map(buildPackageMeta))
 
 export default {
   contact: {
@@ -24,29 +33,11 @@ export default {
     href: 'https://www.noaignite.se/contact',
   },
   index: 'Getting Started',
-  CONTRIBUTING: 'Contributing',
-  CHANGELOG: 'Changelog',
+  Contributing: 'Contributing',
+  Changelog: 'Changelog',
   '-': {
     type: 'separator',
     title: 'Packages',
   },
-  ...packages.reduce(
-    (acc, title) => ({
-      ...acc,
-      [title]: {
-        title,
-        items: {
-          index: 'Getting Started',
-          CHANGELOG: 'Changelog',
-          ...(packagesWithExports.includes(title) && {
-            '-': {
-              type: 'separator',
-              title: 'Exports',
-            },
-          }),
-        },
-      },
-    }),
-    {},
-  ),
+  ...packageMeta,
 }

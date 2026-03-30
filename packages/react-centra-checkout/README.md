@@ -1,10 +1,10 @@
 # @noaignite/react-centra-checkout
 
-[NoA Ignite](https://noaignite.se/) Centra helpers. Previously known as [@oakwood/accelerator](https://github.com/oakwood/accelerator).
+React helpers for the Centra API. Previously known as [@oakwood/accelerator](https://github.com/oakwood/accelerator).
 
 ## Installation
 
-react-centra-checkout is available as an [npm package](https://www.npmjs.com/package/@noaignite/react-centra-checkout).
+`@noaignite/react-centra-checkout` is available as an [npm package](https://www.npmjs.com/package/@noaignite/react-centra-checkout).
 
 ```sh
 // with pnpm
@@ -19,11 +19,11 @@ npm install @noaignite/react-centra-checkout
 
 ## Why
 
-This package exists to ease development of react frontend applications using the [Centra Checkout API](https://docs.centra.com/api-references/checkout-api/introduction).
+This package helps build React frontend applications that use the [Centra Checkout API](https://docs.centra.com/api-references/checkout-api/introduction).
 
 Most importantly, it exposes a `CentraProvider` that you wrap your application with (for Next.js projects, usually in \_app.js), and a set of hooks to fetch api endpoints and update the user selection.
 
-It does not attempt to abstract the Centra api, but rather exposes the endpoints in a React way of calling them.
+It does not attempt to abstract the Centra API, but instead exposes the endpoints in a React-friendly way.
 
 ## Getting started
 
@@ -92,6 +92,20 @@ const fetchProductsFromCategory = async () => {
 }
 ```
 
+<!-- package-docs:exports -->
+
 ## Documentation
 
-Visit [https://noaignite.dev](https://noaignite.dev) to view the full documentation.
+Visit [https://noaignite.dev/react-centra-checkout](https://noaignite.dev/react-centra-checkout) to view the full documentation.
+
+## Contributing
+
+Read the [contributing guide](https://github.com/noaignite/accelerator/blob/main/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
+
+## Changelog
+
+The [changelog](https://github.com/noaignite/accelerator/releases) is regularly updated to reflect what's changed in each new release.
+
+## License
+
+This project is licensed under the terms of the [MIT license](https://github.com/noaignite/accelerator/blob/main/LICENSE).

@@ -1,6 +1,6 @@
 # @noaignite/react-native-eslint
 
-A comprehensive ESLint configuration for React Native projects with TypeScript support. This package provides a well-tested, opinionated set of ESLint rules specifically tailored for React Native development.
+A comprehensive ESLint configuration for React Native projects with TypeScript support. It provides a tested, opinionated set of ESLint rules tailored for React Native development.
 
 ## Features
 
@@ -116,3 +116,19 @@ Add these scripts to your `package.json`:
 - Node.js >= 18.0.0
 - ESLint >= 9.0.0
 - TypeScript project
+
+## Documentation
+
+Visit [https://noaignite.dev/react-native-eslint](https://noaignite.dev/react-native-eslint) to view the full documentation.
+
+## Contributing
+
+Read the [contributing guide](https://github.com/noaignite/accelerator/blob/main/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
+
+## Changelog
+
+The [changelog](https://github.com/noaignite/accelerator/releases) is regularly updated to reflect what's changed in each new release.
+
+## License
+
+This project is licensed under the terms of the [MIT license](https://github.com/noaignite/accelerator/blob/main/LICENSE).
