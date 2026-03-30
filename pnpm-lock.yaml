@@ -282,8 +282,8 @@ importers:
         specifier: ^0.5.2
         version: 0.5.2(eslint@9.39.4(jiti@2.6.1))(typescript@5.9.3)
       eslint-plugin-turbo:
-        specifier: ^2.8.20
-        version: 2.8.20(eslint@9.39.4(jiti@2.6.1))(turbo@2.8.21)
+        specifier: ^2.8.21
+        version: 2.8.21(eslint@9.39.4(jiti@2.6.1))(turbo@2.8.21)
       eslint-plugin-unicorn:
         specifier: ^62.0.0
         version: 62.0.0(eslint@9.39.4(jiti@2.6.1))
@@ -2050,6 +2050,7 @@ packages:
   '@xmldom/xmldom@0.9.8':
     resolution: {integrity: sha512-p96FSY54r+WJ50FIOsCOjyj/wavs8921hG5+kVMmZgKcvIKxMXHTrjNJvRgWa/zuX3B6t2lijLNFaOyuxUH+2A==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2912,8 +2913,8 @@ packages:
   eslint-plugin-tsdoc@0.5.2:
     resolution: {integrity: sha512-BlvqjWZdBJDIPO/YU3zcPCF23CvjYT3gyu63yo6b609NNV3D1b6zceAREy2xnweuBoDpZcLNuPyAUq9cvx6bbQ==}
 
-  eslint-plugin-turbo@2.8.20:
-    resolution: {integrity: sha512-sMDremg73XbX+Imh7iDRS3TAro5jIf7CdzSqrT50wCGhClbiUvmWcLomnX+ldUbfTy+OvtqOeePvTivJMR87eQ==}
+  eslint-plugin-turbo@2.8.21:
+    resolution: {integrity: sha512-GkbB1vfyq3TxQIavl391Jyyt5gz4XZBwejkcKbRj93gpla1TMjQePr5sUXQZJ9h5Okt361gFkoBV2Li8zytEGA==}
     peerDependencies:
       eslint: '>6.6.0'
       turbo: '>2.0.0'
@@ -8176,7 +8177,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-turbo@2.8.20(eslint@9.39.4(jiti@2.6.1))(turbo@2.8.21):
+  eslint-plugin-turbo@2.8.21(eslint@9.39.4(jiti@2.6.1))(turbo@2.8.21):
     dependencies:
       dotenv: 16.0.3
       eslint: 9.39.4(jiti@2.6.1)
