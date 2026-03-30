@@ -1,5 +1,13 @@
 # @noaignite/utils
 
+## 3.7.1
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+- Updated dependencies [3133224]
+  - @noaignite/types@1.6.1
+
 ## 3.7.0
 
 ### Minor Changes

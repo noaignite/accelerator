@@ -1,5 +1,13 @@
 # @noaignite/centra-mocks
 
+## 0.1.4
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+- Updated dependencies [3133224]
+  - @noaignite/centra-types@3.1.2
+
 ## 0.1.3
 
 ### Patch Changes
