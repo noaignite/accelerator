@@ -1,6 +1,6 @@
 {
   "name": "@noaignite/centra-mocks",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "description": "A collection of mocks to the Centra API",
   "keywords": [

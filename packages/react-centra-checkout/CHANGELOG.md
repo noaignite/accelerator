@@ -1,5 +1,15 @@
 # @noaignite/react-centra-checkout
 
+## 2.1.5
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+- Updated dependencies [3133224]
+  - @noaignite/utils@3.7.1
+  - @noaignite/centra-types@3.1.2
+  - @noaignite/types@1.6.1
+
 ## 2.1.4
 
 ### Patch Changes

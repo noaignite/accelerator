@@ -1,5 +1,14 @@
 # @noaignite/react-utils
 
+## 0.16.1
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+- Updated dependencies [3133224]
+  - @noaignite/utils@3.7.1
+  - @noaignite/types@1.6.1
+
 ## 0.16.0
 
 ### Minor Changes

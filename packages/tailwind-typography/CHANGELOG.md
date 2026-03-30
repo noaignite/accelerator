@@ -1,5 +1,13 @@
 # @noaignite/tailwind-typography
 
+## 0.1.13
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+- Updated dependencies [3133224]
+  - @noaignite/utils@3.7.1
+
 ## 0.1.12
 
 ### Patch Changes

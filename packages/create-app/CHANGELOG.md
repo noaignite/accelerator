@@ -1,5 +1,11 @@
 # @noaignite/create-app
 
+## 0.12.2
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+
 ## 0.12.1
 
 ### Patch Changes

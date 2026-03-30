@@ -1,5 +1,11 @@
 # @noaignite/centra-types
 
+## 3.1.2
+
+### Patch Changes
+
+- 3133224: Include package docs in `dist/docs`.
+
 ## 3.1.1
 
 ### Patch Changes

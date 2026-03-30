@@ -1,5 +1,13 @@
 # @noaignite/style-guide
 
+## 1.1.2
+
+### Patch Changes
+
+- 21c6365: Add package metadata to the `package.json` file.
+- 6326151: Correct `repository.directory` property in `package.json` file.
+- 3133224: Include package docs in `dist/docs`.
+
 ## 1.1.1
 
 ### Patch Changes
