@@ -23,6 +23,10 @@ npm install @noaignite/react-utils
 
 Visit [https://noaignite.dev/react-utils](https://noaignite.dev/react-utils) to view the full documentation.
 
+## AI Agent Skills
+
+If you use an AI agent, run `npx @tanstack/intent@latest install` to install package skills for `@noaignite/react-utils`.
+
 ## Contributing
 
 Read the [contributing guide](https://github.com/noaignite/accelerator/blob/main/CONTRIBUTING.md) to learn about our development process, how to propose bug fixes and improvements, and how to build and test your changes.
