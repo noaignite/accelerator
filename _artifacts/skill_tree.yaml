@@ -1,0 +1,153 @@
+# _artifacts/skill_tree.yaml
+library:
+  name: '@noaignite/react-utils'
+  version: '0.16.1'
+  repository: 'https://github.com/noaignite/accelerator'
+  description: >-
+    Shared React-specific utilities for component composition, refs,
+    effects, DOM observers, overlays, gestures, and responsive viewport logic.
+generated_from:
+  domain_map: '_artifacts/domain_map.yaml'
+  skill_spec: '_artifacts/skill_spec.md'
+generated_at: '2026-04-01'
+
+skills:
+  - name: 'React Utils'
+    slug: 'react-utils'
+    type: 'core'
+    domain: 'component-factories-and-block-rendering'
+    path: 'skills/react-utils/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      Core entry point for @noaignite/react-utils. Routes agents to the correct
+      sub-skill for primitives, refs, effects, DOM observers, overlays,
+      gestures, and responsive helpers.
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/index.ts'
+      - 'noaignite/accelerator:packages/react-utils/README.md'
+      - 'noaignite/accelerator:packages/react-utils/dist/docs/*.md'
+
+  - name: 'Component Factories and Block Rendering'
+    slug: 'react-utils/component-factories-and-block-rendering'
+    type: 'sub-skill'
+    domain: 'component-factories-and-block-rendering'
+    path: 'skills/react-utils/component-factories-and-block-rendering/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      createPolymorph, createRequiredContext, createSvgIcon, ErrorBoundary,
+      and createRenderBlock for typed reusable primitives, provider APIs,
+      icons, local error boundaries, and block renderers.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/createPolymorph.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/createRenderBlock.tsx'
+      - 'noaignite/accelerator:packages/react-utils/src/createRequiredContext.tsx'
+      - 'noaignite/accelerator:packages/react-utils/src/createSvgIcon.tsx'
+      - 'noaignite/accelerator:packages/react-utils/src/ErrorBoundary.ts'
+
+  - name: 'Refs and Element Wiring'
+    slug: 'react-utils/refs-and-element-wiring'
+    type: 'sub-skill'
+    domain: 'refs-and-element-wiring'
+    path: 'skills/react-utils/refs-and-element-wiring/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      useForkRef, setRef, and getReactElementRef for wrapper components,
+      ref forwarding, and React-version-safe element ref access.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/useForkRef.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/setRef.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/getReactElementRef.ts'
+
+  - name: 'Controllable State, Stable Effects, and Timers'
+    slug: 'react-utils/controllable-state-stable-effects-and-timers'
+    type: 'sub-skill'
+    domain: 'controllable-state-stable-effects-and-timers'
+    path: 'skills/react-utils/controllable-state-stable-effects-and-timers/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      useControlled, useStableCallback, useIsomorphicEffect, useInterval, and
+      useTimeout for controlled state ownership, fresh callbacks with stable
+      identity, SSR-safe layout timing, and timer-driven behavior.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/useControlled.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useStableCallback.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useIsomorphicEffect.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useInterval.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useTimeout.ts'
+
+  - name: 'Native Events and Observers'
+    slug: 'react-utils/native-events-and-observers'
+    type: 'sub-skill'
+    domain: 'native-events-and-observers'
+    path: 'skills/react-utils/native-events-and-observers/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      useEvent, useIntersectionObserver, useResizeObserver, and
+      useMutationObserver for declarative wiring to browser events and DOM observation.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/useEvent.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useIntersectionObserver.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useResizeObserver.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useMutationObserver.ts'
+
+  - name: 'Overlays, Focus, and Dismissal'
+    slug: 'react-utils/overlays-focus-and-dismissal'
+    type: 'sub-skill'
+    domain: 'overlays-focus-and-dismissal'
+    path: 'skills/react-utils/overlays-focus-and-dismissal/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      useDismiss, useFocusReturn, and useInert for dialogs, popovers,
+      and modal layering with accessible close behavior.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/useDismiss.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useFocusReturn.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useInert.ts'
+
+  - name: 'Gestures, Scroll, and Sticky Interactions'
+    slug: 'react-utils/gestures-scroll-and-sticky-interactions'
+    type: 'sub-skill'
+    domain: 'gestures-scroll-and-sticky-interactions'
+    path: 'skills/react-utils/gestures-scroll-and-sticky-interactions/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      useGesture, usePressHold, useDragScroll, useScrollProgress, and
+      useSticky for pointer-driven interactions, drag-scroll containers,
+      long-press behavior, scroll progress, and sticky-state UI.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/useGesture.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/usePressHold.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useDragScroll.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useScrollProgress.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useSticky.ts'
+
+  - name: 'Responsive Viewport and Directionality'
+    slug: 'react-utils/responsive-viewport-and-directionality'
+    type: 'sub-skill'
+    domain: 'responsive-viewport-and-directionality'
+    path: 'skills/react-utils/responsive-viewport-and-directionality/SKILL.md'
+    package: 'packages/react-utils'
+    description: >-
+      useElementSize, useWindowSize, useVisualViewport, useMediaQuery, and
+      useRTL for responsive layout logic driven by element geometry,
+      viewport state, zoom-aware metrics, and directionality.
+    requires:
+      - 'react-utils'
+    sources:
+      - 'noaignite/accelerator:packages/react-utils/src/useElementSize.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useWindowSize.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useVisualViewport.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useMediaQuery.ts'
+      - 'noaignite/accelerator:packages/react-utils/src/useRTL.ts'

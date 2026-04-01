@@ -1,0 +1,354 @@
+# domain_map.yaml
+# Generated for @noaignite/react-utils skills scaffolding
+# Library: @noaignite/react-utils
+# Version: 0.16.1
+# Date: 2026-04-01
+# Status: generated
+
+library:
+  name: '@noaignite/react-utils'
+  version: '0.16.1'
+  repository: 'https://github.com/noaignite/accelerator'
+  description: >-
+    Shared React-specific utilities for component composition, refs,
+    effects, DOM observers, overlays, gestures, and responsive viewport logic.
+  primary_framework: 'React'
+
+domains:
+  - name: 'Component Factories and Block Rendering'
+    slug: 'component-factories-and-block-rendering'
+    description: >-
+      Building reusable React primitives, typed component factories,
+      provider-backed APIs, error boundaries, icons, and schema-driven block rendering.
+
+  - name: 'Refs and Element Wiring'
+    slug: 'refs-and-element-wiring'
+    description: >-
+      Merging refs, forwarding DOM ownership, and reading element refs across React versions.
+
+  - name: 'Controllable State, Stable Effects, and Timers'
+    slug: 'controllable-state-stable-effects-and-timers'
+    description: >-
+      Controlled and uncontrolled state ownership, stable callbacks,
+      SSR-safe effects, and timer-driven UI behavior.
+
+  - name: 'Native Events and Observers'
+    slug: 'native-events-and-observers'
+    description: >-
+      Browser event listeners and DOM observation with intersection,
+      resize, and mutation observers.
+
+  - name: 'Overlays, Focus, and Dismissal'
+    slug: 'overlays-focus-and-dismissal'
+    description: >-
+      Dismissable layers, focus restoration, and inert background behavior for overlays.
+
+  - name: 'Gestures, Scroll, and Sticky Interactions'
+    slug: 'gestures-scroll-and-sticky-interactions'
+    description: >-
+      Pointer gestures, press-hold, drag scrolling, scroll progress, and sticky-state UI.
+
+  - name: 'Responsive Viewport and Directionality'
+    slug: 'responsive-viewport-and-directionality'
+    description: >-
+      Layout and viewport-derived state from media queries, element/window size,
+      visual viewport, and RTL detection.
+
+skills:
+  - name: 'React Utils Core'
+    slug: 'react-utils'
+    domain: 'component-factories-and-block-rendering'
+    description: >-
+      Entry-point skill for @noaignite/react-utils. Routes agents to the correct
+      sub-skill for component factories, refs, effects, observers, overlays,
+      gestures, and responsive helpers.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - createPolymorph
+      - createRenderBlock
+      - createRequiredContext
+      - createSvgIcon
+      - ErrorBoundary
+      - getReactElementRef
+      - setRef
+      - useControlled
+      - useDismiss
+      - useDragScroll
+      - useElementSize
+      - useEvent
+      - useFocusReturn
+      - useForkRef
+      - useGesture
+      - useInert
+      - useIntersectionObserver
+      - useInterval
+      - useIsomorphicEffect
+      - useMediaQuery
+      - useMutationObserver
+      - usePressHold
+      - useResizeObserver
+      - useRTL
+      - useScrollProgress
+      - useStableCallback
+      - useSticky
+      - useTimeout
+      - useVisualViewport
+      - useWindowSize
+    tasks:
+      - 'Pick the right react-utils primitive for a React implementation task'
+      - 'Load the correct lower-level skill before writing shared UI code'
+    failure_modes:
+      - mistake: 'Choosing hooks by name similarity instead of browser boundary'
+        mechanism: >-
+          Many helpers solve adjacent problems. Picking the wrong hook leads to
+          needless DOM coupling, missing SSR guards, or incorrect overlay behavior.
+        source: 'packages/react-utils/skills/react-utils/SKILL.md'
+        priority: HIGH
+        status: active
+
+  - name: 'Component Factories and Block Rendering'
+    slug: 'component-factories-and-block-rendering'
+    domain: 'component-factories-and-block-rendering'
+    description: >-
+      createPolymorph, createRequiredContext, createSvgIcon, ErrorBoundary,
+      and createRenderBlock for reusable primitives, provider APIs, icon components,
+      local error boundaries, and block rendering.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - createPolymorph
+      - createRequiredContext
+      - createSvgIcon
+      - ErrorBoundary
+      - createRenderBlock
+    tasks:
+      - 'Build a polymorphic design-system primitive'
+      - 'Create a required context hook and provider pair'
+      - 'Wrap an unstable subtree in a local error boundary'
+      - 'Create a CMS-style block renderer with adapters'
+    failure_modes:
+      - mistake: 'Re-implementing polymorphism with manual prop unions'
+        mechanism: >-
+          Manual unions lose the dynamic relationship between `as`, native props,
+          and ref type that createPolymorph preserves.
+        source: 'packages/react-utils/skills/react-utils/component-factories-and-block-rendering/SKILL.md'
+        priority: HIGH
+        status: active
+      - mistake: 'Using required context hooks outside their provider tree'
+        mechanism: >-
+          createRequiredContext is designed to throw loudly when consumers render
+          outside the matching provider.
+        source: 'packages/react-utils/skills/react-utils/component-factories-and-block-rendering/SKILL.md'
+        priority: HIGH
+        status: active
+
+  - name: 'Refs and Element Wiring'
+    slug: 'refs-and-element-wiring'
+    domain: 'refs-and-element-wiring'
+    description: >-
+      useForkRef, setRef, and getReactElementRef for wrapper components,
+      ref forwarding, and React-version-safe element ref access.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - useForkRef
+      - setRef
+      - getReactElementRef
+    tasks:
+      - 'Merge local and forwarded refs in a wrapper component'
+      - 'Expose an inner DOM node through a public ref'
+      - 'Read a child element ref safely across React versions'
+    failure_modes:
+      - mistake: 'Overwriting consumer refs with a local ref'
+        mechanism: >-
+          A ref-forwarding component must preserve both internal and external ref ownership.
+        source: 'packages/react-utils/skills/react-utils/refs-and-element-wiring/SKILL.md'
+        priority: HIGH
+        status: active
+
+  - name: 'Controllable State, Stable Effects, and Timers'
+    slug: 'controllable-state-stable-effects-and-timers'
+    domain: 'controllable-state-stable-effects-and-timers'
+    description: >-
+      useControlled, useStableCallback, useIsomorphicEffect, useInterval, and
+      useTimeout for shared component state ownership and effect timing.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - useControlled
+      - useStableCallback
+      - useIsomorphicEffect
+      - useInterval
+      - useTimeout
+    tasks:
+      - 'Support both controlled and uncontrolled component usage'
+      - 'Prevent stale timer or subscription callbacks'
+      - 'Use layout-timed effects in SSR-capable components safely'
+    failure_modes:
+      - mistake: 'Accidentally switching between controlled and uncontrolled ownership'
+        mechanism: >-
+          A component should keep one ownership mode for its lifetime.
+        source: 'packages/react-utils/skills/react-utils/controllable-state-stable-effects-and-timers/SKILL.md'
+        priority: HIGH
+        status: active
+      - mistake: 'Capturing stale state in timeout or interval callbacks'
+        mechanism: >-
+          Timers often outlive a render. Stable callbacks avoid stale closures.
+        source: 'packages/react-utils/skills/react-utils/controllable-state-stable-effects-and-timers/SKILL.md'
+        priority: HIGH
+        status: active
+
+  - name: 'Native Events and Observers'
+    slug: 'native-events-and-observers'
+    domain: 'native-events-and-observers'
+    description: >-
+      useEvent, useIntersectionObserver, useResizeObserver, and
+      useMutationObserver for declarative wiring to browser events and DOM observation.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - useEvent
+      - useIntersectionObserver
+      - useResizeObserver
+      - useMutationObserver
+    tasks:
+      - 'Attach a native event listener in a React-safe way'
+      - 'Lazy-load or reveal content on intersection'
+      - 'Measure element box changes'
+      - 'Track DOM attribute or child mutations'
+    failure_modes:
+      - mistake: 'Using the wrong observer for the problem'
+        mechanism: >-
+          Intersection, resize, and mutation observers solve different event surfaces.
+        source: 'packages/react-utils/skills/react-utils/native-events-and-observers/SKILL.md'
+        priority: MEDIUM
+        status: active
+
+  - name: 'Overlays, Focus, and Dismissal'
+    slug: 'overlays-focus-and-dismissal'
+    domain: 'overlays-focus-and-dismissal'
+    description: >-
+      useDismiss, useFocusReturn, and useInert for dialogs, popovers,
+      and modal layering with accessible close behavior.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - useDismiss
+      - useFocusReturn
+      - useInert
+    tasks:
+      - 'Dismiss an overlay on outside click or Escape'
+      - 'Restore focus to the trigger when the overlay closes'
+      - 'Make background content inert while a modal is open'
+    failure_modes:
+      - mistake: 'Closing an overlay without restoring focus'
+        mechanism: >-
+          Keyboard users lose their place if a modal closes without a focus return path.
+        source: 'packages/react-utils/skills/react-utils/overlays-focus-and-dismissal/SKILL.md'
+        priority: HIGH
+        status: active
+
+  - name: 'Gestures, Scroll, and Sticky Interactions'
+    slug: 'gestures-scroll-and-sticky-interactions'
+    domain: 'gestures-scroll-and-sticky-interactions'
+    description: >-
+      useGesture, usePressHold, useDragScroll, useScrollProgress, and
+      useSticky for richer pointer and scrolling interactions.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - useGesture
+      - usePressHold
+      - useDragScroll
+      - useScrollProgress
+      - useSticky
+    tasks:
+      - 'Implement a swipe or drag gesture'
+      - 'Turn a container into a drag-scroll surface'
+      - 'Trigger long-press behavior'
+      - 'Show viewport-relative scroll progress or sticky state'
+    failure_modes:
+      - mistake: 'Using useSticky without the required CSS sticky behavior'
+        mechanism: >-
+          useSticky only reports whether the element is stuck; it does not set `position: sticky`.
+        source: 'packages/react-utils/skills/react-utils/gestures-scroll-and-sticky-interactions/SKILL.md'
+        priority: MEDIUM
+        status: active
+
+  - name: 'Responsive Viewport and Directionality'
+    slug: 'responsive-viewport-and-directionality'
+    domain: 'responsive-viewport-and-directionality'
+    description: >-
+      useElementSize, useWindowSize, useVisualViewport, useMediaQuery, and
+      useRTL for responsive layout logic and direction-aware UI.
+    type: core
+    packages:
+      - '@noaignite/react-utils'
+    covers:
+      - useElementSize
+      - useWindowSize
+      - useVisualViewport
+      - useMediaQuery
+      - useRTL
+    tasks:
+      - 'Branch UI by media query or viewport size'
+      - 'Measure container geometry'
+      - 'React to zoom-aware visual viewport changes'
+      - 'Detect global or local RTL directionality'
+    failure_modes:
+      - mistake: 'Assuming responsive hooks always return concrete values on first render'
+        mechanism: >-
+          Several hooks may return undefined or empty values during SSR or the first client render.
+        source: 'packages/react-utils/skills/react-utils/responsive-viewport-and-directionality/SKILL.md'
+        priority: HIGH
+        status: active
+
+tensions:
+  - name: 'Low-level flexibility vs task-specific abstraction'
+    skills: ['react-utils', 'component-factories-and-block-rendering']
+    description: >-
+      The package provides low-level building blocks instead of opinionated components.
+    implication: >-
+      Agents should compose primitives into app-specific APIs instead of treating the package as a full UI kit.
+
+  - name: 'Browser coupling vs SSR-safe shared code'
+    skills:
+      [
+        'native-events-and-observers',
+        'responsive-viewport-and-directionality',
+        'controllable-state-stable-effects-and-timers',
+      ]
+    description: >-
+      Many hooks are browser-facing, while shared components may also render during SSR.
+    implication: >-
+      Agents must guard first-render browser state and prefer SSR-safe utilities like useIsomorphicEffect.
+
+cross_references:
+  - from: 'react-utils'
+    to: 'component-factories-and-block-rendering'
+    reason: 'Core skill routes factory, provider, icon, and error-boundary tasks to the right detailed guidance'
+  - from: 'react-utils'
+    to: 'refs-and-element-wiring'
+    reason: 'Shared component wrappers often need correct ref ownership and forwarding'
+  - from: 'react-utils'
+    to: 'native-events-and-observers'
+    reason: 'DOM-driven hooks are a separate browser boundary from component composition'
+  - from: 'overlays-focus-and-dismissal'
+    to: 'refs-and-element-wiring'
+    reason: 'Overlay primitives often need correct ref ownership for trigger and content nodes'
+  - from: 'gestures-scroll-and-sticky-interactions'
+    to: 'native-events-and-observers'
+    reason: 'Gesture and scroll behavior often composes with DOM observation and event listeners'
+  - from: 'responsive-viewport-and-directionality'
+    to: 'native-events-and-observers'
+    reason: 'Responsive hooks overlap with low-level browser observation patterns'
+
+gaps: []
