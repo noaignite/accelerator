@@ -6,6 +6,7 @@
   "keywords": [
     "react",
     "react-utils",
+    "tanstack-intent",
     "typescript"
   ],
   "bugs": {
@@ -33,12 +34,15 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "skills"
   ],
   "scripts": {
     "build": "tsdown --config-loader unrun && pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
     "dev": "tsdown --config-loader unrun --watch",
+    "intent:stale": "pnpm dlx @tanstack/intent@latest stale skills",
+    "intent:validate": "pnpm dlx @tanstack/intent@latest validate skills",
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",
     "test:types": "tsc --noEmit",
