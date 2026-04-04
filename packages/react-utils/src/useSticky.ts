@@ -132,11 +132,14 @@ export const useSticky = (
       if (!when || !side) return
 
       if (isI1Intersecting && !isI2Intersecting) {
-        const parent = container?.current ?? document.body
+        const parent = container?.current
         const element = ref.current
-        if (!(parent instanceof HTMLElement) || !(element instanceof HTMLElement)) return
+        if (!(element instanceof HTMLElement)) return
 
-        const pRect = parent.getBoundingClientRect()
+        const pRect =
+          parent?.getBoundingClientRect() ??
+          new DOMRect(0, 0, window.innerWidth, window.innerHeight)
+
         const cRect = element.getBoundingClientRect()
 
         const isStuckTo = {
