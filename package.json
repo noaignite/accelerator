@@ -40,7 +40,7 @@
     "prettier": "^3.8.1",
     "ts-morph": "^27.0.2",
     "tsdown": "^0.21.7",
-    "turbo": "^2.8.21",
+    "turbo": "^2.9.3",
     "typescript": "^5.8.3",
     "vitest": "^4.1.2"
   },
