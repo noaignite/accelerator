@@ -63,7 +63,7 @@ jobs:
                     const releaseTag = encodeURIComponent(`${name}@${version}`);
                     const packageUrl = `https://github.com/${process.env.GITHUB_REPOSITORY}/releases/tag/${releaseTag}`;
 
-                    return `* <${packageUrl}|${name}@${version}>`;
+                    return `- <${packageUrl}|${name}@${version}>`;
                   })
                   .join('\n')
               : 'Package details were not returned by Changesets.';
@@ -83,8 +83,17 @@ jobs:
               - type: section
                 text:
                   type: mrkdwn
-                  text: "*:rocket: Accelerator packages published*"
+                  text: |
+                    *:rocket: Accelerator packages published*
               - type: section
                 text:
                   type: mrkdwn
-                  text: "*:package: Packages*\n${{ steps.release_summary.outputs.summary }}"
+                  text: |
+                    *:memo: Release Notes*
+                    <https://github.com/noaignite/accelerator/releases|https://github.com/noaignite/accelerator/releases>
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: |
+                    *:package: Packages*
+                    ${{ steps.release_summary.outputs.summary }}
