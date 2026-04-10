@@ -1,5 +1,16 @@
 # @noaignite/react-utils
 
+## 0.17.0
+
+### Minor Changes
+
+- 2e2d2b0: Add TanStack Intent skills.
+
+### Patch Changes
+
+- Updated dependencies [9742dc7]
+  - @noaignite/utils@3.8.0
+
 ## 0.16.1
 
 ### Patch Changes
