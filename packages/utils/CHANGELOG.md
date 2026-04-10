@@ -1,5 +1,11 @@
 # @noaignite/utils
 
+## 3.8.0
+
+### Minor Changes
+
+- 9742dc7: isKeyOf: Add new utility to safely narrow computed property keys for indexed access.
+
 ## 3.7.1
 
 ### Patch Changes

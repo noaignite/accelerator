@@ -1,5 +1,12 @@
 # @noaignite/react-centra-checkout
 
+## 2.1.6
+
+### Patch Changes
+
+- Updated dependencies [9742dc7]
+  - @noaignite/utils@3.8.0
+
 ## 2.1.5
 
 ### Patch Changes
