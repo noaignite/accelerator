@@ -31,7 +31,7 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.2.3",
+    "@next/eslint-plugin-next": "16.2.6",
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^22.19.17",
     "@types/react": "^19.2.14",
