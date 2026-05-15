@@ -26,7 +26,10 @@
   "scripts": {
     "build": "pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
-    "test:types": "tsc --noEmit"
+    "test:coverage": "vitest run --coverage",
+    "test:types": "tsc --noEmit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest"
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
