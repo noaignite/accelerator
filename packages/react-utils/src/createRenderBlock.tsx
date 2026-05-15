@@ -1,8 +1,7 @@
 /* eslint-disable tsdoc/syntax -- Allow dot-notated @param's, seems to work. */
 /* eslint-disable @typescript-eslint/no-explicit-any -- To any or not to any, that is the question. */
 
-import type { PropsFrom } from '@noaignite/types'
-import { Suspense, type ComponentType } from 'react'
+import { Suspense, type ComponentProps, type ComponentType } from 'react'
 import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
 
 /**
@@ -109,12 +108,12 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
     TGlobals extends Record<PropertyKey, unknown>,
     TAdapters extends
       | {
-          [K in keyof TBlocks]?: BlockAdapter<any, PropsFrom<TBlocks[K]>, TContext, TGlobals>
+          [K in keyof TBlocks]?: BlockAdapter<any, ComponentProps<TBlocks[K]>, TContext, TGlobals>
         }
       | undefined,
     TDefaultProps extends
       | {
-          [K in keyof TBlocks]?: Partial<PropsFrom<TBlocks[K]>>
+          [K in keyof TBlocks]?: Partial<ComponentProps<TBlocks[K]>>
         }
       | undefined,
   >(
@@ -136,7 +135,7 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
     return async function renderBlock<TBlockType extends keyof TBlocks>(
       data: {
         blockType: TBlockType
-        props: keyof TAdapters extends never ? PropsFrom<TBlocks[TBlockType]> : any
+        props: keyof TAdapters extends never ? ComponentProps<TBlocks[TBlockType]> : any
       },
       indexOrContext: number | TContext,
     ) {

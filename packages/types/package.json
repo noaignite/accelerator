@@ -31,12 +31,10 @@
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
     "@types/react": "^19.2.14",
-    "react": "^19.2.6",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0",
-    "react": "^17.0.0 || ^18.0.0 || ^19.0.0"
+    "@types/react": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
