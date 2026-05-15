@@ -2,55 +2,69 @@
 
 Repository-wide operating instructions for AI agents and coding assistants.
 
-## Commands
-
-Use existing repo commands first. Prefer `pnpm` for all workspace workflows.
-
-- Install deps: `pnpm install --frozen-lockfile`
-- Build all packages and apps: `pnpm build`
-- Run standard local test suite: `pnpm test`
-- Run CI-oriented validation: `pnpm ci:test`
-- Run lint only: `pnpm lint`
-- Build docs app: `pnpm docs:build`
-- Start docs app locally: `pnpm docs:dev`
-- Check changeset status against main: `pnpm ci:status`
-- Create a changeset: `pnpm changeset`
-- Create an empty changeset: `pnpm changeset --empty`
-
-## Stack
-
-- Runtime: Node from `.nvmrc`
-- Package manager: `pnpm`
-- Monorepo: `Turborepo`
-- Language: `TypeScript`
-- Testing: `Vitest`
-- Docs app: `Next.js` in `docs/`
-- Release flow: `Changesets` + GitHub Actions
-
 ## Repository Structure
 
-- `packages/*` - published packages and templates
 - `docs/` - documentation site and generated content
-- `scripts/` - shared repo tooling such as `scripts/generateDocs.ts`
-- `.github/workflows/` - CI and release automation
-- `.changeset/` - package versioning and release metadata
+- `packages/*` - published packages and templates
+- `scripts/` - shared repo tooling
 
-## Package Rules
+## Essential Commands
 
-- Treat each folder in `packages/*` as its own package boundary.
-- Prefer package-local changes over cross-repo refactors unless the task clearly requires multi-package updates.
-- Assume changes in shared config, scripts, or workflows may affect several packages.
-- Treat `packages/react-*`, `packages/utils`, `packages/types`, `packages/centra-*`, `packages/style-guide`, and `packages/create-app` as important maintained packages; default to checking tests, docs, and release impact.
+```bash
+pnpm install          # Install dependencies
+pnpm build            # Build all workspaces
+pnpm packages:build   # Build all packages
+pnpm lint             # ESLint check
+pnpm test:types       # TypeScript validation
+pnpm test:unit        # Run unit tests
+pnpm changeset        # Create a changeset
+```
 
-## Changeset Rules
+### Scope-Aware Validation
 
-- Changes to publishable packages usually require a changeset.
-- If a change affects package behavior, public API, package config, generated package output, or user-facing docs for a published package, assume a changeset is needed unless there is strong evidence the change is internal only.
-- Bump guidance:
-  - `patch` - bug fixes, small non-breaking improvements, maintenance
-  - `minor` - new backward-compatible features
-  - `major` - breaking API or behavior changes
-- Changes limited to CI, repo metadata, or clearly internal-only tooling usually do not need a changeset.
+When editing one package/app, prefer targeted `-F` runs before repo-wide commands:
+
+```bash
+pnpm -F <workspace> lint
+pnpm -F <workspace> test:types
+pnpm -F <workspace> test:unit
+pnpm -F <workspace> build
+```
+
+## Changesets
+
+**Always create a changeset for all PRs.**
+
+```bash
+pnpm changeset
+```
+
+A changeset is a markdown file in `.changeset/` with YAML frontmatter listing affected packages and their bump type (patch/minor/major).
+
+### Changeset Rules
+
+1. Every PR must include a changeset (use empty frontmatter for non-package changes).
+2. If your change modifies a package in `/packages/*`, include it in the changeset frontmatter
+3. If your change only affects non-package files (docs, config, examples, internal tooling), create a changeset with **empty frontmatter** - just the description
+
+Example changeset for a package change:
+
+```md
+---
+'@noaignite/react-utils': minor
+---
+
+useElementSize: Fix faulty size computation.
+```
+
+Example changeset for non-package changes:
+
+```md
+---
+---
+
+CI: Update workflow configuration.
+```
 
 ## Docs Rules
 
@@ -60,7 +74,6 @@ Use existing repo commands first. Prefer `pnpm` for all workspace workflows.
   - `packages/*/README.md`
   - `docs/src/content/**`
 - The docs site includes generated content. If source-level documentation changes affect generated docs, consider `scripts/generateDocs.ts` and `pnpm docs:build` part of validation.
-- If changing `packages/create-app`, check setup and onboarding docs as well.
 
 ## Git Workflow
 
@@ -107,36 +120,3 @@ When reviewing or summarizing a PR, prefer this shape:
 - Risk level: low, medium, or high
 
 Avoid spending most of the review on generic style comments that linting or formatting already covers.
-
-## Examples
-
-### Good PR Summary
-
-```text
-Changed packages: `packages/utils`, `docs/`
-Changeset: likely required (`patch`) because `packages/utils` behavior changed
-Docs: update `packages/utils/README.md` and verify generated docs if exported helpers changed
-Verify: `pnpm --filter @noaignite/utils test:unit`, `pnpm test:types`, `pnpm docs:build`
-Risk: medium - publishable package change with docs impact
-```
-
-### Good Changeset Recommendation
-
-```text
-Use a `patch` changeset for `@noaignite/react-utils`.
-Reason: this PR fixes existing behavior without introducing a new public API or a breaking change.
-```
-
-### Good Docs Follow-Up
-
-```text
-Public CLI behavior changed in `packages/create-app`, so check both `packages/create-app/README.md` and `docs/src/content/create-app/**`.
-```
-
-## Final Check Before Finishing
-
-- Are all affected packages identified?
-- Does the change require a changeset?
-- Should any README or docs page be updated?
-- Are build, lint, type checks, tests, or docs build needed for confidence?
-- Did the change touch shared config, scaffolding, CI, or release flow?
