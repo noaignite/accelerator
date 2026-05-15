@@ -67,10 +67,7 @@ function getDeclarationName(declaration: DeclarationTypes) {
   if ('getName' in declaration) {
     return declaration.getName()
   }
-  for (const dec of declaration.getDeclarations()) {
-    return dec.getName()
-  }
-  return undefined
+  return declaration.getDeclarations()[0]?.getName()
 }
 
 /**
