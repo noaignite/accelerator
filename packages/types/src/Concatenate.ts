@@ -1,4 +1,6 @@
-type Separate<T extends string | number, S extends string> = T extends '' ? T : `${S}${T}`
+type WithLeadingSeparator<T extends string | number, S extends string> = T extends ''
+  ? T
+  : `${S}${T}`
 
 /**
  * Concatenates an array of `string | number` types into a single string.
@@ -17,5 +19,5 @@ export type Concatenate<T extends (string | number)[], S extends string = ''> = 
   infer I extends string | number,
   ...infer A extends (string | number)[],
 ]
-  ? `${I}${Separate<Concatenate<A, S>, S>}`
+  ? `${I}${WithLeadingSeparator<Concatenate<A, S>, S>}`
   : ''
