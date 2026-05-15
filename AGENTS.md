@@ -46,6 +46,7 @@ A changeset is a markdown file in `.changeset/` with YAML frontmatter listing af
 1. Every PR must include a changeset (use empty frontmatter for non-package changes).
 2. If your change modifies a package in `/packages/*`, include it in the changeset frontmatter
 3. If your change only affects non-package files (docs, config, examples, internal tooling), create a changeset with **empty frontmatter** - just the description
+4. Keep changeset descriptions scoped to the packages listed in their frontmatter. If affected packages need different release notes, create separate changeset files.
 
 Example changeset for a package change:
 
