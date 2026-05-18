@@ -1,5 +1,14 @@
 # @noaignite/react-utils
 
+## 0.17.1
+
+### Patch Changes
+
+- 8a537e0: createRenderBlock: Use React's built-in ComponentProps type.
+- Updated dependencies [8a537e0]
+  - @noaignite/types@2.0.0
+  - @noaignite/utils@3.8.1
+
 ## 0.17.0
 
 ### Minor Changes
