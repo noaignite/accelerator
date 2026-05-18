@@ -1,7 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["NODE_ENV", "npm_config_user_agent"],
+  "globalEnv": [
+    "GITHUB_OUTPUT",
+    "GITHUB_REPOSITORY",
+    "NODE_ENV",
+    "PUBLISHED_PACKAGES",
+    "npm_config_user_agent"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
