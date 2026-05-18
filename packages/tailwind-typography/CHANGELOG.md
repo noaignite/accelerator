@@ -1,5 +1,11 @@
 # @noaignite/tailwind-typography
 
+## 0.1.15
+
+### Patch Changes
+
+- @noaignite/utils@3.8.1
+
 ## 0.1.14
 
 ### Patch Changes

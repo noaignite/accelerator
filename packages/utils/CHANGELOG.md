@@ -1,5 +1,12 @@
 # @noaignite/utils
 
+## 3.8.1
+
+### Patch Changes
+
+- Updated dependencies [8a537e0]
+  - @noaignite/types@2.0.0
+
 ## 3.8.0
 
 ### Minor Changes
