@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for test files */
 import { render, screen, waitFor } from '@testing-library/react'
+import { Suspense } from 'react'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import type { BlockAdapter } from './createRenderBlock'
 import { createRenderBlock } from './createRenderBlock'
@@ -196,5 +197,58 @@ describe('createRenderBlock', () => {
     // Verify that the adapter appended the global suffix to the message.
     const mockComponent = screen.getByTestId('mock-component')
     expect(mockComponent).toHaveTextContent('"message":"Hello!!!"')
+  })
+
+  it('should wrap blocks in Suspense by default', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const renderBlock = createRenderBlock(blocks)
+    const element = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 7)
+
+    expect(element?.props.children.type).toBe(Suspense)
+  })
+
+  it('should keep Suspense when disableSuspense is false', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const renderBlock = createRenderBlock(blocks, { disableSuspense: false })
+    const element = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 8)
+
+    expect(element?.props.children.type).toBe(Suspense)
+  })
+
+  it('should resolve disableSuspense from a sync callback', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const disableSuspense = vi.fn((ctx: { index: number }) => ctx.index % 2 === 0)
+    const renderBlock = createRenderBlock(blocks, { disableSuspense })
+
+    const withoutSuspense = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 10)
+    const withSuspense = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 11)
+
+    expect(disableSuspense).toHaveBeenNthCalledWith(1, { index: 10 })
+    expect(disableSuspense).toHaveBeenNthCalledWith(2, { index: 11 })
+    expect(withoutSuspense?.type).toBe(MockComponent)
+    expect(withSuspense?.props.children.type).toBe(Suspense)
+  })
+
+  it('should resolve disableSuspense from an async callback', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const disableSuspense = vi.fn(async (ctx: { index: number }) => ctx.index === 12)
+    const renderBlock = createRenderBlock(blocks, { disableSuspense })
+
+    const element = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 12)
+
+    expect(disableSuspense).toHaveBeenCalledWith({ index: 12 })
+    expect(element?.type).toBe(MockComponent)
   })
 })

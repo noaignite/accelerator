@@ -25,6 +25,9 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * register needed utils that all adapters should have access to.
  * @param options.fallback - A UI component to render for when the internal
  * block error boundary catches an error.
+ * @param options.disableSuspense - Controls whether rendered blocks should
+ * skip the `<Suspense />` wrapper. Defaults to `false` and can be resolved
+ * from the render context.
  * @returns `renderBlock` function.
  *
  * @example
@@ -123,9 +126,10 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
       defaultProps?: TDefaultProps
       fallback?: ErrorBoundaryProps['fallback']
       globals?: TGlobals
+      disableSuspense?: boolean | ((ctx: TContext) => boolean | Promise<boolean>)
     } = {},
   ) {
-    const { adapters, defaultProps, fallback } = options
+    const { adapters, defaultProps, fallback, disableSuspense: disableSuspenseOption } = options
     const globals = options.globals ?? ({} as TGlobals)
 
     /**
@@ -175,6 +179,15 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
         if (typeof adapter === 'function') {
           componentProps = await adapter(componentProps, context, globals)
         }
+      }
+
+      const disableSuspense =
+        typeof disableSuspenseOption === 'function'
+          ? await disableSuspenseOption(context)
+          : (disableSuspenseOption ?? false)
+
+      if (disableSuspense) {
+        return <Component blockType={blockType} renderIndex={context.index} {...componentProps} />
       }
 
       return (
