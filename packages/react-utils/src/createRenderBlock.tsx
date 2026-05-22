@@ -25,8 +25,8 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * register needed utils that all adapters should have access to.
  * @param options.fallback - A UI component to render for when the internal
  * block error boundary catches an error.
- * @param options.disableSuspense - Controls whether rendered blocks should
- * skip the `<Suspense />` wrapper. Defaults to `false` and can be resolved
+ * @param options.disableErrorBoundary - Controls whether rendered blocks should
+ * skip the `<ErrorBoundary />` wrapper. Defaults to `false` and can be resolved
  * from the render context.
  * @returns `renderBlock` function.
  *
@@ -126,10 +126,15 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
       defaultProps?: TDefaultProps
       fallback?: ErrorBoundaryProps['fallback']
       globals?: TGlobals
-      disableSuspense?: boolean | ((ctx: TContext) => boolean | Promise<boolean>)
+      disableErrorBoundary?: boolean | ((ctx: TContext) => boolean | Promise<boolean>)
     } = {},
   ) {
-    const { adapters, defaultProps, fallback, disableSuspense: disableSuspenseOption } = options
+    const {
+      adapters,
+      defaultProps,
+      fallback,
+      disableErrorBoundary: disableErrorBoundaryOption,
+    } = options
     const globals = options.globals ?? ({} as TGlobals)
 
     /**
@@ -181,12 +186,12 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
         }
       }
 
-      const disableSuspense =
-        typeof disableSuspenseOption === 'function'
-          ? await disableSuspenseOption(context)
-          : (disableSuspenseOption ?? false)
+      const disableErrorBoundary =
+        typeof disableErrorBoundaryOption === 'function'
+          ? await disableErrorBoundaryOption(context)
+          : (disableErrorBoundaryOption ?? false)
 
-      if (disableSuspense) {
+      if (disableErrorBoundary) {
         return <Component blockType={blockType} renderIndex={context.index} {...componentProps} />
       }
 

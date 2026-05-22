@@ -210,45 +210,51 @@ describe('createRenderBlock', () => {
     expect(element?.props.children.type).toBe(Suspense)
   })
 
-  it('should keep Suspense when disableSuspense is false', async () => {
+  it('should keep Suspense when disableErrorBoundary is false', async () => {
     const blocks = {
       Hero: MockComponent,
     }
 
-    const renderBlock = createRenderBlock(blocks, { disableSuspense: false })
+    const renderBlock = createRenderBlock(blocks, { disableErrorBoundary: false })
     const element = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 8)
 
     expect(element?.props.children.type).toBe(Suspense)
   })
 
-  it('should resolve disableSuspense from a sync callback', async () => {
+  it('should resolve disableErrorBoundary from a sync callback', async () => {
     const blocks = {
       Hero: MockComponent,
     }
 
-    const disableSuspense = vi.fn((ctx: { index: number }) => ctx.index % 2 === 0)
-    const renderBlock = createRenderBlock(blocks, { disableSuspense })
+    const disableErrorBoundary = vi.fn((ctx: { index: number }) => ctx.index % 2 === 0)
+    const renderBlock = createRenderBlock(blocks, { disableErrorBoundary })
 
-    const withoutSuspense = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 10)
-    const withSuspense = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 11)
+    const withoutErrorBoundary = await renderBlock(
+      { blockType: 'Hero', props: { title: 'Hello' } },
+      10,
+    )
+    const withErrorBoundary = await renderBlock(
+      { blockType: 'Hero', props: { title: 'Hello' } },
+      11,
+    )
 
-    expect(disableSuspense).toHaveBeenNthCalledWith(1, { index: 10 })
-    expect(disableSuspense).toHaveBeenNthCalledWith(2, { index: 11 })
-    expect(withoutSuspense?.type).toBe(MockComponent)
-    expect(withSuspense?.props.children.type).toBe(Suspense)
+    expect(disableErrorBoundary).toHaveBeenNthCalledWith(1, { index: 10 })
+    expect(disableErrorBoundary).toHaveBeenNthCalledWith(2, { index: 11 })
+    expect(withoutErrorBoundary?.type).toBe(MockComponent)
+    expect(withErrorBoundary?.props.children.type).toBe(Suspense)
   })
 
-  it('should resolve disableSuspense from an async callback', async () => {
+  it('should resolve disableErrorBoundary from an async callback', async () => {
     const blocks = {
       Hero: MockComponent,
     }
 
-    const disableSuspense = vi.fn(async (ctx: { index: number }) => ctx.index === 12)
-    const renderBlock = createRenderBlock(blocks, { disableSuspense })
+    const disableErrorBoundary = vi.fn(async (ctx: { index: number }) => ctx.index === 12)
+    const renderBlock = createRenderBlock(blocks, { disableErrorBoundary })
 
     const element = await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 12)
 
-    expect(disableSuspense).toHaveBeenCalledWith({ index: 12 })
+    expect(disableErrorBoundary).toHaveBeenCalledWith({ index: 12 })
     expect(element?.type).toBe(MockComponent)
   })
 })
