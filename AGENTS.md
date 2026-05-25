@@ -58,6 +58,16 @@ Example changeset for a package change:
 useElementSize: Fix faulty size computation.
 ```
 
+Example changeset for a package dependency update:
+
+```md
+---
+'@noaignite/style-guide': patch
+---
+
+Deps: Update `prettier-plugin-tailwindcss` from 0.7.2 to 0.8.0.
+```
+
 Example changeset for non-package changes:
 
 ```md
