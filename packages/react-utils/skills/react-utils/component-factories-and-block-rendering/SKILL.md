@@ -126,7 +126,8 @@ function WidgetFallback({ resetErrorBoundary }: ErrorBoundaryFallbackProps) {
 ### Render heterogeneous CMS-style blocks with adapters
 
 `createRenderBlock` maps `blockType` values to components, then optionally runs
-adapters, applies default props, and exposes shared globals to adapters.
+adapters, applies default props, exposes shared globals to adapters, and wraps
+rendered blocks with an explicit wrapper function.
 
 `renderBlock` expects both block data and either a numeric render index or a
 context object.
@@ -154,6 +155,9 @@ const renderBlock = createRenderBlock(
       }),
     },
     globals: { suffix: '!' },
+    wrapper: ({ children }, context) => (
+      <div data-render-index={context.renderIndex}>{children}</div>
+    ),
   },
 )
 
