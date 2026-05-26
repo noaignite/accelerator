@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "turbo build",
+    "build": "pnpm packages:build && pnpm docs:build",
     "ci:release": "pnpm build && pnpm test && changeset publish",
     "ci:status": "changeset status --since=origin/main",
     "ci:test": "pnpm lint && pnpm test:types && pnpm test:coverage",
@@ -44,14 +44,9 @@
     "typescript": "^5.8.3",
     "vitest": "^4.1.7"
   },
-  "packageManager": "pnpm@9.3.0",
+  "packageManager": "pnpm@11.3.0",
   "engines": {
-    "node": ">=20",
-    "pnpm": "^9"
-  },
-  "pnpm": {
-    "overrides": {
-      "minimatch@3": "^3.1.5"
-    }
+    "node": ">=24",
+    "pnpm": "^11"
   }
 }
