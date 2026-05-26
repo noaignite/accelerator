@@ -1,3 +1,15 @@
 packages:
   - 'docs'
   - 'packages/*'
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+
+engineStrict: true
+linkWorkspacePackages: true
+
+overrides:
+  'minimatch@3': ^3.1.5
