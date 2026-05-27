@@ -1,5 +1,8 @@
 {
   "extends": "@noaignite/style-guide/typescript/react",
+  "compilerOptions": {
+    "types": ["node"]
+  },
   "include": ["**/*.ts", "**/*.tsx", ".storybook/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

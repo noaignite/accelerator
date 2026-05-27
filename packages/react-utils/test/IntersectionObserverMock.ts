@@ -4,22 +4,24 @@ import { vi } from 'vitest'
  * A simple IntersectionObserver mock that captures instances
  * and exposes a .trigger() method to simulate intersections.
  */
-export class IntersectionObserverMock {
+export class IntersectionObserverMock implements IntersectionObserver {
   private callback: IntersectionObserverCallback
   private isDisconnected = false
   public options: IntersectionObserverInit
   public root: Element | Document | null
   public rootMargin: string
+  public scrollMargin: string
   public thresholds: number[]
   static instances: IntersectionObserverMock[] = []
 
   constructor(callback: IntersectionObserverCallback, options: IntersectionObserverInit = {}) {
-    const { root, rootMargin, threshold } = options
+    const { root, rootMargin, scrollMargin, threshold } = options
 
     this.callback = callback
     this.options = options
     this.root = root ?? null
     this.rootMargin = rootMargin ?? ''
+    this.scrollMargin = scrollMargin ?? ''
     this.thresholds = Array.isArray(threshold) ? threshold : [threshold ?? 0]
 
     IntersectionObserverMock.instances.push(this)

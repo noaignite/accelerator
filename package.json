@@ -41,7 +41,8 @@
     "ts-morph": "^27.0.2",
     "tsdown": "^0.22.0",
     "turbo": "^2.9.14",
-    "typescript": "^5.8.3",
+    "typescript": "^6.0.3",
+    "unrun": "^0.3.0",
     "vitest": "^4.1.7"
   },
   "packageManager": "pnpm@11.3.0",
