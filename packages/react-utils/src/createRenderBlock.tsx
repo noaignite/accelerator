@@ -1,8 +1,7 @@
 /* eslint-disable tsdoc/syntax -- Allow dot-notated @param's, seems to work. */
 /* eslint-disable @typescript-eslint/no-explicit-any -- To any or not to any, that is the question. */
 
-import { Suspense, type ComponentProps, type ComponentType } from 'react'
-import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
+import { Fragment, type ComponentProps, type ComponentType, type ReactNode } from 'react'
 
 /**
  * `createRenderBlock` is a utility function for registering the to-be rendered
@@ -23,8 +22,8 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  * `renderBlock` functions where the blocks should behave differently.
  * @param options.globals - Globals are meant to be the place where one can
  * register needed utils that all adapters should have access to.
- * @param options.fallback - A UI component to render for when the internal
- * block error boundary catches an error.
+ * @param options.wrapper - An optional function for wrapping the rendered
+ * block component.
  * @returns `renderBlock` function.
  *
  * @example
@@ -62,7 +61,9 @@ import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
  *   adapters,
  *   defaultProps,
  *   globals,
- *   fallback: FallbackComponent,
+ *   wrapper: ({ children }, context) => (
+ *     <section data-render-index={context.renderIndex}>{children}</section>
+ *   ),
  * })
  *
  * const blocksData = [{
@@ -78,20 +79,65 @@ export const createRenderBlock = _createRenderBlock()
 /**
  * The interface that block data needs to conform to.
  */
-export interface BlockTypeMap {
+export interface RenderBlockTypeMap {
   blockType: string
   props: Record<PropertyKey, unknown>
 }
 
 /**
- * Type helper to set up a block adapter.
+ * Adapter function used to transform block data before it is passed to the
+ * registered block component.
+ *
+ * @typeParam TInProps - Props received by the adapter. These are usually the
+ * incoming block props after renderer-injected props and configured default
+ * props have been merged in.
+ * @typeParam TOutProps - Final props returned from the adapter and passed to
+ * the block component. Adapters may omit or override renderer-injected props.
+ * @typeParam TContext - Context object provided to `renderBlock`.
+ * @typeParam TGlobals - Shared globals configured on `createRenderBlock`.
  */
-export type BlockAdapter<
+export type RenderBlockAdapter<
   TInProps extends Record<PropertyKey, unknown>,
   TOutProps extends Record<PropertyKey, unknown>,
   TContext extends Record<PropertyKey, unknown>,
   TGlobals extends Record<PropertyKey, unknown>,
 > = (props: TInProps, context: TContext, globals: TGlobals) => Promise<TOutProps> | TOutProps
+
+/**
+ * Props injected by `renderBlock` for every rendered block.
+ *
+ * These values are included in adapter input and wrapper props. Adapters are
+ * responsible for the final component props, so adapter output may omit or
+ * override these values before the component is rendered.
+ *
+ * @typeParam TBlockType - Literal block type for the selected block component.
+ */
+export type RenderBlockInjectedProps<TBlockType extends string = string> = {
+  blockType: TBlockType
+  renderIndex: number
+}
+
+/**
+ * Wrapper function used to decorate the rendered block element.
+ *
+ * The wrapper receives renderer-injected block metadata plus `children`, along
+ * with the same context and globals available to adapters.
+ *
+ * @typeParam TBlockType - Literal block type for the rendered block.
+ * @typeParam TContext - Context object provided to `renderBlock`.
+ * @typeParam TGlobals - Shared globals configured on `createRenderBlock`.
+ */
+export type RenderBlockWrapper<
+  TBlockType extends string,
+  TContext extends Record<PropertyKey, unknown>,
+  TGlobals extends Record<PropertyKey, unknown>,
+> = (
+  props: RenderBlockInjectedProps<TBlockType> & {
+    children: ReactNode
+  },
+  context: TContext,
+  globals: TGlobals,
+) => ReactNode
 
 /**
  * A wrapper around `createRenderBlock` to give the posibility to define the
@@ -102,13 +148,20 @@ export type BlockAdapter<
  * @see https://github.com/microsoft/TypeScript/issues/10571
  * @see https://github.com/microsoft/TypeScript/pull/26349
  */
-export function _createRenderBlock<TContext extends { index: number; [key: string]: unknown }>() {
+export function _createRenderBlock<
+  TContext extends { renderIndex: number; [key: string]: unknown },
+>() {
   return function __createRenderBlock<
-    TBlocks extends Record<PropertyKey, ComponentType<any>>,
+    TBlocks extends Record<string, ComponentType<any>>,
     TGlobals extends Record<PropertyKey, unknown>,
     TAdapters extends
       | {
-          [K in keyof TBlocks]?: BlockAdapter<any, ComponentProps<TBlocks[K]>, TContext, TGlobals>
+          [K in keyof TBlocks]?: RenderBlockAdapter<
+            any,
+            ComponentProps<TBlocks[K]>,
+            TContext,
+            TGlobals
+          >
         }
       | undefined,
     TDefaultProps extends
@@ -121,34 +174,38 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
     options: {
       adapters?: TAdapters
       defaultProps?: TDefaultProps
-      fallback?: ErrorBoundaryProps['fallback']
       globals?: TGlobals
+      wrapper?: RenderBlockWrapper<keyof TBlocks & string, TContext, TGlobals>
     } = {},
   ) {
-    const { adapters, defaultProps, fallback } = options
+    const { adapters, defaultProps, wrapper } = options
     const globals = options.globals ?? ({} as TGlobals)
 
     /**
      * `renderBlock` is a function which renders a block based on the `blockType`.
      * See `createRenderBlock` for documentation.
      */
-    return async function renderBlock<TBlockType extends keyof TBlocks>(
+    return async function renderBlock<TBlockType extends keyof TBlocks & string>(
       data: {
         blockType: TBlockType
-        props: keyof TAdapters extends never ? ComponentProps<TBlocks[TBlockType]> : any
+        props: keyof TAdapters extends never
+          ? Omit<ComponentProps<TBlocks[TBlockType]>, keyof RenderBlockInjectedProps>
+          : any
       },
-      indexOrContext: number | TContext,
+      renderIndexOrContext: number | TContext,
     ) {
       const { blockType, props } = data
       const context = (
-        typeof indexOrContext === 'number' ? { index: indexOrContext } : indexOrContext
+        typeof renderIndexOrContext === 'number'
+          ? { renderIndex: renderIndexOrContext }
+          : renderIndexOrContext
       ) as TContext
 
       if (typeof blockType !== 'string') {
         if (process.env.NODE_ENV !== 'production') {
           console.error(
-            'renderBlock: Block with index `%s` is missing the property `blockType`.',
-            context.index,
+            'renderBlock: Block with renderIndex `%s` is missing the property `blockType`.',
+            context.renderIndex,
           )
         }
         return null
@@ -157,18 +214,28 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
       if (!(blockType in blocks)) {
         if (process.env.NODE_ENV !== 'production') {
           console.error(
-            'renderBlock: Block with index `%s` and blockType `%s` could not find a matching component.',
-            context.index,
+            'renderBlock: Block with renderIndex `%s` and blockType `%s` could not find a matching component.',
+            context.renderIndex,
             blockType,
           )
         }
         return null
       }
 
-      // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style -- TS not infering correctly so we assert.
-      const Component = blocks[blockType] as ComponentType<any>
+      type BlockProps = ComponentProps<TBlocks[TBlockType]>
+      const Component = blocks[blockType] as ComponentType<BlockProps>
       const componentDefaultProps = defaultProps?.[blockType]
-      let componentProps = { ...componentDefaultProps, ...props }
+
+      const injectedProps: RenderBlockInjectedProps<TBlockType> = {
+        blockType,
+        renderIndex: context.renderIndex,
+      }
+
+      let componentProps = {
+        ...componentDefaultProps,
+        ...props,
+        ...injectedProps,
+      } as BlockProps
 
       if (adapters) {
         const adapter = adapters[blockType]
@@ -177,13 +244,10 @@ export function _createRenderBlock<TContext extends { index: number; [key: strin
         }
       }
 
-      return (
-        <ErrorBoundary blockType={blockType} fallback={fallback} key={context.index}>
-          <Suspense fallback={null}>
-            <Component blockType={blockType} renderIndex={context.index} {...componentProps} />
-          </Suspense>
-        </ErrorBoundary>
-      )
+      const children = <Component {...componentProps} />
+      const block = wrapper ? wrapper({ ...injectedProps, children }, context, globals) : children
+
+      return <Fragment key={context.renderIndex}>{block}</Fragment>
     }
   }
 }
