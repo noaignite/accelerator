@@ -1,5 +1,11 @@
 # @noaignite/centra-types
 
+## 3.1.3
+
+### Patch Changes
+
+- 7a6f0c0: Deps: Upgrade TypeScript from 5.8.3 to 6.0.3.
+
 ## 3.1.2
 
 ### Patch Changes
