@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@noaignite/style-guide": "workspace:*",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
