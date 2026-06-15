@@ -547,7 +547,7 @@ describe('CentraProvider', () => {
       useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- To avoid passing `as const` in the test declarations above, we silent the error here instead.
         // @ts-expect-error
-        void handler?.(...handlerArgs)
+        void handler(...handlerArgs)
       }, [handler])
 
       return null
