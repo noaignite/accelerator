@@ -486,49 +486,55 @@ export function CentraProvider(props: ProviderProps) {
 
   const submitPayment = useCallback<NonNullable<ContextMethods['submitPayment']>>(
     async (data) => {
-      const response = (await apiClient.request('POST', 'payment', {
-        paymentReturnPage:
-          typeof paymentReturnPage === 'function'
-            ? paymentReturnPage(selection)
-            : paymentReturnPage,
-        paymentFailedPage:
-          typeof paymentFailedPage === 'function'
-            ? paymentFailedPage(selection)
-            : paymentFailedPage,
-        ...data,
-      })) as CheckoutApi.Response<CheckoutApi.Payment>
+      window.CentraCheckout?.suspend()
 
-      if ('errors' in response) {
-        throw new Error(
-          Object.entries(response.errors)
-            .map((key, value) => `${key}: ${value}`)
-            .join(','),
-        )
-      }
+      try {
+        const response = (await apiClient.request('POST', 'payment', {
+          paymentReturnPage:
+            typeof paymentReturnPage === 'function'
+              ? paymentReturnPage(selection)
+              : paymentReturnPage,
+          paymentFailedPage:
+            typeof paymentFailedPage === 'function'
+              ? paymentFailedPage(selection)
+              : paymentFailedPage,
+          ...data,
+        })) as CheckoutApi.Response<CheckoutApi.Payment>
 
-      // handle redirecting here
-      switch (response.action) {
-        case 'redirect':
-          if (response.url) {
-            window.location.href = response.url
-          }
-          break
-        case 'success':
-          // according to Centra docs – if action === 'success', user should be forwarded directly to the receipt page
-          window.location.href = `${receiptPage}/${response.token}`
-          break
-        case 'javascript':
-          if (response.code) {
-            const script = document.createElement('script')
-            const text = document.createTextNode(response.code)
-            script.appendChild(text)
-            document.body.appendChild(script)
-          }
-          break
-        default:
-          return response
+        if ('errors' in response) {
+          throw new Error(
+            Object.entries(response.errors)
+              .map((key, value) => `${key}: ${value}`)
+              .join(','),
+          )
+        }
+
+        // handle redirecting here
+        switch (response.action) {
+          case 'redirect':
+            if (response.url) {
+              window.location.href = response.url
+            }
+            break
+          case 'success':
+            // according to Centra docs – if action === 'success', user should be forwarded directly to the receipt page
+            window.location.href = `${receiptPage}/${response.token}`
+            break
+          case 'javascript':
+            if (response.code) {
+              const script = document.createElement('script')
+              const text = document.createTextNode(response.code)
+              script.appendChild(text)
+              document.body.appendChild(script)
+            }
+            break
+          default:
+            return response
+        }
+        return response
+      } finally {
+        window.CentraCheckout?.resume()
       }
-      return response
     },
     [apiClient, paymentFailedPage, paymentReturnPage, receiptPage, selection],
   )
