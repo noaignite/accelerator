@@ -226,9 +226,6 @@ importers:
       '@noaignite/utils':
         specifier: workspace:*
         version: link:../utils
-      react-dom:
-        specifier: ^18.0.0 || ^19.0.0
-        version: 19.2.7(react@19.2.7)
     devDependencies:
       '@noaignite/style-guide':
         specifier: workspace:*
