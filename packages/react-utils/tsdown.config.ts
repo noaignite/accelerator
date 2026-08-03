@@ -4,6 +4,6 @@ import { getTsdownConfig } from '../../scripts/getTsdownConfig'
 export default defineConfig(
   getTsdownConfig({
     entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
-    deps: { neverBundle: ['react', 'react-dom'] },
+    deps: { neverBundle: ['react'] },
   }),
 )
