@@ -39,7 +39,7 @@
     "lint-staged": "^17.0.5",
     "prettier": "^3.8.3",
     "ts-morph": "^27.0.2",
-    "tsdown": "^0.22.1",
+    "tsdown": "^0.22.14",
     "turbo": "^2.10.7",
     "typescript": "^6.0.3",
     "unrun": "^0.3.0",
