@@ -1,5 +1,12 @@
 # @noaignite/centra-mocks
 
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [7a6f0c0]
+  - @noaignite/centra-types@3.1.3
+
 ## 0.1.4
 
 ### Patch Changes

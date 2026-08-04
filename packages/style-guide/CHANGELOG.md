@@ -1,5 +1,15 @@
 # @noaignite/style-guide
 
+## 1.1.3
+
+### Patch Changes
+
+- d6e782e: Deps: Update `eslint-plugin-react-hooks` from 7.0.1 to 7.1.1.
+- e8171b7: Deps: Update `@eslint-community/eslint-plugin-eslint-comments` from 4.7.1 to 4.7.2.
+- 6c57071: Deps: Update `typescript-eslint` packages from 8.57.1 to 8.59.4.
+- 5dac38b: Deps: Update `prettier-plugin-tailwindcss` from 0.7.2 to 0.8.0.
+- 7a6f0c0: Deps: Upgrade TypeScript from 5.8.3 to 6.0.3.
+
 ## 1.1.2
 
 ### Patch Changes

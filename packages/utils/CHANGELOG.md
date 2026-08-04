@@ -1,5 +1,17 @@
 # @noaignite/utils
 
+## 3.9.0
+
+### Minor Changes
+
+- 09d64de: round: Add `round` utility for rounding numbers to a given precision.
+
+### Patch Changes
+
+- Updated dependencies [8a537e0]
+- Updated dependencies [7a6f0c0]
+  - @noaignite/types@2.0.0
+
 ## 3.8.0
 
 ### Minor Changes

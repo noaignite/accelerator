@@ -1,5 +1,14 @@
 # @noaignite/react-native-eslint
 
+## 1.2.3
+
+### Patch Changes
+
+- 6c57071: Deps: Update `typescript-eslint` packages from 8.57.1 to 8.59.4.
+- 7a6f0c0: Deps: Upgrade TypeScript from 5.8.3 to 6.0.3.
+- 1d3e872: Deps: Update `eslint-plugin-promise` from 7.2.1 to 7.3.0.
+- 6b255ff: Deps: Update `typescript-eslint` packages from 8.59.4 to 8.65.0.
+
 ## 1.2.2
 
 ### Patch Changes
