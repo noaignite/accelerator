@@ -36,7 +36,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Check changeset status
-        if: github.actor != 'dependabot[bot]'
+        if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
         run: pnpm ci:status
 
       - name: Run build
