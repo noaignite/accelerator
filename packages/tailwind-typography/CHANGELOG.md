@@ -1,5 +1,12 @@
 # @noaignite/tailwind-typography
 
+## 0.1.15
+
+### Patch Changes
+
+- Updated dependencies [09d64de]
+  - @noaignite/utils@3.9.0
+
 ## 0.1.14
 
 ### Patch Changes

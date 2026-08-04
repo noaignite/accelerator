@@ -1,5 +1,15 @@
 # @noaignite/types
 
+## 2.0.0
+
+### Major Changes
+
+- 8a537e0: PropsFrom: Remove exported React props extraction helper.
+
+### Patch Changes
+
+- 7a6f0c0: Deps: Upgrade TypeScript from 5.8.3 to 6.0.3.
+
 ## 1.6.1
 
 ### Patch Changes
