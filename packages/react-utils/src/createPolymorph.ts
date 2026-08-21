@@ -188,9 +188,10 @@ export type PolymorphicRenderFunction<
   P extends Props,
   T extends ElementType = ElementType,
   C extends Exact<Config<P, T>, C> = object,
-> = (
-  props: PolymorphicProps<P, T, C>,
-) => PolymorphicElement<P, T> | Promise<PolymorphicElement<P, T>>
+> = {
+  displayName?: string;
+  (props: PolymorphicProps<P, T, C>): PolymorphicElement<P, T> | Promise<PolymorphicElement<P, T>>
+}
 
 /**
  * Return type of `createPolymorph`.
@@ -203,11 +204,14 @@ export type PolymorphicExoticComponent<
   P extends Props,
   T extends ElementType = AsOrDefault<P, ElementType>,
   C extends Exact<Config<P, T>, C> = object,
-> = <TT = AsOrDefault<P, T>>(
-  props: PolymorphicProps<P, TT extends ElementType ? TT : T, C>,
-) =>
-  | PolymorphicElement<P, TT extends ElementType ? TT : T>
-  | Promise<PolymorphicElement<P, TT extends ElementType ? TT : T>>
+> = {
+  displayName?: string;
+  <TT = AsOrDefault<P, T>>(
+    props: PolymorphicProps<P, TT extends ElementType ? TT : T, C>,
+  ):
+    | PolymorphicElement<P, TT extends ElementType ? TT : T>
+    | Promise<PolymorphicElement<P, TT extends ElementType ? TT : T>>
+}
 
 /**
  * Creates a polymorphic component.
@@ -262,6 +266,8 @@ export const createPolymorph = <
     (Number(version.split('.')[0]) || 0) >= 19,
     'To use `createPolymorph`, please upgrade "react" and "@types/react" to version 19 or higher.',
   )
+
+  render.displayName ??= render.name || 'PolymorphicComponent'
 
   return render as PolymorphicExoticComponent<P, T, C>
 }

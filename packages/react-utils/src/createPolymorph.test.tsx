@@ -56,6 +56,37 @@ describe('createPolymorph', () => {
     expect(createPolymorph(testFunction)).toBe(testFunction)
   })
 
+  it('sets the display name from the render function', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    const render: PolymorphicRenderFunction<object, 'button'> = () => null
+    const Button = createPolymorph(render)
+
+    expect(Button.displayName).toBe('render')
+  })
+
+  it('uses a fallback display name for anonymous render functions', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    const render: PolymorphicRenderFunction<object, 'button'> = () => null
+    Object.defineProperty(render, 'name', { value: '' })
+
+    const Button = createPolymorph(render)
+
+    expect(Button.displayName).toBe('PolymorphicComponent')
+  })
+
+  it('preserves an existing display name', async () => {
+    const { createPolymorph } = await import('./createPolymorph')
+
+    const render: PolymorphicRenderFunction<object, 'button'> = () => null
+    render.displayName = 'CustomButton'
+
+    const Button = createPolymorph(render)
+
+    expect(Button.displayName).toBe('CustomButton')
+  })
+
   it('treats a bare `object` props definition as having no custom keys', async () => {
     const { createPolymorph } = await import('./createPolymorph')
 
