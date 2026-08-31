@@ -1,3 +1,5 @@
+'use client'
+
 import type * as CheckoutApi from '@noaignite/centra-types'
 import { isPlainObject } from '@noaignite/utils'
 import type Cookies from 'js-cookie'
@@ -67,6 +69,28 @@ export interface ContextMethods {
   addItem?: (
     item: string,
     quantity?: number,
+    data?: {
+      /**
+       * The URL to the product added, so the item can be linked back to its origin
+       */
+      productUrl?: string
+      /**
+       * The category id of the added product, so the item can be linked back to its origin.
+       */
+      category?: string
+      /**
+       * Requires shared secret. Comment that will end up on the order line
+       */
+      comment?: string
+      /**
+       * Localized size (localizedSize) & localization definition name (localizationDefinitionName)
+       */
+      localizedProdSize?: string
+      /**
+       * The ID of subscription plan
+       */
+      subscriptionPlan?: string
+    },
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
    * @param item - The Centra item id
@@ -74,7 +98,34 @@ export interface ContextMethods {
    */
   addBundleItem?: (
     item: string,
-    data?: Record<string, unknown>,
+    data?: {
+      /**
+       * The quantity of items that should be added to the cart.
+       * Minimum should be 1.
+       * Defaults to 1.
+       */
+      quantity?: number
+      /**
+       * The URL to the product added, so the item can be linked back to its origin
+       */
+      productUrl?: string
+      /**
+       * The category id of the added product, so the item can be linked back to its origin
+       */
+      category?: string
+      /**
+       * Requires shared secret. Comment that will end up on the order line
+       */
+      comment?: string
+      /**
+       * Localized size (localizedSize) & localization definition name (localizationDefinitionName)
+       */
+      localizedProdSize?: string
+      /**
+       * The ID of subscription plan
+       */
+      subscriptionPlan?: string
+    },
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   /**
    * @param giftCertificate - The `giftCertificate` value of the gift certificate to add
@@ -355,9 +406,9 @@ export function CentraProvider(props: ProviderProps) {
   /* HANDLER METHODS */
 
   const addItem = useCallback<NonNullable<ContextMethods['addItem']>>(
-    (item, quantity = 1) =>
+    (item, quantity = 1, data) =>
       onSelectionResponse(
-        apiClient.request('POST', `items/${item}/quantity/${quantity}`),
+        apiClient.request('POST', `items/${item}/quantity/${quantity}`, data),
         selectionApiCall,
       ),
     [apiClient, selectionApiCall],
