@@ -218,6 +218,94 @@ describe('CentraProvider', () => {
   })
 
   describe('submitPayment', () => {
+    it('suspends checkout scripts while submitting payment', async () => {
+      const centraCheckoutStub = {
+        suspend: vi.fn(),
+        resume: vi.fn(),
+        reInitiate: vi.fn(),
+      }
+      window.CentraCheckout = centraCheckoutStub
+
+      const scope = nock(CENTRA_API_URL)
+        .post('/payment', () => {
+          expect(centraCheckoutStub.suspend).toHaveBeenCalledTimes(1)
+          expect(centraCheckoutStub.resume).not.toHaveBeenCalled()
+
+          return true
+        })
+        .reply(200, {
+          formHtml: '<div>Injected form</div>',
+        })
+
+      function TestComponent() {
+        const { submitPayment } = useCentraHandlers()
+
+        useEffect(() => {
+          void submitPayment?.({
+            address: {},
+          })
+        }, [submitPayment])
+
+        return null
+      }
+
+      render(<TestComponent />, {
+        wrapper: (props) => (
+          <CentraProviderWrapper disableInit initialSelection={selectionEmptyResponse} {...props} />
+        ),
+      })
+
+      await waitFor(() => {
+        expect(scope.isDone()).toBe(true)
+        expect(centraCheckoutStub.resume).toHaveBeenCalledTimes(1)
+      })
+
+      window.CentraCheckout = undefined
+    })
+
+    it('resumes checkout scripts when submitting payment fails', async () => {
+      const centraCheckoutStub = {
+        suspend: vi.fn(),
+        resume: vi.fn(),
+        reInitiate: vi.fn(),
+      }
+      window.CentraCheckout = centraCheckoutStub
+
+      const scope = nock(CENTRA_API_URL)
+        .post('/payment')
+        .reply(200, {
+          errors: {
+            paymentMethod: ['Payment method is invalid'],
+          },
+        })
+
+      function TestComponent() {
+        const { submitPayment } = useCentraHandlers()
+
+        useEffect(() => {
+          void submitPayment?.({
+            address: {},
+          }).catch(() => {})
+        }, [submitPayment])
+
+        return null
+      }
+
+      render(<TestComponent />, {
+        wrapper: (props) => (
+          <CentraProviderWrapper disableInit initialSelection={selectionEmptyResponse} {...props} />
+        ),
+      })
+
+      await waitFor(() => {
+        expect(scope.isDone()).toBe(true)
+        expect(centraCheckoutStub.suspend).toHaveBeenCalledTimes(1)
+        expect(centraCheckoutStub.resume).toHaveBeenCalledTimes(1)
+      })
+
+      window.CentraCheckout = undefined
+    })
+
     describe('when paymentReturnPage and paymentFailedPage props are callbacks', () => {
       it('passes returned strings parameters to POST /payment', async () => {
         const scope = nock(CENTRA_API_URL)
