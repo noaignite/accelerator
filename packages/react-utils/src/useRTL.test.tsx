@@ -1,6 +1,7 @@
-import { act, render } from '@testing-library/react'
-import { useRef } from 'react'
-import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest'
+import { act, render, renderHook } from '@testing-library/react'
+import { createElement, useRef } from 'react'
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { isReactElement, UseRTL } from '.'
 import { useRTL } from './useRTL'
 
 class MutationObserverStub {
@@ -59,128 +60,253 @@ afterAll(() => {
   vi.unstubAllGlobals()
 })
 
-function Scenario1() {
-  const isRTL = useRTL()
-  return <div data-is-rtl={isRTL} title="Target" />
-}
+describe('useRTL', () => {
+  function Scenario1() {
+    const isRTL = useRTL()
+    return <div data-is-rtl={isRTL} title="Target" />
+  }
 
-test('defaults to LTR when no `dir` attribute is set on `HTMLHtmlElement`', async () => {
-  const { findByTitle } = render(<Scenario1 />)
+  it('defaults to LTR when no `dir` attribute is set on `HTMLHtmlElement`', async () => {
+    const { findByTitle } = render(<Scenario1 />)
 
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
-})
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+  })
 
-test('respects `dir` attribute of `HTMLHtmlElement`', async () => {
-  document.documentElement.dir = 'rtl'
-
-  const { findByTitle } = render(<Scenario1 />)
-
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('true')
-})
-
-test('changes to `dir` attribute on `HTMLHtmlElement` updates return value', async () => {
-  const { findByTitle } = render(<Scenario1 />)
-
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
-
-  act(() => {
+  it('respects `dir` attribute of `HTMLHtmlElement`', async () => {
     document.documentElement.dir = 'rtl'
-    MutationObserverStub.triggerAttributeChange(document.documentElement, 'dir')
+
+    const { findByTitle } = render(<Scenario1 />)
+
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('true')
   })
 
-  expect(target.getAttribute('data-is-rtl')).toBe('true')
+  it('changes to `dir` attribute on `HTMLHtmlElement` updates return value', async () => {
+    const { findByTitle } = render(<Scenario1 />)
 
-  act(() => {
-    document.documentElement.dir = 'ltr'
-    MutationObserverStub.triggerAttributeChange(document.documentElement, 'dir')
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+
+    act(() => {
+      document.documentElement.dir = 'rtl'
+      MutationObserverStub.triggerAttributeChange(document.documentElement, 'dir')
+    })
+
+    expect(target.getAttribute('data-is-rtl')).toBe('true')
+
+    act(() => {
+      document.documentElement.dir = 'ltr'
+      MutationObserverStub.triggerAttributeChange(document.documentElement, 'dir')
+    })
+
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
   })
 
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
+  function Scenario2({
+    containerDir,
+    targetDir,
+    when = true,
+  }: {
+    containerDir?: 'ltr' | 'rtl'
+    targetDir?: 'ltr' | 'rtl'
+    when?: boolean
+  }) {
+    const ref = useRef<HTMLDivElement>(null)
+    const isRTL = useRTL({ ref, when })
+
+    return (
+      <div dir={containerDir}>
+        <div data-is-rtl={isRTL} dir={targetDir} ref={ref} title="Target" />
+      </div>
+    )
+  }
+
+  it('defaults to closest `Element` with a `dir` attribute if referenced element does not have `dir` attribute', async () => {
+    const { findByTitle } = render(<Scenario2 containerDir="rtl" />)
+
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('true')
+  })
+
+  it('defaults to referenced element if referenced element has `dir` attribute', async () => {
+    const { findByTitle } = render(<Scenario2 containerDir="rtl" targetDir="ltr" />)
+
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+  })
+
+  it('changes to `dir` attribute on referenced element updates return value', async () => {
+    const { findByTitle } = render(<Scenario2 targetDir="ltr" />)
+
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+
+    act(() => {
+      target.dir = 'rtl'
+      MutationObserverStub.triggerAttributeChange(target, 'dir')
+    })
+
+    expect(target.getAttribute('data-is-rtl')).toBe('true')
+
+    act(() => {
+      target.dir = 'ltr'
+      MutationObserverStub.triggerAttributeChange(target, 'dir')
+    })
+
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+  })
+
+  it('when disabled, retains return value and does not observe for changes', async () => {
+    const { findByTitle } = render(<Scenario2 targetDir="rtl" when={false} />)
+
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('true')
+
+    act(() => {
+      target.dir = 'ltr'
+      MutationObserverStub.triggerAttributeChange(target, 'dir')
+    })
+
+    expect(target.getAttribute('data-is-rtl')).toBe('true')
+  })
+
+  it('when unmounted, retains return value and does not observe for changes', async () => {
+    const { findByTitle, unmount } = render(<Scenario2 targetDir="ltr" />)
+
+    const target = await findByTitle('Target')
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+
+    unmount()
+
+    act(() => {
+      target.dir = 'ltr'
+      MutationObserverStub.triggerAttributeChange(target, 'dir')
+    })
+
+    expect(target.getAttribute('data-is-rtl')).toBe('false')
+  })
 })
 
-function Scenario2({
-  containerDir,
-  targetDir,
-  when = true,
-}: {
-  containerDir?: 'ltr' | 'rtl'
-  targetDir?: 'ltr' | 'rtl'
-  when?: boolean
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isRTL = useRTL({ ref, when })
-
-  return (
-    <div dir={containerDir}>
-      <div data-is-rtl={isRTL} dir={targetDir} ref={ref} title="Target" />
-    </div>
-  )
-}
-
-test('defaults to closest `Element` with a `dir` attribute if referenced element does not have `dir` attribute', async () => {
-  const { findByTitle } = render(<Scenario2 containerDir="rtl" />)
-
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('true')
-})
-
-test('defaults to referenced element if referenced element has `dir` attribute', async () => {
-  const { findByTitle } = render(<Scenario2 containerDir="rtl" targetDir="ltr" />)
-
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
-})
-
-test('changes to `dir` attribute on referenced element updates return value', async () => {
-  const { findByTitle } = render(<Scenario2 targetDir="ltr" />)
-
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
-
-  act(() => {
-    target.dir = 'rtl'
-    MutationObserverStub.triggerAttributeChange(target, 'dir')
+describe('UseRTL', () => {
+  it('is a function component', () => {
+    expect(isReactElement(createElement(UseRTL))).toBe(true)
   })
 
-  expect(target.getAttribute('data-is-rtl')).toBe('true')
+  it('merges attributes correctly, applying them to underlying DOM element', async () => {
+    const { findByTitle } = render(
+      <UseRTL data-a="a-1">
+        {() => (
+          <UseRTL data-a="a-2" data-b="b-1">
+            {() => <div title="Target" data-a="a-3" data-c="c-1" />}
+          </UseRTL>
+        )}
+      </UseRTL>,
+    )
 
-  act(() => {
-    target.dir = 'ltr'
-    MutationObserverStub.triggerAttributeChange(target, 'dir')
+    const target = await findByTitle('Target')
+    expect(target.dataset['a']).toEqual('a-3')
+    expect(target.dataset['b']).toEqual('b-1')
+    expect(target.dataset['c']).toEqual('c-1')
   })
 
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
-})
+  it('forwards reference to underlying DOM element', async () => {
+    const { result } = renderHook(() => useRef(null))
 
-test('when disabled, retains return value and does not observe for changes', async () => {
-  const { findByTitle } = render(<Scenario2 targetDir="rtl" when={false} />)
+    const { findByTitle } = render(
+      <UseRTL ref={result.current}>{() => <UseRTL>{() => <div title="Target" />}</UseRTL>}</UseRTL>,
+    )
 
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('true')
-
-  act(() => {
-    target.dir = 'ltr'
-    MutationObserverStub.triggerAttributeChange(target, 'dir')
+    const target = await findByTitle('Target')
+    expect(result.current.current).toEqual(target)
   })
 
-  expect(target.getAttribute('data-is-rtl')).toBe('true')
-})
+  it('disallows fragment child if reference if passed', async () => {
+    const { result } = renderHook(() => useRef(null))
 
-test('when unmounted, retains return value and does not observe for changes', async () => {
-  const { findByTitle, unmount } = render(<Scenario2 targetDir="ltr" />)
+    let error: unknown
 
-  const target = await findByTitle('Target')
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
+    try {
+      render(
+        <UseRTL ref={result.current}>
+          {() => (
+            <>
+              <div title="Target" />
+            </>
+          )}
+        </UseRTL>,
+      )
+    } catch (err) {
+      error = err
+    }
 
-  unmount()
-
-  act(() => {
-    target.dir = 'ltr'
-    MutationObserverStub.triggerAttributeChange(target, 'dir')
+    expect(error).toBeInstanceOf(Error)
   })
 
-  expect(target.getAttribute('data-is-rtl')).toBe('false')
+  it('disallows child to have reference assigned', async () => {
+    const { result } = renderHook(() => useRef(null))
+
+    let error: unknown
+
+    try {
+      render(<UseRTL>{() => <div ref={result.current} title="Target" />}</UseRTL>)
+    } catch (err) {
+      error = err
+    }
+
+    expect(error).toBeInstanceOf(Error)
+  })
+
+  it('silently fails if child is falsy', () => {
+    const condition = false as const
+
+    const { queryByTitle } = render(<UseRTL>{() => condition && <div title="Target" />}</UseRTL>)
+
+    expect(queryByTitle('Target')).toBeNull()
+  })
+
+  it('returns and tracks document directionality', async () => {
+    const { findByTitle } = render(
+      <UseRTL>{(isRTL) => <div title="Target" data-is-rtl={isRTL ? '' : undefined} />}</UseRTL>,
+    )
+
+    const target = await findByTitle('Target')
+
+    expect(target.hasAttribute('data-is-rtl')).toBe(false)
+    expect(target.hasAttribute('data-rtl')).toBe(false)
+
+    act(() => {
+      document.documentElement.dir = 'rtl'
+      MutationObserverStub.triggerAttributeChange(document.documentElement, 'dir')
+    })
+
+    expect(target.hasAttribute('data-is-rtl')).toBe(true)
+    expect(target.hasAttribute('data-rtl')).toBe(true)
+  })
+
+  it('returns and tracks local directionality', async () => {
+    const { findByTitle } = render(
+      <div title="Container" dir="rtl">
+        <UseRTL scoped>
+          {(isRTL) => <div title="Target" data-is-rtl={isRTL ? '' : undefined} />}
+        </UseRTL>
+      </div>,
+    )
+
+    const container = await findByTitle('Container')
+    const target = await findByTitle('Target')
+
+    expect(document.documentElement.dir).toEqual('')
+    expect(container.dir).toEqual('rtl')
+    expect(target.hasAttribute('data-is-rtl')).toBe(true)
+
+    act(() => {
+      container.dir = 'ltr'
+      MutationObserverStub.triggerAttributeChange(container, 'dir')
+    })
+
+    expect(document.documentElement.dir).toEqual('')
+    expect(container.dir).toEqual('ltr')
+    expect(target.hasAttribute('data-is-rtl')).toBe(false)
+  })
 })
