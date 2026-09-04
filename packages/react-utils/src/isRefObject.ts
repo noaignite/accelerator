@@ -6,7 +6,6 @@ import type { RefObject } from 'react'
  *
  * @param value - The value to check.
  * @returns `true` if the value is of type `RefObject`, `false` otherwise.
- *
  * @example
  * ```ts
  * const ref = useRef<HTMLDivElement>(null)

@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax -- Allow dot-notated @param's, seems to work. */
 /* eslint-disable @typescript-eslint/no-explicit-any -- To any or not to any, that is the question. */
 
 import { Fragment, type ComponentProps, type ComponentType, type ReactNode } from 'react'
@@ -25,7 +24,6 @@ import { Fragment, type ComponentProps, type ComponentType, type ReactNode } fro
  * @param options.wrapper - An optional function for wrapping the rendered
  * block component.
  * @returns `renderBlock` function.
- *
  * @example
  * ```tsx
  * const blocks = {
@@ -71,7 +69,7 @@ import { Fragment, type ComponentProps, type ComponentType, type ReactNode } fro
  *   props: { title: 'Hello World!' },
  * }]
  *
- * const blocks = await Promise.all(blocksData.map(renderBlock))
+ * const children = await Promise.all(blocksData.map(renderBlock))
  * ```
  */
 export const createRenderBlock = _createRenderBlock()
@@ -88,13 +86,13 @@ export interface RenderBlockTypeMap {
  * Adapter function used to transform block data before it is passed to the
  * registered block component.
  *
- * @typeParam TInProps - Props received by the adapter. These are usually the
+ * @template TInProps - Props received by the adapter. These are usually the
  * incoming block props after renderer-injected props and configured default
  * props have been merged in.
- * @typeParam TOutProps - Final props returned from the adapter and passed to
+ * @template TOutProps - Final props returned from the adapter and passed to
  * the block component. Adapters may omit or override renderer-injected props.
- * @typeParam TContext - Context object provided to `renderBlock`.
- * @typeParam TGlobals - Shared globals configured on `createRenderBlock`.
+ * @template TContext - Context object provided to `renderBlock`.
+ * @template TGlobals - Shared globals configured on `createRenderBlock`.
  */
 export type RenderBlockAdapter<
   TInProps extends Record<PropertyKey, unknown>,
@@ -110,7 +108,7 @@ export type RenderBlockAdapter<
  * responsible for the final component props, so adapter output may omit or
  * override these values before the component is rendered.
  *
- * @typeParam TBlockType - Literal block type for the selected block component.
+ * @template TBlockType - Literal block type for the selected block component.
  */
 export type RenderBlockInjectedProps<TBlockType extends string = string> = {
   blockType: TBlockType
@@ -123,9 +121,9 @@ export type RenderBlockInjectedProps<TBlockType extends string = string> = {
  * The wrapper receives renderer-injected block metadata plus `children`, along
  * with the same context and globals available to adapters.
  *
- * @typeParam TBlockType - Literal block type for the rendered block.
- * @typeParam TContext - Context object provided to `renderBlock`.
- * @typeParam TGlobals - Shared globals configured on `createRenderBlock`.
+ * @template TBlockType - Literal block type for the rendered block.
+ * @template TContext - Context object provided to `renderBlock`.
+ * @template TGlobals - Shared globals configured on `createRenderBlock`.
  */
 export type RenderBlockWrapper<
   TBlockType extends string,
@@ -145,6 +143,7 @@ export type RenderBlockWrapper<
  * no way in typescript to partially provide generics while having the rest
  * self-infer.
  *
+ * @returns A typed block-renderer factory.
  * @see https://github.com/microsoft/TypeScript/issues/10571
  * @see https://github.com/microsoft/TypeScript/pull/26349
  */
@@ -184,6 +183,12 @@ export function _createRenderBlock<
     /**
      * `renderBlock` is a function which renders a block based on the `blockType`.
      * See `createRenderBlock` for documentation.
+     *
+     * @param data - Block data to render.
+     * @param data.blockType - Registered component key.
+     * @param data.props - Props supplied to the block component.
+     * @param renderIndexOrContext - Render index or full render context.
+     * @returns The rendered block element, or `null` for invalid block data.
      */
     return async function renderBlock<TBlockType extends keyof TBlocks & string>(
       data: {

@@ -8,7 +8,6 @@
  * `Promise` resolves. If no value is provided, the default is 0, meaning it
  * resolves immediately in the next event loop cycle.
  * @returns A `Promise` that resolves after the specified delay.
- *
  * @example
  * ```ts
  * await sleep(1000) // Resolves after 1 second

@@ -1,5 +1,8 @@
 /**
- * Helper function to calculate relative luminance for a color
+ * Calculates the relative luminance of an RGB color.
+ *
+ * @param rgb - The RGB color.
+ * @returns The color's relative luminance.
  */
 export const calculateLuminance = (rgb: [number, number, number]): number => {
   const [r, g, b] = rgb.map((c) => {

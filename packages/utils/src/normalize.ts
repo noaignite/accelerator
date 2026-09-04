@@ -9,7 +9,6 @@
  * @param minimum - The minimum value of the range.
  * @param maximum - The maximum value of the range.
  * @returns The normalized value between `0` and `1`.
- *
  * @example
  * ```ts
  * // Normalize a value within the range [0, 100]

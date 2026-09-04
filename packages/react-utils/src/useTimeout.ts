@@ -7,7 +7,7 @@ export type TimeoutOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -18,9 +18,8 @@ export type TimeoutOptions = {
  * @param callback - A function to execute.
  * @param delay - The delay in milliseconds.
  * @param options - Configurable options.
- *
+ * @param options.when - Whether the timeout is enabled.
  * @returns void
- *
  * @example
  * ```tsx
  * const [showNewsletterPopup, setShowNewsletterPopup] = useState(false);

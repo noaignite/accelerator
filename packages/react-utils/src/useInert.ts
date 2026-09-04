@@ -51,6 +51,9 @@ const resetInert = () => {
  * In the case where a child contains the `ignore` element, the function is called
  * recursively to apply the `inert` attribute to all descendants of the child which
  * does not contain the ignored element until the `ignore` element is reached.
+ *
+ * @param scope - Ancestor whose children may become inert.
+ * @param ignore - Descendant branch to leave interactive.
  */
 const applyInertToDescendants = (scope: Element, ignore: Element) => {
   Array.from(scope.children).forEach((child) => {
@@ -86,9 +89,7 @@ const applyInert = () => {
  *
  * @param when - Whether to apply the `inert` attribute.
  * @param ref - The element to exclude from the `inert` attribute.
- *
  * @returns void
- *
  * @example
  * ```tsx
  * const [isDialogOpen, setIsDialogOpen] = useState(false)

@@ -3,7 +3,6 @@
  *
  * @param value - The string to capitalize.
  * @returns The capitalized string.
- *
  * @example
  * ```ts
  * capitalize('hello world') // 'Hello world'

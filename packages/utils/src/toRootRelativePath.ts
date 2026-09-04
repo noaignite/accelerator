@@ -1,6 +1,8 @@
 /**
  * Transforms a given path to be root relative.
  *
+ * @param str - The path or absolute URL to transform.
+ * @returns The root-relative path, or the original absolute URL.
  * @example
  * ```typescript
  * toRootRelativePath('foo/bar') // '/foo/bar'

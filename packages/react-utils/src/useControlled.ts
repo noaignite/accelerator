@@ -1,6 +1,5 @@
 // @see https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useControlled
 /* eslint-disable react-hooks/rules-of-hooks, react-hooks/exhaustive-deps -- Based on Mui */
-/* eslint-disable tsdoc/syntax -- Allow documentation of object params */
 
 'use client'
 
@@ -38,7 +37,6 @@ export type UseControlledOptions<T = unknown> = {
  * @param options.name - The component name for warning messages.
  * @param options.state - (Optional) The state variable name (defaults to "value") for warnings.
  * @returns A tuple with the current value and a setter. In controlled mode, the setter is a no-op.
- *
  * @example
  * ```tsx
  * function ExampleComponent(props) {

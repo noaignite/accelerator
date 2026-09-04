@@ -10,7 +10,6 @@
  * object.
  * @returns A new object that contains all properties of `object` except for
  * those specified in the `keys` array.
- *
  * @example
  * ```ts
  * omit({ a: 1, b: 2, c: 3 }, ['a', 'c']) // { b: 2 }

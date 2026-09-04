@@ -4,6 +4,9 @@
  * Could be useful when the [Array.prototype.filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method
  * doesn't properly infer your predicate function.
  *
+ * @param obj - The object whose values are checked.
+ * @param keys - The keys whose values must be non-nullable.
+ * @returns Whether every specified key has a non-nullable value.
  * @example
  * ```ts
  *  const entries = [

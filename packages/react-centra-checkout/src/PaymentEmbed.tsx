@@ -11,8 +11,10 @@ export interface PaymentEmbedProps {
   onPaymentError?: (error: CheckoutApi.Errors) => void
 }
 
-/** This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
-you should simply call the submitPayment method of the context instead */
+/**
+ * This component handles rendering of payment widgets such as Klarna Checkout and Adyen drop-in, if you submit payments yourself directly,
+ * you should simply call the submitPayment method of the context instead
+ */
 export const PaymentEmbed = memo(function PaymentEmbed(
   props: PaymentEmbedProps,
 ): React.ReactElement | null {

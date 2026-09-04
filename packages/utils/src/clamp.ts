@@ -12,7 +12,6 @@
  * greater than this number.
  * @returns The clamped value, constrained within the range defined by `min`
  * and `max`.
- *
  * @example
  * ```ts
  * clamp(5, 0, 10) // 5

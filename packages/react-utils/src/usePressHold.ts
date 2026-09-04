@@ -32,9 +32,15 @@ export type PressHoldOptions = Prettify<
  * @param ref - The element to attach the gesture to.
  * @param callback - Function to execute when gesture is complete.
  * @param options - Configurable options
- *
+ * @param options.when - Whether press-and-hold handling is enabled.
+ * @param options.axis - Axis to constrain movement to.
+ * @param options.deadZone - Movement allowed before cancellation.
+ * @param options.duration - Required hold duration in milliseconds.
+ * @param options.onGestureStart - Called when the press starts.
+ * @param options.onGestureMove - Called when the pointer moves.
+ * @param options.onGestureEnd - Called when the press ends.
+ * @param options.pointerType - Pointer type allowed to trigger the gesture.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null);

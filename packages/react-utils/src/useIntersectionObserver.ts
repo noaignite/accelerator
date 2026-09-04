@@ -13,13 +13,13 @@ export type IntersectionObserverOptions = IntersectionObserverInit & {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
   /**
    * A `boolean` indicating whether the first intersection should terminate the observer.
    *
-   * @defaultValue false
+   * @default false
    */
   once?: boolean
 }
@@ -31,9 +31,12 @@ export type IntersectionObserverOptions = IntersectionObserverInit & {
  * @param ref - A `RefObject` of the element to observe.
  * @param callback - A function to execute when the observed element intersection changes.
  * @param options - Configurable options
- *
+ * @param options.when - Whether observation is enabled.
+ * @param options.once - Whether to stop after the first intersection.
+ * @param options.root - Element used as the intersection viewport.
+ * @param options.rootMargin - Margin applied around the root.
+ * @param options.threshold - Intersection ratios that trigger the callback.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLSpanElement>(null);

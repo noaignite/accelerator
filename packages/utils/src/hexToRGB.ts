@@ -1,5 +1,8 @@
 /**
- * Helper function to convert hex to RGB
+ * Converts a hexadecimal color to RGB.
+ *
+ * @param hex - The hexadecimal color value.
+ * @returns The corresponding RGB color.
  */
 export const hexToRGB = (hex: string): [number, number, number] => {
   let normalizedHex = hex.replace(/^#/, '')

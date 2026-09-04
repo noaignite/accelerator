@@ -8,13 +8,12 @@ import { useIsomorphicEffect } from './useIsomorphicEffect'
  * reference, but also can read the latest scope (props and state) of the
  * component in which it is used. Useful for preventing unnecessary re-renders.
  *
- * @param callback - Function to stabilize
- *
+ * @param callback - Function to stabilize.
+ * @returns A stable callback that invokes the latest function.
  * @remarks
  * As opposed to `useCallback` which recreates callback when dependencies change,
  * `useStableCallback` does not recreate the callback itself, but rather the
  * reference to it. You will always get the latest version of the callback.
- *
  * @example
  * ```tsx
  * const stableCallback = useStableCallback(() => getRandomValue())

@@ -21,6 +21,9 @@ export interface ProviderProps {
    * The api client to use instead of the default one
    */
   apiClient?: ApiClient
+  /**
+   * The content rendered within the provider.
+   */
   children: React.ReactNode
   /**
    * Disables automatic client side fetching of the Centra selection
@@ -49,14 +52,19 @@ export interface ProviderProps {
   receiptPage: string
   /**
    *  When the cookie used to store the Centra checkout token will expire, days as a number or a Date
-   *  @defaultValue `365`
+   *
+   * @default 365
    */
   tokenExpires?: number | Date
   /**
    * The name of the cookie used to store the Centra checkout token
-   * @defaultValue `centra-checkout-token`
+   *
+   * @default 'centra-checkout-token'
    */
   tokenName?: string
+  /**
+   * Options used when storing the checkout token cookie.
+   */
   tokenCookieOptions?: Cookies.CookieAttributes
 }
 
@@ -144,6 +152,7 @@ export interface ContextMethods {
   ) => Promise<CheckoutApi.Response<CheckoutApi.SelectionResponse>>
   resetSelection?: () => Promise<void>
   /**
+   * @param email - Email address associated with the customer account.
    * @param linkUri - URI of the password reset page. Should not be a full url e.g. `account/password-reset`. Domain is set in CheckoutApi.
    */
   sendCustomerResetPasswordEmail?: (
@@ -221,6 +230,7 @@ export const CentraSelectionContext = createContext<ContextProperties | null>(nu
  *
  * @param promise -  Promise that may contain `selection` response
  * @param callback -  Callback that should be called with the `promise` if the results of the `promise` contains a `CheckoutApi.SelectionResponse`
+ * @returns The selection response, processed by the callback when applicable.
  */
 const onSelectionResponse = async <
   TPromise extends Promise<CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>>,
@@ -247,6 +257,9 @@ const onSelectionResponse = async <
  * React Context provider that is required to use the `useCentra` and `useCentraHandlers` hooks.
  * Provides state management and related handlers of the users current Centra selection via the Checkout API.
  * The handlers could be used for adding products to the selection and making purchases, for example.
+ *
+ * @param props - Provider configuration and child content.
+ * @returns The Centra context providers.
  */
 export function CentraProvider(props: ProviderProps) {
   const {
@@ -755,6 +768,8 @@ export function CentraProvider(props: ProviderProps) {
 
 /**
  * This hook returns the centra selection
+ *
+ * @returns The current Centra selection context.
  */
 export function useCentraSelection() {
   const context = useContext(CentraSelectionContext)
@@ -774,6 +789,8 @@ export function useCentraSelection() {
 
 /**
  * This hook returns update handlers
+ *
+ * @returns The current Centra handler methods.
  */
 export function useCentraHandlers() {
   const context = useContext(CentraHandlersContext)
@@ -793,6 +810,9 @@ export function useCentraHandlers() {
 
 /**
  * Returns the latest order receipt given a selection token
+ *
+ * @param token - Selection token used to fetch the receipt.
+ * @returns The latest receipt response.
  */
 export function useCentraReceipt(
   token: string,
@@ -823,8 +843,11 @@ export function useCentraReceipt(
 
 /**
  * Returns the latest orders for the currently logged in user
+ *
  * @param from - Display orders from this index. Defaults to 0.
  * @param size - Display this many orders. Defaults lists all orders.
+ * @param apiClient - API client used to fetch orders.
+ * @returns The current orders response.
  */
 export function useCentraOrders(
   from?: number,

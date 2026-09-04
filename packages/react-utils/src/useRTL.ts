@@ -15,13 +15,13 @@ export type RTLOptions = {
    * Useful when the most likely value is known ahead of time, as it may
    * mitigate a flash of content in certain controlled scenarios.
    *
-   * @defaultValue `undefined`
+   * @default undefined
    */
   initialValue?: boolean
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue `true`
+   * @default true
    */
   when?: boolean
 }
@@ -30,6 +30,9 @@ export type RTLOptions = {
  * Traverse DOM-tree toward root element and find the closest parent
  * with an explicit `dir` attribute set. In the instance of no `dir`,
  * the `<html />` or `document.documentElement` is returned.
+ *
+ * @param ref - Optional element used to derive local directionality.
+ * @returns The nearest explicit directionality element.
  */
 const deriveObservableElement = (ref?: RefObject<Element | null>) => {
   if (typeof window === 'undefined') return null
@@ -52,14 +55,14 @@ const deriveObservableElement = (ref?: RefObject<Element | null>) => {
  *
  * @remarks This hook __does not__ consider directionality defined via CSS, only
  * semantic directionality defined via the `dir` attribute.
- *
  * @param options - Configurable options
- *
+ * @param options.ref - Optional element used for local directionality.
+ * @param options.initialValue - Value returned before client-side evaluation.
+ * @param options.when - Whether direction changes are observed.
  * @returns
  * - `true` if document or local directionality is RTL
  * - `false` if document or local directionality is LTR
  * - `undefined` on initial render / server-side
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLUListElement>(null)

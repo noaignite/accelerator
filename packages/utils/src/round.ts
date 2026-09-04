@@ -6,7 +6,6 @@
  * @param number - The number to round.
  * @param precision - The precision to round to. Defaults to `0`.
  * @returns The rounded number.
- *
  * @example
  * ```ts
  * round(4.006) // 4

@@ -59,7 +59,6 @@ export type ErrorBoundaryState = {
  * {@link ErrorBoundaryFallbackProps} for more dynamic rendering. It also provides a
  * `resetErrorBoundary` function to clear the error state and attempt to render the children
  * again.
- *
  * @example
  * ```tsx
  * function Fallback({ resetErrorBoundary }: ErrorBoundaryFallbackProps) {

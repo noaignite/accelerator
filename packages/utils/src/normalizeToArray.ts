@@ -7,7 +7,6 @@
  *
  * @param value - The value to normalize.
  * @returns An array containing the input value(s), or an empty array.
- *
  * @example
  * ```ts
  * normalizeToArray(5); // [5]

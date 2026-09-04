@@ -10,7 +10,7 @@ export type ResizeObserverOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -22,9 +22,8 @@ export type ResizeObserverOptions = {
  * @param ref - A `RefObject` of the element to observe.
  * @param callback - A function to execute when the observed element is resized.
  * @param options - Configurable options
- *
+ * @param options.when - Whether observation is enabled.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLElement>(null);

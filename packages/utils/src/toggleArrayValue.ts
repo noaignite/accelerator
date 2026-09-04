@@ -5,7 +5,6 @@
  * @param value - The value to toggle in the array.
  * @returns A new array with the value added if not present, or removed if
  * present.
- *
  * @example
  * ```ts
  * toggleArrayValue([1, 'foo', true], 1); // ['foo', true]

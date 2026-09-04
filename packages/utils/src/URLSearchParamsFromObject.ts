@@ -10,7 +10,6 @@
  * @param initialSearchParams - An optional initial value for `URLSearchParams`
  * instance to modify.
  * @returns A new `URLSearchParams` instance with the specified key-value pairs.
- *
  * @example
  * ```ts
  * const object = { name: 'Alicia', hobbies: ['reading', 'dancing'] };

@@ -7,6 +7,8 @@ import { createContext, useContext, type ReactNode } from 'react'
  * intended type. Using the hook outside of its provider tree will result in
  * an error being thrown.
  *
+ * @param contextName - Base name used for the context display name and errors.
+ * @returns The required hook, provider, and consumer.
  * @example
  * ```typescript
  * const [useFoo, FooProvider] = createRequiredContext<FooContextValue>('Foo')

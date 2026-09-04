@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax -- Allow documentation of object params */
 import { debounce } from './debounce'
 
 type Options<T> = {
@@ -24,7 +23,6 @@ type Options<T> = {
  * flushing the batch if the condition isn't met.
  * @returns A function that accepts an argument of type T, adds it to the batch,
  * and flushes the batch based on the limit or wait time.
- *
  * @example
  * ```ts
  * // Using a numeric limit:

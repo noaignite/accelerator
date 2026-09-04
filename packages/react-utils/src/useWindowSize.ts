@@ -7,7 +7,7 @@ export type WindowSizeOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -34,12 +34,11 @@ const getSize = () => {
  * Tracks `window` size which updates on window resize.
  *
  * @param options - Configurable options
- *
+ * @param options.when - Whether window-size tracking is enabled.
  * @returns An object containing size information
- *
  * @example
  * ```tsx
- * const { innerWidth, innerHeight } = useWindowSize(ref)
+ * const { innerWidth, innerHeight } = useWindowSize()
  *
  * if (!innerWidth) return null
  * return <div>{innerWidth} x {innerHeight}</div>

@@ -9,7 +9,6 @@
  * @param keys - An array of keys (property names) to include in the new object.
  * @returns A new object that contains only the properties of `object` specified
  * in the `keys` array.
- *
  * @example
  * ```ts
  * pick({ a: 1, b: 2, c: 3 }, ['a', 'c']) // { a: 1, c: 3 }

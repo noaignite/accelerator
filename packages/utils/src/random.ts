@@ -6,7 +6,6 @@
  * @param floating - A boolean indicating if the result should be a
  * floating-point number.
  * @returns A random number between `min` and `max`.
- *
  * @example
  * ```ts
  * random(1, 10); // Outputs an integer between 1 and 10

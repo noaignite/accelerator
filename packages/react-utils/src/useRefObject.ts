@@ -9,7 +9,6 @@ import { useImperativeHandle, useRef } from 'react'
  *
  * @param ref - The React ref to normalize.
  * @returns A `RefObject<T | null>` that is kept in sync with the provided `ref`.
- *
  * @example
  * ```tsx
  * const Component = ({ ref }) => {

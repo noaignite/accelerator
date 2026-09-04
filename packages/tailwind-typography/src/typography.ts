@@ -1,4 +1,3 @@
-/* eslint-disable tsdoc/syntax -- Allow dot-notated @param's, seems to work. */
 import { isPlainObject } from '@noaignite/utils'
 import plugin from 'tailwindcss/plugin'
 import { fluidValue } from './fluidValue'
@@ -97,7 +96,6 @@ export interface TypographyOptions<TKeys extends readonly [string, ...string[]]>
  * breakpoint-specific styles (e.g., `{ sm: { fontSize: 16 }, md: { fontSize: 20 } }`),
  * along with optional local `clamp`, `clampMax`, `clampMin`, and `fluid` flags.
  * @returns A Tailwind CSS plugin function that registers the typography styles.
- *
  * @example
  * ```ts
  * tailwind({

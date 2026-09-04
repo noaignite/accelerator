@@ -1,6 +1,10 @@
 import { calculateLuminance } from './calculateLuminance'
 /**
- * Helper function to calculate contrast ratio between two colors
+ * Calculates the contrast ratio between two RGB colors.
+ *
+ * @param rgb1 - The first RGB color.
+ * @param rgb2 - The second RGB color.
+ * @returns The contrast ratio between the colors.
  */
 export const calculateContrast = (
   rgb1: [number, number, number],

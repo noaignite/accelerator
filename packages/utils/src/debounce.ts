@@ -13,7 +13,6 @@ interface Cancelable {
  * 166 ms. 166 corresponds to 10 frames at 60 Hz.
  * @returns The debounced function, with a `clear` method to cancel any
  * pending execution.
- *
  * @example
  * ```ts
  * const debouncedLog = debounce((msg: string) => console.log(msg), 200);
