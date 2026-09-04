@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for test files */
 import { render, screen, waitFor } from '@testing-library/react'
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import type { BlockAdapter } from './createRenderBlock'
-import { createRenderBlock } from './createRenderBlock'
+import { Suspense, type ReactNode } from 'react'
+import { afterAll, beforeAll, describe, expect, expectTypeOf, it, vi } from 'vitest'
+import { ErrorBoundary } from './ErrorBoundary'
+import type { RenderBlockAdapter } from './createRenderBlock'
+import { _createRenderBlock, createRenderBlock } from './createRenderBlock'
 
 // -- Example Components -------------------------------------------------------
 
@@ -17,14 +19,14 @@ function MockComponent(props: { blockType?: string; renderIndex?: number; [k: st
 }
 
 // A component that deliberately throws an error to test error boundary fallback.
-function BrokenComponent() {
+function BrokenComponent(): never {
   throw new Error('Broken block')
 }
 
 // -- Example Adapters --------------------------------------------------------
 
 // An adapter that appends a prop called `adapterApplied`.
-const heroAdapter: BlockAdapter<
+const heroAdapter: RenderBlockAdapter<
   { title: string },
   { title: string; adapterApplied: boolean },
   any,
@@ -106,6 +108,166 @@ describe('createRenderBlock', () => {
     expect(mockComponent).toHaveTextContent('"adapterApplied":true')
   })
 
+  it('should let adapters control final component props', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const adapters = {
+      Hero: () => ({ title: 'Adapted' }),
+    }
+
+    const renderBlock = createRenderBlock(blocks, { adapters })
+
+    render(await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 2))
+
+    const mockComponent = screen.getByTestId('mock-component')
+    expect(mockComponent).not.toHaveTextContent('blockType: Hero')
+    expect(mockComponent).not.toHaveTextContent('renderIndex: 2')
+    expect(mockComponent).toHaveTextContent('"title":"Adapted"')
+  })
+
+  it('should type blockType and renderIndex as renderer-injected props', () => {
+    type HeroProps = { title: string; blockType: 'Hero'; renderIndex: number }
+
+    function Hero(_props: HeroProps) {
+      return null
+    }
+
+    const blocks = {
+      Hero,
+    }
+
+    const adapters = {
+      Hero: (props: HeroProps) => {
+        expectTypeOf(props.blockType).toEqualTypeOf<'Hero'>()
+        expectTypeOf(props.renderIndex).toEqualTypeOf<number>()
+
+        return props
+      },
+    }
+
+    const renderBlockWithoutAdapter = createRenderBlock(blocks)
+    const renderBlockWithAdapter = createRenderBlock(blocks, { adapters })
+
+    expectTypeOf(renderBlockWithoutAdapter).toBeFunction()
+    expectTypeOf(renderBlockWithAdapter).toBeFunction()
+    expectTypeOf<Parameters<typeof renderBlockWithoutAdapter>[0]>().toEqualTypeOf<{
+      blockType: 'Hero'
+      props: { title: string }
+    }>()
+
+    void renderBlockWithoutAdapter({ blockType: 'Hero', props: { title: 'Hello' } }, 2)
+    void renderBlockWithAdapter({ blockType: 'Hero', props: { title: 'Hello' } }, 2)
+  })
+
+  it('should wrap a block with the configured wrapper', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const renderBlock = createRenderBlock(blocks, {
+      wrapper: ({ children, blockType }, context) => {
+        return (
+          <section
+            data-block-type={blockType}
+            data-render-index={context.renderIndex}
+            data-testid="wrapper"
+          >
+            {children}
+          </section>
+        )
+      },
+    })
+
+    render(await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 2))
+
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-render-index', '2')
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-block-type', 'Hero')
+    expect(screen.getByTestId('mock-component')).toBeInTheDocument()
+  })
+
+  it('should pass injected props, context, and globals to the configured wrapper', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const context = { renderIndex: 7, locale: 'en' }
+    const globals = { suffix: '!' }
+
+    const renderBlock = createRenderBlock(blocks, {
+      globals,
+      wrapper: ({ children, blockType, renderIndex }, contextArg, globalsArg) => {
+        return (
+          <section
+            data-block-type={blockType}
+            data-locale={contextArg.locale}
+            data-render-index={renderIndex}
+            data-suffix={globalsArg.suffix}
+            data-testid="wrapper"
+          >
+            {children}
+          </section>
+        )
+      },
+    })
+
+    render(await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, context))
+
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-block-type', 'Hero')
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-render-index', '7')
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-locale', 'en')
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-suffix', '!')
+    expect(screen.getByTestId('mock-component')).toBeInTheDocument()
+  })
+
+  it('should pass wrapper metadata independently from adapter output', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const adapters = {
+      Hero: () => ({ title: 'Adapted' }),
+    }
+
+    const renderBlock = createRenderBlock(blocks, {
+      adapters,
+      wrapper: ({ children, blockType, renderIndex }) => {
+        return (
+          <section
+            data-block-type={blockType}
+            data-render-index={renderIndex}
+            data-testid="wrapper"
+          >
+            {children}
+          </section>
+        )
+      },
+    })
+
+    render(await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 8))
+
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-block-type', 'Hero')
+    expect(screen.getByTestId('wrapper')).toHaveAttribute('data-render-index', '8')
+    expect(screen.getByTestId('mock-component')).not.toHaveTextContent('blockType: Hero')
+    expect(screen.getByTestId('mock-component')).not.toHaveTextContent('renderIndex: 8')
+    expect(screen.getByTestId('mock-component')).toHaveTextContent('"title":"Adapted"')
+  })
+
+  it('should render nothing when the configured wrapper returns null', async () => {
+    const blocks = {
+      Hero: MockComponent,
+    }
+
+    const renderBlock = createRenderBlock(blocks, {
+      wrapper: () => null,
+    })
+
+    render(await renderBlock({ blockType: 'Hero', props: { title: 'Hello' } }, 2))
+
+    expect(screen.queryByTestId('mock-component')).not.toBeInTheDocument()
+  })
+
   it('should log an error and returns null if blockType is missing in data', async () => {
     const blocks = {
       Hero: MockComponent,
@@ -120,7 +282,7 @@ describe('createRenderBlock', () => {
 
     // Make sure the error was logged.
     expect(console.error).toHaveBeenCalledWith(
-      'renderBlock: Block with index `%s` is missing the property `blockType`.',
+      'renderBlock: Block with renderIndex `%s` is missing the property `blockType`.',
       3,
     )
   })
@@ -139,13 +301,13 @@ describe('createRenderBlock', () => {
 
     // Make sure the error was logged.
     expect(console.error).toHaveBeenCalledWith(
-      'renderBlock: Block with index `%s` and blockType `%s` could not find a matching component.',
+      'renderBlock: Block with renderIndex `%s` and blockType `%s` could not find a matching component.',
       3,
       'MissingBlock',
     )
   })
 
-  it('should display the fallback if the component throws an error', async () => {
+  it('should display the fallback if an explicit wrapper catches a component error', async () => {
     const blocks = {
       Hero: MockComponent,
       Broken: BrokenComponent,
@@ -154,8 +316,15 @@ describe('createRenderBlock', () => {
     // Provide a fallback component for the error boundary.
     const fallback = <div data-testid="fallback">Something went wrong!</div>
 
-    // @ts-expect-error - We want to specifically test for this error
-    const renderBlock = createRenderBlock(blocks, { fallback })
+    const renderBlock = createRenderBlock(blocks, {
+      wrapper: ({ children }) => {
+        return (
+          <ErrorBoundary blockType="Block" fallback={fallback}>
+            <Suspense fallback={null}>{children}</Suspense>
+          </ErrorBoundary>
+        )
+      },
+    })
 
     // Render the broken block. It should throw an error and show the fallback.
     render(await renderBlock({ blockType: 'Broken', props: {} }, 4))
@@ -164,6 +333,19 @@ describe('createRenderBlock', () => {
     await waitFor(() => {
       expect(screen.getByTestId('fallback')).toBeInTheDocument()
     })
+  })
+
+  it('should let component errors propagate without a wrapper', async () => {
+    const blocks = {
+      Broken: BrokenComponent,
+    }
+
+    const renderBlock = createRenderBlock(blocks)
+    const element = await renderBlock({ blockType: 'Broken', props: {} }, 5)
+
+    expect(() => {
+      render(element)
+    }).toThrow('Broken block')
   })
 
   it('should apply globals in the adapter', async () => {
@@ -175,7 +357,7 @@ describe('createRenderBlock', () => {
     const globals = { suffix: '!!!' }
 
     // Create an adapter that uses the global value to modify the message prop.
-    const globalsAdapter: BlockAdapter<
+    const globalsAdapter: RenderBlockAdapter<
       { message: string },
       { message: string },
       any,
@@ -196,5 +378,37 @@ describe('createRenderBlock', () => {
     // Verify that the adapter appended the global suffix to the message.
     const mockComponent = screen.getByTestId('mock-component')
     expect(mockComponent).toHaveTextContent('"message":"Hello!!!"')
+  })
+
+  it('should type wrapper context and globals', () => {
+    type HeroProps = { title: string }
+    type ProductProps = { title: string }
+
+    const Hero = (_props: HeroProps) => null
+    const Product = (_props: ProductProps) => null
+
+    const blocks = {
+      Hero,
+      Product,
+    }
+
+    const createRenderBlockWithContext = _createRenderBlock<{
+      renderIndex: number
+      locale: string
+    }>()
+
+    createRenderBlockWithContext(blocks, {
+      globals: { suffix: '!' },
+      wrapper: (block, context, globals) => {
+        expectTypeOf(block.blockType).toEqualTypeOf<keyof typeof blocks>()
+        expectTypeOf(block.renderIndex).toEqualTypeOf<number>()
+        expectTypeOf(block.children).toEqualTypeOf<ReactNode>()
+        expectTypeOf(context.renderIndex).toEqualTypeOf<number>()
+        expectTypeOf(context.locale).toEqualTypeOf<string>()
+        expectTypeOf(globals.suffix).toEqualTypeOf<string>()
+
+        return null
+      },
+    })
   })
 })
