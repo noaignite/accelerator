@@ -29,7 +29,7 @@ updates:
       turbo:
         patterns:
           - 'turbo'
-          - 'eslint-config-turbo'
+          - 'eslint-plugin-turbo'
       typescript-eslint:
         patterns:
           - 'typescript-eslint'
