@@ -5,5 +5,10 @@ export default defineConfig(
   getTsdownConfig({
     entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.*'],
     deps: { neverBundle: ['tailwindcss'] },
+    format: ['cjs', 'esm'],
+    outExtensions: ({ format }) => ({
+      js: format === 'cjs' ? '.cjs' : '.js',
+      dts: format === 'cjs' ? '.d.cts' : '.d.ts',
+    }),
   }),
 )
