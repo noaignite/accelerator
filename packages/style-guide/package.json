@@ -55,7 +55,7 @@
     "typescript-eslint": "^8.65.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^16.2.12",
+    "@next/eslint-plugin-next": "^16.3.4",
     "eslint": "^9.39.4",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3"
