@@ -1,7 +1,7 @@
+import { ErrorBoundary } from '@noaignite/react-utils'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { useState } from 'react'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import { ErrorBoundary } from './ErrorBoundary'
 
 // A simple component that throws when `shouldThrow` is true.
 function ProblemChild({ shouldThrow }: { shouldThrow: boolean }) {

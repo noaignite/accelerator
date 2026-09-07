@@ -1,7 +1,7 @@
+import { useRefObject } from '@noaignite/react-utils'
 import { render, renderHook } from '@testing-library/react'
 import { createRef, forwardRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import { useRefObject } from './useRefObject'
 
 describe('useRefObject', () => {
   it('is a function', () => {

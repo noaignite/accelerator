@@ -1,6 +1,6 @@
+import { useVisualViewport } from '@noaignite/react-utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import { useVisualViewport } from './useVisualViewport'
 
 type ViewportState = {
   height: number

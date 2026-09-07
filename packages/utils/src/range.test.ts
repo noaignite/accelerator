@@ -1,5 +1,5 @@
+import { range } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { range } from './range'
 
 describe('range', () => {
   it('is a function and returns an array', () => {

@@ -1,5 +1,10 @@
 {
   "extends": "@noaignite/style-guide/typescript/base",
+  "compilerOptions": {
+    "paths": {
+      "@noaignite/types": ["./src/index.ts"]
+    }
+  },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist", "node_modules"]
 }

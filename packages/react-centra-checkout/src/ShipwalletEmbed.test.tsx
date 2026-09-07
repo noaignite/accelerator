@@ -1,9 +1,8 @@
 import { selectionEmptyResponse, selectionResponse } from '@noaignite/centra-mocks'
+import { CentraProvider, ShipwalletEmbed } from '@noaignite/react-centra-checkout'
 import { render, waitFor } from '@testing-library/react'
 import nock from 'nock'
 import { describe, expect, it, vi } from 'vitest'
-import { CentraProvider } from './Context'
-import { ShipwalletEmbed } from './ShipwalletEmbed'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 

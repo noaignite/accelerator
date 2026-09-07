@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- No need to be strict here */
 
+import { getReactElementRef, useForkRef } from '@noaignite/react-utils'
 import { render, screen, type RenderResult } from '@testing-library/react'
 import {
   cloneElement,
@@ -11,8 +12,6 @@ import {
   type Ref,
 } from 'react'
 import { describe, expect, it } from 'vitest'
-import { getReactElementRef } from './getReactElementRef'
-import { useForkRef } from './useForkRef'
 
 describe('useForkRef', () => {
   it('returns a single ref-setter function that forks the ref to its inputs', () => {

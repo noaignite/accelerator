@@ -1,7 +1,7 @@
+import { useControlled } from '@noaignite/react-utils'
 import { act, render } from '@testing-library/react'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import { useControlled } from './useControlled'
 
 type SetValue<T> = (newValue: T) => void
 

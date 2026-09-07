@@ -1,5 +1,5 @@
+import type { Concatenate } from '@noaignite/types'
 import { describe, expectTypeOf, it } from 'vitest'
-import type { Concatenate } from './Concatenate'
 
 describe('Concatenate', () => {
   it('concatenates string and number tuples with an optional separator', () => {

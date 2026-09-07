@@ -1,5 +1,5 @@
+import { traverse } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { traverse } from './traverse'
 
 describe('traverse', () => {
   it('is a function and returns an array', () => {

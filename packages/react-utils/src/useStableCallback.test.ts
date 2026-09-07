@@ -1,6 +1,6 @@
+import { useStableCallback } from '@noaignite/react-utils'
 import { renderHook } from '@testing-library/react'
 import { expect, test, vi } from 'vitest'
-import { useStableCallback } from './useStableCallback'
 
 test('returns a stable reference across rerenders', () => {
   const { result, rerender } = renderHook(({ callback }) => useStableCallback(callback), {

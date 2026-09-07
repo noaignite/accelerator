@@ -1,7 +1,10 @@
 {
   "extends": "@noaignite/style-guide/typescript/react",
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@noaignite/react-utils": ["./src/index.ts"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist", "node_modules"]

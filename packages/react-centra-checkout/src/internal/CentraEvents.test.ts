@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports -- This test intentionally covers a private module. */
 import { selectionEmptyResponse } from '@noaignite/centra-mocks'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { CentraEvents } from './CentraEvents'

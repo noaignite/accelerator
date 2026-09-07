@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for test files */
+import {
+  _createRenderBlock,
+  createRenderBlock,
+  ErrorBoundary,
+  type RenderBlockAdapter,
+} from '@noaignite/react-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import { Suspense, type ReactNode } from 'react'
 import { afterAll, beforeAll, describe, expect, expectTypeOf, it, vi } from 'vitest'
-import { ErrorBoundary } from './ErrorBoundary'
-import type { RenderBlockAdapter } from './createRenderBlock'
-import { _createRenderBlock, createRenderBlock } from './createRenderBlock'
 
 // -- Example Components -------------------------------------------------------
 

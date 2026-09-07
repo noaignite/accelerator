@@ -1,5 +1,5 @@
+import { normalizeToArray } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { normalizeToArray } from './normalizeToArray'
 
 describe('normalizeToArray', () => {
   it('is a function and returns an array', () => {

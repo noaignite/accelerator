@@ -1,6 +1,6 @@
+import { useInterval } from '@noaignite/react-utils'
 import { renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
-import { useInterval } from './useInterval'
 
 beforeEach(vi.useFakeTimers)
 

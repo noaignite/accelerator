@@ -1,7 +1,7 @@
 import { selectionEmptyResponse } from '@noaignite/centra-mocks'
+import { ApiClient } from '@noaignite/react-centra-checkout'
 import nock from 'nock'
 import { describe, expect, it } from 'vitest'
-import { ApiClient } from './ApiClient'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 

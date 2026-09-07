@@ -1,5 +1,5 @@
+import { isKeyOf } from '@noaignite/utils'
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import { isKeyOf } from './isKeyOf'
 
 describe('isKeyOf', () => {
   it('returns true for own string keys', () => {

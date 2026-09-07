@@ -1,5 +1,5 @@
+import { chunk } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { chunk } from './chunk'
 
 describe('chunk', () => {
   it('is a function and returns an array', () => {

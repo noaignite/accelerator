@@ -1,6 +1,6 @@
+import { getReactElementRef } from '@noaignite/react-utils'
 import { createRef } from 'react'
 import { describe, expect, it } from 'vitest'
-import { getReactElementRef } from './getReactElementRef'
 
 describe('getReactElementRef', () => {
   it('should return undefined when not used correctly', () => {

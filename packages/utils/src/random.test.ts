@@ -1,5 +1,5 @@
+import { random } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { random } from './random'
 
 describe('random', () => {
   it('is a function and returns a number', () => {

@@ -1,7 +1,10 @@
 {
   "extends": "@noaignite/style-guide/typescript/react",
   "compilerOptions": {
-    "typeRoots": ["../../node_modules/@types", "./src/types"]
+    "typeRoots": ["../../node_modules/@types", "./src/types"],
+    "paths": {
+      "@noaignite/react-centra-checkout": ["./src/index.ts"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["dist", "node_modules"]

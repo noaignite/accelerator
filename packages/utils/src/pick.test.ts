@@ -1,5 +1,5 @@
+import { pick } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { pick } from './pick'
 
 describe('pick', () => {
   it('returns the correct result', () => {

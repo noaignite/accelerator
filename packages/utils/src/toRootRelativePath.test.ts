@@ -1,5 +1,5 @@
+import { toRootRelativePath } from '@noaignite/utils'
 import { expect, test } from 'vitest'
-import { toRootRelativePath } from './toRootRelativePath'
 
 test.each([
   ['foo/bar', '/foo/bar'],

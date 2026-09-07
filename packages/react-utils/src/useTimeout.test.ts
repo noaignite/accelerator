@@ -1,6 +1,6 @@
+import { useTimeout } from '@noaignite/react-utils'
 import { renderHook } from '@testing-library/react'
 import { afterEach, beforeEach, expect, test, vi } from 'vitest'
-import { useTimeout } from './useTimeout'
 
 beforeEach(vi.useFakeTimers)
 
