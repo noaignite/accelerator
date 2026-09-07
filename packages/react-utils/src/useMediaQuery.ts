@@ -10,13 +10,13 @@ export type MediaQueryOptions = {
    * Useful when the most likely value is known ahead of time, as it may
    * mitigate a flash of content in certain controlled scenarios.
    *
-   * @defaultValue `undefined`
+   * @default undefined
    */
   initialValue?: boolean
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue `true`
+   * @default true
    */
   when?: boolean
 }
@@ -27,12 +27,12 @@ export type MediaQueryOptions = {
  *
  * @param media - A valid media query string
  * @param options - Configurable options
- *
+ * @param options.initialValue - Value returned before client-side evaluation.
+ * @param options.when - Whether query tracking is enabled.
  * @returns
  * - `true` if media query matches
  * - `false` if media query does not match
  * - `undefined` on initial render / server-side
- *
  * @example
  * ```tsx
  * const isMobile = useMediaQuery('(max-width: 640px)')

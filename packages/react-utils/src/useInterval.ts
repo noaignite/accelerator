@@ -7,7 +7,7 @@ export type IntervalOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -18,9 +18,8 @@ export type IntervalOptions = {
  * @param callback - A function to execute.
  * @param delay - The delay in milliseconds.
  * @param options - Configurable options.
- *
+ * @param options.when - Whether the interval is enabled.
  * @returns void
- *
  * @example
  * ```tsx
  * const livePriceUpdate = () => { ... }

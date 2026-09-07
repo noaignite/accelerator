@@ -17,6 +17,7 @@ import { useStableCallback } from './useStableCallback'
  * @param containerRect - Bounding rect of the scroll container.
  * @param topOffset - Offset from the container's top (default: 0).
  * @param bottomOffset - Offset from the container's bottom (default: topOffset).
+ * @returns The clamped vertical progress.
  */
 function getVerticalScrollProgress(
   targetRect: DOMRect,
@@ -67,7 +68,7 @@ export type UseScrollProgressOptions = {
   /**
    * Enables/disables the hook.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -79,8 +80,9 @@ export type UseScrollProgressOptions = {
  * @param ref - Ref of the element to observe.
  * @param callback - Callback invoked with progress data.
  * @param options - Configuration for the scroll container and enable/disable behavior.
+ * @param options.container - Custom scroll container; defaults to the viewport.
+ * @param options.when - Whether scroll-progress tracking is enabled.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null);

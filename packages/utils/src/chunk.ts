@@ -6,9 +6,8 @@ import { assert } from './assert'
  * @param array - The array to be split into chunks.
  * @param size - The maximum size of each chunk. Must be a positive integer.
  * @returns An array of chunks, where each chunk is an array of elements from the input array.
- * @throws Will throw an error if `array` is not an array.
- * @throws Will throw an error if `size` is not a positive integer.
- *
+ * @throws {Error} If `array` is not an array.
+ * @throws {Error} If `size` is not a positive integer.
  * @example
  * ```ts
  * chunk([1, 2, 3, 4, 5], 2); // [[1, 2], [3, 4], [5]]

@@ -10,7 +10,7 @@ export type MutationObserverOptions = MutationObserverInit & {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -22,9 +22,15 @@ export type MutationObserverOptions = MutationObserverInit & {
  * @param ref - A `RefObject` of the element to observe.
  * @param callback - A function to execute when the observed element is mutated.
  * @param options - Configurable options
- *
+ * @param options.when - Whether observation is enabled.
+ * @param options.attributeFilter - Attribute names to observe.
+ * @param options.attributeOldValue - Whether to record previous attribute values.
+ * @param options.attributes - Whether to observe attribute changes.
+ * @param options.characterData - Whether to observe character-data changes.
+ * @param options.characterDataOldValue - Whether to record previous character data.
+ * @param options.childList - Whether to observe child-list changes.
+ * @param options.subtree - Whether to observe all descendants.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null);

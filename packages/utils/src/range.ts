@@ -12,7 +12,6 @@
  * @param inclusive - If `true`, the stopping value will be included in the
  * generated array. If `false`, the stopping value will be excluded.
  * @returns An array of numbers representing the specified range.
- *
  * @example
  * ```ts
  * range(0, 5, 1) // [0, 1, 2, 3, 4, 5]

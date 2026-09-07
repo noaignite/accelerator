@@ -8,7 +8,6 @@ import { hexToRGB } from './hexToRGB'
  * @param baseColor - The base color to compare against.
  * @param restColors - Any number of colors to compare against the base color.
  * @returns An object containing the color with the highest contrast ratio.
- *
  * @example
  * ```ts
  * colorContrast('#51f', '#821522', '#dde', 'f3a')

@@ -19,7 +19,6 @@ import { clamp as clampFunc } from './clamp'
  * @returns The value mapped from the input range to the output range. If
  * `clamp` is `true`, the returned value will always correspond to a value
  * between `outMin` and `outMax`.
- *
  * @example
  * ```ts
  * // Map a value from the range [0, 100] to [0, 1]

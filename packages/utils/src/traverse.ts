@@ -10,7 +10,6 @@ import type { Traverse } from '@noaignite/types'
  * @param key - The property key that contains child entries to traverse.
  * @returns An array containing the current object and all recursively
  * reachable descendants.
- *
  * @example
  * ```ts
  * const tree = {

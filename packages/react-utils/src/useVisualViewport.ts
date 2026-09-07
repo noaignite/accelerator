@@ -7,7 +7,7 @@ export type VisualViewportOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -40,9 +40,8 @@ const getVisualViewport = () => {
  * Tracks `window.visualViewport` which updates on viewport resize.
  *
  * @param options - Configurable options
- *
+ * @param options.when - Whether viewport tracking is enabled.
  * @returns An object containing size information
- *
  * @example
  * ```tsx
  * const { width, height, scale } = useVisualViewport()
@@ -56,7 +55,6 @@ const getVisualViewport = () => {
  *   </div>
  * )
  * ```
- *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Visual_Viewport_API
  */
 export const useVisualViewport = ({ when = true }: VisualViewportOptions = {}) => {

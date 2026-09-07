@@ -9,14 +9,14 @@ export type DismissOptions = {
   /**
    * A `boolean` indicating whether to listen for `keydown` events involving `Escape` key.
    *
-   * @defaultValue true
+   * @default true
    */
   keyboard?: boolean
   /**
    * A `boolean` indicating whether to listen for `pointerdown` events.
    * Can be set to listen for any pointer type, or restricted to a specific type(s).
    *
-   * @defaultValue true
+   * @default true
    */
   pointer?:
     | boolean
@@ -25,7 +25,7 @@ export type DismissOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -38,7 +38,9 @@ export type DismissOptions = {
  * @param ref - Element reference to base events on.
  * @param callback - Callback to execute when a `keydown` or `pointerdown` event occurs.
  * @param options - Configurable options
- *
+ * @param options.when - Whether dismissal listeners are enabled.
+ * @param options.keyboard - Whether Escape-key dismissal is enabled.
+ * @param options.pointer - Pointer types that may trigger dismissal.
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null)

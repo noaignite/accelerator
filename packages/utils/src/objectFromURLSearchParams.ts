@@ -9,7 +9,6 @@
  * @param searchParams - The `URLSearchParams` instance to convert.
  * @returns An object where keys are parameter names and values are either
  * strings or arrays of strings.
- *
  * @example
  * ```ts
  * const string = 'name=Alice&hobbies=reading&hobbies=hiking'

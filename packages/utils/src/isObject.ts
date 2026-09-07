@@ -3,7 +3,6 @@
  *
  * @param value - The value to check.
  * @returns `true` if the value is of type `object`, `false` otherwise.
- *
  * @example
  * ```ts
  * isObject({}) // true

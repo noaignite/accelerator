@@ -7,8 +7,7 @@
  * @param condition - The condition which should be `true`.
  * @param message - The message to throw if the condition is `false`.
  * @param errorType - The type of error to throw if the condition is `false`.
- * @throws Error If the condition is `false`.
- *
+ * @throws {Error} If the condition is `false`.
  * @example
  * ```ts
  * assert(foo !== undefined, 'foo should not be undefined')

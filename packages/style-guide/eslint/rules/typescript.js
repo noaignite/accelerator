@@ -1,9 +1,27 @@
-import tsdocEslint from 'eslint-plugin-tsdoc'
+import jsdoc from 'eslint-plugin-jsdoc'
 import tsEslint from 'typescript-eslint'
 import constants from './constants.js'
 
 export default [
   ...tsEslint.configs.recommended,
+  {
+    ...jsdoc.configs['flat/recommended-typescript-error'],
+    name: '@noaignite/style-guide/eslint/typescript/jsdoc',
+    files: constants.TYPESCRIPT_FILES,
+    rules: {
+      ...jsdoc.configs['flat/recommended-typescript-error'].rules,
+      'jsdoc/require-jsdoc': 'off',
+      'jsdoc/require-returns-check': 'off',
+      'jsdoc/tag-lines': [
+        'error',
+        'any',
+        {
+          startLines: 1,
+          endLines: 0,
+        },
+      ],
+    },
+  },
   {
     name: '@noaignite/style-guide/eslint/typescript',
     files: constants.TYPESCRIPT_FILES,
@@ -12,9 +30,6 @@ export default [
       parserOptions: {
         project: './tsconfig.json',
       },
-    },
-    plugins: {
-      tsdoc: tsdocEslint,
     },
     rules: {
       /**
@@ -62,12 +77,6 @@ export default [
        * 🔧 Fixable - https://typescript-eslint.io/rules/prefer-nullish-coalescing/
        */
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
-      /**
-       * Validates ts-doc comments.
-       *
-       * 🚫 Not fixable - https://github.com/microsoft/tsdoc
-       */
-      'tsdoc/syntax': 'error',
     },
   },
 ]

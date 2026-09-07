@@ -28,11 +28,10 @@ type Exact<T, U extends T> = T & Record<Exclude<keyof U, keyof T>, never>
  * - Prevent distributive conditional types over unions
  * - Perform a stricter comparison than a simple `X extends Y`
  *
- * @typeParam X - First type to compare
- * @typeParam Y - Second type to compare
- * @typeParam A - Result type if `X` and `Y` are equal
- * @typeParam B - Result type if `X` and `Y` are not equal
- *
+ * @template X - First type to compare
+ * @template Y - Second type to compare
+ * @template A - Result type if `X` and `Y` are equal
+ * @template B - Result type if `X` and `Y` are not equal
  * @example
  * ```tsx
  * type T1 = IfEquals<1, 1, "yes", "no">           // "yes"
@@ -228,13 +227,11 @@ export type PolymorphicExoticComponent<
  * - `omit` allows removal of props from the resulting polymorphic component.
  *
  * @param render - Render function of `PolymorphicExoticComponent`.
- *
  * @returns `PolymorphicExoticComponent`
- *
  * @example
  * ```tsx
  * type ButtonProps = { variant: 'success' | 'error' }
-
+ *
  * type ButtonConfig = {
  *   // Remove 'reset' prop from type 'button'
  *   overrides: { type: 'button' | 'submit' },

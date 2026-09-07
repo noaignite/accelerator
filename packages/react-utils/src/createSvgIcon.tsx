@@ -14,7 +14,6 @@ import {
  * @param viewBox - The viewBox of the SVG.
  * @param rest - Additional props to pass to the SVG element.
  * @returns A new SVG icon component.
- *
  * @example
  * ```tsx
  * export const AddIcon = createSvgIcon(

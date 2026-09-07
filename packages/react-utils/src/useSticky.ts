@@ -32,19 +32,22 @@ export type StickyOptions = {
    * Useful when the most likely value is known ahead of time, as it may
    * mitigate a flash of content in certain controlled scenarios.
    *
-   * @defaultValue `undefined`
+   * @default undefined
    */
   initialValue?: boolean
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
 
 /**
  * Returns the sticky properties of a target element, based on its style-declarations.
+ *
+ * @param ref - Element whose computed sticky styles are inspected.
+ * @returns The resolved sticky side and inset, or `null`.
  */
 const getProperties = (ref: RefObject<HTMLElement | null>): StickyProperties | null => {
   const element = ref.current
@@ -79,12 +82,12 @@ const getProperties = (ref: RefObject<HTMLElement | null>): StickyProperties | n
  *
  * @remarks __Does not support__ elements with variable positioning using CSS
  * `env()` function as it can cause infinite re-renders.
- *
  * @param ref - The element to monitor for stickiness.
  * @param options - Configurable options
- *
+ * @param options.container - Optional scroll container reference.
+ * @param options.initialValue - Value returned before client-side evaluation.
+ * @param options.when - Whether stickiness tracking is enabled.
  * @returns A `boolean` indicating whether the element is currently _stuck_.
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null)

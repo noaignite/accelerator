@@ -17,9 +17,9 @@ type GestureProperties =
 export type DragScrollOptions = Prettify<
   Pick<GestureOptions, GestureProperties> & {
     /**
-     * When `true`, enable additional inerttial movement after the gesture ends.
+     * When `true`, enable additional inertial movement after the gesture ends.
      *
-     * @defaultValue true
+     * @default true
      */
     inertia?: boolean
   }
@@ -78,9 +78,14 @@ const applyInertia: ApplyInertia = (element, mX, mY) => {
  *
  * @param ref - The element to attach the gesture to.
  * @param options - Configurable options
- *
+ * @param options.when - Whether drag scrolling is enabled.
+ * @param options.axis - Axis to constrain scrolling to.
+ * @param options.deadZone - Movement required before dragging starts.
+ * @param options.onGestureStart - Called when dragging starts.
+ * @param options.onGestureMove - Called as dragging moves.
+ * @param options.onGestureEnd - Called when dragging ends.
+ * @param options.inertia - Whether movement continues after release.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null)

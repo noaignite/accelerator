@@ -6,7 +6,8 @@ import { setRef } from './setRef'
 /**
  * Useful if you want to merge multiple refs into a single ref.
  *
- * @param refs - An array of refs.
+ * @param refs - An array of refs to merge.
+ * @returns A merged ref callback, or `null` when every ref is absent.
  * @example
  * ```tsx
  * const forkedRef = useForkRef(ref1, ref2);

@@ -8,7 +8,7 @@ export type ElementSizeOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -42,9 +42,8 @@ const getSize = (ref?: RefObject<HTMLElement | null>) => {
  *
  * @param ref - An element reference to measure
  * @param options - Configurable options
- *
+ * @param options.when - Whether size tracking is enabled.
  * @returns An object containing size information
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null)

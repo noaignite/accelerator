@@ -84,7 +84,7 @@ export type GestureOptions = {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
   /**
@@ -101,7 +101,7 @@ export type GestureOptions = {
    * A `number` indicating the dead zone in pixels that must be crossed before a gesture
    * is considered valid.
    *
-   * @defaultValue 3
+   * @default 3
    */
   deadZone?: number
   /**
@@ -141,9 +141,15 @@ export type GestureOptions = {
  *
  * @param ref - A `RefObject` of the element to observe.
  * @param options - Configurable options
- *
+ * @param options.when - Whether gesture handling is enabled.
+ * @param options.axis - Axis to constrain movement to.
+ * @param options.pointerType - Pointer type allowed to start gestures.
+ * @param options.deadZone - Movement required before a gesture becomes valid.
+ * @param options.lifespan - Maximum gesture duration in milliseconds.
+ * @param options.onGestureStart - Called when a gesture starts.
+ * @param options.onGestureMove - Called as a valid gesture moves.
+ * @param options.onGestureEnd - Called when a gesture ends.
  * @returns void
- *
  * @example
  * ```tsx
  * const ref = useRef<HTMLDivElement>(null)

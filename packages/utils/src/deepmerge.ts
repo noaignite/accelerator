@@ -36,7 +36,6 @@ function deepClone<T>(source: T): T | Record<PropertyKey, unknown> {
  * @param options - {@link DeepmergeOptions} An optional options object.
  * @returns The merged object, which is a combination of properties from both
  * the target and source objects.
- *
  * @example
  * ```ts
  * deepmerge({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }

@@ -12,7 +12,7 @@ export type EventOptions = AddEventListenerOptions & {
   /**
    * A `boolean` indicating whether the hook is enabled.
    *
-   * @defaultValue true
+   * @default true
    */
   when?: boolean
 }
@@ -21,13 +21,16 @@ export type EventOptions = AddEventListenerOptions & {
  * Adds a native event `listener` of `type` to a `target`.
  * Executes `listener` when the event of type `type` is dispatched.
  *
- * @param target - The target to add the event listener to. Values of type `string` are used instead of their respective global objects to ensure compatibility with server-side rendering.
+ * @param reference - Event target reference or server-safe global target name.
  * @param type - The event type to listen for, the available options are derived from the `target`.
  * @param listener - The event listener to be called when the event is dispatched.
  * @param options - Configurable options
- *
+ * @param options.when - Whether the event listener is enabled.
+ * @param options.capture - Whether the listener is invoked during the capture phase.
+ * @param options.once - Whether the listener is removed after its first invocation.
+ * @param options.passive - Whether the listener will not call `preventDefault()`.
+ * @param options.signal - An abort signal that removes the listener when aborted.
  * @returns void
- *
  * @example
  * ```tsx
  * const [width, setWidth] = useState<number | null>(null)

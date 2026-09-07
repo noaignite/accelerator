@@ -18,9 +18,8 @@ export type FocusReturnOptions = {
  *
  * @param when - When `true`, focus is recorded. When `false`, focus is returned.
  * @param options - Configurable options
- *
+ * @param options.returnTo - Explicit element to receive returned focus.
  * @returns void
- *
  *  @example
  * ```tsx
  * const [isDialogOpen, setIsDialogOpen] = useState(false)

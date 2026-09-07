@@ -12,7 +12,6 @@
  * @param obj - The object to check.
  * @param key - The property key to look up.
  * @returns `true` if `key` is an own key of `obj`, `false` otherwise.
- *
  * @example
  * ```ts
  * const reports = {

@@ -12,7 +12,6 @@
  * factor.
  * @returns The interpolated value between start and end, calculated based on
  * the amount provided.
- *
  * @example
  * ```ts
  * lerp(0, 100, 0) // 0

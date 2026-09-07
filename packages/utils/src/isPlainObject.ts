@@ -3,14 +3,12 @@
  *
  * @param value - The value to check.
  * @returns `true` if the value is a plain object, `false` otherwise.
- *
  * @example
  * ```ts
  * isPlainObject({}) // true
  * isPlainObject(new Date()) // false
  * isPlainObject([]) // false
  * ```
- *
  * @see https://github.com/sindresorhus/is-plain-obj/blob/main/index.js
  */
 export function isPlainObject(value: unknown): value is Record<PropertyKey, unknown> {

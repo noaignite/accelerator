@@ -5,6 +5,7 @@ import type { RefObject } from 'react'
  * while still using it inside the component.
  *
  * @param ref - A ref callback or ref object. If anything falsy, this is a no-op.
+ * @param value - Value assigned to the ref.
  */
 export function setRef<T>(
   ref: RefObject<T | null> | ((instance: T | null) => void) | null | undefined,
