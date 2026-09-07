@@ -24,14 +24,14 @@
     "test:types": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "16.2.12",
+    "next": "16.3.4",
     "nextra": "4.6.1",
     "nextra-theme-docs": "4.6.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "16.2.12",
+    "@next/eslint-plugin-next": "16.3.4",
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^24.12.4",
     "@types/react": "^19.2.18",
