@@ -6,16 +6,16 @@ type Options = UserConfig & {
 
 export function getTsdownConfig(options: Options): Options {
   return {
-    format: ['cjs', 'esm'],
+    format: ['esm'],
     clean: true,
     dts: true,
     root: 'src',
     sourcemap: true,
     target: 'esnext',
     unbundle: true,
-    outExtensions: ({ format }) => ({
-      js: format === 'cjs' ? '.cjs' : '.js',
-      dts: format === 'cjs' ? '.d.cts' : '.d.ts',
+    outExtensions: () => ({
+      js: '.js',
+      dts: '.d.ts',
     }),
     ...options,
   }
