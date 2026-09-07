@@ -1,5 +1,16 @@
 # @noaignite/utils
 
+## 4.0.0
+
+### Major Changes
+
+- bf4bc23: hasNonNullableValues: Remove broken helper.
+- 72a87ee: Build: Publish ESM-only builds
+
+### Patch Changes
+
+- @noaignite/types@2.0.0
+
 ## 3.9.0
 
 ### Minor Changes

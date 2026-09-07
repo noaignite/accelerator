@@ -1,5 +1,11 @@
 # @noaignite/style-guide
 
+## 2.0.0
+
+### Major Changes
+
+- 995511b: ESLint: Replace TSDoc syntax linting with the recommended TypeScript JSDoc rules and require Node.js 22.22.2 or newer within Node 22, or Node.js 24.15.0 or newer.
+
 ## 1.1.3
 
 ### Patch Changes

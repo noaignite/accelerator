@@ -1,5 +1,26 @@
 # @noaignite/react-utils
 
+## 1.0.0
+
+### Major Changes
+
+- 590b441: createRenderBlock: Remove the default ErrorBoundary/Suspense wrapping and fallback option. Blocks now render directly by default, and custom composition can be added with the new `wrapper` option.
+- 72a87ee: Build: Publish ESM-only builds
+- 590b441: createRenderBlock: Rename the public `BlockAdapter` and `BlockTypeMap` helper types to `RenderBlockAdapter` and `RenderBlockTypeMap`.
+- 590b441: createRenderBlock: Rename the render context field from `context.index` to `context.renderIndex`.
+
+### Minor Changes
+
+- 2a23b84: useRefObject: Add hook
+
+### Patch Changes
+
+- c081ea1: createPolymorph: Expose and initialize `displayName` for created components.
+- Updated dependencies [bf4bc23]
+- Updated dependencies [72a87ee]
+  - @noaignite/utils@4.0.0
+  - @noaignite/types@2.0.0
+
 ## 0.17.1
 
 ### Patch Changes
