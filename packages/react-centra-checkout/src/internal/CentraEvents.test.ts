@@ -10,6 +10,7 @@ describe('CentraEvents', () => {
   })
 
   afterEach(() => {
+    centraEvents.eventHandlers.addItem?.clear()
     centraEvents.eventHandlers.centra_checkout_payment_callback?.clear()
     centraEvents.eventHandlers.centra_checkout_callback?.clear()
   })
@@ -31,6 +32,21 @@ describe('CentraEvents', () => {
       expect(centraEvents.eventHandlers.centra_checkout_callback?.size).toBe(0)
       expect(centraEvents.eventHandlers.centra_checkout_payment_callback?.size).toBe(0)
     })
+
+    it('exposes event specific callback signatures', () => {
+      const callback = vi.fn((payload, item: string, quantity = 1) => ({
+        payload,
+        item,
+        quantity,
+      }))
+
+      const hasAttachedListener = centraEvents.on('addItem', callback)
+
+      expect(hasAttachedListener).toBe(true)
+
+      // @ts-expect-error -- `centra_checkout_callback` only forwards the payload.
+      centraEvents.on('centra_checkout_callback', (_payload, _line: string) => null)
+    })
   })
 
   describe('dispatch', () => {
@@ -46,6 +62,16 @@ describe('CentraEvents', () => {
       centraEvents.dispatch('centra_checkout_callback', selectionEmptyResponse)
 
       expect(callback).toHaveBeenCalledWith(selectionEmptyResponse)
+    })
+
+    it('forwards handler args after the payload', () => {
+      const callback = vi.fn()
+
+      centraEvents.on('addItem', callback)
+
+      centraEvents.dispatch('addItem', selectionEmptyResponse, '123', 2)
+
+      expect(callback).toHaveBeenCalledWith(selectionEmptyResponse, '123', 2)
     })
   })
 
