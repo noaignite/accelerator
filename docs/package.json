@@ -33,7 +33,7 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "16.3.4",
     "@noaignite/style-guide": "workspace:*",
-    "@types/node": "^24.12.4",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "pagefind": "^1.5.2",
     "tailwindcss": "^3.4.19"
