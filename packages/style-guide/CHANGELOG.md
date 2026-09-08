@@ -1,5 +1,11 @@
 # @noaignite/style-guide
 
+## 2.0.1
+
+### Patch Changes
+
+- ee1fccb: Require tests to import public APIs through supported package exports.
+
 ## 2.0.0
 
 ### Major Changes
