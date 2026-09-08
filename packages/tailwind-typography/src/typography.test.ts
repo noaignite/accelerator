@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for tests */
+import { typography } from '@noaignite/tailwind-typography'
 import { describe, expect, it, vi } from 'vitest'
-import { typography } from './index'
 
 describe('typography', () => {
   const theme = (path: string) => {

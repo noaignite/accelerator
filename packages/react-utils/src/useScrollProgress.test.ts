@@ -1,7 +1,7 @@
+import { useScrollProgress } from '@noaignite/react-utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { IntersectionObserverMock, ResizeObserverMock } from '../test'
-import { useScrollProgress } from './useScrollProgress'
 
 type RectInit = {
   top: number

@@ -1,5 +1,5 @@
+import { assert } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { assert } from './assert'
 
 let foo: number | string | undefined
 let bar: number | string | undefined

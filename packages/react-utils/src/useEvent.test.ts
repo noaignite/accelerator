@@ -1,6 +1,6 @@
+import { useEvent } from '@noaignite/react-utils'
 import { act, renderHook } from '@testing-library/react'
 import { expect, test } from 'vitest'
-import { useEvent } from './useEvent'
 
 type References = 'window' | 'document'
 

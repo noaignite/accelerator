@@ -1,9 +1,8 @@
+import { useFocusReturn, useInert } from '@noaignite/react-utils'
 import { render } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { useRef, useState } from 'react'
 import { expect, test } from 'vitest'
-import { useFocusReturn } from './useFocusReturn'
-import { useInert } from './useInert'
 
 /**
  * Focuses the next _actually_ focusable element.

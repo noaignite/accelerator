@@ -1,8 +1,8 @@
+import { useDismiss } from '@noaignite/react-utils'
 import { render } from '@testing-library/react'
 import userEvents from '@testing-library/user-event'
 import { useRef, useState } from 'react'
 import { expect, test } from 'vitest'
-import { useDismiss } from './useDismiss'
 
 function Scenario1() {
   const ref = useRef<HTMLDivElement>(null)

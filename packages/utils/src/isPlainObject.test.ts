@@ -1,5 +1,5 @@
+import { isPlainObject } from '@noaignite/utils'
 import { describe, expect, it, test } from 'vitest'
-import { isPlainObject } from './isPlainObject'
 
 describe('isPlainObject', () => {
   it('is a function', () => {

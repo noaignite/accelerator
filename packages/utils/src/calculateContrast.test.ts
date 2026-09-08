@@ -1,5 +1,5 @@
+import { calculateContrast } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { calculateContrast } from './calculateContrast'
 
 describe('calculateContrast', () => {
   it('should work', () => {

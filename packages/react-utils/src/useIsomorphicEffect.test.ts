@@ -10,7 +10,7 @@ describe('useIsomorphicEffect', () => {
     vi.resetModules()
     vi.stubGlobal('window', window)
 
-    const { useIsomorphicEffect } = await import('./useIsomorphicEffect')
+    const { useIsomorphicEffect } = await import('@noaignite/react-utils')
 
     expect(useIsomorphicEffect).toBe(useLayoutEffect)
     expect(useIsomorphicEffect).not.toBe(useEffect)
@@ -20,7 +20,7 @@ describe('useIsomorphicEffect', () => {
     vi.resetModules()
     vi.stubGlobal('window', undefined)
 
-    const { useIsomorphicEffect } = await import('./useIsomorphicEffect')
+    const { useIsomorphicEffect } = await import('@noaignite/react-utils')
 
     expect(useIsomorphicEffect).toBe(useEffect)
     expect(useIsomorphicEffect).not.toBe(useLayoutEffect)

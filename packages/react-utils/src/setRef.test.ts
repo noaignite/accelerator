@@ -1,6 +1,6 @@
+import { setRef } from '@noaignite/react-utils'
 import { createRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import { setRef } from './setRef'
 
 describe('setRef', () => {
   it('can handle callback refs', () => {

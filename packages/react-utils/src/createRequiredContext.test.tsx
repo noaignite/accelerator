@@ -1,6 +1,6 @@
+import { createRequiredContext } from '@noaignite/react-utils'
 import { render, screen } from '@testing-library/react'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-import { createRequiredContext } from './createRequiredContext'
 
 // Define a type for our test context.
 type FooContextValue = { count: number }

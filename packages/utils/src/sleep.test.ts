@@ -1,6 +1,5 @@
+import { assert, sleep } from '@noaignite/utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { assert } from './assert'
-import { sleep } from './sleep'
 
 describe('sleep', () => {
   beforeEach(vi.useFakeTimers)

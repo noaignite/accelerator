@@ -1,7 +1,7 @@
+import { useIntersectionObserver } from '@noaignite/react-utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { IntersectionObserverMock } from '../test'
-import { useIntersectionObserver } from './useIntersectionObserver'
 
 describe('useIntersectionObserver', () => {
   beforeAll(() => {

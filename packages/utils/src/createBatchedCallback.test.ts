@@ -1,5 +1,5 @@
+import { createBatchedCallback } from '@noaignite/utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { createBatchedCallback } from './createBatchedCallback'
 
 describe('createBatchedCallback', () => {
   beforeEach(() => {

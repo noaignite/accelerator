@@ -1,5 +1,5 @@
+import { toggleArrayValue } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { toggleArrayValue } from './toggleArrayValue'
 
 describe('toggleArrayValue', () => {
   it('is a function and returns an array', () => {

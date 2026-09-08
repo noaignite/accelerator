@@ -11,6 +11,18 @@ export default [
     rules: {
       ...vitest.configs.recommended.rules,
       '@typescript-eslint/no-empty-function': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['./*'],
+              message:
+                'Test public APIs through the package’s exported entry points instead of relative source imports.',
+            },
+          ],
+        },
+      ],
     },
     settings: {
       vitest: {

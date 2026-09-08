@@ -1,5 +1,5 @@
+import { hexToRGB } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { hexToRGB } from './hexToRGB'
 
 describe('hexToRGB', () => {
   it('should work', () => {

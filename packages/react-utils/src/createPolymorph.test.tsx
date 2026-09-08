@@ -1,6 +1,6 @@
+import type { PolymorphicProps, PolymorphicRenderFunction } from '@noaignite/react-utils'
 import { type ComponentPropsWithRef, type HTMLElementType, type ReactNode } from 'react'
 import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest'
-import type { PolymorphicProps, PolymorphicRenderFunction } from './createPolymorph'
 
 const reactMockState = vi.hoisted(() => ({
   version: null as string | null,
@@ -44,12 +44,12 @@ describe('createPolymorph', () => {
   })
 
   it('is a function', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
     expect(createPolymorph).toBeTypeOf('function')
   })
 
   it('returns passed reference-equal function', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     const testFunction: PolymorphicRenderFunction<Record<string, unknown>, HTMLElementType> = () =>
       null
@@ -57,7 +57,7 @@ describe('createPolymorph', () => {
   })
 
   it('sets the display name from the render function', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     const render: PolymorphicRenderFunction<object, 'button'> = () => null
     const Button = createPolymorph(render)
@@ -66,7 +66,7 @@ describe('createPolymorph', () => {
   })
 
   it('uses a fallback display name for anonymous render functions', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     const render: PolymorphicRenderFunction<object, 'button'> = () => null
     Object.defineProperty(render, 'name', { value: '' })
@@ -77,7 +77,7 @@ describe('createPolymorph', () => {
   })
 
   it('preserves an existing display name', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     const render: PolymorphicRenderFunction<object, 'button'> = () => null
     render.displayName = 'CustomButton'
@@ -88,7 +88,7 @@ describe('createPolymorph', () => {
   })
 
   it('treats a bare `object` props definition as having no custom keys', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     const Button = createPolymorph<object, 'button'>((_props) => {
       expectTypeOf<PropOf<typeof _props, 'foo'>>().toBeNever()
@@ -101,7 +101,7 @@ describe('createPolymorph', () => {
   })
 
   it('constrains `as` defaults to the declared prop shape when present on custom props', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { as?: 'a' | 'button'; label: string }
 
@@ -114,7 +114,7 @@ describe('createPolymorph', () => {
   })
 
   it('merges native props with custom props based on the active `as` element', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { variant: 'primary' | 'ghost' }
     type AnchorProps = PolymorphicProps<CustomProps, 'a'>
@@ -130,7 +130,7 @@ describe('createPolymorph', () => {
   })
 
   it('prefers custom props when they clash with native attributes', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { className?: number }
     type ButtonProps = PolymorphicProps<CustomProps, 'button'>
@@ -144,7 +144,7 @@ describe('createPolymorph', () => {
   })
 
   it('keeps base component requirements while allowing polymorphic overrides', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type AnchorProps = { href: string }
     type ButtonLinkProps = { variant: 'primary' | 'ghost' }
@@ -170,7 +170,7 @@ describe('createPolymorph', () => {
   })
 
   it('preserves required unions when extending another polymorph', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type ButtonProps = { variant: 'primary' | 'ghost' }
     type AriaLabelRequired =
@@ -188,7 +188,7 @@ describe('createPolymorph', () => {
   })
 
   it('matches extracted component props to polymorphic props', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { variant?: 'primary' | 'ghost' }
     const Button = createPolymorph<CustomProps, 'button'>(() => null)
@@ -208,7 +208,7 @@ describe('createPolymorph', () => {
   })
 
   it('restricts render function props to attributes of the base element', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { variant: 'primary' | 'ghost' }
 
@@ -224,7 +224,7 @@ describe('createPolymorph', () => {
   })
 
   it('infers correct `ref` type when extracted inside render function', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { label: string }
 
@@ -235,7 +235,7 @@ describe('createPolymorph', () => {
   })
 
   it('exposes correct `ref` types to consumers', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { label: string }
     const Button = createPolymorph<CustomProps, 'button'>(() => null)
@@ -250,7 +250,7 @@ describe('createPolymorph', () => {
   })
 
   it('exposes correct `ref` types when `as` targets a polymorphic component', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type LinkProps = { label: string }
     type LinkConfig = { overrides: { href: string } }
@@ -263,7 +263,7 @@ describe('createPolymorph', () => {
   })
 
   it('honors `omit` config for custom and native props', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { label: string; children?: ReactNode }
     type Config = { omit: 'children' | 'type' }
@@ -282,7 +282,7 @@ describe('createPolymorph', () => {
   })
 
   it('honors `omit` config when using a custom component via `as`', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type ButtonProps = { children: ReactNode }
     const Button = createPolymorph<ButtonProps, 'button'>(({ children }) => {
@@ -303,7 +303,7 @@ describe('createPolymorph', () => {
   })
 
   it('propagates `omit` through nested polymorphic `as` components', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type ButtonProps = { label: string; onClick?: () => void }
     type ButtonConfig = { omit: 'onClick' }
@@ -320,7 +320,7 @@ describe('createPolymorph', () => {
   })
 
   it('uses `overrides` config to narrow native props', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { id?: string }
     type Config = { overrides: { type: 'button' | 'submit' } }
@@ -335,7 +335,7 @@ describe('createPolymorph', () => {
   })
 
   it('rejects `overrides` for native props that do not exist', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { label: string }
     type BadConfig = { overrides: { foo: string } }
@@ -348,7 +348,7 @@ describe('createPolymorph', () => {
   })
 
   it('propagates `overrides` through nested polymorphic `as` components', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type LinkProps = { label: string }
     type LinkConfig = { overrides: { href: string } }
@@ -367,7 +367,7 @@ describe('createPolymorph', () => {
   })
 
   it('prefers custom props over `overrides` when keys clash', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { type?: 'primary' }
     type Config = { overrides: { type: 'button' | 'submit' } }
@@ -382,7 +382,7 @@ describe('createPolymorph', () => {
   })
 
   it('applies `overrides` and `omit` for the base element and custom `as` values', async () => {
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     type CustomProps = { label: string; disabled?: boolean; children?: ReactNode }
     type Config = { overrides: { type: 'button' }; omit: 'disabled' | 'children' }
@@ -407,7 +407,7 @@ describe('createPolymorph', () => {
   it('throws if React version is below 19', async () => {
     reactMockState.version = '18.2.0'
 
-    const { createPolymorph } = await import('./createPolymorph')
+    const { createPolymorph } = await import('@noaignite/react-utils')
 
     expect(() => createPolymorph(() => null)).toThrow(
       'To use `createPolymorph`, please upgrade "react" and "@types/react" to version 19 or higher.',

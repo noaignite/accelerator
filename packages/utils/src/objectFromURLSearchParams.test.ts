@@ -1,6 +1,5 @@
+import { isPlainObject, objectFromURLSearchParams } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { isPlainObject } from './isPlainObject'
-import { objectFromURLSearchParams } from './objectFromURLSearchParams'
 
 describe('objectFromURLSearchParams', () => {
   it('is a function and returns a plain object', () => {

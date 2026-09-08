@@ -1,5 +1,5 @@
+import { URLSearchParamsFromObject } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { URLSearchParamsFromObject } from './URLSearchParamsFromObject'
 
 describe('URLSearchParamsFromObject', () => {
   it('is a function and returns a URLSearchParams instance', () => {

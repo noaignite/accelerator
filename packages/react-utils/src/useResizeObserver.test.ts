@@ -1,7 +1,7 @@
+import { useResizeObserver } from '@noaignite/react-utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { ResizeObserverMock } from '../test'
-import { useResizeObserver } from './useResizeObserver'
 
 describe('useResizeObserver', () => {
   beforeAll(() => {

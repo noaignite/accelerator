@@ -1,5 +1,5 @@
+import { colorContrast } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { colorContrast } from './colorContrast'
 
 describe('colorContrast', () => {
   it('is a function and returns an object', () => {

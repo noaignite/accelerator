@@ -1,6 +1,6 @@
+import { useWindowSize } from '@noaignite/react-utils'
 import { act, renderHook } from '@testing-library/react'
 import { beforeEach, expect, test } from 'vitest'
-import { useWindowSize } from './useWindowSize'
 
 const dispatch = (width: number, height: number) => {
   window.innerWidth = width

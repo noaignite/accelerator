@@ -1,5 +1,5 @@
+import { round } from '@noaignite/utils'
 import { describe, expect, it } from 'vitest'
-import { round } from './round'
 
 describe('round', () => {
   it('is a function and returns a number', () => {

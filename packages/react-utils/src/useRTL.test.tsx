@@ -1,7 +1,7 @@
+import { useRTL } from '@noaignite/react-utils'
 import { act, render } from '@testing-library/react'
 import { useRef } from 'react'
 import { afterAll, afterEach, beforeAll, expect, test, vi } from 'vitest'
-import { useRTL } from './useRTL'
 
 class MutationObserverStub {
   private callback: MutationCallback

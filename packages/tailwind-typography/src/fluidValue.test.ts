@@ -1,5 +1,5 @@
+import { fluidValue } from '@noaignite/tailwind-typography'
 import { describe, expect, it } from 'vitest'
-import { fluidValue } from './index'
 
 describe('fluidValue', () => {
   it('generates the basic calc() formula when no clamping', () => {

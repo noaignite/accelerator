@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports -- This test intentionally covers a private module. */
 import { render, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { HtmlEmbed } from './HtmlEmbed'

@@ -1,7 +1,7 @@
+import { useMediaQuery } from '@noaignite/react-utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { MediaQueryListMock } from '../test'
-import { useMediaQuery } from './useMediaQuery'
 
 describe('useMediaQuery', () => {
   const media = '(max-width: 600px)'

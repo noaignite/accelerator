@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any -- Allow for test files */
+import { useElementSize } from '@noaignite/react-utils'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { ResizeObserverMock } from '../test'
-import { useElementSize } from './useElementSize'
 
 describe('useElementSize', () => {
   const initialSizes = {

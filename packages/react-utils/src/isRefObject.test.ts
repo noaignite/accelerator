@@ -1,6 +1,6 @@
+import { isRefObject } from '@noaignite/react-utils'
 import { createRef } from 'react'
 import { describe, expect, it } from 'vitest'
-import { isRefObject } from './isRefObject'
 
 describe('isRefObject', () => {
   it('returns true for a createRef object', () => {
