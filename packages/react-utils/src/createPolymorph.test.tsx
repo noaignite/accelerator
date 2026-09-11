@@ -1,5 +1,13 @@
 import type { PolymorphicProps, PolymorphicRenderFunction } from '@noaignite/react-utils'
-import { type ComponentPropsWithRef, type HTMLElementType, type ReactNode } from 'react'
+import { fireEvent, render, screen } from '@testing-library/react'
+import {
+  createRef,
+  Fragment,
+  version as reactVersion,
+  type ComponentPropsWithRef,
+  type HTMLElementType,
+  type ReactNode,
+} from 'react'
 import { afterEach, beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest'
 
 const reactMockState = vi.hoisted(() => ({
@@ -32,6 +40,12 @@ vi.mock('react', async () => {
  * ```
  */
 type PropOf<T, K extends PropertyKey> = K extends keyof T ? T[K] : never
+
+const isReactVersionAtLeast = (major: number, minor: number) => {
+  const [currentMajor = 0, currentMinor = 0] = reactVersion.split('.').map(Number)
+
+  return currentMajor > major || (currentMajor === major && currentMinor >= minor)
+}
 
 describe('createPolymorph', () => {
   beforeEach(() => {
@@ -261,6 +275,42 @@ describe('createPolymorph', () => {
     const anchorRef: ComponentPropsWithRef<'a'>['ref'] = () => undefined
     expect(Trigger({ as: Link, href: '#', label: 'CTA', ref: anchorRef })).toBeNull()
   })
+
+  it.skipIf(!isReactVersionAtLeast(19, 3))(
+    'supports FragmentInstance refs on polymorphic fragments',
+    async () => {
+      const { createPolymorph } = await import('@noaignite/react-utils')
+
+      const FragmentPolymorph = createPolymorph<object, typeof Fragment>(
+        ({ as: Tag = Fragment, children, ref }) => <Tag ref={ref}>{children}</Tag>,
+      )
+
+      const ref = createRef<object | null>()
+      const onClick = vi.fn()
+
+      render(
+        <FragmentPolymorph ref={ref}>
+          <button data-testid="first-child" type="button">
+            First child
+          </button>
+        </FragmentPolymorph>,
+      )
+
+      expect(ref.current).not.toBeNull()
+
+      const fragmentInstance = ref.current as {
+        addEventListener: (type: string, listener: EventListener) => void
+        removeEventListener: (type: string, listener: EventListener) => void
+      }
+
+      fragmentInstance.addEventListener('click', onClick)
+
+      fireEvent.click(screen.getByTestId('first-child'))
+      expect(onClick).toHaveBeenCalledOnce()
+
+      fragmentInstance.removeEventListener('click', onClick)
+    },
+  )
 
   it('honors `omit` config for custom and native props', async () => {
     const { createPolymorph } = await import('@noaignite/react-utils')
