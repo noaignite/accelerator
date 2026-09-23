@@ -29,7 +29,7 @@
     "*": "prettier --ignore-unknown --write"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^2.31.1",
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^24.13.3",
     "@vitest/coverage-v8": "^4.1.11",
