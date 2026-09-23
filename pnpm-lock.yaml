@@ -91,9 +91,6 @@ importers:
       pagefind:
         specifier: ^1.5.2
         version: 1.5.2
-      tailwindcss:
-        specifier: ^3.4.19
-        version: 3.4.19(yaml@2.9.0)
 
   packages/centra-mocks:
     dependencies:
