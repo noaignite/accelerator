@@ -10,7 +10,7 @@ import { render, renderHook, screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 import type { ComponentProps } from 'react'
 import { useEffect } from 'react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 const TEST_ITEM = '370-261'
@@ -33,13 +33,6 @@ const CentraProviderWrapper = (props: Partial<ComponentProps<typeof CentraProvid
 }
 
 describe('CentraProvider', () => {
-  beforeEach(() => {
-    // overwrite the global location with a plain object
-    vi.stubGlobal('location', {
-      href: '',
-    })
-  })
-
   it('Renders children', () => {
     render(
       <CentraProvider disableInit paymentFailedPage="" paymentReturnPage="" receiptPage="">
@@ -252,7 +245,8 @@ describe('CentraProvider', () => {
             {
               token: 'foo',
               action: 'redirect',
-              url: 'https://example.com/checkout',
+              // Use hash navigation to preserve redirect coverage without JSDOM navigation errors.
+              url: '#checkout',
             },
           )
           .persist()

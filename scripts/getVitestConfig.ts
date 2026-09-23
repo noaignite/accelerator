@@ -27,6 +27,7 @@ export function getVitestConfig(options: Options): Options {
       },
       globals: true,
       environment: 'jsdom',
+      pool: 'vmThreads',
       ...test,
     },
     ...rest,

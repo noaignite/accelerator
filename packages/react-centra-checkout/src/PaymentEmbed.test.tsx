@@ -3,7 +3,7 @@ import { CentraProvider, PaymentEmbed } from '@noaignite/react-centra-checkout'
 import { render, screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 import React from 'react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 
@@ -17,7 +17,7 @@ function CentraProviderWrapper(props: { children: React.ReactNode }) {
       apiUrl={CENTRA_API_URL}
       paymentFailedPage=""
       paymentReturnPage=""
-      receiptPage=""
+      receiptPage="#" // Use hash navigation to preserve redirect coverage without JSDOM navigation errors.
       {...props}
     />
   )
@@ -31,13 +31,6 @@ describe('PaymentEmbed', () => {
     onPaymentSuccess: vi.fn(),
     onPaymentError: vi.fn(),
   }
-
-  beforeEach(() => {
-    // overwrite the global location with a plain object
-    vi.stubGlobal('location', {
-      href: '',
-    })
-  })
 
   afterEach(() => {
     // Clear all mocks before each test
