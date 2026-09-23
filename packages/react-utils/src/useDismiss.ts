@@ -19,9 +19,7 @@ export type DismissOptions = {
    * @default true
    */
   pointer?:
-    | boolean
-    | HintedString<'mouse' | 'touch' | 'pen'>
-    | HintedString<'mouse' | 'touch' | 'pen'>[]
+    boolean | HintedString<'mouse' | 'touch' | 'pen'> | HintedString<'mouse' | 'touch' | 'pen'>[]
   /**
    * A `boolean` indicating whether the hook is enabled.
    *

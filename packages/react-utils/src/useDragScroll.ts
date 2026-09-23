@@ -7,12 +7,7 @@ import { useGesture } from './useGesture'
 
 /** Properties to extract from `useGesture` for re-use in this hook. */
 type GestureProperties =
-  | 'when'
-  | 'axis'
-  | 'deadZone'
-  | 'onGestureStart'
-  | 'onGestureMove'
-  | 'onGestureEnd'
+  'when' | 'axis' | 'deadZone' | 'onGestureStart' | 'onGestureMove' | 'onGestureEnd'
 
 export type DragScrollOptions = Prettify<
   Pick<GestureOptions, GestureProperties> & {

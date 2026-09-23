@@ -38,14 +38,12 @@ export interface ProviderProps {
    * Used when submitting payment using the POST /payment Centra api call
    */
   paymentFailedPage:
-    | string
-    | ((selection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>) => string)
+    string | ((selection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>) => string)
   /**
    * Used when submitting payment using the POST /payment Centra api call
    */
   paymentReturnPage:
-    | string
-    | ((selection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>) => string)
+    string | ((selection: CheckoutApi.SuccessResponse<CheckoutApi.SelectionResponse>) => string)
   /**
    * Receipt page to redirect to when Centra payment succeeds directly
    */

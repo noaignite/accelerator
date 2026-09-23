@@ -14,13 +14,7 @@ export interface Order {
   order?: string
   status?: 'untouched' | 'progress' | 'ok' | 'archived' | 'failed'
   statusDescription?:
-    | 'Pending'
-    | 'Confirmed'
-    | 'Processing'
-    | 'Completed'
-    | 'Archived'
-    | 'Cancelled'
-    | 'Incomplete'
+    'Pending' | 'Confirmed' | 'Processing' | 'Completed' | 'Archived' | 'Cancelled' | 'Incomplete'
   date?: string
   giftMessage?: string
   shipments?: Shipment[]
