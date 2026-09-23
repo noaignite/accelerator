@@ -7,13 +7,7 @@ import { useStableCallback } from './useStableCallback'
 
 /** Properties to extract from `useGesture` for re-use in this hook. */
 type GestureProperties =
-  | 'when'
-  | 'axis'
-  | 'deadZone'
-  | 'onGestureStart'
-  | 'onGestureMove'
-  | 'onGestureEnd'
-  | 'pointerType'
+  'when' | 'axis' | 'deadZone' | 'onGestureStart' | 'onGestureMove' | 'onGestureEnd' | 'pointerType'
 
 export type PressHoldOptions = Prettify<
   Pick<GestureOptions, GestureProperties> & {

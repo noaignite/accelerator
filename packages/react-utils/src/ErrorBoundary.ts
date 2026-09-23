@@ -33,10 +33,7 @@ export type ErrorBoundaryProps = {
    * Fallback content to display when an error is caught.
    */
   fallback?:
-    | ((props: ErrorBoundaryFallbackProps) => JSX.Element | null)
-    | JSX.Element
-    | string
-    | null
+    ((props: ErrorBoundaryFallbackProps) => JSX.Element | null) | JSX.Element | string | null
 }
 
 /**

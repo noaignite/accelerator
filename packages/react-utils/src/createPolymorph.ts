@@ -154,10 +154,7 @@ type NativeProps<T extends ElementType, C> =
  * Functionally similar to `ReactNode`, but with additional restrictions.
  */
 export type PolymorphicElement<P extends Props, T extends ElementType> =
-  | ReactElement<P, T>
-  | ReactPortal
-  | null
-  | undefined
+  ReactElement<P, T> | ReactPortal | null | undefined
 
 /**
  * Derives the entire set of props for a polymorphic component, combining
@@ -188,7 +185,7 @@ export type PolymorphicRenderFunction<
   T extends ElementType = ElementType,
   C extends Exact<Config<P, T>, C> = object,
 > = {
-  displayName?: string;
+  displayName?: string
   (props: PolymorphicProps<P, T, C>): PolymorphicElement<P, T> | Promise<PolymorphicElement<P, T>>
 }
 
@@ -204,7 +201,7 @@ export type PolymorphicExoticComponent<
   T extends ElementType = AsOrDefault<P, ElementType>,
   C extends Exact<Config<P, T>, C> = object,
 > = {
-  displayName?: string;
+  displayName?: string
   <TT = AsOrDefault<P, T>>(
     props: PolymorphicProps<P, TT extends ElementType ? TT : T, C>,
   ):
