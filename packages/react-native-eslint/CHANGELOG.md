@@ -1,5 +1,11 @@
 # @noaignite/react-native-eslint
 
+## 1.2.4
+
+### Patch Changes
+
+- d131b40: Deps: Update `typescript-eslint` from 8.65.0 to 8.70.0.
+
 ## 1.2.3
 
 ### Patch Changes

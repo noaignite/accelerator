@@ -1,5 +1,12 @@
 # @noaignite/style-guide
 
+## 2.0.1
+
+### Patch Changes
+
+- ee1fccb: Require tests to import public APIs through supported package exports.
+- 34e0a00: Prettier: Restore import sorting when using the Tailwind configuration.
+
 ## 2.0.0
 
 ### Major Changes
