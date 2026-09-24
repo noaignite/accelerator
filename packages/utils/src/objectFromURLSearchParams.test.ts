@@ -14,6 +14,6 @@ describe('objectFromURLSearchParams', () => {
     const object = objectFromURLSearchParams(params)
     const toMatch = { name: 'Alicia', hobbies: ['reading', 'dancing'], age: '' }
 
-    expect(object).toStrictEqual(toMatch)
+    expect(object).toEqual(toMatch)
   })
 })

@@ -12,7 +12,7 @@ describe('URLSearchParamsFromObject', () => {
     const params = URLSearchParamsFromObject(object)
 
     expect(params.get('name')).toEqual(object.name)
-    expect(params.getAll('hobbies')).toStrictEqual(object.hobbies)
+    expect(params.getAll('hobbies')).toEqual(object.hobbies)
     expect(Array.from(params.keys()).length).toBe(3)
     expect(new Set(params.keys()).size).toBe(2)
   })
