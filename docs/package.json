@@ -16,7 +16,7 @@
   "type": "module",
   "scripts": {
     "build": "pnpm generate && next build",
-    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
+    "postbuild": "node scripts/buildSearchIndex.ts",
     "dev": "pnpm generate && next dev --turbopack",
     "generate": "pnpm --dir .. packages:build-docs && node ../scripts/buildDocs.ts",
     "lint": "eslint .",
