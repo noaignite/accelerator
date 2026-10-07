@@ -21,6 +21,12 @@ npm install @noaignite/style-guide
 
 ### ESLint Configuration
 
+The ESLint presets are tested with ESLint 9.39.5 and TypeScript 6.0.3. Use
+ESLint 9 and TypeScript versions supported by both this package and
+`typescript-eslint` (currently `>=5.0.0 <6.1.0`).
+ESLint 10 is not yet supported by all included import, React, and accessibility
+plugins. TypeScript 7 is not yet supported by `typescript-eslint`.
+
 The package provides several ESLint configurations that you can extend in your project:
 
 ```js
