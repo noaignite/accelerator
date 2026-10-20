@@ -597,10 +597,11 @@ export function CentraProvider(props: ProviderProps) {
   /** Resets the selection. Useful if you need a fresh `api-token` (when a user exits a campaign site, for example). */
   const resetSelection = useCallback<NonNullable<ContextMethods['resetSelection']>>(() => {
     apiClient.headers.delete('api-token')
-    cookies.remove(tokenName)
+    // A cookie set with `domain`/`path` is only removed when the same attributes are passed.
+    cookies.remove(tokenName, tokenCookieOptions ?? undefined)
 
     return init()
-  }, [apiClient.headers, init, tokenName])
+  }, [apiClient.headers, init, tokenName, tokenCookieOptions])
 
   const sendCustomerResetPasswordEmail = useCallback<
     NonNullable<ContextMethods['sendCustomerResetPasswordEmail']>
