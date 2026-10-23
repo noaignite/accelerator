@@ -1,5 +1,11 @@
 # @noaignite/style-guide
 
+## 2.0.2
+
+### Patch Changes
+
+- 584851c: Deps: Update ESLint 9-compatible linting dependencies and Prettier tooling without changing the configured rule policy. Document tested ESLint and TypeScript compatibility.
+
 ## 2.0.1
 
 ### Patch Changes
