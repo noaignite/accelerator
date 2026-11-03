@@ -217,6 +217,24 @@ describe('CentraProvider', () => {
   })
 
   describe('resetSelection', () => {
+    it('removes the token cookie without options by default', async () => {
+      const removeSpy = vi.spyOn(cookies, 'remove')
+
+      const { result } = renderHook(useCentraHandlers, {
+        wrapper: CentraProviderWrapper,
+      })
+
+      await waitFor(() => {
+        expect(result.current.resetSelection).toBeDefined()
+      })
+
+      await result.current.resetSelection?.()
+
+      expect(removeSpy).toHaveBeenCalledWith('centra-checkout-token', undefined)
+
+      removeSpy.mockRestore()
+    })
+
     it('removes the token cookie with `tokenCookieOptions`', async () => {
       const removeSpy = vi.spyOn(cookies, 'remove')
       const tokenCookieOptions = { domain: 'example.com', path: '/checkout' }
