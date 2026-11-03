@@ -7,10 +7,11 @@ import {
   useCentraSelection,
 } from '@noaignite/react-centra-checkout'
 import { render, renderHook, screen, waitFor } from '@testing-library/react'
+import cookies from 'js-cookie'
 import nock from 'nock'
 import type { ComponentProps } from 'react'
 import { useEffect } from 'react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 const CENTRA_API_URL = 'https://mock-centra-checkout.com/api'
 const TEST_ITEM = '370-261'
@@ -212,6 +213,51 @@ describe('CentraProvider', () => {
       await waitFor(() => {
         expect(resultingSelection?.items?.length).toBe(0)
       })
+    })
+  })
+
+  describe('resetSelection', () => {
+    it('removes the token cookie without options by default', async () => {
+      const removeSpy = vi.spyOn(cookies, 'remove')
+
+      const { result } = renderHook(useCentraHandlers, {
+        wrapper: CentraProviderWrapper,
+      })
+
+      await waitFor(() => {
+        expect(result.current.resetSelection).toBeDefined()
+      })
+
+      await result.current.resetSelection?.()
+
+      expect(removeSpy).toHaveBeenCalledWith('centra-checkout-token', undefined)
+
+      removeSpy.mockRestore()
+    })
+
+    it('removes the token cookie with `tokenCookieOptions`', async () => {
+      const removeSpy = vi.spyOn(cookies, 'remove')
+      const tokenCookieOptions = { domain: 'example.com', path: '/checkout' }
+
+      const { result } = renderHook(useCentraHandlers, {
+        wrapper: (props) => (
+          <CentraProviderWrapper
+            tokenCookieOptions={tokenCookieOptions}
+            tokenName="test-token"
+            {...props}
+          />
+        ),
+      })
+
+      await waitFor(() => {
+        expect(result.current.resetSelection).toBeDefined()
+      })
+
+      await result.current.resetSelection?.()
+
+      expect(removeSpy).toHaveBeenCalledWith('test-token', tokenCookieOptions)
+
+      removeSpy.mockRestore()
     })
   })
 
