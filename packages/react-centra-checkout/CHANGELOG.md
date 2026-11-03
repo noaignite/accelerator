@@ -1,5 +1,14 @@
 # @noaignite/react-centra-checkout
 
+## 2.1.9
+
+### Patch Changes
+
+- 9094c71: resetSelection: Pass `tokenCookieOptions` when removing the token cookie so cookies set with a custom `domain` or `path` are removed correctly.
+  - @noaignite/centra-types@3.1.3
+  - @noaignite/types@2.0.0
+  - @noaignite/utils@4.0.0
+
 ## 2.1.8
 
 ### Patch Changes
