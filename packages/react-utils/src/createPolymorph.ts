@@ -81,6 +81,10 @@ type InternalPolymorphicProps<
 > = P extends unknown
   ? Omit<InternalNativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | PropKeys<P>> &
       Omit<P, OmittedKeys<C>> & {
+        /**
+         * The element or React component to render.
+         * Defaults to the component's default element.
+         */
         as?: T
         ref?: BasePropsOf<T>['ref']
       }
@@ -168,6 +172,10 @@ export type PolymorphicProps<
 > = P extends unknown
   ? Omit<NativeProps<T, C>, 'as' | 'ref' | OmittedKeys<C> | PropKeys<P>> &
       Omit<P, OmittedKeys<C>> & {
+        /**
+         * The element or React component to render.
+         * Defaults to the component's default element.
+         */
         as?: T
         ref?: BasePropsOf<T>['ref']
       }
