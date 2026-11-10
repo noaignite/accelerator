@@ -131,3 +131,20 @@ When reviewing or summarizing a PR, prefer this shape:
 - Risk level: low, medium, or high
 
 Avoid spending most of the review on generic style comments that linting or formatting already covers.
+
+## Agent skills
+
+### Issue tracker
+
+Track work in GitHub Issues and Accelerator Project #8. Before reading,
+creating, or updating tickets, read `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five canonical triage labels. Before triaging issues, read
+`docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Use a single-context glossary and ADR layout. Before exploring domain
+concepts or proposing architectural changes, read `docs/agents/domain.md`.
