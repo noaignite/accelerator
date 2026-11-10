@@ -4,7 +4,7 @@ Repository-wide operating instructions for AI agents and coding assistants.
 
 ## Repository Structure
 
-- `docs/` - documentation site and generated content
+- `apps/docs/` - documentation site and generated content
 - `packages/*` - published packages and templates
 - `scripts/` - shared repo tooling
 
@@ -83,8 +83,8 @@ CI: Update workflow configuration.
 - Relevant docs may live in:
   - `README.md`
   - `packages/*/README.md`
-  - `docs/src/content/**`
-- The docs site includes generated content. If source-level documentation changes affect generated docs, consider `scripts/generateDocs.ts` and `pnpm docs:build` part of validation.
+  - `apps/docs/src/content/**`
+- The docs site includes generated content. If source-level documentation changes affect generated docs, consider `scripts/buildDocs.ts` and `pnpm docs:build` part of validation.
 
 ## Git Workflow
 

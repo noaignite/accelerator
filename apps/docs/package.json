@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
-    "directory": "docs"
+    "directory": "apps/docs"
   },
   "author": "NoA Ignite",
   "type": "module",
@@ -18,7 +18,7 @@
     "build": "pnpm generate && next build",
     "postbuild": "node scripts/buildSearchIndex.ts",
     "dev": "pnpm generate && next dev --turbopack",
-    "generate": "pnpm --dir .. packages:build-docs && node ../scripts/buildDocs.ts",
+    "generate": "pnpm --dir ../.. packages:build-docs && node ../../scripts/buildDocs.ts",
     "lint": "eslint .",
     "start": "next start",
     "test:types": "tsc --noEmit"

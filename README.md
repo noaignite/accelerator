@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://noaignite.dev/" rel="noopener" target="_blank">
-    <img width="150" height="150" src="https://github.com/noaignite/accelerator/blob/main/docs/public/accelerator-logo.png?raw=1" alt="NoA Ignite Accelerator logo">
+    <img width="150" height="150" src="https://github.com/noaignite/accelerator/blob/main/apps/docs/public/accelerator-logo.png?raw=1" alt="NoA Ignite Accelerator logo">
   </a>
 </p>
 

@@ -20,8 +20,8 @@ next-env.d.ts
 storybook-static
 
 # docs
-docs/public/_pagefind/
-docs/src/content/
+apps/docs/public/_pagefind/
+apps/docs/src/content/
 
 # misc
 .DS_Store
