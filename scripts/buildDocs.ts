@@ -5,7 +5,7 @@ import { injectFrontmatter, readFromFile, resetDirectory, writeFileTo } from './
 /**
  * Config
  */
-const rootDir = path.resolve(process.cwd(), '..')
+const rootDir = path.resolve(import.meta.dirname, '..')
 const packagesDir = path.join(rootDir, 'packages')
 const outputDir = path.join(process.cwd(), 'src/content')
 const rootDocs = [
@@ -20,7 +20,7 @@ const rootDocs = [
     title: 'Contributing',
   },
   {
-    source: './docs/CHANGELOG.md',
+    source: './apps/docs/CHANGELOG.md',
     destination: 'Changelog.md',
     title: 'Changelog',
   },
