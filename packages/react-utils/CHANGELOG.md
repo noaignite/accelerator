@@ -1,5 +1,11 @@
 # @noaignite/react-utils
 
+## 1.0.2
+
+### Patch Changes
+
+- 392f674: createPolymorph: Add documentation for the `as` prop to editor tooltips.
+
 ## 1.0.1
 
 ### Patch Changes
