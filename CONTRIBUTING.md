@@ -34,9 +34,27 @@ git push
 
 4. Go to [the repository](https://github.com/noaignite/accelerator) and make a Pull Request.
 
+Prefer a conventional-commit-style title, `type(scope): short summary`. Write a
+prose-first body explaining what changed, why, user or runtime impact, actual
+validation, and any failed or skipped checks with causes. For docs-only work,
+say so explicitly and keep the body brief. Preserve useful issue links and
+reviewer context; no particular headings or checklists are required.
+
 ## Adding a changeset to your Pull Request
 
-Not all Pull Requests need a changeset. Adding a changeset to your Pull Request will cause a version bump for the specified packages. If your changes should not result in a new version, mark your PR with an empty changeset. When creating a changeset, make sure to include the generated changeset in the same commit as the corresponding code changes.
+Every Pull Request needs a changeset. Include entries for packages under
+`packages/*` with non-test changes; those entries cause package version bumps.
+Non-package and test-only changes use an empty-frontmatter changeset with a short
+description and do not cause a version bump. Test files are `*.test.*`,
+`*.spec.*`, Python `test_*.py` / `*_test.py`, and files under `test/`,
+`__tests__/`, or `__snapshots__/`. Mixed PRs need entries only for packages
+with non-test changes; runtime/API, dependency, and packaging changes still need
+package coverage. Include the changeset with the corresponding changes.
+
+For agent-assisted scope checks and PR metadata preparation, see
+[changeset-pr](.agents/skills/changeset-pr/SKILL.md) and
+[gh-pr-metadata](.agents/skills/gh-pr-metadata/SKILL.md). Validation and drafting
+are read-only; GitHub metadata updates require user authorization.
 
 Create a changeset:
 

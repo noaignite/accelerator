@@ -43,9 +43,9 @@ A changeset is a markdown file in `.changeset/` with YAML frontmatter listing af
 
 ### Changeset Rules
 
-1. Every PR must include a changeset (use empty frontmatter for non-package changes).
-2. If your change modifies a package in `/packages/*`, include it in the changeset frontmatter
-3. If your change only affects non-package files (docs, config, examples, internal tooling), create a changeset with **empty frontmatter** - just the description
+1. Every PR must include a changeset (use empty frontmatter for non-package or test-only changes).
+2. If your change modifies a package in `/packages/*`, include it in the changeset frontmatter, except when that package has only test-file changes. Tests include `*.test.*`, `*.spec.*`, Python `test_*.py` / `*_test.py`, and files under `test/`, `__tests__/`, or `__snapshots__/` directories; runtime/API, dependency, and packaging changes still require package coverage.
+3. If your change only affects non-package files (docs, config, examples, internal tooling) or test files, create a changeset with **empty frontmatter** - just the description. Mixed PRs need package release entries only for packages with non-test changes.
 4. Keep changeset descriptions scoped to the packages listed in their frontmatter. If affected packages need different release notes, create separate changeset files.
 
 Example changeset for a package change:
@@ -132,7 +132,21 @@ When reviewing or summarizing a PR, prefer this shape:
 
 Avoid spending most of the review on generic style comments that linting or formatting already covers.
 
+## Pull Request Conventions
+
+- Prefer conventional-commit-style titles: `type(scope): short summary`, for example `fix(react-utils): correct element size calculation`. Describe the change directly, without agent-specific prefixes.
+- PR bodies should be prose-first and explain what changed, why, user or runtime impact, actual validation, and failed or skipped checks with causes.
+- Docs-only bodies explicitly say so and remain brief. Preserve useful issue links and reviewer context; no particular headings or checklists are required.
+- Validation and drafting are read-only. Update GitHub metadata only when the user authorizes an update.
+
 ## Agent skills
+
+### Changesets and PR metadata
+
+Before creating, correcting, or checking branch changesets, use
+`.agents/skills/changeset-pr/SKILL.md`.
+Before validating, drafting, or updating GitHub PR titles or bodies, use
+`.agents/skills/gh-pr-metadata/SKILL.md`.
 
 ### Issue tracker
 
