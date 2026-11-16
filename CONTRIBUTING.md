@@ -34,27 +34,18 @@ git push
 
 4. Go to [the repository](https://github.com/noaignite/accelerator) and make a Pull Request.
 
-Prefer a conventional-commit-style title, `type(scope): short summary`. Write a
-prose-first body explaining what changed, why, user or runtime impact, actual
-validation, and any failed or skipped checks with causes. For docs-only work,
-say so explicitly and keep the body brief. Preserve useful issue links and
-reviewer context; no particular headings or checklists are required.
+Before submitting, follow the [Pull Request Conventions](AGENTS.md#pull-request-conventions)
+for the title and body.
 
 ## Adding a changeset to your Pull Request
 
-Every Pull Request needs a changeset. Include entries for packages under
-`packages/*` with non-test changes; those entries cause package version bumps.
-Non-package and test-only changes use an empty-frontmatter changeset with a short
-description and do not cause a version bump. Test files are `*.test.*`,
-`*.spec.*`, Python `test_*.py` / `*_test.py`, and files under `test/`,
-`__tests__/`, or `__snapshots__/`. Mixed PRs need entries only for packages
-with non-test changes; runtime/API, dependency, and packaging changes still need
-package coverage. Include the changeset with the corresponding changes.
+Use the [Changeset Rules](AGENTS.md#changeset-rules) to choose package scope,
+release type, or empty frontmatter. Include the generated file with the
+corresponding changes.
 
 For agent-assisted scope checks and PR metadata preparation, see
 [changeset-pr](.agents/skills/changeset-pr/SKILL.md) and
-[gh-pr-metadata](.agents/skills/gh-pr-metadata/SKILL.md). Validation and drafting
-are read-only; GitHub metadata updates require user authorization.
+[gh-pr-metadata](.agents/skills/gh-pr-metadata/SKILL.md).
 
 Create a changeset:
 
@@ -66,6 +57,37 @@ Create an empty changeset:
 
 ```sh
 pnpm changeset --empty
+```
+
+Add a short description to the empty changeset before submitting.
+
+Package release example:
+
+```md
+---
+'@noaignite/react-utils': patch
+---
+
+useElementSize: Fix faulty size computation.
+```
+
+Dependency update example:
+
+```md
+---
+'@noaignite/style-guide': patch
+---
+
+Deps: Update `prettier-plugin-tailwindcss` from 0.7.2 to 0.8.0.
+```
+
+Empty-frontmatter example:
+
+```md
+---
+---
+
+Docs: Clarify contributor setup.
 ```
 
 <!--

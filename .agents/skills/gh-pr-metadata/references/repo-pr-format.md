@@ -1,38 +1,24 @@
-# Repo PR Format
+# PR Metadata Helper Reference
 
-Source: the root `AGENTS.md` Pull Request Conventions.
+Policy: [Pull Request Conventions](../../../../AGENTS.md#pull-request-conventions).
 
-## PR Body Guidance
+## Inputs
 
-Keep the body prose-first and explain:
+- Without explicit input, the helper reads the current branch's PR using `gh pr view`.
+- `--pr <number-or-url>` selects a different remote PR.
+- `--title` and `--body` / `--body-file` validate a local draft together, without `--pr`.
+- `--print-template` prints an optional drafting scaffold without reading a PR.
 
-- what changed
-- why the change was needed
-- user or runtime impact
-- validation that was run
-- any failed or skipped checks, with cause
+## Validation Limits
 
-If a PR is docs-only, say that explicitly and keep the body brief. Preserve useful issue links and reviewer context. The repository does not require particular headings or checklist items.
+The helper checks conventional title syntax and rejects empty or comment-only bodies.
+Accepted title types are `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`,
+`refactor`, `revert`, and `test`.
+It does not check whether claims match the diff or execution evidence, or impose
+body sections. Review those claims manually using the linked policy.
+The helper never writes GitHub metadata.
 
-## Title Convention
-
-Prefer conventional-commit style:
-
-```text
-type(scope): short summary
-```
-
-Examples:
-
-- `fix(react-utils): correct element size calculation`
-- `feat(style-guide): add lint rule defaults`
-- `docs(agents): clarify workspace checks`
-
-Avoid vague summaries such as `update pr`, or titles that do not describe the branch's actual change.
-
-## Authorization
-
-Validation and drafting are read-only. The helper only reads PR metadata or explicit local input; it never edits GitHub. Preserve useful issue links and reviewer context when an update is authorized, and re-read metadata before applying it to reconcile concurrent edits.
+## Prerequisites
 
 The helper requires Python 3. Remote reads additionally require an authenticated
 `gh`; explicit local input and `--print-template` do not contact GitHub.
