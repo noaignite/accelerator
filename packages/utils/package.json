@@ -19,10 +19,36 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./dist/index.js",
+    "./assert": "./dist/assert.js",
+    "./calculateContrast": "./dist/calculateContrast.js",
+    "./calculateLuminance": "./dist/calculateLuminance.js",
+    "./capitalize": "./dist/capitalize.js",
+    "./chunk": "./dist/chunk.js",
+    "./clamp": "./dist/clamp.js",
+    "./colorContrast": "./dist/colorContrast.js",
+    "./createBatchedCallback": "./dist/createBatchedCallback.js",
+    "./debounce": "./dist/debounce.js",
+    "./deepmerge": "./dist/deepmerge.js",
+    "./hexToRGB": "./dist/hexToRGB.js",
+    "./isKeyOf": "./dist/isKeyOf.js",
+    "./isObject": "./dist/isObject.js",
+    "./isPlainObject": "./dist/isPlainObject.js",
+    "./lerp": "./dist/lerp.js",
+    "./mapRange": "./dist/mapRange.js",
+    "./normalize": "./dist/normalize.js",
+    "./normalizeToArray": "./dist/normalizeToArray.js",
+    "./objectFromURLSearchParams": "./dist/objectFromURLSearchParams.js",
+    "./omit": "./dist/omit.js",
+    "./pick": "./dist/pick.js",
+    "./random": "./dist/random.js",
+    "./range": "./dist/range.js",
+    "./round": "./dist/round.js",
+    "./sleep": "./dist/sleep.js",
+    "./toggleArrayValue": "./dist/toggleArrayValue.js",
+    "./toRootRelativePath": "./dist/toRootRelativePath.js",
+    "./traverse": "./dist/traverse.js",
+    "./URLSearchParamsFromObject": "./dist/URLSearchParamsFromObject.js"
   },
   "files": [
     "dist"
