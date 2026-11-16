@@ -35,7 +35,7 @@
     "@noaignite/style-guide": "workspace:*",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
-    "pagefind": "^1.5.2"
+    "pagefind": "^1.6.0"
   },
   "engines": {
     "node": ">=20.0.0"
