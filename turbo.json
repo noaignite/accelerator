@@ -6,6 +6,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "outputLogs": "new-only",
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "build:docs": {
@@ -17,6 +18,10 @@
     },
     "test:coverage": {
       "dependsOn": ["^test:coverage"]
+    },
+    "test:package": {
+      "dependsOn": ["build", "^build"],
+      "cache": false
     },
     "test:unit": {
       "dependsOn": ["^test:unit"]

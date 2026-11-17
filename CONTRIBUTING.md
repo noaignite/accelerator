@@ -107,3 +107,35 @@ You can now access the documentation site [locally](http://localhost:3000).
 
 Where possible, please add tests for any changes you make.
 Tests can be run locally with `pnpm test`.
+
+## Validating package distributions
+
+After `pnpm install`, run the packed-package checks from the repository root:
+
+```sh
+pnpm test:package
+```
+
+This builds the selected packages and their workspace dependencies before checking the
+consumer-facing files, exports, declarations and type resolution with strict publint
+and Are the Types Wrong (ATTW). Validation always runs, even when Turbo restores cached
+builds. It complements lint, type and unit checks and is included in both `pnpm test`
+and `pnpm ci:test`, including the existing release test chains.
+
+Only these packages have this gate:
+
+- `@noaignite/react-centra-checkout` and `@noaignite/tailwind-typography`: ATTW's
+  `node16` profile checks their ESM and CommonJS entrypoints.
+- `@noaignite/react-utils` and `@noaignite/utils`: ATTW's `esm-only` profile checks
+  their ESM entrypoints.
+
+To focus on one package while retaining the build prerequisites:
+
+```sh
+pnpm exec turbo test:package --filter=@noaignite/react-utils
+```
+
+Direct package scripts (for example, `pnpm -F @noaignite/react-utils test:package`)
+assume that the package and its dependencies have already been built. Prefer the
+Turbo-filtered command for a clean checkout. Each validator packs independently;
+missing built files, strict publint warnings and ATTW failures fail the gate.

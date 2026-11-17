@@ -68,6 +68,7 @@
     "intent:validate": "pnpm dlx @tanstack/intent@latest validate skills",
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",
+    "test:package": "publint --pack pnpm --strict && attw --pack . --profile esm-only",
     "test:types": "tsc --noEmit",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest"
