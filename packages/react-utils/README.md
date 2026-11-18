@@ -17,6 +17,25 @@ yarn add @noaignite/react-utils
 npm install @noaignite/react-utils
 ```
 
+## Imports
+
+Import utilities from the package root or from explicit module subpaths:
+
+```ts
+import { useControlled } from '@noaignite/react-utils'
+```
+
+Equivalent module imports:
+
+```ts
+import { useControlled } from '@noaignite/react-utils/useControlled'
+import { ErrorBoundary } from '@noaignite/react-utils/ErrorBoundary'
+```
+
+Every module exported at the root has a subpath matching its source-module spelling and case.
+Root imports remain supported, and module imports expose the same exports and TypeScript types.
+Use the public subpaths without a file extension or `/dist`.
+
 <!-- package-docs:exports -->
 
 ## Documentation

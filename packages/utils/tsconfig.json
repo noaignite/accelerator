@@ -2,7 +2,8 @@
   "extends": "@noaignite/style-guide/typescript/base",
   "compilerOptions": {
     "paths": {
-      "@noaignite/utils": ["./src/index.ts"]
+      "@noaignite/utils": ["./src/index.ts"],
+      "@noaignite/utils/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

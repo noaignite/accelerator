@@ -17,6 +17,25 @@ yarn add @noaignite/utils
 npm install @noaignite/utils
 ```
 
+## Imports
+
+Import utilities from the package root or from explicit module subpaths:
+
+```ts
+import { clamp } from '@noaignite/utils'
+```
+
+Equivalent module imports:
+
+```ts
+import { clamp } from '@noaignite/utils/clamp'
+import { URLSearchParamsFromObject } from '@noaignite/utils/URLSearchParamsFromObject'
+```
+
+Every module exported at the root has a subpath matching its source-module spelling and case.
+Root imports remain supported, and module imports expose the same exports and TypeScript types.
+Use the public subpaths without a file extension or `/dist`.
+
 <!-- package-docs:exports -->
 
 ## Documentation

@@ -3,7 +3,8 @@
   "compilerOptions": {
     "types": ["node"],
     "paths": {
-      "@noaignite/react-utils": ["./src/index.ts"]
+      "@noaignite/react-utils": ["./src/index.ts"],
+      "@noaignite/react-utils/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
