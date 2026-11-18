@@ -39,6 +39,7 @@
     "dev": "tsdown --config-loader unrun --watch",
     "lint": "eslint .",
     "test:coverage": "vitest run --coverage",
+    "test:package": "publint --pack pnpm --strict && attw --pack . --profile node16",
     "test:types": "tsc --noEmit",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest"
