@@ -15,10 +15,9 @@
   "author": "NoA Ignite",
   "type": "module",
   "scripts": {
-    "build": "pnpm generate && next build",
+    "build": "node ../../scripts/assembleDocsContent.ts && next build",
     "postbuild": "node scripts/buildSearchIndex.ts",
-    "dev": "pnpm generate && next dev --turbopack",
-    "generate": "pnpm --dir ../.. packages:build-docs && node ../../scripts/buildDocs.ts",
+    "dev": "node ../../scripts/assembleDocsContent.ts && next dev",
     "lint": "eslint .",
     "start": "next start",
     "test:types": "tsc --noEmit"

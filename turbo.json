@@ -7,34 +7,77 @@
     "build": {
       "dependsOn": ["^build"],
       "outputLogs": "new-only",
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": ["!.next/cache/**", ".next/**", "dist/**"]
     },
     "build:docs": {
       "dependsOn": ["^build:docs"],
       "outputs": ["dist/docs/**"]
     },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "docs#build": {
+      "dependsOn": [
+        "@noaignite/centra-mocks#build",
+        "@noaignite/centra-types#build",
+        "@noaignite/create-app#build",
+        "@noaignite/react-centra-checkout#build",
+        "@noaignite/react-native-eslint#build",
+        "@noaignite/react-utils#build",
+        "@noaignite/style-guide#build",
+        "@noaignite/tailwind-typography#build",
+        "@noaignite/types#build",
+        "@noaignite/utils#build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/CONTRIBUTING.md",
+        "$TURBO_ROOT$/README.md",
+        "$TURBO_ROOT$/scripts/assembleDocsContent.ts",
+        "$TURBO_ROOT$/scripts/docsUtils.ts"
+      ],
+      "outputLogs": "new-only",
+      "outputs": ["!.next/cache/**", ".next/**", "public/_pagefind/**", "src/content/**"]
+    },
+    "docs#dev": {
+      "cache": false,
+      "dependsOn": [
+        "@noaignite/centra-mocks#build:docs",
+        "@noaignite/centra-types#build:docs",
+        "@noaignite/create-app#build:docs",
+        "@noaignite/react-centra-checkout#build:docs",
+        "@noaignite/react-native-eslint#build:docs",
+        "@noaignite/react-utils#build:docs",
+        "@noaignite/style-guide#build:docs",
+        "@noaignite/tailwind-typography#build:docs",
+        "@noaignite/types#build:docs",
+        "@noaignite/utils#build:docs"
+      ],
+      "persistent": true
+    },
     "lint": {
       "dependsOn": ["^lint"]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
     },
     "test:coverage": {
       "dependsOn": ["^test:coverage"]
     },
     "test:package": {
-      "dependsOn": ["build", "^build"],
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build", "build"]
+    },
+    "test:types": {
+      "dependsOn": ["^test:types"]
     },
     "test:unit": {
       "dependsOn": ["^test:unit"]
     },
     "test:unit:watch": {
       "dependsOn": ["^test:unit:watch"]
-    },
-    "test:types": {
-      "dependsOn": ["^test:types"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
     }
   }
 }

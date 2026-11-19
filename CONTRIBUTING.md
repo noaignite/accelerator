@@ -108,6 +108,26 @@ You can now access the documentation site [locally](http://localhost:3000).
 Where possible, please add tests for any changes you make.
 Tests can be run locally with `pnpm test`.
 
+## Building packages and documentation
+
+Root commands run unfiltered Turbo tasks:
+
+| Command                    | Purpose                                                                    |
+| -------------------------- | -------------------------------------------------------------------------- |
+| `pnpm build`               | Build all packages and the docs site, including its search index.          |
+| `pnpm dev`                 | Generate package docs and start docs development; no compilation required. |
+| `pnpm start`               | Serve built apps; run `pnpm build` first.                                  |
+| `pnpm packages:build`      | Build complete package artifacts, including `dist/docs`.                   |
+| `pnpm packages:build-docs` | Generate package docs only.                                                |
+
+Pass server options with `--`, e.g. `pnpm dev -- --port 3001` (also works for `start`).
+Prefer root commands: direct docs-app `build`/`dev` require prepared package docs,
+and direct `next build` skips the Pagefind postbuild lifecycle.
+
+Turbo restores complete package and site outputs, including content and search.
+Keep package docs after tsdown, which cleans `dist`. When adding a documented
+package, update both `docs#build` and `docs#dev` prerequisites in `turbo.json`.
+
 ## Validating package distributions
 
 After `pnpm install`, run the packed-package checks from the repository root:
