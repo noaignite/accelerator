@@ -51,3 +51,7 @@ The [changelog](https://github.com/noaignite/accelerator/releases) is regularly 
 ## License
 
 This project is licensed under the terms of the [MIT license](https://github.com/noaignite/accelerator/blob/main/LICENSE).
+
+## Benchmark documentation sample
+
+Temporary documentation content for controlled cache sample 1.
