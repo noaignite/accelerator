@@ -128,6 +128,16 @@ Turbo restores complete package and site outputs, including content and search.
 Keep package docs after tsdown, which cleans `dist`. When adding a documented
 package, update both `docs#build` and `docs#dev` prerequisites in `turbo.json`.
 
+### CI task caching
+
+CI caches Turbo task results without reducing check scope; package validators
+always execute. Fork PRs restore caches but do not save them. Never put credentials
+in cached outputs or logs.
+
+Keep `$TURBO_DEFAULT$`, include shared helper inputs, and declare generated files
+in `outputs`. When changing cache/output semantics, bump the cache schema in
+`.github/workflows/test.yml`.
+
 ## Validating package distributions
 
 After `pnpm install`, run the packed-package checks from the repository root:

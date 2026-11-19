@@ -1,16 +1,27 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "agentGuidance": false,
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env.*local", "pnpm-workspace.yaml"],
   "globalEnv": ["NODE_ENV", "npm_config_user_agent"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/getTsdownConfig.ts",
+        "$TURBO_ROOT$/scripts/buildPackageDocs.ts",
+        "$TURBO_ROOT$/scripts/docsUtils.ts"
+      ],
       "outputLogs": "new-only",
-      "outputs": ["!.next/cache/**", ".next/**", "dist/**"]
+      "outputs": ["!.next/cache/**", "!.next/dev/**", ".next/**", "dist/**"]
     },
     "build:docs": {
       "dependsOn": ["^build:docs"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/buildPackageDocs.ts",
+        "$TURBO_ROOT$/scripts/docsUtils.ts"
+      ],
       "outputs": ["dist/docs/**"]
     },
     "dev": {
@@ -38,7 +49,14 @@
         "$TURBO_ROOT$/scripts/docsUtils.ts"
       ],
       "outputLogs": "new-only",
-      "outputs": ["!.next/cache/**", ".next/**", "public/_pagefind/**", "src/content/**"]
+      "outputs": [
+        "!.next/cache/**",
+        "!.next/dev/**",
+        ".next/**",
+        "next-env.d.ts",
+        "public/_pagefind/**",
+        "src/content/**"
+      ]
     },
     "docs#dev": {
       "cache": false,
@@ -57,24 +75,43 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^build", "^lint"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/getTsdownConfig.ts",
+        "$TURBO_ROOT$/scripts/getVitestConfig.ts"
+      ]
+    },
+    "docs#lint": {
+      "dependsOn": ["^build", "^lint", "build"]
     },
     "start": {
       "cache": false,
       "persistent": true
     },
     "test:coverage": {
-      "dependsOn": ["^test:coverage"]
+      "dependsOn": ["^build", "^test:coverage"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"],
+      "outputs": ["coverage/**"]
     },
     "test:package": {
       "cache": false,
       "dependsOn": ["^build", "build"]
     },
     "test:types": {
-      "dependsOn": ["^test:types"]
+      "dependsOn": ["^build", "^test:types"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/getTsdownConfig.ts",
+        "$TURBO_ROOT$/scripts/getVitestConfig.ts"
+      ]
+    },
+    "docs#test:types": {
+      "dependsOn": ["^build", "^test:types", "build"]
     },
     "test:unit": {
-      "dependsOn": ["^test:unit"]
+      "dependsOn": ["^build", "^test:unit"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"]
     },
     "test:unit:watch": {
       "dependsOn": ["^test:unit:watch"]
