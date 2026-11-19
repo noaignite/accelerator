@@ -13,7 +13,11 @@ env:
 
 jobs:
   test-and-coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    env:
+      TURBO_CACHE_DIR: .turbo/ci-cache
+      TURBO_CACHE: local:rw
+      TURBO_RUN_SUMMARY: 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -29,8 +33,14 @@ jobs:
         with:
           # Keep CI on Node 24 so the bundled npm matches the release workflow's
           # OIDC-compatible npm version requirement for trusted publishing.
-          node-version: 24
+          node-version: '24.22.2'
           cache: 'pnpm'
+
+      - name: Verify benchmark environment
+        run: |
+          node --input-type=module -e 'import assert from "node:assert/strict"; import os from "node:os"; assert.equal(process.version, "v24.22.2"); assert.equal(process.platform, "linux"); assert.equal(process.arch, "x64"); assert.equal(process.env.ImageOS, "ubuntu26"); assert.equal(process.env.ImageVersion, "20261111.196.1"); console.log(JSON.stringify({node: process.version, platform: process.platform, arch: process.arch, image: process.env.ImageOS, imageVersion: process.env.ImageVersion, cpus: os.availableParallelism(), memory: os.totalmem()}))'
+          test "$(pnpm --version)" = "11.3.0"
+          pnpm --version
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
