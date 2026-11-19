@@ -16,7 +16,7 @@ export default [
         {
           patterns: [
             {
-              group: ['./*'],
+              regex: '^(?!\\.\\./(?:test|package\\.json)$)\\.{1,2}(?:/|$)',
               message:
                 'Test public APIs through the package’s exported entry points instead of relative source imports.',
             },
