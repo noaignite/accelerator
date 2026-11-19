@@ -15,7 +15,14 @@ export type UseIdProps = {
   children: (id: ReturnType<typeof useId>) => ReactElement | false | null | undefined
 }
 
-/** Component-hook for React {@link useId}. */
+/**
+ * Component-hook for React {@link useId}.
+ *
+ * @param root0 - Component props.
+ * @param root0.ref - Ref forwarded to the child element.
+ * @param root0.children - Render function receiving the generated ID.
+ * @returns The rendered child with merged props, or a falsy value.
+ */
 export function UseId({ ref, children, ...rest }: UseIdProps) {
   assert(!('id' in rest), `${NAME} cannot receive an "id" prop.`)
 

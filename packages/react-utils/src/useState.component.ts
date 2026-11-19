@@ -16,7 +16,15 @@ export type UseStateProps<S> = {
   children: (props: [S, Dispatch<SetStateAction<S>>]) => ReactElement | false | null | undefined
 }
 
-/** Component-hook for React {@link useState}. */
+/**
+ * Component-hook for React {@link useState}.
+ *
+ * @param root0 - Component props.
+ * @param root0.ref - Ref forwarded to the child element.
+ * @param root0.children - Render function receiving the state and setter.
+ * @param root0.initialState - Initial state value or lazy initializer.
+ * @returns The rendered child with merged props, or a falsy value.
+ */
 export function UseState<S>({ ref, children, initialState, ...rest }: UseStateProps<S>) {
   const refObject = useRefObject(ref)
   const shouldForwardRef = Boolean(ref)

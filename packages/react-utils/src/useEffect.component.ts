@@ -17,7 +17,16 @@ export type UseEffectProps = {
   children: ReactElement | false | null | undefined
 }
 
-/** Component-hook for React {@link useEffect}. */
+/**
+ * Component-hook for React {@link useEffect}.
+ *
+ * @param root0 - Component props.
+ * @param root0.ref - Ref forwarded to the child element.
+ * @param root0.effect - Effect callback, optionally returning cleanup.
+ * @param root0.deps - Dependencies that control when the effect runs.
+ * @param root0.children - Single child element or a falsy value.
+ * @returns The child element with merged props, or the falsy child.
+ */
 export function UseEffect({ ref, effect, deps, children, ...rest }: UseEffectProps) {
   const refObject = useRefObject(ref)
   const shouldForwardRef = Boolean(ref)

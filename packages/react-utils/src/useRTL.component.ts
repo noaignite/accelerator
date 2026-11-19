@@ -14,13 +14,22 @@ const NAME = '<UseRTL />'
 export type UseRTLProps = RTLOptions & {
   ref?: Ref<Element | null>
   children:
-    | ReactElement
-    | ((rtl: ReturnType<typeof useRTL>) => ReactElement | false | null | undefined)
+    ReactElement | ((rtl: ReturnType<typeof useRTL>) => ReactElement | false | null | undefined)
   /** Should directionality be determined from provided `ref` element? */
   scoped?: boolean
 }
 
-/** Component-hook for Accelerator {@link useRTL}. */
+/**
+ * Component-hook for Accelerator {@link useRTL}.
+ *
+ * @param root0 - Component props.
+ * @param root0.ref - Ref forwarded to the child element.
+ * @param root0.children - Child element or render function receiving directionality.
+ * @param root0.initialValue - Initial directionality before observing the DOM.
+ * @param root0.scoped - Whether to track directionality from the child element.
+ * @param root0.when - Whether to observe directionality changes.
+ * @returns The child with directionality attributes and merged props, or a falsy value.
+ */
 export function UseRTL({
   ref,
   children,

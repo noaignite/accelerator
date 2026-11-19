@@ -16,7 +16,12 @@ export type UseRefProps<T> = {
   children: (ref: RefObject<T>) => ReactElement | false | null | undefined
 }
 
-/** Component-hook for React {@link useRef}. */
+/**
+ * Component-hook for React {@link useRef}.
+ *
+ * @param props - Initial ref value, render function, and optional forwarded ref.
+ * @returns The rendered child with merged props, or a falsy value.
+ */
 export function UseRef<T>(props: UseRefProps<T>): ReactElement | false | null | undefined
 
 export function UseRef<T>(props: UseRefProps<T | null>): ReactElement | false | null | undefined
