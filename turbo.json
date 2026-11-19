@@ -56,30 +56,25 @@
       ],
       "persistent": true
     },
-    "docs#test:package": {
-      "cache": false,
-      "dependsOn": [],
-      "description": "The docs app has no package validator; skip its build prerequisites."
-    },
     "lint": {
-      "dependsOn": ["^build", "^lint"]
+      "dependsOn": ["^lint"]
     },
     "start": {
       "cache": false,
       "persistent": true
     },
     "test:coverage": {
-      "dependsOn": ["^build", "^test:coverage"]
+      "dependsOn": ["^test:coverage"]
     },
     "test:package": {
       "cache": false,
       "dependsOn": ["^build", "build"]
     },
     "test:types": {
-      "dependsOn": ["^build", "^test:types"]
+      "dependsOn": ["^test:types"]
     },
     "test:unit": {
-      "dependsOn": ["^build", "^test:unit"]
+      "dependsOn": ["^test:unit"]
     },
     "test:unit:watch": {
       "dependsOn": ["^test:unit:watch"]

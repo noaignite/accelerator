@@ -106,9 +106,7 @@ You can now access the documentation site [locally](http://localhost:3000).
  -->
 
 Where possible, please add tests for any changes you make.
-`pnpm test` schedules lint, types, unit tests, and package validation concurrently
-through Turbo; `pnpm ci:test` uses coverage instead of unit-only tests.
-Checks wait for dependency builds, and package validation always runs uncached.
+Tests can be run locally with `pnpm test`.
 
 ## Building packages and documentation
 
