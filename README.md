@@ -54,4 +54,4 @@ This project is licensed under the terms of the [MIT license](https://github.com
 
 ## Benchmark documentation sample
 
-Temporary documentation content for controlled cache sample 1.
+Temporary documentation content for controlled cache sample 2.
