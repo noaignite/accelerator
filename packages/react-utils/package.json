@@ -29,6 +29,7 @@
     "./createSvgIcon": "./dist/createSvgIcon.js",
     "./ErrorBoundary": "./dist/ErrorBoundary.js",
     "./getReactElementRef": "./dist/getReactElementRef.js",
+    "./isReactElement": "./dist/isReactElement.js",
     "./isRefObject": "./dist/isRefObject.js",
     "./setRef": "./dist/setRef.js",
     "./useControlled": "./dist/useControlled.js",
