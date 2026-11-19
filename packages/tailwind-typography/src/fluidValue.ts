@@ -20,9 +20,9 @@ export function fluidValue(
   clampMax = false,
 ) {
   // Set up the fluid formula.
-  const deltaValue = maxValue - minValue
+  const valueDelta = maxValue - minValue
   const deltaViewport = maxViewport - minViewport
-  const value = `calc(${minValue}${unit} + ${deltaValue} * ((100vw - ${minViewport}${unit}) / ${deltaViewport}))`
+  const value = `calc(${minValue}${unit} + ${valueDelta} * ((100vw - ${minViewport}${unit}) / ${deltaViewport}))`
 
   // Clamp fontSize values if enabled.
   if (clampMin && clampMax) {
