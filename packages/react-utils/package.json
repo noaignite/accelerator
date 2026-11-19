@@ -30,6 +30,7 @@
     "./ErrorBoundary": "./dist/ErrorBoundary.js",
     "./getReactElementRef": "./dist/getReactElementRef.js",
     "./isReactElement": "./dist/isReactElement.js",
+    "./isReactFragment": "./dist/isReactFragment.js",
     "./isRefObject": "./dist/isRefObject.js",
     "./setRef": "./dist/setRef.js",
     "./useControlled": "./dist/useControlled.js",
