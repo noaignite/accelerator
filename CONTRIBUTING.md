@@ -128,6 +128,39 @@ Turbo restores complete package and site outputs, including content and search.
 Keep package docs after tsdown, which cleans `dist`. When adding a documented
 package, update both `docs#build` and `docs#dev` prerequisites in `turbo.json`.
 
+### CI task caching
+
+Test CI still runs the full build, then sequential lint, types, coverage and all four
+uncached package validators. GitHub Actions restores only `.turbo/ci-cache`; Turbo
+decides individual task hits from inputs and dependency build hashes. A cache miss
+or cache-service failure runs the normal tasks. The existing pnpm cache is separate.
+Release/publish and Slack workflows do not consume this task cache.
+
+Main seeds base caches. Same-repository PRs save in GitHub's PR-isolated scope;
+fork PRs only restore eligible base caches. Never put credentials in task outputs
+or logs: base caches are readable by fork PRs.
+
+Keys and their only restore prefix include the resolved Node version, OS/architecture,
+runner image/version, UTC calendar year (rendered by docs), and schema version.
+When changing output/cache semantics, bump `schema` in `scripts/turboCache.ts`.
+Keep `$TURBO_DEFAULT$` in custom inputs; add imported root helpers explicitly.
+Generated outputs belong in `outputs`, not source inputs. Changes to shared build,
+docs and Vitest helpers must invalidate their consumers. Don't run `build` and
+`build:docs` concurrently: both own package docs and tsdown cleans `dist`.
+
+Snapshots retain only hashes used in the current successful job, not accumulated
+task history. Task-cache directories above 256 MiB are not saved. Each compatible
+commit gets at most one immutable snapshot per GitHub scope. Entries still compete
+with pnpm caches for the repository's included 10 GiB; GitHub expires/evicts them,
+so hits are not guaranteed. No cache deletion permissions, storage-limit increases
+or paid services are needed. Job summaries report snapshot bytes and restore/save
+overhead; action logs report compressed transfer size and time.
+
+For an isolated local reproduction, set `TURBO_CACHE_DIR=.turbo/ci-cache` and
+`TURBO_CACHE=local:rw` before `pnpm build` and `pnpm ci:test`. This also avoids
+Turbo's default cache sharing across worktrees. Run cache tooling regression tests
+with `node --test scripts/*.test.ts`.
+
 ## Validating package distributions
 
 After `pnpm install`, run the packed-package checks from the repository root:

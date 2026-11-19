@@ -14,6 +14,11 @@ env:
 jobs:
   test-and-coverage:
     runs-on: ubuntu-latest
+    env:
+      # Turbo 2.11 shares worktree caches by default. Persist this directory only.
+      TURBO_CACHE_DIR: .turbo/ci-cache
+      TURBO_CACHE: local:rw
+      TURBO_RUN_SUMMARY: 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -39,11 +44,70 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
         run: pnpm ci:status
 
+      - name: Test Turbo cache tooling
+        run: node --test scripts/*.test.ts
+
+      - name: Resolve Turbo cache compatibility
+        id: turbo-key
+        continue-on-error: true
+        run: node scripts/turboCache.ts key
+
+      - name: Start Turbo restore timer
+        id: turbo-restore-start
+        run: echo "time=$(date +%s)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Turbo tasks
+        id: turbo-restore
+        if: ${{ steps.turbo-key.outcome == 'success' }}
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: '1'
+        uses: actions/cache/restore@v5
+        with:
+          path: .turbo/ci-cache
+          key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
+          restore-keys: ${{ steps.turbo-key.outputs.prefix }}
+
+      - name: Report Turbo restore time
+        run: echo "Turbo restore overhead (seconds) = $(( $(date +%s) - ${{ steps.turbo-restore-start.outputs.time }} ))" >> "$GITHUB_STEP_SUMMARY"
+
       - name: Run build
         run: pnpm build
 
       - name: Run tests with coverage
         run: pnpm ci:test
+
+      - name: Start Turbo save timer
+        id: turbo-save-start
+        run: echo "time=$(date +%s)" >> "$GITHUB_OUTPUT"
+
+      - name: Bound Turbo snapshot to this job's task hashes
+        id: turbo-snapshot
+        if: ${{ steps.turbo-key.outcome == 'success' }}
+        continue-on-error: true
+        run: node scripts/turboCache.ts prune
+
+      - name: Save Turbo tasks
+        # GitHub scopes PR saves to refs/pull/<number>/merge. Forks only restore.
+        # Main seeds the default-branch cache; release never restores this path.
+        if: >-
+          ${{
+            steps.turbo-snapshot.outcome == 'success' &&
+            steps.turbo-snapshot.outputs.save == 'true' &&
+            steps.turbo-restore.outputs.cache-hit != 'true' &&
+            (github.event_name == 'push' ||
+             github.event.pull_request.head.repo.full_name == github.repository)
+          }}
+        continue-on-error: true
+        timeout-minutes: 2
+        uses: actions/cache/save@v5
+        with:
+          path: .turbo/ci-cache
+          key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Report Turbo save time
+        run: echo "Turbo prune/save overhead (seconds) = $(( $(date +%s) - ${{ steps.turbo-save-start.outputs.time }} ))" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload coverage to Codecov
         if: ${{ github.actor != 'dependabot[bot]' }}
