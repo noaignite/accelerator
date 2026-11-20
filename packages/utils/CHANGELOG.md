@@ -1,5 +1,15 @@
 # @noaignite/utils
 
+## 4.1.0
+
+### Minor Changes
+
+- 64a3b2b: Exports: Add explicit, case-preserving module subpath imports with TypeScript support while preserving all existing root exports.
+
+### Patch Changes
+
+- @noaignite/types@2.0.0
+
 ## 4.0.0
 
 ### Major Changes
