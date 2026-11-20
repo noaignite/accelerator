@@ -11,12 +11,20 @@ on:
 env:
   HUSKY: 0
 
+# Only newer runs of the same PR supersede each other. A unique push group also
+# avoids Actions replacing pending main runs; release uses a separate workflow.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test-and-coverage:
     runs-on: ubuntu-latest
     env:
       # Turbo 2.11 shares worktree caches by default. Persist this directory only.
       TURBO_CACHE_DIR: .turbo/ci-cache
+      # Keep every event credential-free until Owner-approved server policies are
+      # proven. Client-side remote:r cannot constrain a write-capable credential.
       TURBO_CACHE: local:rw
       # Native eviction runs at startup; the size check below also caps uploads.
       TURBO_CACHE_MAX_AGE: 7d
@@ -54,7 +62,7 @@ jobs:
           NODE_VERSION: ${{ steps.node.outputs.node-version }}
         run: |
           year=$(date -u +%Y)
-          echo "prefix=turbo-v2-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
+          echo "prefix=turbo-v3-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
 
       - name: Restore Turbo tasks
         id: turbo-restore
@@ -69,14 +77,17 @@ jobs:
           key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
           restore-keys: ${{ steps.turbo-key.outputs.prefix }}
 
-      - name: Run build
-        run: pnpm build
-
       - name: Check formatting
         run: pnpm format:check
 
-      - name: Run tests with coverage
-        run: pnpm ci:test
+      - name: Run build and validation
+        # Compare the checked-out PR head to the event's actual target snapshot,
+        # not origin/main or a target ref that may have advanced since this event.
+        # Full history above permits merge-base resolution; invalid refs run full.
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: pnpm ci:test:affected
 
       - name: Check Turbo cache size
         id: turbo-size
