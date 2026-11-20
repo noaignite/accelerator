@@ -54,7 +54,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md#adding-a-changeset-to-your-pull-request)
   - `README.md`
   - `packages/*/README.md`
   - `apps/docs/src/content/**`
-- The docs site includes generated content. If source-level documentation changes affect generated docs, consider `scripts/buildDocs.ts` and `pnpm docs:build` part of validation.
+- The docs site includes generated content. If source-level documentation changes affect generated docs, consider `scripts/assembleDocsContent.ts` and `pnpm build` part of validation.
 
 ## Git Workflow
 

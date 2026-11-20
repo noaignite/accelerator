@@ -14,6 +14,13 @@ env:
 jobs:
   test-and-coverage:
     runs-on: ubuntu-latest
+    env:
+      # Turbo 2.11 shares worktree caches by default. Persist this directory only.
+      TURBO_CACHE_DIR: .turbo/ci-cache
+      TURBO_CACHE: local:rw
+      # Native eviction runs at startup; the size check below also caps uploads.
+      TURBO_CACHE_MAX_AGE: 7d
+      TURBO_CACHE_MAX_SIZE: 256MB
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -25,6 +32,7 @@ jobs:
         uses: pnpm/action-setup@v6
 
       - name: Set up node
+        id: node
         uses: actions/setup-node@v6
         with:
           # Keep CI on Node 24 so the bundled npm matches the release workflow's
@@ -39,11 +47,60 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' && github.actor != 'github-actions[bot]' }}
         run: pnpm ci:status
 
+      - name: Resolve Turbo cache compatibility
+        id: turbo-key
+        continue-on-error: true
+        env:
+          NODE_VERSION: ${{ steps.node.outputs.node-version }}
+        run: |
+          year=$(date -u +%Y)
+          echo "prefix=turbo-v2-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Turbo tasks
+        id: turbo-restore
+        if: ${{ steps.turbo-key.outcome == 'success' }}
+        continue-on-error: true
+        timeout-minutes: 2
+        env:
+          SEGMENT_DOWNLOAD_TIMEOUT_MINS: '1'
+        uses: actions/cache/restore@v5
+        with:
+          path: .turbo/ci-cache
+          key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
+          restore-keys: ${{ steps.turbo-key.outputs.prefix }}
+
       - name: Run build
         run: pnpm build
 
       - name: Run tests with coverage
         run: pnpm ci:test
+
+      - name: Check Turbo cache size
+        id: turbo-size
+        if: ${{ steps.turbo-key.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          bytes=$(du -sb .turbo/ci-cache | cut -f1)
+          echo "Turbo cache: $bytes bytes (256 MiB save ceiling)"
+          echo "save=$([ "$bytes" -le 268435456 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - name: Save Turbo tasks
+        # GitHub scopes PR saves to refs/pull/<number>/merge. Forks only restore.
+        # Main seeds the default-branch cache; release never restores this path.
+        if: >-
+          ${{
+            steps.turbo-size.outcome == 'success' &&
+            steps.turbo-size.outputs.save == 'true' &&
+            steps.turbo-restore.outputs.cache-hit != 'true' &&
+            (github.event_name == 'push' ||
+             github.event.pull_request.head.repo.full_name == github.repository)
+          }}
+        continue-on-error: true
+        timeout-minutes: 2
+        uses: actions/cache/save@v5
+        with:
+          path: .turbo/ci-cache
+          key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Upload coverage to Codecov
         if: ${{ github.actor != 'dependabot[bot]' }}

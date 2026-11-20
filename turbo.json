@@ -1,40 +1,120 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "agentGuidance": false,
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env.*local", "pnpm-workspace.yaml"],
   "globalEnv": ["NODE_ENV", "npm_config_user_agent"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/getTsdownConfig.ts",
+        "$TURBO_ROOT$/scripts/buildPackageDocs.ts",
+        "$TURBO_ROOT$/scripts/docsUtils.ts"
+      ],
       "outputLogs": "new-only",
-      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": ["!.next/cache/**", "!.next/dev/**", ".next/**", "dist/**"]
     },
     "build:docs": {
       "dependsOn": ["^build:docs"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/buildPackageDocs.ts",
+        "$TURBO_ROOT$/scripts/docsUtils.ts"
+      ],
       "outputs": ["dist/docs/**"]
-    },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "test:coverage": {
-      "dependsOn": ["^test:coverage"]
-    },
-    "test:package": {
-      "dependsOn": ["build", "^build"],
-      "cache": false
-    },
-    "test:unit": {
-      "dependsOn": ["^test:unit"]
-    },
-    "test:unit:watch": {
-      "dependsOn": ["^test:unit:watch"]
-    },
-    "test:types": {
-      "dependsOn": ["^test:types"]
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "docs#build": {
+      "dependsOn": [
+        "@noaignite/centra-mocks#build",
+        "@noaignite/centra-types#build",
+        "@noaignite/create-app#build",
+        "@noaignite/react-centra-checkout#build",
+        "@noaignite/react-native-eslint#build",
+        "@noaignite/react-utils#build",
+        "@noaignite/style-guide#build",
+        "@noaignite/tailwind-typography#build",
+        "@noaignite/types#build",
+        "@noaignite/utils#build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/CONTRIBUTING.md",
+        "$TURBO_ROOT$/README.md",
+        "$TURBO_ROOT$/scripts/assembleDocsContent.ts",
+        "$TURBO_ROOT$/scripts/docsUtils.ts"
+      ],
+      "outputLogs": "new-only",
+      "outputs": [
+        "!.next/cache/**",
+        "!.next/dev/**",
+        ".next/**",
+        "next-env.d.ts",
+        "public/_pagefind/**",
+        "src/content/**"
+      ]
+    },
+    "docs#dev": {
+      "cache": false,
+      "dependsOn": [
+        "@noaignite/centra-mocks#build:docs",
+        "@noaignite/centra-types#build:docs",
+        "@noaignite/create-app#build:docs",
+        "@noaignite/react-centra-checkout#build:docs",
+        "@noaignite/react-native-eslint#build:docs",
+        "@noaignite/react-utils#build:docs",
+        "@noaignite/style-guide#build:docs",
+        "@noaignite/tailwind-typography#build:docs",
+        "@noaignite/types#build:docs",
+        "@noaignite/utils#build:docs"
+      ],
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build", "^lint"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/getTsdownConfig.ts",
+        "$TURBO_ROOT$/scripts/getVitestConfig.ts"
+      ]
+    },
+    "docs#lint": {
+      "dependsOn": ["^build", "^lint", "build"]
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["^build", "^test:coverage"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"],
+      "outputs": ["coverage/**"]
+    },
+    "test:package": {
+      "cache": false,
+      "dependsOn": ["^build", "build"]
+    },
+    "test:types": {
+      "dependsOn": ["^build", "^test:types"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/scripts/getTsdownConfig.ts",
+        "$TURBO_ROOT$/scripts/getVitestConfig.ts"
+      ]
+    },
+    "docs#test:types": {
+      "dependsOn": ["^build", "^test:types", "build"]
+    },
+    "test:unit": {
+      "dependsOn": ["^build", "^test:unit"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"]
+    },
+    "test:unit:watch": {
+      "dependsOn": ["^test:unit:watch"]
     }
   }
 }

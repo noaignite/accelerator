@@ -30,7 +30,6 @@
   "scripts": {
     "build": "tsdown --config-loader unrun && pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
-    "dev": "tsdown --config-loader unrun --watch",
     "lint": "eslint . --ignore-pattern 'template-*'",
     "test:types": "tsc --noEmit"
   },

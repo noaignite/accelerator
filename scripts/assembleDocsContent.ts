@@ -71,10 +71,10 @@ function copyRootDocs() {
 /**
  * Rebuilds the docs site content from package-local docs and root docs.
  */
-function buildDocs() {
+function assembleDocsContent() {
   resetDirectory(outputDir)
   copyPackageDocs()
   copyRootDocs()
 }
 
-buildDocs()
+assembleDocsContent()
