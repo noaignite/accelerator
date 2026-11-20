@@ -158,7 +158,10 @@ type NativeProps<T extends ElementType, C> =
  * Functionally similar to `ReactNode`, but with additional restrictions.
  */
 export type PolymorphicElement<P extends Props, T extends ElementType> =
-  ReactElement<P, T> | ReactPortal | null | undefined
+  | ReactElement<P, T>
+  | ReactPortal
+  | null
+  | undefined
 
 /**
  * Derives the entire set of props for a polymorphic component, combining

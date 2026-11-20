@@ -28,8 +28,8 @@ import { useControlled } from '@noaignite/react-utils'
 Equivalent module imports:
 
 ```ts
-import { useControlled } from '@noaignite/react-utils/useControlled'
 import { ErrorBoundary } from '@noaignite/react-utils/ErrorBoundary'
+import { useControlled } from '@noaignite/react-utils/useControlled'
 ```
 
 Every module exported at the root has a subpath matching its source-module spelling and case.

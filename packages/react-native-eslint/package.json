@@ -3,29 +3,32 @@
   "version": "1.2.5",
   "description": "A comprehensive ESLint configuration for React Native projects with TypeScript support",
   "keywords": [
-    "eslint",
-    "react-native",
-    "typescript",
-    "linting",
     "config",
-    "javascript"
+    "eslint",
+    "javascript",
+    "linting",
+    "react-native",
+    "typescript"
   ],
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/react-native-eslint"
   },
-  "license": "MIT",
-  "author": "NoA Ignite",
-  "type": "module",
-  "main": "eslint.config.js",
   "files": [
     "dist",
     "eslint.config.js"
   ],
+  "type": "module",
+  "main": "eslint.config.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts"
@@ -48,8 +51,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

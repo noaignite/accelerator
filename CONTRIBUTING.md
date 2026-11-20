@@ -37,6 +37,15 @@ git push
 Before submitting, follow the [Pull Request Conventions](AGENTS.md#pull-request-conventions)
 for the title and body.
 
+## Formatting
+
+Run `pnpm format` to format with [Oxfmt](https://oxc.rs/docs/guide/usage/formatter)
+or `pnpm format:check` to check without writing. The pre-commit hook formats staged
+files; ESLint remains the linter.
+
+Published Prettier presets and create-app templates are unchanged and excluded
+from repository formatting.
+
 ## Adding a changeset to your Pull Request
 
 Use the [Changeset Rules](AGENTS.md#changeset-rules) to choose package scope,

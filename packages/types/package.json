@@ -10,20 +10,23 @@
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/types"
   },
-  "license": "MIT",
-  "author": "NoA Ignite",
-  "sideEffects": false,
-  "types": "./src/index.ts",
   "files": [
     "dist",
     "src",
     "!src/**/*.test.ts"
   ],
+  "sideEffects": false,
+  "types": "./src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
@@ -44,8 +47,5 @@
     "@types/react": {
       "optional": true
     }
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

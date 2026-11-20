@@ -4,26 +4,29 @@
   "private": false,
   "description": "Typescript definitions for centra apis",
   "keywords": [
-    "typescript",
+    "centra",
     "types",
-    "centra"
+    "typescript"
   ],
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/centra-types"
   },
-  "license": "MIT",
-  "author": "NoA Ignite",
-  "sideEffects": false,
-  "types": "./src/index.ts",
   "files": [
     "dist",
     "src"
   ],
+  "sideEffects": false,
+  "types": "./src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
@@ -35,8 +38,5 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

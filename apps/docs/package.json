@@ -7,12 +7,12 @@
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "apps/docs"
   },
-  "author": "NoA Ignite",
   "type": "module",
   "scripts": {
     "build": "node ../../scripts/assembleDocsContent.ts && next build",

@@ -72,6 +72,9 @@ jobs:
       - name: Run build
         run: pnpm build
 
+      - name: Check formatting
+        run: pnpm format:check
+
       - name: Run tests with coverage
         run: pnpm ci:test
 

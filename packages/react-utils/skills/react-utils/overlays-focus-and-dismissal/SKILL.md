@@ -20,8 +20,8 @@ This skill builds on `react-utils`. Read it first for package-level routing.
 ## Setup
 
 ```tsx
-import { useRef, useState } from 'react'
 import { useDismiss, useFocusReturn, useInert } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function Dialog() {
   const [open, setOpen] = useState(false)
@@ -50,8 +50,8 @@ function Dialog() {
 `Escape` keydown.
 
 ```tsx
-import { useRef, useState } from 'react'
 import { useDismiss } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function Popover() {
   const ref = useRef<HTMLDivElement>(null)
@@ -82,8 +82,8 @@ function Sheet({ open }: { open: boolean }) {
 and its descendants.
 
 ```tsx
-import { useRef } from 'react'
 import { useInert } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function Modal({ open }: { open: boolean }) {
   const ref = useRef<HTMLDivElement>(null)

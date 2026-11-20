@@ -52,9 +52,9 @@ You can also compose your own configuration by importing specific rule sets:
 ```js
 // eslint.config.js
 import ignoresConfig from '@noaignite/style-guide/eslint/rules/ignores'
+import importConfig from '@noaignite/style-guide/eslint/rules/import'
 import javascriptConfig from '@noaignite/style-guide/eslint/rules/javascript'
 import prettierConfig from '@noaignite/style-guide/eslint/rules/prettier'
-import importConfig from '@noaignite/style-guide/eslint/rules/import'
 import typescriptConfig from '@noaignite/style-guide/eslint/rules/typescript'
 
 // Only include the rule sets you need
