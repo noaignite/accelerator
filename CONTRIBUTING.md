@@ -117,6 +117,10 @@ You can now access the documentation site [locally](http://localhost:3000).
 Where possible, please add tests for any changes you make.
 Tests can be run locally with `pnpm test`.
 
+For opt-in changed-input validation, use `pnpm test:affected`. Existing commands
+remain full-scope. See [affected selection](https://github.com/noaignite/accelerator/blob/main/docs/ci/affected-selection.md) for
+comparison refs, local edits, safe fallbacks, and verified task plans.
+
 ## Building packages and documentation
 
 Root commands run unfiltered Turbo tasks:
@@ -140,9 +144,31 @@ package, update both `docs#build` and `docs#dev` prerequisites in `turbo.json`.
 
 ### CI task caching
 
-CI caches Turbo task results without reducing check scope; package validators
-always execute. Fork PRs restore caches but do not save them. Never put credentials
-in cached outputs or logs.
+Start with the [end-to-end CI guide and acceptance matrix](https://github.com/noaignite/accelerator/blob/main/docs/ci/README.md)
+for local commands, selection versus reuse, safety boundaries and which evidence
+still requires authorized Actions runs or Owner provisioning.
+
+For full-scope scheduling, same-PR cancellation boundaries, and reproducible
+cold/warm measurements, see
+[CI scheduling and cancellation](https://github.com/noaignite/accelerator/blob/main/docs/ci/scheduling.md).
+
+See [CI cache trust and compatibility](https://github.com/noaignite/accelerator/blob/main/docs/ci/cache.md)
+for credential-free fallback, task hash inputs, and the Owner approval gates for
+any future Remote Cache setup.
+
+PR CI selects affected builds, lint, types and package validators against the
+actual target merge-base; invalid comparisons visibly fall back to full checks.
+The workflow uses `pnpm ci:test:affected` (`node ./scripts/testAffected.ts --ci`),
+which reads the event's base/head snapshots and retains full coverage. The same
+script without `--ci` keeps local affected unit checks, even with `CI=true`. Non-PR events run
+the full graph. Existing `pnpm ci:test` remains unchanged and full-scope.
+After successful execution, the CI runner checks both expected reports for every
+executable producer in Turbo's full coverage plan, including restored reports.
+Formatting and coverage remain full-scope, as do main and release validation.
+See [PR selection](https://github.com/noaignite/accelerator/blob/main/docs/ci/affected-selection.md#pr-validation) for the deliberate
+full-coverage trade-off and evidence. Selected package validators always execute.
+Fork PRs restore caches but do not save them. Never put credentials in cached
+outputs or logs.
 
 Keep `$TURBO_DEFAULT$`, include shared helper inputs, and declare generated files
 in `outputs`. When changing cache/output semantics, bump the cache schema in
