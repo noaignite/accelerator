@@ -21,8 +21,8 @@ This skill builds on `react-utils`. Read it first for package-level routing.
 ## Setup
 
 ```tsx
-import { useRef, useState } from 'react'
 import { useEvent, useIntersectionObserver, useResizeObserver } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function ResponsiveImage() {
   const ref = useRef<HTMLDivElement>(null)
@@ -79,8 +79,8 @@ function EscapeHandler({ onEscape }: { onEscape: () => void }) {
 progressive hydration triggers.
 
 ```tsx
-import { useRef, useState } from 'react'
 import { useIntersectionObserver } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function LazySection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -104,8 +104,8 @@ Use `useResizeObserver` for element box changes and `useMutationObserver` for
 attribute or child-list changes.
 
 ```tsx
-import { useRef, useState } from 'react'
 import { useMutationObserver, useResizeObserver } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function ObservedPanel() {
   const ref = useRef<HTMLDivElement>(null)

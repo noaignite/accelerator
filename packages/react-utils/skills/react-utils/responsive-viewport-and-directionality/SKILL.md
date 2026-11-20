@@ -22,7 +22,6 @@ This skill builds on `react-utils`. Read it first for package-level routing.
 ## Setup
 
 ```tsx
-import { useRef } from 'react'
 import {
   useElementSize,
   useMediaQuery,
@@ -30,6 +29,7 @@ import {
   useVisualViewport,
   useWindowSize,
 } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function ResponsivePanel() {
   const ref = useRef<HTMLDivElement>(null)
@@ -55,8 +55,8 @@ function ResponsivePanel() {
 when component layout depends on the rendered element itself.
 
 ```tsx
-import { useRef } from 'react'
 import { useElementSize } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function MasonryCell() {
   const ref = useRef<HTMLDivElement>(null)
@@ -93,8 +93,8 @@ function LayoutSwitcher() {
 `useRTL` reports whether the document or a local subtree is right-to-left.
 
 ```tsx
-import { useRef } from 'react'
 import { useRTL, useVisualViewport } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function FloatingToolbar() {
   const ref = useRef<HTMLDivElement>(null)

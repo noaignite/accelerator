@@ -21,9 +21,9 @@ This skill builds on `react-utils`. Read it first for package-level routing.
 ## Setup
 
 ```tsx
+import { setRef, useForkRef } from '@noaignite/react-utils'
 import type { ComponentProps, Ref, ReactNode } from 'react'
 import { Children, cloneElement, isValidElement, useRef } from 'react'
-import { setRef, useForkRef } from '@noaignite/react-utils'
 
 function Input({ ref, ...props }: ComponentProps<'input'>) {
   const localRef = useRef<HTMLInputElement>(null)
@@ -45,9 +45,9 @@ Use `useForkRef` when the component needs a local DOM ref and also exposes that
 same node to consumers through the `ref` prop.
 
 ```tsx
+import { useForkRef } from '@noaignite/react-utils'
 import type { ComponentProps } from 'react'
 import { useRef } from 'react'
-import { useForkRef } from '@noaignite/react-utils'
 
 function TextField({ ref, ...props }: ComponentProps<'input'>) {
   const localRef = useRef<HTMLInputElement>(null)
@@ -63,8 +63,8 @@ function TextField({ ref, ...props }: ComponentProps<'input'>) {
 no-ops on falsy refs.
 
 ```tsx
-import type { Ref } from 'react'
 import { setRef } from '@noaignite/react-utils'
+import type { Ref } from 'react'
 
 function assignNode<T>(ref: Ref<T>, node: T | null) {
   setRef(ref, node)
@@ -77,9 +77,9 @@ function assignNode<T>(ref: Ref<T>, node: T | null) {
 19 and older versions.
 
 ```tsx
+import { getReactElementRef } from '@noaignite/react-utils'
 import type { ReactNode } from 'react'
 import { Children, cloneElement, isValidElement } from 'react'
-import { getReactElementRef } from '@noaignite/react-utils'
 
 function Slot({ children }: { children: ReactNode }) {
   const child = Children.only(children)

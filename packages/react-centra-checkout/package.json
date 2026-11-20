@@ -4,23 +4,26 @@
   "private": false,
   "description": "React components and helpers for Centra checkout api",
   "keywords": [
+    "centra",
     "react",
     "react-component",
-    "typescript",
-    "centra"
+    "typescript"
   ],
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/react-centra-checkout"
   },
-  "license": "MIT",
-  "author": "NoA Ignite",
-  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "import": {
@@ -33,9 +36,9 @@
       }
     }
   },
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsdown --config-loader unrun && pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
@@ -68,8 +71,5 @@
   },
   "engines": {
     "node": ">=20.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

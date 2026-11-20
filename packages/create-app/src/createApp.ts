@@ -1,11 +1,11 @@
 /* eslint-disable no-console -- Allow as it is a CLI tool */
 
-import { sync as spawnSync } from 'cross-spawn'
-import { bold, cyan, green, lightBlue, magenta, red } from 'kolorist'
-import minimist from 'minimist'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { sync as spawnSync } from 'cross-spawn'
+import { bold, cyan, green, lightBlue, magenta, red } from 'kolorist'
+import minimist from 'minimist'
 import prompts from 'prompts'
 
 // Avoids autoconversion to number of the project name by defining that the args

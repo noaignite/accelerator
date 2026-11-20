@@ -9,15 +9,18 @@
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/utils"
   },
-  "license": "MIT",
-  "author": "NoA Ignite",
-  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": "./dist/index.js",
     "./assert": "./dist/assert.js",
@@ -50,9 +53,9 @@
     "./traverse": "./dist/traverse.js",
     "./URLSearchParamsFromObject": "./dist/URLSearchParamsFromObject.js"
   },
-  "files": [
-    "dist"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsdown --config-loader unrun && pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
@@ -71,8 +74,5 @@
   },
   "engines": {
     "node": ">=20"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

@@ -62,8 +62,8 @@ Need responsive or viewport-aware logic, or RTL-aware behavior?
 ## Minimal Working Example
 
 ```tsx
-import type { ReactNode } from 'react'
 import { createRequiredContext, useControlled } from '@noaignite/react-utils'
+import type { ReactNode } from 'react'
 
 type AccordionContextValue = {
   open: boolean

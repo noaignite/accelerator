@@ -22,13 +22,13 @@ This skill builds on `react-utils`. Read it first for package-level routing.
 ## Setup
 
 ```tsx
-import { useState } from 'react'
 import {
   useControlled,
   useIsomorphicEffect,
   useStableCallback,
   useTimeout,
 } from '@noaignite/react-utils'
+import { useState } from 'react'
 
 function Toast(props: { open?: boolean; defaultOpen?: boolean }) {
   const [mounted, setMounted] = useState(false)
@@ -118,8 +118,8 @@ function Poller({ enabled, onTick }: { enabled: boolean; onTick: () => void }) {
 `useEffect` on the server to avoid server-render warnings.
 
 ```tsx
-import { useRef } from 'react'
 import { useIsomorphicEffect } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function AutoMeasure() {
   const ref = useRef<HTMLDivElement>(null)

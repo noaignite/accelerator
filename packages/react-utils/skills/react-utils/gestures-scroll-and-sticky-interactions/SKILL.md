@@ -22,8 +22,8 @@ This skill builds on `react-utils`. Read it first for package-level routing.
 ## Setup
 
 ```tsx
-import { useRef, useState } from 'react'
 import { useDragScroll, usePressHold, useScrollProgress, useSticky } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function ScrollRail() {
   const ref = useRef<HTMLDivElement>(null)
@@ -58,8 +58,8 @@ function ScrollRail() {
 by axis, pointer type, dead zone, and lifespan.
 
 ```tsx
-import { useRef } from 'react'
 import { useGesture } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function SwipeTarget() {
   const ref = useRef<HTMLDivElement>(null)
@@ -81,8 +81,8 @@ function SwipeTarget() {
 add inertia after the drag ends.
 
 ```tsx
-import { useRef } from 'react'
 import { useDragScroll } from '@noaignite/react-utils'
+import { useRef } from 'react'
 
 function CarouselTrack() {
   const ref = useRef<HTMLDivElement>(null)
@@ -98,8 +98,8 @@ These hooks fit when UI state depends on duration, viewport progress, or CSS
 sticky behavior.
 
 ```tsx
-import { useRef, useState } from 'react'
 import { usePressHold, useScrollProgress, useSticky } from '@noaignite/react-utils'
+import { useRef, useState } from 'react'
 
 function StickyProgressHeader() {
   const ref = useRef<HTMLDivElement>(null)

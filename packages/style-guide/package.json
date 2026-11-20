@@ -6,13 +6,19 @@
   "bugs": {
     "url": "https://github.com/noaignite/accelerator/issues"
   },
+  "license": "MIT",
+  "author": "NoA Ignite",
   "repository": {
     "type": "git",
     "url": "https://github.com/noaignite/accelerator.git",
     "directory": "packages/style-guide"
   },
-  "license": "MIT",
-  "author": "NoA Ignite",
+  "files": [
+    "dist",
+    "eslint",
+    "prettier",
+    "typescript"
+  ],
   "type": "module",
   "exports": {
     "./eslint/*": "./eslint/*.js",
@@ -22,12 +28,9 @@
     "./typescript/next": "./typescript/tsconfig.next.json",
     "./typescript/react": "./typescript/tsconfig.react.json"
   },
-  "files": [
-    "dist",
-    "eslint",
-    "prettier",
-    "typescript"
-  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "pnpm build:docs",
     "build:docs": "node ../../scripts/buildPackageDocs.ts",
@@ -82,8 +85,5 @@
   },
   "engines": {
     "node": "^22.22.2 || >=24.15.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
