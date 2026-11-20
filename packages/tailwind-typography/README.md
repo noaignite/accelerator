@@ -23,6 +23,7 @@ Use `typography()` to define responsive typography variants and generate utility
 
 ```ts
 // tailwind.config.ts
+
 import type { Config } from 'tailwindcss'
 import { typography } from '@noaignite/tailwind-typography'
 

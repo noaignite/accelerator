@@ -9,7 +9,8 @@
     "ci:test": "pnpm lint && pnpm test:types && pnpm test:coverage && pnpm test:package",
     "clean": "node ./scripts/clean.ts",
     "dev": "turbo dev",
-    "format": "prettier --write .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
     "lint": "turbo lint",
     "packages:build": "turbo build --filter=@noaignite/*",
     "packages:build-docs": "turbo build:docs --filter=@noaignite/*",
@@ -24,9 +25,6 @@
     "test:unit": "turbo test:unit",
     "test:unit:watch": "turbo watch test:unit:watch"
   },
-  "lint-staged": {
-    "*": "prettier --ignore-unknown --write"
-  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/cli": "^2.31.1",
@@ -37,7 +35,7 @@
     "husky": "^9.1.7",
     "jsdom": "^30.1.1",
     "lint-staged": "^17.0.5",
-    "prettier": "^3.9.10",
+    "oxfmt": "^0.79.0",
     "publint": "^0.3.25",
     "ts-morph": "^28.0.0",
     "tsdown": "^0.23.7",
@@ -46,9 +44,12 @@
     "unrun": "^0.3.1",
     "vitest": "^5.1.0"
   },
-  "packageManager": "pnpm@11.3.0",
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  },
   "engines": {
     "node": "^22.22.2 || >=24.15.0",
     "pnpm": "^11"
-  }
+  },
+  "packageManager": "pnpm@11.3.0"
 }
