@@ -51,3 +51,4 @@ The [changelog](https://github.com/noaignite/accelerator/releases) is regularly 
 ## License
 
 This project is licensed under the terms of the [MIT license](https://github.com/noaignite/accelerator/blob/main/LICENSE).
+<!-- Temporary CI validation #907/#913: inert root docs-input probe; not intended for merge. -->
