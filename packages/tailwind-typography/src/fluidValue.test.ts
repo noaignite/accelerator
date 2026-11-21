@@ -22,4 +22,4 @@ describe('fluidValue', () => {
     expect(result).toBe('min(20rem, calc(12rem + 8 * ((100vw - 320rem) / 704)))')
   })
 })
-// Temporary CI validation #907/#913: inert leaf test-input probe.
+// Temporary CI validation #907/#913: superseding inert leaf test-input probe.
