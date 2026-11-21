@@ -22,3 +22,4 @@ export function getVitestConfig(options: Options): Options {
     options,
   )
 }
+// Temporary CI validation #907/#913: inert shared-input probe.
