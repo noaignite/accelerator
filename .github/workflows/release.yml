@@ -31,9 +31,8 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v6
         with:
-          # npm trusted publishing via OIDC requires a newer npm version.
-          # Using Node 24 ensures the bundled npm meets npm's OIDC requirements.
-          node-version: 24
+          # Keep CI on the same exact Node version as development and releases.
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Install dependencies
