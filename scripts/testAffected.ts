@@ -102,17 +102,14 @@ if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
 
 // Test prerequisites are dependency builds, not dependency tests. Native affected
 // selection still includes consumers when their dependency task inputs change.
-const graphs = [[...checks, 'test:coverage', ...(mergeBase ? ['--affected'] : [])]]
-
-for (const tasks of graphs) {
-  const result = spawnSync('pnpm', ['exec', 'turbo', 'run', ...tasks, ...args], {
-    env,
-    stdio: 'inherit',
-  })
-  if (result.error) console.error(result.error.message)
-  // Task failures are not comparison failures: never retry them as a "safe" green fallback.
-  if (result.status !== 0) process.exit(result.status ?? 1)
-}
+const tasks = [...checks, 'test:coverage', ...(mergeBase ? ['--affected'] : [])]
+const result = spawnSync('pnpm', ['exec', 'turbo', 'run', ...tasks, ...args], {
+  env,
+  stdio: 'inherit',
+})
+if (result.error) console.error(result.error.message)
+// Task failures are not comparison failures: never retry them as a "safe" green fallback.
+if (result.status !== 0) process.exit(result.status ?? 1)
 
 // Dry runs describe selected work; they neither produce nor restore reports.
 if (args.some((arg) => /^--dry(?:-run)?(?:=|$)/.test(arg))) process.exit(0)

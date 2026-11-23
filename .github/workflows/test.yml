@@ -117,7 +117,7 @@ jobs:
           key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Upload coverage to Codecov
-        if: ${{ github.actor != 'dependabot[bot]' && steps.validation.outputs.coverage-count != '0' }}
+        if: ${{ github.actor != 'dependabot[bot]' && steps.validation.outputs.coverage-count != '' && steps.validation.outputs.coverage-count != '0' }}
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
