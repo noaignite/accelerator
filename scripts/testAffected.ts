@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process'
-import { statSync } from 'node:fs'
+import { appendFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
 // CI policy is opt-in, even when CI=true. Consume our flag, not Turbo's arguments.
@@ -90,7 +90,7 @@ if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
     console.error(
       `PR validation: target ${baseCommit}, head ${headCommit}, merge-base ${mergeBase}.`,
     )
-    console.error('PR validation: native affected checks; coverage remains full-scope.')
+    console.error('PR validation: native affected checks and coverage.')
   } else {
     console.error(
       'PR validation: missing/invalid target or head, unavailable history, or checkout mismatch; falling back to full validation.',
@@ -100,12 +100,9 @@ if (process.env.GITHUB_EVENT_NAME === 'pull_request') {
   console.error('CI validation: non-PR event; full validation without an affected comparison.')
 }
 
-// Turbo filters apply to every entrypoint, including package-qualified coverage.
-// Keep full coverage separate on PRs rather than accidentally restoring only affected reports.
-// Main and invalid comparisons retain the single full graph measured in the baseline.
-const graphs = mergeBase
-  ? [[...checks, '--affected'], ['test:coverage']]
-  : [[...checks, 'test:coverage']]
+// Test prerequisites are dependency builds, not dependency tests. Native affected
+// selection still includes consumers when their dependency task inputs change.
+const graphs = [[...checks, 'test:coverage', ...(mergeBase ? ['--affected'] : [])]]
 
 for (const tasks of graphs) {
   const result = spawnSync('pnpm', ['exec', 'turbo', 'run', ...tasks, ...args], {
@@ -120,12 +117,21 @@ for (const tasks of graphs) {
 // Dry runs describe selected work; they neither produce nor restore reports.
 if (args.some((arg) => /^--dry(?:-run)?(?:=|$)/.test(arg))) process.exit(0)
 
-// Discover expected producers from the full native plan, never from reports
+// Discover expected producers from the selected native plan, never from reports
 // already on disk: a missing producer directory must fail just like a missing file.
-const coverageScope = spawnSync('pnpm', ['exec', 'turbo', 'run', 'test:coverage', '--dry=json'], {
-  env,
-  encoding: 'utf8',
-})
+const coverageScope = spawnSync(
+  'pnpm',
+  [
+    'exec',
+    'turbo',
+    'run',
+    'test:coverage',
+    ...(mergeBase ? ['--affected'] : []),
+    ...args,
+    '--dry=json',
+  ],
+  { env, encoding: 'utf8' },
+)
 if (coverageScope.status !== 0) {
   console.error(coverageScope.error?.message ?? coverageScope.stderr)
   process.exit(coverageScope.status ?? 1)
@@ -141,9 +147,28 @@ for (const producer of producers) {
     const path = join(producer.directory, 'coverage', report)
     // types legitimately has an empty LCOV file; require a file, not nonzero size.
     if (!statSync(path, { throwIfNoEntry: false })?.isFile()) {
-      console.error(`::error file=${path}::Missing full-scope coverage report`)
+      console.error(`::error file=${path}::Missing selected coverage report`)
       process.exit(1)
     }
   }
 }
-console.error(`Verified complete coverage for ${producers.length} producers.`)
+const scope = mergeBase ? 'affected' : 'full'
+const files = producers.map((producer) => join(producer.directory, 'coverage', 'lcov.info'))
+console.error(`Verified ${scope} coverage for ${producers.length} selected producers.`)
+if (process.env.GITHUB_OUTPUT) {
+  appendFileSync(
+    process.env.GITHUB_OUTPUT,
+    `coverage-count=${producers.length}\ncoverage-files=${files.join(',')}\ncoverage-scope=${scope}\n`,
+  )
+}
+const summary = producers.length
+  ? `Coverage: ${scope}; ${producers.length} selected producers verified. Upload only these reports; ${
+      mergeBase
+        ? 'the 90% patch gate applies, not the full-project gate'
+        : 'the full-project gate applies'
+    }.`
+  : 'Coverage: no selected producers. No upload or Codecov status requested; this is not a passing coverage measurement.'
+console.error(summary)
+if (process.env.GITHUB_STEP_SUMMARY) {
+  appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summary}\n`)
+}
