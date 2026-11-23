@@ -53,7 +53,7 @@
     "@noaignite/centra-types": "workspace:*",
     "@noaignite/types": "workspace:*",
     "@noaignite/utils": "workspace:*",
-    "js-cookie": "^3.0.7"
+    "js-cookie": "^3.0.8"
   },
   "devDependencies": {
     "@noaignite/centra-mocks": "workspace:*",
