@@ -164,27 +164,17 @@ TURBO_SCM_BASE=origin/my-target TURBO_SCM_HEAD=HEAD pnpm test:affected --dry-run
 Formatting (`pnpm format:check`) stays full-scope. Every executable
 producer in Turbo's selected coverage plan must supply `lcov.info` and
 `coverage-summary.json`, including on cache restoration; missing reports fail.
-Only selected LCOV reports are uploaded, never reports discovered on disk from
-unselected packages. A zero-producer plan explicitly skips the upload and requests
-no Codecov status; it is not a passing coverage measurement. Required external
-checks may therefore need human review for such PRs; this experiment does not change
-branch protection.
+Only selected coverage reports are uploaded. If no tests are selected, CI skips
+the upload and posts no Codecov status.
 
-This optional affected-coverage experiment changes the PR coverage policy:
-PR uploads are labelled `affected`, retaining Codecov's 90% patch target and 1%
-threshold. They are not complete repository coverage scores. The 68% project target
-and 1% threshold apply only to newly uploaded `full` coverage (main/non-PR runs
-and full-validation fallbacks). Neither flag carries old coverage forward; a
-partial PR upload does not refresh the full-project gate. Codecov comments show
-flags and files rather than comparing partial and complete repository totals.
-See Codecov's [status semantics](https://docs.codecov.com/docs/commit-status)
-and [flags](https://docs.codecov.com/docs/flags).
+PRs use Codecov's patch coverage check; complete coverage runs also use its project
+check. Targets and thresholds are configured in `codecov.yml`. Partial PR reports
+do not update the full-project check.
 
-Selected package validators always execute uncached, retaining build prerequisites.
-Tests also retain dependency builds, but do not depend on dependency test tasks:
-editing `react-utils` tests `react-utils`, not `utils`; editing `utils` also tests
-its affected consumers. Selection follows task inputs and dependency hashes, not
-whether an individual export is used. Shared test/config changes can select all suites.
+Selected package validators run uncached. Tests retain dependency builds and
+include affected consumers, but do not automatically run dependency tests. Shared
+test/config changes may select all suites.
+
 Do not bypass prerequisites with `--only` or `--parallel`.
 
 GitHub Actions archives Turbo's filesystem cache (`TURBO_CACHE=local:rw`) as the
