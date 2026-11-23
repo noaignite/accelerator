@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "agentGuidance": false,
   // Task-only docs edges and shared helper inputs must participate in selection.
-  // Recheck the plans in docs/ci/affected-selection.md when upgrading Turbo.
+  // Recheck affected plans using CONTRIBUTING.md#ci when upgrading Turbo.
   "futureFlags": { "affectedUsingTaskInputs": true },
   // Root configuration is deliberately conservative: select and invalidate every task.
   "globalDependencies": [
