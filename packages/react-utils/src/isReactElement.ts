@@ -14,5 +14,7 @@ import { isValidElement } from 'react'
  * isReactElement(value) // true
  * ```
  */
-export const isReactElement = (x: unknown): x is ReactElement<Record<string, unknown>> =>
-  isValidElement(x) && isObject(x.props)
+export const isReactElement = (x: unknown): x is ReactElement<Record<string, unknown>> => {
+  const validElement = isValidElement(x) && isObject(x.props)
+  return validElement
+}
