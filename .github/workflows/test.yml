@@ -23,8 +23,8 @@ jobs:
     env:
       # Turbo 2.11 shares worktree caches by default. Persist this directory only.
       TURBO_CACHE_DIR: .turbo/ci-cache
-      # Keep every event credential-free until Owner-approved server policies are
-      # proven. Client-side remote:r cannot constrain a write-capable credential.
+      # GitHub Actions deliberately archives Turbo's filesystem cache;
+      # no external Turbo cache authentication is needed.
       TURBO_CACHE: local:rw
       # Native eviction runs at startup; the size check below also caps uploads.
       TURBO_CACHE_MAX_AGE: 7d
