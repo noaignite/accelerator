@@ -12,12 +12,22 @@ coverage:
       default:
         target: 68%
         threshold: 1%
+        # Partial PR reports must not be scored as complete repository coverage.
+        flags: [full]
+        flag_coverage_not_uploaded_behavior: exclude
     patch:
       default:
         target: 90%
         threshold: 1%
 
+flags:
+  full:
+    carryforward: false
+  affected:
+    carryforward: false
+
 comment:
   behavior: default
-  layout: header, diff, files
+  # A PR's aggregate is partial, not a new repository-wide coverage score.
+  layout: flags, files
   require_changes: true

@@ -62,7 +62,7 @@ jobs:
           NODE_VERSION: ${{ steps.node.outputs.node-version }}
         run: |
           year=$(date -u +%Y)
-          echo "prefix=turbo-v3-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
+          echo "prefix=turbo-v4-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
 
       - name: Restore Turbo tasks
         id: turbo-restore
@@ -81,6 +81,7 @@ jobs:
         run: pnpm format:check
 
       - name: Run build and validation
+        id: validation
         # Compare the checked-out PR head to the event's actual target snapshot,
         # not origin/main or a target ref that may have advanced since this event.
         # Full history above permits merge-base resolution; invalid refs run full.
@@ -117,9 +118,13 @@ jobs:
           key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Upload coverage to Codecov
-        if: ${{ github.actor != 'dependabot[bot]' }}
+        if: ${{ github.actor != 'dependabot[bot]' && steps.validation.outputs.coverage-count != '0' }}
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: packages
+          # Never discover stale reports from unselected packages.
+          files: ${{ steps.validation.outputs.coverage-files }}
+          disable_search: true
+          flags: ${{ steps.validation.outputs.coverage-scope }}
+          name: ${{ steps.validation.outputs.coverage-scope }} coverage
           fail_ci_if_error: true
