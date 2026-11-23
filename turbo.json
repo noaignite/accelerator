@@ -115,7 +115,7 @@
       "persistent": true
     },
     "test:coverage": {
-      "dependsOn": ["^build", "^test:coverage"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"],
       "outputs": ["coverage/**"]
     },
@@ -135,7 +135,7 @@
       "dependsOn": ["^build", "^test:types", "build"]
     },
     "test:unit": {
-      "dependsOn": ["^build", "^test:unit"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"]
     },
     "test:unit:watch": {
