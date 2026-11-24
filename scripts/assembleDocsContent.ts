@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { injectFrontmatter, readFromFile, resetDirectory, writeFileTo } from './docsUtils.ts'
+import { findPackagesWithDocs } from './findPackagesWithDocs.ts'
 
 /**
  * Config
@@ -8,6 +9,7 @@ import { injectFrontmatter, readFromFile, resetDirectory, writeFileTo } from './
 const rootDir = path.resolve(import.meta.dirname, '..')
 const packagesDir = path.join(rootDir, 'packages')
 const outputDir = path.join(process.cwd(), 'src/content')
+const packages = findPackagesWithDocs(rootDir)
 const rootDocs = [
   {
     source: './README.md',
@@ -27,24 +29,11 @@ const rootDocs = [
 ]
 
 /**
- * Returns all direct subdirectories within `directory`.
- */
-function findDirectories(directory: string) {
-  return fs
-    .readdirSync(directory, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-}
-
-/**
  * Copies each package's local docs folder into the docs site content tree.
  */
 function copyPackageDocs() {
-  const packages = findDirectories(packagesDir)
-
   packages.forEach((packageName) => {
     const sourceDir = path.join(packagesDir, packageName, 'dist/docs')
-    if (!fs.existsSync(sourceDir)) return
 
     const destinationDir = path.join(outputDir, packageName)
     fs.cpSync(sourceDir, destinationDir, { recursive: true })
@@ -72,6 +61,14 @@ function copyRootDocs() {
  * Rebuilds the docs site content from package-local docs and root docs.
  */
 function assembleDocsContent() {
+  const missing = packages
+    .map((name) => path.join(packagesDir, name, 'dist/docs/index.md'))
+    .filter((file) => !fs.existsSync(file))
+  if (missing.length > 0) {
+    throw new Error(
+      `Missing package documentation:\n${missing.join('\n')}\nRun pnpm packages:build-docs from the repository root, or use pnpm build.`,
+    )
+  }
   resetDirectory(outputDir)
   copyPackageDocs()
   copyRootDocs()

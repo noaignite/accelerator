@@ -15,8 +15,8 @@
   },
   "type": "module",
   "scripts": {
-    "build": "node ../../scripts/assembleDocsContent.ts && next build",
-    "postbuild": "node scripts/buildSearchIndex.ts",
+    "build": "node scripts/prepareDocs.ts && next build",
+    "postbuild": "node scripts/verifyDocsRoutes.ts && node scripts/buildSearchIndex.ts",
     "dev": "node ../../scripts/assembleDocsContent.ts && next dev",
     "lint": "eslint .",
     "start": "next start",

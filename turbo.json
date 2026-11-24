@@ -46,6 +46,7 @@
         "$TURBO_ROOT$/CONTRIBUTING.md",
         "$TURBO_ROOT$/README.md",
         "$TURBO_ROOT$/scripts/assembleDocsContent.ts",
+        "$TURBO_ROOT$/scripts/findPackagesWithDocs.ts",
         "$TURBO_ROOT$/scripts/docsUtils.ts"
       ],
       "outputLogs": "new-only",
