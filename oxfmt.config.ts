@@ -1,0 +1,38 @@
+import { defineConfig } from 'oxfmt'
+
+export default defineConfig({
+  endOfLine: 'lf',
+  tabWidth: 2,
+  printWidth: 100,
+  useTabs: false,
+  semi: false,
+  singleQuote: true,
+  sortImports: {
+    newlinesBetween: false,
+    sortSideEffects: false,
+  },
+  sortPackageJson: true,
+  ignorePatterns: [
+    '**/.next/**',
+    '**/.turbo/**',
+    '**/dist/**',
+    '**/node_modules/**',
+    '**/target/**',
+    '**/compiled/**',
+    '**/public/**',
+    '**/storybook-static/**',
+    '**/.env*',
+    '**/package-lock.json',
+    '**/pnpm-lock.yaml',
+    '**/yarn.lock',
+    '**/next-env.d.ts',
+    '**/.pnpm-store/**',
+    '**/coverage/**',
+    '**/.swc/**',
+    '**/build/**',
+    '**/out/**',
+    'apps/docs/src/content/**',
+    'packages/style-guide/prettier/**',
+    'packages/create-app/template-*/**',
+  ],
+})
