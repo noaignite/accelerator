@@ -1,6 +1,7 @@
 {
   "extends": "@noaignite/style-guide/typescript/next",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "types": ["node"],
     "paths": {
       "~/*": ["./src/*"]

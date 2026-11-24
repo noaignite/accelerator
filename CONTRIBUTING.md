@@ -130,8 +130,9 @@ Root commands run unfiltered Turbo tasks:
 | `pnpm packages:build-docs` | Generate package docs only.                                                |
 
 Pass server options with `--`, e.g. `pnpm dev -- --port 3001` (also works for `start`).
-Prefer root commands: direct docs-app `build`/`dev` require prepared package docs,
-and direct `next build` skips the Pagefind postbuild lifecycle.
+For docs-only deployments, run `pnpm -F docs build` from the repository root.
+Do not use direct `next build`: it skips content preparation, route checks, and search indexing.
+Direct docs-app `dev` requires `pnpm packages:build-docs` first.
 
 Turbo restores complete package and site outputs, including content and search.
 Keep package docs after tsdown, which cleans `dist`. When adding a documented
