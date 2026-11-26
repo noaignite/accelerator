@@ -1,5 +1,11 @@
 # @noaignite/style-guide
 
+## 2.0.3
+
+### Patch Changes
+
+- 09eea84: ESLint: Reject bare-directory and nested relative imports in test files so public APIs are tested through package entry points.
+
 ## 2.0.2
 
 ### Patch Changes

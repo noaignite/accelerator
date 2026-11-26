@@ -1,5 +1,21 @@
 # @noaignite/react-utils
 
+## 1.1.0
+
+### Minor Changes
+
+- 6f2abad: isReactFragment: Add a predicate for the React Fragment token and fragment elements.
+- 64a3b2b: Exports: Add explicit, case-preserving module subpath imports with TypeScript support while preserving all existing root exports.
+- 6ab6554: isReactElement: Add a type predicate for React elements, available from the package root and dedicated subpath.
+
+### Patch Changes
+
+- 392f674: createPolymorph: Add documentation for the `as` prop to editor tooltips.
+- 3f7651a: useSticky: Fix stickiness detection when no custom container is provided by using viewport dimensions instead of `document.body` bounds.
+- Updated dependencies [64a3b2b]
+  - @noaignite/utils@4.1.0
+  - @noaignite/types@2.0.0
+
 ## 1.0.1
 
 ### Patch Changes
