@@ -138,15 +138,55 @@ Turbo restores complete package and site outputs, including content and search.
 Keep package docs after tsdown, which cleans `dist`. When adding a documented
 package, update both `docs#build` and `docs#dev` prerequisites in `turbo.json`.
 
-### CI task caching
+## CI
 
-CI caches Turbo task results without reducing check scope; package validators
-always execute. Fork PRs restore caches but do not save them. Never put credentials
-in cached outputs or logs.
+Valid PRs select affected builds, lint, types, tests and package validators against the
+actual target merge-base using the event's base/head snapshots. Invalid comparisons
+visibly fall back to full validation; a valid zero affected plan is successful,
+without running unaffected tests even on a cold cache. Main and release validation
+remain full-scope. The invalid-comparison fallback intentionally runs all tests.
+Only newer runs of the same PR cancel obsolete runs; main and release are unaffected.
 
-Keep `$TURBO_DEFAULT$`, include shared helper inputs, and declare generated files
-in `outputs`. When changing cache/output semantics, bump the cache schema in
-`.github/workflows/test.yml`.
+Existing local `pnpm build`, `pnpm test` and `pnpm ci:test` remain full-scope.
+Opt into affected lint/types/unit checks and package validators with
+`pnpm test:affected`. CI uses `pnpm ci:test:affected`, whose explicit `--ci` selects
+affected coverage instead of local unit checks; `CI=true` alone does not select CI policy.
+
+Local comparisons default to local `main` and `HEAD`; override with
+`TURBO_SCM_BASE` and `TURBO_SCM_HEAD`. Fetch the intended target first if needed.
+Staged, unstaged and nonignored untracked edits participate even with an explicit
+head; use a clean checkout for committed-only plans. Inspect without executing:
+
+```sh
+TURBO_SCM_BASE=origin/my-target TURBO_SCM_HEAD=HEAD pnpm test:affected --dry-run=json
+```
+
+Formatting (`pnpm format:check`) stays full-scope. Every executable
+producer in Turbo's selected coverage plan must supply `lcov.info` and
+`coverage-summary.json`, including on cache restoration; missing reports fail.
+Only selected coverage reports are uploaded. If no tests are selected, CI skips
+the upload and posts no Codecov status.
+
+PRs use Codecov's patch coverage check; complete coverage runs also use its project
+check. Targets and thresholds are configured in `codecov.yml`. Partial PR reports
+do not update the full-project check.
+
+Selected package validators run uncached. Tests retain dependency builds and
+include affected consumers, but do not automatically run dependency tests. Shared
+test/config changes may select all suites.
+
+Do not bypass prerequisites with `--only` or `--parallel`.
+
+GitHub Actions archives Turbo's filesystem cache (`TURBO_CACHE=local:rw`) as the
+deliberate final caching solution; no external cache service credentials are needed.
+Cache misses or archive service failures execute required tasks normally; task,
+report and applicable coverage-upload failures still fail CI. Fork PRs restore
+caches but never save them. Release does not restore this CI cache.
+Never put secrets in cached outputs or logs.
+
+Keep `$TURBO_DEFAULT$`, shared helper/environment inputs and generated `outputs`
+accurate, preserving runtime/platform compatibility safeguards and archive size limits.
+When changing cache/output semantics, bump the cache schema in `.github/workflows/test.yml`.
 
 ## Validating package distributions
 

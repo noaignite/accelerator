@@ -1,8 +1,32 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "agentGuidance": false,
-  "globalDependencies": ["**/.env.*local", "pnpm-workspace.yaml"],
-  "globalEnv": ["NODE_ENV", "npm_config_user_agent"],
+  // Task-only docs edges and shared helper inputs must participate in selection.
+  // Recheck affected plans using CONTRIBUTING.md#ci when upgrading Turbo.
+  "futureFlags": { "affectedUsingTaskInputs": true },
+  // Root configuration is deliberately conservative: select and invalidate every task.
+  "globalDependencies": [
+    "**/.env.*local",
+    "package.json",
+    "pnpm-workspace.yaml",
+    "tsconfig.json",
+    "scripts/tsconfig.json"
+  ],
+  // Archive prefixes do not participate in remote task hashes. pnpm's user agent
+  // supplies exact Node/platform/architecture; runner image and env also matter.
+  "globalEnv": [
+    "CI",
+    "ImageOS",
+    "ImageVersion",
+    "LANG",
+    "LC_ALL",
+    "NODE_ENV",
+    "NODE_OPTIONS",
+    "RUNNER_ARCH",
+    "RUNNER_OS",
+    "TZ",
+    "npm_config_user_agent"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -91,7 +115,7 @@
       "persistent": true
     },
     "test:coverage": {
-      "dependsOn": ["^build", "^test:coverage"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"],
       "outputs": ["coverage/**"]
     },
@@ -111,7 +135,7 @@
       "dependsOn": ["^build", "^test:types", "build"]
     },
     "test:unit": {
-      "dependsOn": ["^build", "^test:unit"],
+      "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/scripts/getVitestConfig.ts"]
     },
     "test:unit:watch": {

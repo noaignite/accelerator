@@ -11,12 +11,20 @@ on:
 env:
   HUSKY: 0
 
+# Only newer runs of the same PR supersede each other. A unique push group also
+# avoids Actions replacing pending main runs; release uses a separate workflow.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   test-and-coverage:
     runs-on: ubuntu-latest
     env:
       # Turbo 2.11 shares worktree caches by default. Persist this directory only.
       TURBO_CACHE_DIR: .turbo/ci-cache
+      # GitHub Actions deliberately archives Turbo's filesystem cache;
+      # no external Turbo cache authentication is needed.
       TURBO_CACHE: local:rw
       # Native eviction runs at startup; the size check below also caps uploads.
       TURBO_CACHE_MAX_AGE: 7d
@@ -53,7 +61,7 @@ jobs:
           NODE_VERSION: ${{ steps.node.outputs.node-version }}
         run: |
           year=$(date -u +%Y)
-          echo "prefix=turbo-v2-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
+          echo "prefix=turbo-v4-${RUNNER_OS:?}-${RUNNER_ARCH:?}-${ImageOS:?}-${ImageVersion:?}-node${NODE_VERSION:?}-${year:?}-" >> "$GITHUB_OUTPUT"
 
       - name: Restore Turbo tasks
         id: turbo-restore
@@ -68,14 +76,18 @@ jobs:
           key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
           restore-keys: ${{ steps.turbo-key.outputs.prefix }}
 
-      - name: Run build
-        run: pnpm build
-
       - name: Check formatting
         run: pnpm format:check
 
-      - name: Run tests with coverage
-        run: pnpm ci:test
+      - name: Run build and validation
+        id: validation
+        # Compare the checked-out PR head to the event's actual target snapshot,
+        # not origin/main or a target ref that may have advanced since this event.
+        # Full history above permits merge-base resolution; invalid refs run full.
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: pnpm ci:test:affected
 
       - name: Check Turbo cache size
         id: turbo-size
@@ -105,9 +117,13 @@ jobs:
           key: ${{ steps.turbo-key.outputs.prefix }}${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Upload coverage to Codecov
-        if: ${{ github.actor != 'dependabot[bot]' }}
+        if: ${{ github.actor != 'dependabot[bot]' && steps.validation.outputs.coverage-count != '' && steps.validation.outputs.coverage-count != '0' }}
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: packages
+          # Never discover stale reports from unselected packages.
+          files: ${{ steps.validation.outputs.coverage-files }}
+          disable_search: true
+          flags: ${{ steps.validation.outputs.coverage-scope }}
+          name: ${{ steps.validation.outputs.coverage-scope }} coverage
           fail_ci_if_error: true
