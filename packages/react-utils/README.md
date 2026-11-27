@@ -36,6 +36,24 @@ Every module exported at the root has a subpath matching its source-module spell
 Root imports remain supported, and module imports expose the same exports and TypeScript types.
 Use the public subpaths without a file extension or `/dist`.
 
+## Component hooks
+
+`UseEffect`, `UseId`, `UseRef`, `UseState`, and `UseRTL` expose hooks as components.
+For example, `UseState` passes the state and setter to its render-function child:
+
+```tsx
+import { UseState } from '@noaignite/react-utils/useState.component'
+
+;<UseState initialState={0}>
+  {([count, setCount]) => <button onClick={() => setCount(count + 1)}>{count}</button>}
+</UseState>
+```
+
+Each component renders a single React element (or a falsy child). Put a forwarded
+`ref` on the component hook, not its child; fragments cannot receive that ref.
+`UseRTL` can track the rendered element's direction with `scoped` and adds
+`data-ltr` or `data-rtl` to its child.
+
 <!-- package-docs:exports -->
 
 ## Documentation
